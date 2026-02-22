@@ -1,0 +1,105 @@
+{
+  "script_version": "1.0",
+  "script": "11_run_golisa_re_cloud.py",
+  "experiment": "B1 - GoLiSA Running_Examples x Cloud Models (zero-shot)",
+  "run_start": "2026-02-10T13:36:27.214751",
+  "run_end": "2026-02-10T13:44:09.372787",
+  "run_duration_s": 462.2,
+  "output_csv": "golisa_re_cloud_260210_1336.csv",
+  "output_csv_bytes": 104849,
+  "total_records": 30,
+  "error_count": 0,
+  "dataset_dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Running_Examples",
+  "dataset_files": [
+    "channel/Channel.go",
+    "global/GlobalVariable.go",
+    "goroutine/GoRoutines.go",
+    "map-iter/MapIteration.go",
+    "method-function/MethodFunction.go"
+  ],
+  "dataset_file_count": 5,
+  "claude_models": [
+    "claude-haiku-4-5@20251001",
+    "claude-sonnet-4-5@20250929",
+    "claude-opus-4-5@20251101"
+  ],
+  "gemini_models": [
+    "google/gemini-2.5-pro",
+    "google/gemini-2.5-flash",
+    "google/gemini-2.5-flash-lite"
+  ],
+  "inference_params": {
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "system_prompt": "You are a Hyperledger Fabric Security Expert. Analyze the following Go chaincode for security vulnerabilities. Focus on: access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, and insecure key management. For each vulnerability found, provide:\n1. Vulnerability type\n2. Severity (Critical/High/Medium/Low)\n3. Affected code location (function name and line reference)\n4. Description of the issue\n5. Recommended fix\nIf no vulnerabilities are found, state 'No vulnerabilities detected.'",
+  "timing_summary": {
+    "claude-haiku-4-5@20251001": {
+      "total_s": 57.7,
+      "avg_s": 11.536,
+      "per_file": [
+        12.305,
+        11.848,
+        11.085,
+        11.698,
+        10.743
+      ]
+    },
+    "claude-sonnet-4-5@20250929": {
+      "total_s": 120.1,
+      "avg_s": 24.013,
+      "per_file": [
+        25.109,
+        22.47,
+        21.017,
+        23.968,
+        27.502
+      ]
+    },
+    "claude-opus-4-5@20251101": {
+      "total_s": 100.5,
+      "avg_s": 20.095,
+      "per_file": [
+        17.957,
+        20.377,
+        23.59,
+        16.495,
+        22.055
+      ]
+    },
+    "google/gemini-2.5-pro": {
+      "total_s": 98.8,
+      "avg_s": 19.766,
+      "per_file": [
+        22.103,
+        19.91,
+        19.413,
+        18.961,
+        18.444
+      ]
+    },
+    "google/gemini-2.5-flash": {
+      "total_s": 67.2,
+      "avg_s": 13.45,
+      "per_file": [
+        14.363,
+        13.092,
+        12.766,
+        13.834,
+        13.195
+      ]
+    },
+    "google/gemini-2.5-flash-lite": {
+      "total_s": 15.2,
+      "avg_s": 3.043,
+      "per_file": [
+        0.486,
+        6.063,
+        6.277,
+        1.896,
+        0.494
+      ]
+    }
+  },
+  "run_id": "6d6e7daf"
+}

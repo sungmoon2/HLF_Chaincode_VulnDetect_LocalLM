@@ -1,0 +1,258 @@
+[
+  {
+    "name": "blankidentifier",
+    "path": "go-lisa/go-testcases/blankidentifier",
+    "sha": "5a2e3f04b8b4831ff3ab6e48e8f84d86a7a16119",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/blankidentifier?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/blankidentifier",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/5a2e3f04b8b4831ff3ab6e48e8f84d86a7a16119",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/blankidentifier?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/5a2e3f04b8b4831ff3ab6e48e8f84d86a7a16119",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/blankidentifier"
+    }
+  },
+  {
+    "name": "cc",
+    "path": "go-lisa/go-testcases/cc",
+    "sha": "d10f4d34b6488d114e08df9e0ea46782f8f6c1bb",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/cc?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/cc",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/d10f4d34b6488d114e08df9e0ea46782f8f6c1bb",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/cc?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/d10f4d34b6488d114e08df9e0ea46782f8f6c1bb",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/cc"
+    }
+  },
+  {
+    "name": "cfg",
+    "path": "go-lisa/go-testcases/cfg",
+    "sha": "ed705fe6dba10e2cb6394b15f5ee97a061ae6a63",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/cfg?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/cfg",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/ed705fe6dba10e2cb6394b15f5ee97a061ae6a63",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/cfg?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/ed705fe6dba10e2cb6394b15f5ee97a061ae6a63",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/cfg"
+    }
+  },
+  {
+    "name": "collections",
+    "path": "go-lisa/go-testcases/collections",
+    "sha": "5e8b2c927770d53c7f7716e7a3adcc87abd87aa2",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/collections?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/collections",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/5e8b2c927770d53c7f7716e7a3adcc87abd87aa2",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/collections?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/5e8b2c927770d53c7f7716e7a3adcc87abd87aa2",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/collections"
+    }
+  },
+  {
+    "name": "div-by-zero",
+    "path": "go-lisa/go-testcases/div-by-zero",
+    "sha": "78d25bb9c5d8161282945357be816198ca6b5a48",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/div-by-zero?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/div-by-zero",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/78d25bb9c5d8161282945357be816198ca6b5a48",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/div-by-zero?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/78d25bb9c5d8161282945357be816198ca6b5a48",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/div-by-zero"
+    }
+  },
+  {
+    "name": "go-projects",
+    "path": "go-lisa/go-testcases/go-projects",
+    "sha": "95bb7fd28bb8e8070395e9d297a6ff2b3d16b43d",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/go-projects?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/go-projects",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/95bb7fd28bb8e8070395e9d297a6ff2b3d16b43d",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/go-projects?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/95bb7fd28bb8e8070395e9d297a6ff2b3d16b43d",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/go-projects"
+    }
+  },
+  {
+    "name": "heap",
+    "path": "go-lisa/go-testcases/heap",
+    "sha": "e802921e01184a32428aeb846406febc4a82a5b9",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/heap?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/heap",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/e802921e01184a32428aeb846406febc4a82a5b9",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/heap?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/e802921e01184a32428aeb846406febc4a82a5b9",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/heap"
+    }
+  },
+  {
+    "name": "instrumentation",
+    "path": "go-lisa/go-testcases/instrumentation",
+    "sha": "c3bdfbf25e8687d1e3c35999d2d08655cf092c34",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/instrumentation?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/instrumentation",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/c3bdfbf25e8687d1e3c35999d2d08655cf092c34",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/instrumentation?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/c3bdfbf25e8687d1e3c35999d2d08655cf092c34",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/instrumentation"
+    }
+  },
+  {
+    "name": "interprocedural",
+    "path": "go-lisa/go-testcases/interprocedural",
+    "sha": "4ea5f3503bd75113c3c2be1ea04244761049f3bf",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/interprocedural?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/interprocedural",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/4ea5f3503bd75113c3c2be1ea04244761049f3bf",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/interprocedural?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/4ea5f3503bd75113c3c2be1ea04244761049f3bf",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/interprocedural"
+    }
+  },
+  {
+    "name": "non-det",
+    "path": "go-lisa/go-testcases/non-det",
+    "sha": "59c53079c8885d5d28414af716c739492fd69816",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/59c53079c8885d5d28414af716c739492fd69816",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/59c53079c8885d5d28414af716c739492fd69816",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det"
+    }
+  },
+  {
+    "name": "strings-typing",
+    "path": "go-lisa/go-testcases/strings-typing",
+    "sha": "6386154c03cb59d4ef7a67814ee738e65c6d5622",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/strings-typing?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/strings-typing",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/6386154c03cb59d4ef7a67814ee738e65c6d5622",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/strings-typing?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/6386154c03cb59d4ef7a67814ee738e65c6d5622",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/strings-typing"
+    }
+  },
+  {
+    "name": "taint",
+    "path": "go-lisa/go-testcases/taint",
+    "sha": "7feccb7a5a771f00bbddd9dc35722d8a53055e85",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/taint?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/taint",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/7feccb7a5a771f00bbddd9dc35722d8a53055e85",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/taint?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/7feccb7a5a771f00bbddd9dc35722d8a53055e85",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/taint"
+    }
+  },
+  {
+    "name": "tarsis",
+    "path": "go-lisa/go-testcases/tarsis",
+    "sha": "de8e66354542fee27b5da7dae0d7e2dd28ae1daa",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/tarsis?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/tarsis",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/de8e66354542fee27b5da7dae0d7e2dd28ae1daa",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/tarsis?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/de8e66354542fee27b5da7dae0d7e2dd28ae1daa",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/tarsis"
+    }
+  },
+  {
+    "name": "typing",
+    "path": "go-lisa/go-testcases/typing",
+    "sha": "b445551fa9d645523b928f2f251d59278b5aa4f1",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/typing?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/typing",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/b445551fa9d645523b928f2f251d59278b5aa4f1",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/typing?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/b445551fa9d645523b928f2f251d59278b5aa4f1",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/typing"
+    }
+  },
+  {
+    "name": "variablescoping",
+    "path": "go-lisa/go-testcases/variablescoping",
+    "sha": "fe7f16811efc1f8cf9ea5e4e49656d5ee5342a18",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/variablescoping?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/variablescoping",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/fe7f16811efc1f8cf9ea5e4e49656d5ee5342a18",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/variablescoping?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/fe7f16811efc1f8cf9ea5e4e49656d5ee5342a18",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/variablescoping"
+    }
+  },
+  {
+    "name": "vmcai2022",
+    "path": "go-lisa/go-testcases/vmcai2022",
+    "sha": "734dd98abfa7d17d2db6bed485296149087e14c8",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/vmcai2022?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/vmcai2022",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/734dd98abfa7d17d2db6bed485296149087e14c8",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/vmcai2022?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/734dd98abfa7d17d2db6bed485296149087e14c8",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/vmcai2022"
+    }
+  }
+]

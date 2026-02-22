@@ -1,0 +1,898 @@
+timestamp,model,file,result
+2026-02-09T03:01:10.618877,qwen2.5-coder-7b-instruct-q4_k_m.gguf,01_access_control_vuln.go,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `TransferAsset` function (line 41)
+   - **Description**: The `TransferAsset` function allows any user to transfer any asset without checking if the caller is the current owner of the asset.
+   - **Recommended Fix**: Add a check to ensure that the caller is the current owner of the asset.
+     ```go
+     func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+         assetJSON, err := ctx.GetStub().GetState(assetID)
+         if err != nil {
+             return fmt.Errorf(""failed to read asset: %v"", err)
+         }
+         if assetJSON == nil {
+             return fmt.Errorf(""asset %s does not exist"", assetID)
+         }
+
+         var asset Asset
+         err = json.Unmarshal(assetJSON, &asset)
+         if err != nil {
+             return err
+         }
+
+         // Check if the caller is the current owner
+         callerID, err := ctx.GetClientIdentity().GetID()
+         if err != nil {
+             return fmt.Errorf(""failed to get caller ID: %v"", err)
+         }
+         if asset.Owner != callerID {
+             return fmt.Errorf(""caller is not the owner of the asset"")
+         }
+
+         asset.Owner = newOwner
+
+         updatedJSON, err := json.Marshal(asset)
+         if err != nil {
+             return err
+         }
+
+         return ctx.GetStub().PutState(assetID, updatedJSON)
+     }
+     ```
+
+2. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `DeleteAsset` function (line 65)
+   - **Description**: The `DeleteAsset` function allows any user to delete any asset without checking if the caller has the necessary privileges (e.g., admin role).
+   - **Recommended Fix**: Add a check to ensure that the caller has the necessary privileges.
+     ```go
+     func (s *AssetTransferChaincode) DeleteAsset(ctx contractapi.TransactionContextInterface, assetID string) error {
+         exists, err := s.AssetExists(ctx, assetID)
+         if err != nil {
+             return err
+         }
+         if !exists {
+             return fmt.Errorf(""asset %s does not exist"", assetID)
+         }
+
+         // Check if the caller has the necessary privileges (e.g., admin role)
+         callerID, err := ctx.GetClientIdentity().GetMSPID()
+         if err != nil {
+             return fmt.Errorf(""failed to get caller MSP ID: %v"", err)
+         }
+         if callerID != ""adminMSP"" {
+             return fmt.Errorf(""caller does not have the necessary privileges"")
+         }
+
+         return ctx.GetStub().DelState(assetID)
+     }
+     ```
+
+3. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `UpdateAssetValue` function (line 89)
+   - **Description**: The `UpdateAssetValue` function allows any user to update the value of any asset without checking if the caller is the current owner or an admin.
+   - **Recommended Fix**: Add checks to ensure that the caller is the current owner or an admin.
+     ```go
+     func (s *AssetTransferChaincode) UpdateAssetValue(ctx contractapi.TransactionContextInterface, assetID string, newValue float64) error {
+         assetJSON, err := ctx.GetStub().GetState(assetID)
+         if err != nil {
+             return fmt.Errorf(""failed to read asset: %v"", err)
+         }
+         if assetJSON == nil {
+             return fmt.Errorf(""asset %s does not exist"", assetID)
+         }
+
+         var asset Asset
+         err = json.Unmarshal(assetJSON, &asset)
+         if err != nil {
+             return err
+         }
+
+         // Check if the caller is the current owner or an admin
+         callerID, err := ctx.GetClientIdentity().GetID()
+         if err != nil {
+             return fmt.Errorf(""failed to get caller ID: %v"", err)
+         }
+         if asset.Owner != callerID && callerID != ""admin"" {
+             return fmt.Errorf(""caller is not the owner or an admin"")
+         }
+
+         // Check if the asset is transfer-locked
+         if asset.TransferLocked {
+             return fmt.Errorf(""asset is transfer-locked"")
+         }
+
+         asset.Value = newValue
+
+         updatedJSON, err := json.Marshal(asset)
+         if err != nil {
+             return err
+         }
+
+         return ctx.GetStub().PutState(assetID, updatedJSON)
+     }
+     ```
+
+4. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `TransferAsset` function (line 41)
+   - **Description**: The `TransferAsset` function does not validate the input parameters (e.g., `assetID` and `newOwner`).
+   - **Recommended Fix**: Add input validation to ensure that the input parameters are valid.
+     ```go
+     func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+         if assetID == """" || newOwner == """" {
+             return fmt.Errorf(""assetID and newOwner cannot be empty"")
+         }
+
+         assetJSON, err := ctx.GetStub().GetState(assetID)
+         if err != nil {
+             return fmt.Errorf(""failed to read asset: %v"", err)
+         }
+         if assetJSON == nil {
+             return fmt.Errorf(""asset %s does not exist"", assetID)
+         }
+
+         var asset Asset
+         err = json.Unmarshal(assetJSON, &asset)
+         if err != nil {
+             return err
+         }
+
+         callerID, err := ctx.GetClientIdentity().GetID()
+         if err != nil {
+             return fmt.Errorf(""failed to get caller ID: %v"", err)
+         }
+         if asset.Owner != callerID {
+             return fmt.Errorf(""caller is not the owner of the asset"")
+         }
+
+         asset.Owner = newOwner
+
+         updatedJSON, err := json.Marshal(asset)
+         if err != nil {
+             return err
+         }
+
+         return ctx.GetStub().PutState(assetID, updatedJSON)
+     }
+     ```
+
+5. **Vulnerability Type**: Non-Deterministic Operations
+   - **Severity**: Low
+   - **Affected Code Location**: `InitLedger` function (line 21)
+   - **Description**: The `InitLedger` function initializes the ledger with sample assets, which can lead to non-deterministic behavior if the order of assets is changed.
+   - **Recommended Fix**: Ensure that the order of assets is consistent and deterministic.
+     ```go
+     func (s *AssetTransferChaincode) InitLedger(ctx contractapi.TransactionContextInterface) error {
+         assets := []Asset{
+             {ID: ""asset1"", Owner: ""Alice"", Value: 1000.0, TransferLocked: false},
+             {ID: ""asset2"", Owner: ""Bob"", Value: 2000.0, TransferLocked: false},
+             {ID: ""asset3"", Owner: ""Charlie"", Value: 3000.0, TransferLocked: true},
+         }
+
+         for _, asset := range assets {
+             assetJSON, err := json.Marshal(asset)
+             if err != nil {
+                 return err
+             }
+             err = ctx.GetStub().PutState(asset.ID, assetJSON)
+             if err != nil {
+                 return fmt.Errorf(""failed to put asset: %v"", err)
+             }
+         }
+         return nil
+     }
+     ```
+
+6. **Vulnerability Type**: Insecure Key Management
+   - **Severity**: Low
+   - **Affected Code Location**: `TransferAsset` function (line 41)
+   - **Description**: The `TransferAsset` function does not manage keys securely, which can lead to insecure key management practices.
+   - **Recommended Fix**: Ensure that keys are managed securely and follow best practices for key management.
+     ```go
+     func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+         assetJSON, err := ctx.GetStub().GetState(assetID)
+         if err != nil {
+             return fmt.Errorf(""failed to read asset: %v"", err)
+         }
+         if assetJSON == nil {
+             return fmt.Errorf(""asset %s does not exist"", assetID)
+         }
+
+         var asset Asset
+         err = json.Unmarshal(assetJSON, &asset)
+         if err != nil {
+             return err
+         }
+
+         callerID, err := ctx.GetClientIdentity().GetID()
+         if err != nil {
+             return fmt.Errorf(""failed to get caller ID: %v"", err)
+         }
+         if asset.Owner != callerID {
+             return fmt.Errorf(""caller is not the owner of the asset"")
+         }
+
+         asset.Owner = newOwner
+
+         updatedJSON, err := json.Marshal(asset)
+         if err != nil {
+             return err
+         }
+
+         return ctx.GetStub().PutState(assetID, updatedJSON)
+     }
+     ```
+
+### Summary
+
+- **Access Control Issues**: High
+- **Input Validation Flaws**: Medium
+- **Non-Deterministic Operations**: Low
+- **Insecure Key Management**: Low
+
+No other vulnerabilities were detected in the provided chaincode."
+2026-02-09T03:01:19.445035,qwen2.5-coder-7b-instruct-q4_k_m.gguf,02_input_validation_vuln.go,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `Transfer` function, line 21
+   - **Description**: The `Transfer` function accepts a string `amountStr` and converts it to a float64 without any validation. This allows attackers to mint tokens by transferring negative amounts.
+   - **Recommended Fix**: Add a check to ensure the amount is non-negative.
+     ```go
+     if amount < 0 {
+         return fmt.Errorf(""negative transfer amount not allowed"")
+     }
+     ```
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `CreateAccount` function, line 46
+   - **Description**: The `CreateAccount` function accepts an `initialBalance` string and converts it to a float64 without any validation. This allows attackers to create accounts with invalid balances.
+   - **Recommended Fix**: Add a check to ensure the balance is non-negative.
+     ```go
+     if balance < 0 {
+         return fmt.Errorf(""negative initial balance not allowed"")
+     }
+     ```
+
+3. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `BatchTransfer` function, line 75
+   - **Description**: The `BatchTransfer` function accepts a string `transfersJSON` and converts it to a slice of transfers without any validation. This allows attackers to submit invalid transfer data.
+   - **Recommended Fix**: Add validation for each transfer, including checking for non-negative amounts and valid account IDs.
+     ```go
+     for _, tr := range transfers {
+         if tr.Amount < 0 {
+             return fmt.Errorf(""negative transfer amount not allowed"")
+         }
+         fromJSON, _ := ctx.GetStub().GetState(tr.From)
+         toJSON, _ := ctx.GetStub().GetState(tr.To)
+         if fromJSON == nil || toJSON == nil {
+             return fmt.Errorf(""invalid transfer: sender or receiver account does not exist"")
+         }
+     }
+     ```
+
+4. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `QueryByOwner` function, line 101
+   - **Description**: The `QueryByOwner` function accepts an `owner` string and constructs a CouchDB query string without any sanitization. This allows attackers to perform NoSQL injection if CouchDB is used as the state database.
+   - **Recommended Fix**: Use parameterized queries or escape special characters in the query string.
+     ```go
+     query := `{""selector"":{""owner"":""` + strings.Replace(owner, `""`, `\""`, -1) + `""}}`
+     ```
+
+5. **Vulnerability Type**: Non-Deterministic Operations
+   - **Severity**: Medium
+   - **Affected Code Location**: `Transfer` function, line 30
+   - **Description**: The `Transfer` function does not check for overflow or underflow when updating the balances. This can lead to unexpected results if the balance overflows or underflows.
+   - **Recommended Fix**: Add checks for overflow and underflow.
+     ```go
+     if fromAccount.Balance < amount {
+         return fmt.Errorf(""insufficient balance"")
+     }
+     ```
+
+6. **Vulnerability Type**: Insecure Key Management
+   - **Severity**: Low
+   - **Affected Code Location**: `CreateAccount` function, line 46
+   - **Description**: The `CreateAccount` function does not check if the `accountID` already exists, which allows attackers to overwrite existing accounts.
+   - **Recommended Fix**: Add a check to ensure the `accountID` does not already exist.
+     ```go
+     if ctx.GetStub().GetState(accountID) != nil {
+         return fmt.Errorf(""account already exists"")
+     }
+     ```
+
+7. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Low
+   - **Affected Code Location**: `BatchTransfer` function, line 85
+   - **Description**: The `BatchTransfer` function does not handle read-after-write conflicts, which can lead to phantom reads if another transaction modifies the state between reads and writes.
+   - **Recommended Fix**: Use transactions to ensure atomicity.
+     ```go
+     txID := ctx.GetStub().GetTxID()
+     ctx.GetStub().SetStateMetadata(txID, map[string][]byte{""batch"": []byte(""true"")})
+     ```
+
+### Summary
+The chaincode contains several security vulnerabilities, including input validation flaws, non-deterministic operations, and insecure key management. Addressing these vulnerabilities will help improve the security of the chaincode."
+2026-02-09T03:01:26.292652,qwen2.5-coder-7b-instruct-q4_k_m.gguf,03_phantom_read_vuln.go,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Read-after-write / Phantom Read
+   - **Severity**: High
+   - **Affected Code Location**: `PlaceBid` function, lines 16-27
+   - **Description**: The function reads the current state of the auction, checks if the bid is higher than the current highest bid, and then updates the auction state. If another transaction modifies the auction state between the read and write operations, it can lead to a phantom read, where the transaction is invalidated due to MVCC validation failure.
+   - **Recommended Fix**: Use a transactional update pattern to ensure that the read and write operations are atomic. This can be achieved by using a single transaction that reads the current state, checks the conditions, and updates the state in a single step.
+
+2. **Vulnerability Type**: Read-after-write / Phantom Read
+   - **Severity**: High
+   - **Affected Code Location**: `IncrementViewCount` function, lines 16-24
+   - **Description**: The function reads the current view count, increments it, and writes it back. If another transaction modifies the view count between the read and write operations, it can lead to a phantom read.
+   - **Recommended Fix**: Use a transactional update pattern to ensure that the read and write operations are atomic.
+
+3. **Vulnerability Type**: Range query followed by write creates phantom read risk
+   - **Severity**: High
+   - **Affected Code Location**: `CloseExpiredAuctions` function, lines 16-30
+   - **Description**: The function performs a range query to find all open auctions and then closes them. If another transaction modifies the state of any auction key during the range query, it can lead to a phantom read.
+   - **Recommended Fix**: Use a transactional update pattern to ensure that the read and write operations are atomic. Alternatively, use a more fine-grained approach to update only the specific keys that were read during the range query.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: Medium
+   - **Affected Code Location**: `PlaceBid` function, lines 20-22
+   - **Description**: The function checks if the bid amount is higher than the current highest bid. If two transactions read the same highest bid at the same time, both may pass this check, leading to non-deterministic behavior.
+   - **Recommended Fix**: Use a transactional update pattern to ensure that the read and write operations are atomic.
+
+5. **Vulnerability Type**: Insecure key management
+   - **Severity**: Low
+   - **Affected Code Location**: `PlaceBid` function, lines 16-27
+   - **Description**: The function uses the auction ID as the key for storing the auction state. If the auction ID is not properly validated or sanitized, it could lead to insecure key management.
+   - **Recommended Fix**: Validate and sanitize the auction ID to ensure it does not contain any malicious characters or patterns.
+
+### Summary
+
+- **Vulnerability Type**: Read-after-write / Phantom Read
+  - **Severity**: High
+  - **Affected Code Location**: `PlaceBid`, `IncrementViewCount`, `CloseExpiredAuctions`
+  - **Recommended Fix**: Use a transactional update pattern.
+
+- **Vulnerability Type**: Non-deterministic operations
+  - **Severity**: Medium
+  - **Affected Code Location**: `PlaceBid`
+  - **Recommended Fix**: Use a transactional update pattern.
+
+- **Vulnerability Type**: Insecure key management
+  - **Severity**: Low
+  - **Affected Code Location**: `PlaceBid`
+  - **Recommended Fix**: Validate and sanitize the auction ID."
+2026-02-09T03:01:30.981165,qwen2.5-coder-7b-instruct-q4_k_m.gguf,04_data_leakage_vuln.go,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Private data leakage
+   - **Severity**: High
+   - **Affected Code Location**: `CreateRecord`, `GetRecord`, `UpdateDiagnosis`, `AddMedication`, `CreateDiagnosisIndex`, `GetRecordHistory`
+   - **Description**: Sensitive medical data (SSN, diagnosis, medications, etc.) is stored and accessed directly in the public world state, making it accessible to all participants in the channel.
+   - **Recommended Fix**: Use Private Data Collections (PDC) to store sensitive data. Replace `ctx.GetStub().PutState(patientID, recordJSON)` with `ctx.GetStub().PutPrivateData(""medicalPDC"", patientID, recordJSON)`.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: Medium
+   - **Affected Code Location**: `AddMedication`
+   - **Description**: The `fmt.Printf` statement logs sensitive data (SSN) in the transaction logs, which can be accessed by anyone with access to the peer logs.
+   - **Recommended Fix**: Avoid logging sensitive data in transaction logs. Instead, use the event log for sensitive information.
+
+3. **Vulnerability Type**: Composite key leaks information through key structure
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateDiagnosisIndex`
+   - **Description**: The composite key structure leaks information about the diagnosis and patient ID, allowing anyone who can enumerate keys to see which patients have which diagnoses.
+   - **Recommended Fix**: Use a more secure composite key structure that does not leak sensitive information.
+
+4. **Vulnerability Type**: GetHistoryForKey exposes all previous values including deleted records
+   - **Severity**: Medium
+   - **Affected Code Location**: `GetRecordHistory`
+   - **Description**: The `GetHistoryForKey` function exposes all previous values, including deleted records, making it possible to see all previous values of sensitive data.
+   - **Recommended Fix**: Implement logic to filter out deleted records or use a more secure method to store and retrieve historical data.
+
+### Summary of Recommendations
+
+1. **Use Private Data Collections (PDC)** for sensitive data.
+2. **Avoid logging sensitive data** in transaction logs.
+3. **Use a more secure composite key structure**.
+4. **Implement logic to filter out deleted records** when retrieving historical data.
+
+By addressing these vulnerabilities, the chaincode will be more secure and protect sensitive patient data."
+2026-02-09T03:01:39.992277,qwen2.5-coder-7b-instruct-q4_k_m.gguf,05_nondeterminism_keymgmt_vuln.go,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operation
+   - **Severity**: High
+   - **Affected Code Location**: `CreateShipment` function, line 27
+   - **Description**: The `time.Now()` function returns different values on different peers, causing endorsement mismatch and transaction failure.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a blockchain timestamp or a timestamp provided by the transaction context.
+
+2. **Vulnerability Type**: Non-deterministic operation
+   - **Severity**: High
+   - **Affected Code Location**: `GenerateTrackingCode` function, line 46
+   - **Description**: The `time.Now()` function returns different values on different peers, causing endorsement mismatch and transaction failure.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a blockchain timestamp or a timestamp provided by the transaction context.
+
+3. **Vulnerability Type**: Non-deterministic operation
+   - **Severity**: High
+   - **Affected Code Location**: `GenerateTrackingCode` function, line 57
+   - **Description**: The `time.Now()` function returns different values on different peers, causing endorsement mismatch and transaction failure.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a blockchain timestamp or a timestamp provided by the transaction context.
+
+4. **Vulnerability Type**: Non-deterministic operation
+   - **Severity**: High
+   - **Affected Code Location**: `UpdateTemperatureFromSensor` function, line 68
+   - **Description**: The `time.Now()` function returns different values on different peers, causing endorsement mismatch and transaction failure.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a blockchain timestamp or a timestamp provided by the transaction context.
+
+5. **Vulnerability Type**: Non-deterministic operation
+   - **Severity**: High
+   - **Affected Code Location**: `UpdateTemperatureFromSensor` function, line 79
+   - **Description**: The `time.Now()` function returns different values on different peers, causing endorsement mismatch and transaction failure.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a blockchain timestamp or a timestamp provided by the transaction context.
+
+6. **Vulnerability Type**: Non-deterministic operation
+   - **Severity**: High
+   - **Affected Code Location**: `GetSystemConfig` function, line 87
+   - **Description**: The `os.Getenv` function returns peer-specific values, causing different peers to have different environment configurations.
+   - **Recommended Fix**: Avoid using environment variables in chaincode. Instead, use a secure configuration management system that provides consistent values across peers.
+
+7. **Vulnerability Type**: Insecure key management
+   - **Severity**: High
+   - **Affected Code Location**: `GenerateEncryptionKey` function, line 107
+   - **Description**: The encryption key is stored in plaintext in the world state, allowing all channel participants to read it.
+   - **Recommended Fix**: Store the encryption key securely, such as in a secure vault or a secure key management system. Ensure that the key is not exposed in the world state.
+
+8. **Vulnerability Type**: Weak random using predictable seed
+   - **Severity**: High
+   - **Affected Code Location**: `AssignRandomInspector` function, line 127
+   - **Description**: The `rand.Int` function is used for selection but still produces different values on different peers.
+   - **Recommended Fix**: Use a deterministic random number generator, such as a blockchain-based random number generator or a random number generator provided by the transaction context.
+
+9. **Vulnerability Type**: Map iteration order is non-deterministic in Go
+   - **Severity**: Medium
+   - **Affected Code Location**: `GenerateReport` function, line 148
+   - **Description**: The map iteration order in Go is randomized, causing the content of the report to differ across peers.
+   - **Recommended Fix**: Use a deterministic order for the map iteration, such as sorting the keys before iterating over them.
+
+### Summary
+
+- **Non-deterministic operations**: High severity, affecting multiple functions.
+- **Insecure key management**: High severity, affecting the `GenerateEncryptionKey` function.
+- **Weak random using predictable seed**: High severity, affecting the `AssignRandomInspector` function.
+- **Map iteration order is non-deterministic in Go**: Medium severity, affecting the `GenerateReport` function.
+
+These vulnerabilities can lead to endorsement mismatches, transaction failures, and security breaches. It is crucial to address these issues to ensure the security and reliability of the Hyperledger Fabric chaincode."
+2026-02-09T03:02:03.130919,Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf,01_access_control_vuln.go,"**Vulnerability Analysis Report**
+
+The provided Hyperledger Fabric chaincode file '01_access_control_vuln.go' has several security vulnerabilities. Here's a detailed analysis of each vulnerability:
+
+### 1. **Access Control Issue: No ownership verification before transfer**
+
+* **Vulnerability Type:** Access Control Issue
+* **Severity:** Critical
+* **Affected Code Location:** `TransferAsset` function (lines 34-43)
+* **Description of the issue:** The `TransferAsset` function allows any user to transfer any asset without verifying the ownership of the asset. This can lead to unauthorized asset transfers.
+* **Recommended fix:** Add a check to ensure the new owner is the same as the current owner of the asset. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+	// ...
+	if asset.Owner != newOwner {
+		return fmt.Errorf(""asset %s is not owned by %s"", assetID, newOwner)
+	}
+	// ...
+}
+```
+
+### 2. **Access Control Issue: No admin role verification**
+
+* **Vulnerability Type:** Access Control Issue
+* **Severity:** Critical
+* **Affected Code Location:** `DeleteAsset` function (lines 55-63)
+* **Description of the issue:** The `DeleteAsset` function allows any organization member to delete any asset without verifying their admin role. This can lead to unauthorized asset deletions.
+* **Recommended fix:** Add a check to ensure the caller has the admin role. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) DeleteAsset(ctx contractapi.TransactionContextInterface, assetID string) error {
+	// ...
+	mspID := ctx.GetClientIdentity().GetMSPID()
+	if mspID != ""AdminMSP"" {
+		return fmt.Errorf(""only admin can delete asset"")
+	}
+	// ...
+}
+```
+
+### 3. **Access Control Issue: Unrestricted bulk update without authorization**
+
+* **Vulnerability Type:** Access Control Issue
+* **Severity:** Critical
+* **Affected Code Location:** `UpdateAssetValue` function (lines 74-85)
+* **Description of the issue:** The `UpdateAssetValue` function allows any user to update any asset's value without verifying their ownership or admin role. This can lead to unauthorized asset value updates.
+* **Recommended fix:** Add a check to ensure the caller is the owner or an admin of the asset. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) UpdateAssetValue(ctx contractapi.TransactionContextInterface, assetID string, newValue float64) error {
+	// ...
+	if asset.Owner != ctx.GetClientIdentity().GetID() && mspID != ""AdminMSP"" {
+		return fmt.Errorf(""only owner or admin can update asset value"")
+	}
+	// ...
+}
+```
+
+### 4. **Input Validation Flaw: No check for asset existence**
+
+* **Vulnerability Type:** Input Validation Flaw
+* **Severity:** Medium
+* **Affected Code Location:** `TransferAsset`, `DeleteAsset`, `UpdateAssetValue`, and `ReadAsset` functions (lines 34-43, 55-63, 74-85, and 90-101)
+* **Description of the issue:** The functions do not check if the asset exists before performing operations on it. This can lead to errors when trying to access non-existent assets.
+* **Recommended fix:** Add a check to ensure the asset exists before performing operations on it. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+	// ...
+	exists, err := s.AssetExists(ctx, assetID)
+	if !exists {
+		return fmt.Errorf(""asset %s does not exist"", assetID)
+	}
+	// ...
+}
+```
+
+### 5. **Input Validation Flaw: No check for asset transfer lock**
+
+* **Vulnerability Type:** Input Validation Flaw
+* **Severity:** Medium
+* **Affected Code Location:** `UpdateAssetValue` function (lines 74-85)
+* **Description of the issue:** The `UpdateAssetValue` function does not check if the asset is transfer-locked before updating its value. This can lead to errors when trying to update transfer-locked assets.
+* **Recommended fix:** Add a check to ensure the asset is not transfer-locked before updating its value. If it is, return an error.
+
+```go
+func (s *AssetTransferChaincode) UpdateAssetValue(ctx contractapi.TransactionContextInterface, assetID string, newValue float64) error {
+	// ...
+	if asset.TransferLocked {
+		return fmt.Errorf(""asset %s is transfer-locked"", assetID)
+	}
+	// ...
+}
+```
+
+### 6. **Non-Deterministic Operation: Unrestricted asset transfer**
+
+* **Vulnerability Type:** Non-Deterministic Operation
+* **Severity:** Critical
+* **Affected Code Location:** `TransferAsset` function (lines 34-43)
+* **Description of the issue:** The `TransferAsset` function allows any user to transfer any asset without verifying the ownership of the asset. This can lead to non-deterministic behavior and unauthorized asset transfers.
+* **Recommended fix:** Add a check to ensure the new owner is the same as the current owner of the asset. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+	// ...
+	if asset.Owner != newOwner {
+		return fmt.Errorf(""asset %s is not owned by %s"", assetID, newOwner)
+	}
+	// ...
+}
+```
+
+### 7. **Private Data Leakage: Unrestricted asset access**
+
+* **Vulnerability Type:** Private Data Leakage
+* **Severity:** Critical
+* **Affected Code Location:** `ReadAsset` function (lines 90-101)
+* **Description of the issue:** The `ReadAsset` function allows any user to access any asset without verifying their ownership or admin role. This can lead to unauthorized access to private assets.
+* **Recommended fix:** Add a check to ensure the caller is the owner or an admin of the asset. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) ReadAsset(ctx contractapi.TransactionContextInterface, assetID string) (*Asset, error) {
+	// ...
+	if asset.Owner != ctx.GetClientIdentity().GetID() && mspID != ""AdminMSP"" {
+		return nil, fmt.Errorf(""only owner or admin can read asset"")
+	}
+	// ...
+}
+```
+
+### 8. **Insecure Key Management: Missing MSP ID check**
+
+* **Vulnerability Type:** Insecure Key Management
+* **Severity:** Medium
+* **Affected Code Location:** `DeleteAsset` function (lines 55-63)
+* **Description of the issue:** The `DeleteAsset` function does not check the MSP ID of the caller. This can lead to unauthorized asset deletions.
+* **Recommended fix:** Add a check to ensure the caller has the admin role. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) DeleteAsset(ctx contractapi.TransactionContextInterface, assetID string) error {
+	// ...
+	mspID := ctx.GetClientIdentity().GetMSPID()
+	if mspID != ""AdminMSP"" {
+		return fmt.Errorf(""only admin can delete asset"")
+	}
+	// ...
+}
+```
+
+### 9. **Insecure Key Management: Missing role check**
+
+* **Vulnerability Type:** Insecure Key Management
+* **Severity:** Medium
+* **Affected Code Location:** `UpdateAssetValue` function (lines 74-85)
+* **Description of the issue:** The `UpdateAssetValue` function does not check the role of the caller. This can lead to unauthorized asset value updates.
+* **Recommended fix:** Add a check to ensure the caller is the owner or an admin of the asset. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) UpdateAssetValue(ctx contractapi.TransactionContextInterface, assetID string, newValue float64) error {
+	// ...
+	if asset.Owner != ctx.GetClientIdentity().GetID() && mspID != ""AdminMSP"" {
+		return fmt.Errorf(""only owner or admin can update asset value"")
+	}
+	// ...
+}
+```
+
+### 10. **Insecure Key Management: Missing identity check**
+
+* **Vulnerability Type:** Insecure Key Management
+* **Severity:** Medium
+* **Affected Code Location:** `TransferAsset`, `DeleteAsset`, `UpdateAssetValue`, and `ReadAsset` functions (lines 34-43, 55-63, 74-85, and 90-101)
+* **Description of the issue:** The functions do not check the identity of the caller. This can lead to unauthorized operations.
+* **Recommended fix:** Add a check to ensure the caller is the owner or an admin of the asset. If not, return an error.
+
+```go
+func (s *AssetTransferChaincode) TransferAsset(ctx contractapi.TransactionContextInterface, assetID string, newOwner string) error {
+	// ...
+	if asset.Owner != ctx.GetClientIdentity().GetID() {
+		return fmt.Errorf(""only owner can transfer asset"")
+	}
+	// ...
+}
+```
+
+**Conclusion:**
+
+The provided Hyperledger Fabric chaincode file '01_access_control_vuln.go' has several security vulnerabilities, including access control issues, input validation flaws, non-deterministic operations, and insecure key management. These vulnerabilities can lead to unauthorized operations, data breaches, and other security risks. To address these vulnerabilities"
+2026-02-09T03:02:12.273066,Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf,02_input_validation_vuln.go,"Here are the security vulnerabilities found in the provided Go chaincode:
+
+1. **Vulnerability type:** Access Control Issue
+**Severity:** High
+**Affected code location:** `Transfer()` function, line 24
+**Description of the issue:** The `Transfer()` function does not check if the sender account has sufficient balance to perform the transfer. This allows an attacker to transfer tokens from an account with insufficient balance, effectively draining the account.
+**Recommended fix:** Add a check to ensure the sender account has sufficient balance before performing the transfer.
+
+2. **Vulnerability type:** Access Control Issue
+**Severity:** High
+**Affected code location:** `CreateAccount()` function, line 63
+**Description of the issue:** The `CreateAccount()` function does not check if the account ID already exists. This allows an attacker to overwrite an existing account by creating a new account with the same ID.
+**Recommended fix:** Add a check to ensure the account ID does not already exist before creating a new account.
+
+3. **Vulnerability type:** Input Validation Flaw
+**Severity:** High
+**Affected code location:** `CreateAccount()` function, line 65
+**Description of the issue:** The `CreateAccount()` function silently ignores errors when parsing the initial balance. This allows an attacker to create an account with an invalid initial balance without notification.
+**Recommended fix:** Handle the error when parsing the initial balance and return an error to the user.
+
+4. **Vulnerability type:** Input Validation Flaw
+**Severity:** High
+**Affected code location:** `BatchTransfer()` function, line 114
+**Description of the issue:** The `BatchTransfer()` function silently skips invalid transfers without notification. This allows an attacker to submit a batch of transfers with invalid or malicious data without detection.
+**Recommended fix:** Handle the error when unmarshaling the transfers JSON and return an error to the user.
+
+5. **Vulnerability type:** Read-After-Write Conflict (Phantom Read)
+**Severity:** Medium
+**Affected code location:** `Transfer()` function, line 31
+**Description of the issue:** The `Transfer()` function reads the sender and receiver accounts from the state database, updates the balances, and then writes the updated accounts back to the state database. However, if another transaction updates the sender or receiver account between the read and write operations, the transaction may read stale data and perform an incorrect transfer.
+**Recommended fix:** Use a transactional approach to ensure that the read and write operations are atomic and consistent.
+
+6. **Vulnerability type:** Private Data Leakage
+**Severity:** Medium
+**Affected code location:** `QueryByOwner()` function, line 143
+**Description of the issue:** The `QueryByOwner()` function uses direct string interpolation in the CouchDB query, which allows an attacker to inject malicious data and potentially leak sensitive information.
+**Recommended fix:** Use parameterized queries or prepared statements to prevent SQL injection attacks.
+
+7. **Vulnerability type:** Non-Deterministic Operation
+**Severity:** Medium
+**Affected code location:** `BatchTransfer()` function, line 114
+**Description of the issue:** The `BatchTransfer()` function performs multiple transfers in a single transaction, which may lead to non-deterministic behavior if the transfers are not properly ordered or if the state database is not consistent.
+**Recommended fix:** Use a transactional approach to ensure that the transfers are performed in a consistent and deterministic order.
+
+8. **Vulnerability type:** Insecure Key Management
+**Severity:** Low
+**Affected code location:** `main()` function, line 166
+**Description of the issue:** The `main()` function uses a hardcoded key for the chaincode, which may be insecure if the key is not properly managed or if it is exposed to unauthorized parties.
+**Recommended fix:** Use a secure key management system to generate and manage the chaincode key.
+
+9. **Vulnerability type:** Input Validation Flaw
+**Severity:** Low
+**Affected code location:** `CreateAccount()` function, line 63
+**Description of the issue:** The `CreateAccount()` function does not validate the account ID format, which may allow an attacker to create an account with an invalid or malicious ID.
+**Recommended fix:** Add validation to ensure the account ID is in the correct format.
+
+10. **Vulnerability type:** Input Validation Flaw
+**Severity:** Low
+**Affected code location:** `BatchTransfer()` function, line 114
+**Description of the issue:** The `BatchTransfer()` function does not validate the number of transfers in the batch, which may allow an attacker to submit a large batch of transfers without notification.
+**Recommended fix:** Add validation to ensure the number of transfers in the batch is within a reasonable limit."
+2026-02-09T03:02:21.141634,Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf,03_phantom_read_vuln.go,"**Vulnerability Analysis Report**
+
+The provided Hyperledger Fabric chaincode file '03_phantom_read_vuln.go' has several security vulnerabilities. Here are the identified issues:
+
+### 1. Read-after-write / Phantom Read (Critical)
+
+* **Vulnerability type:** Read-after-write / Phantom Read
+* **Severity:** Critical
+* **Affected code location:** `PlaceBid` function (lines 34-63)
+* **Description of the issue:** The `PlaceBid` function reads the auction state, then writes back to the same key based on stale data. This creates a read-write conflict if concurrent transactions exist, leading to MVCC validation failure.
+* **Recommended fix:** Use a transactional approach to update the auction state, ensuring that all reads and writes are atomic.
+
+### 2. Counter increment pattern - classic phantom read issue (Critical)
+
+* **Vulnerability type:** Counter increment pattern - classic phantom read issue
+* **Severity:** Critical
+* **Affected code location:** `IncrementViewCount` function (lines 74-85)
+* **Description of the issue:** The `IncrementViewCount` function increments a counter and writes it back to the same key. If multiple transactions do this in the same block, all but one will fail due to MVCC conflicts.
+* **Recommended fix:** Use a transactional approach to update the counter, ensuring that all reads and writes are atomic.
+
+### 3. Range query followed by write creates phantom read risk (High)
+
+* **Vulnerability type:** Range query followed by write creates phantom read risk
+* **Severity:** High
+* **Affected code location:** `CloseExpiredAuctions` function (lines 96-115)
+* **Description of the issue:** The `CloseExpiredAuctions` function performs a range query to read all auction keys, then writes back to the same keys. This creates a high risk of MVCC conflicts if concurrent transactions exist.
+* **Recommended fix:** Use a transactional approach to update the auction state, ensuring that all reads and writes are atomic.
+
+### 4. Insecure key management (Medium)
+
+* **Vulnerability type:** Insecure key management
+* **Severity:** Medium
+* **Affected code location:** `CreateAuction` function (lines 126-135)
+* **Description of the issue:** The `CreateAuction` function uses a simple string-based key for storing auction data. This may lead to key collisions or unauthorized access to auction data.
+* **Recommended fix:** Use a secure key management system, such as a cryptographically secure pseudo-random number generator (CSPRNG), to generate unique keys for each auction.
+
+### 5. Input validation flaws (Medium)
+
+* **Vulnerability type:** Input validation flaws
+* **Severity:** Medium
+* **Affected code location:** `PlaceBid` function (lines 34-63)
+* **Description of the issue:** The `PlaceBid` function does not validate the input `bidAmount` to ensure it is a valid float64 value. This may lead to unexpected behavior or errors.
+* **Recommended fix:** Add input validation to ensure that `bidAmount` is a valid float64 value.
+
+### 6. Non-deterministic operations (Low)
+
+* **Vulnerability type:** Non-deterministic operations
+* **Severity:** Low
+* **Affected code location:** `CloseExpiredAuctions` function (lines 96-115)
+* **Description of the issue:** The `CloseExpiredAuctions` function uses a non-deterministic approach to close expired auctions, which may lead to inconsistent results.
+* **Recommended fix:** Use a deterministic approach to close expired auctions, ensuring that the same result is obtained for the same input.
+
+### 7. Private data leakage (Low)
+
+* **Vulnerability type:** Private data leakage
+* **Severity:** Low
+* **Affected code location:** `CloseExpiredAuctions` function (lines 96-115)
+* **Description of the issue:** The `CloseExpiredAuctions` function may leak private data, such as auction IDs, if not properly handled.
+* **Recommended fix:** Use secure data handling practices to prevent private data leakage.
+
+In conclusion, the provided Hyperledger Fabric chaincode file '03_phantom_read_vuln.go' has several security vulnerabilities, including read-after-write / phantom read, counter increment pattern, range query followed by write, insecure key management, input validation flaws, non-deterministic operations, and private data leakage. These vulnerabilities can be addressed by implementing secure coding practices, such as using transactional approaches, secure key management, input validation, and deterministic operations."
+2026-02-09T03:02:28.901967,Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf,04_data_leakage_vuln.go,"**Vulnerability Analysis Report**
+
+The provided Hyperledger Fabric chaincode file '04_data_leakage_vuln.go' contains several security vulnerabilities. Here's a detailed analysis of each vulnerability:
+
+### 1. Private Data Leakage (Multiple)
+
+*   **Vulnerability Type:** Private Data Leakage
+*   **Severity:** Critical
+*   **Affected Code Location:** `CreateRecord` function (lines 34-44)
+*   **Description of the Issue:** The `CreateRecord` function stores sensitive medical data (SSN, diagnosis, medications, etc.) directly in the public world state. This allows any organization in the channel to access this sensitive information.
+*   **Recommended Fix:** Use Private Data Collections (PDC) to store sensitive data. Update the `CreateRecord` function to use `ctx.GetStub().PutPrivateData(""medicalPDC"", patientID, recordJSON)` instead of `ctx.GetStub().PutState(patientID, recordJSON)`.
+
+### 2. Private Data Leakage (Multiple)
+
+*   **Vulnerability Type:** Private Data Leakage
+*   **Severity:** Critical
+*   **Affected Code Location:** `GetRecord` function (lines 55-67)
+*   **Description of the Issue:** The `GetRecord` function returns the complete patient record, including all sensitive fields (SSN, diagnosis, medications, etc.). This exposes sensitive information to any organization in the channel.
+*   **Recommended Fix:** Implement field-level access control to restrict access to sensitive fields. Update the `GetRecord` function to return only the required fields.
+
+### 3. Private Data Leakage (Multiple)
+
+*   **Vulnerability Type:** Private Data Leakage
+*   **Severity:** Critical
+*   **Affected Code Location:** `UpdateDiagnosis` function (lines 78-92)
+*   **Description of the Issue:** The `UpdateDiagnosis` function emits an event with sensitive medical data (SSN, diagnosis, etc.). This broadcasts sensitive information to all peers and clients on the channel.
+*   **Recommended Fix:** Remove the event emission or redact sensitive data from the event payload.
+
+### 4. Private Data Leakage (Multiple)
+
+*   **Vulnerability Type:** Private Data Leakage
+*   **Severity:** Critical
+*   **Affected Code Location:** `AddMedication` function (lines 103-115)
+*   **Description of the Issue:** The `AddMedication` function logs sensitive medical data (SSN, diagnosis, etc.) in the transaction logs. This exposes sensitive information to anyone with access to the logs.
+*   **Recommended Fix:** Remove the logging statement or redact sensitive data from the log message.
+
+### 5. Private Data Leakage (Multiple)
+
+*   **Vulnerability Type:** Private Data Leakage
+*   **Severity:** Critical
+*   **Affected Code Location:** `CreateDiagnosisIndex` function (lines 126-138)
+*   **Description of the Issue:** The `CreateDiagnosisIndex` function creates a composite key that leaks diagnosis information. This allows anyone who can enumerate keys to see which patients have which diagnoses.
+*   **Recommended Fix:** Use a secure key structure or encrypt the diagnosis information.
+
+### 6. Private Data Leakage (Multiple)
+
+*   **Vulnerability Type:** Private Data Leakage
+*   **Severity:** Critical
+*   **Affected Code Location:** `GetRecordHistory` function (lines 149-163)
+*   **Description of the Issue:** The `GetRecordHistory` function exposes full historical records, including deleted records. This allows anyone to see previous SSNs, old diagnoses, removed medications, etc.
+*   **Recommended Fix:** Implement a mechanism to redact or remove sensitive data from historical records.
+
+**Conclusion:**
+
+The provided Hyperledger Fabric chaincode file contains several security vulnerabilities related to private data leakage. To address these issues, implement the recommended fixes to store sensitive data securely, restrict access to sensitive fields, and remove or redact sensitive data from logs and events."
+2026-02-09T03:02:37.336761,Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf,05_nondeterminism_keymgmt_vuln.go,"**Security Vulnerability Analysis**
+
+The provided Go chaincode for Hyperledger Fabric contains several security vulnerabilities. Here's a detailed analysis of each vulnerability:
+
+### 1. Non-deterministic operation - time.Now()
+
+*   **Vulnerability type:** Non-deterministic operation
+*   **Severity:** Critical
+*   **Affected code location:** `CreateShipment` function, `GenerateTrackingCode` function, `UpdateTemperatureFromSensor` function, `GetSystemConfig` function, `AssignRandomInspector` function, and `time.Now()` usage
+*   **Description of the issue:** The `time.Now()` function returns the current time in a non-deterministic manner, which can lead to endorsement mismatch and transaction failure across different peers.
+*   **Recommended fix:** Use a deterministic method to generate timestamps, such as `time.UnixMilli()` or a custom timestamp generator.
+
+### 2. Non-deterministic random number generation
+
+*   **Vulnerability type:** Non-deterministic operation
+*   **Severity:** Critical
+*   **Affected code location:** `GenerateTrackingCode` function, `GenerateEncryptionKey` function, and `AssignRandomInspector` function
+*   **Description of the issue:** The `crypto/rand` package generates random numbers in a non-deterministic manner, which can lead to different results across different peers.
+*   **Recommended fix:** Use a deterministic random number generator, such as `math/rand` with a fixed seed.
+
+### 3. External HTTP call - non-deterministic and unreliable
+
+*   **Vulnerability type:** Non-deterministic operation
+*   **Severity:** High
+*   **Affected code location:** `UpdateTemperatureFromSensor` function
+*   **Description of the issue:** The chaincode makes an external HTTP call to a sensor, which can be non-deterministic and unreliable, leading to different results across different peers.
+*   **Recommended fix:** Avoid making external HTTP calls from chaincode or use a more reliable and deterministic method.
+
+### 4. Reading environment variables - non-deterministic
+
+*   **Vulnerability type:** Non-deterministic operation
+*   **Severity:** Medium
+*   **Affected code location:** `GetSystemConfig` function
+*   **Description of the issue:** The chaincode reads environment variables, which can be non-deterministic and peer-specific, leading to different results across different peers.
+*   **Recommended fix:** Avoid reading environment variables or use a more deterministic method.
+
+### 5. Insecure key generation and storage
+
+*   **Vulnerability type:** Insecure key management
+*   **Severity:** Critical
+*   **Affected code location:** `GenerateEncryptionKey` function
+*   **Description of the issue:** The chaincode generates and stores encryption keys in plaintext, which can be accessed by all channel participants.
+*   **Recommended fix:** Use a secure key management system, such as a Hardware Security Module (HSM) or a secure key store.
+
+### 6. Weak random using predictable seed
+
+*   **Vulnerability type:** Non-deterministic operation
+*   **Severity:** Medium
+*   **Affected code location:** `AssignRandomInspector` function
+*   **Description of the issue:** The chaincode uses a predictable seed for random number generation, which can lead to non-deterministic results.
+*   **Recommended fix:** Use a more secure and unpredictable seed for random number generation.
+
+### 7. Map iteration order is non-deterministic in Go
+
+*   **Vulnerability type:** Non-deterministic operation
+*   **Severity:** Medium
+*   **Affected code location:** `GenerateReport` function
+*   **Description of the issue:** The chaincode iterates over a map in a non-deterministic order, which can lead to different results across different peers.
+*   **Recommended fix:** Use a more deterministic method to iterate over the map, such as sorting the keys.
+
+**Conclusion**
+
+The provided Go chaincode for Hyperledger Fabric contains several security vulnerabilities, including non-deterministic operations, insecure key management, and external HTTP calls. To address these vulnerabilities, it is recommended to use deterministic methods for timestamp generation, random number generation, and map iteration, as well as secure key management systems."

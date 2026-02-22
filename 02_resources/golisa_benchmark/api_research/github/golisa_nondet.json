@@ -1,0 +1,50 @@
+[
+  {
+    "name": "channel",
+    "path": "go-lisa/go-testcases/non-det/channel",
+    "sha": "b4676b01608a10f3c58dccd90828dfc269534c53",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det/channel?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det/channel",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/b4676b01608a10f3c58dccd90828dfc269534c53",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det/channel?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/b4676b01608a10f3c58dccd90828dfc269534c53",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det/channel"
+    }
+  },
+  {
+    "name": "goroutines",
+    "path": "go-lisa/go-testcases/non-det/goroutines",
+    "sha": "88d2d762709241f58d8fb18cf59d70698ab21bf7",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det/goroutines?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det/goroutines",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/88d2d762709241f58d8fb18cf59d70698ab21bf7",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det/goroutines?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/88d2d762709241f58d8fb18cf59d70698ab21bf7",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det/goroutines"
+    }
+  },
+  {
+    "name": "map-iter",
+    "path": "go-lisa/go-testcases/non-det/map-iter",
+    "sha": "7030bc773c2af97791470dd2df3ea8cec2fc59f8",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det/map-iter?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det/map-iter",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/7030bc773c2af97791470dd2df3ea8cec2fc59f8",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det/map-iter?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/7030bc773c2af97791470dd2df3ea8cec2fc59f8",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases/non-det/map-iter"
+    }
+  }
+]

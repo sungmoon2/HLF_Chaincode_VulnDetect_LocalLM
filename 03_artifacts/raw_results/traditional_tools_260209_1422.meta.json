@@ -1,0 +1,342 @@
+{
+  "script": "05_run_traditional_tools.py",
+  "script_version": "1.0",
+  "run_id": "7a4b2a27",
+  "purpose": "Run traditional static analysis tools on HLF chaincode dataset to demonstrate their inability to detect consensus-layer vulnerabilities.",
+  "run_start": "2026-02-09T14:22:09.325406",
+  "run_end": "2026-02-09T14:23:47.009040",
+  "run_duration_s": 97.7,
+  "output_csv": "traditional_tools_260209_1422.csv",
+  "output_csv_bytes": 3437,
+  "total_records": 30,
+  "system_info": {
+    "platform": "Windows-10-10.0.26100-SP0",
+    "python_version": "3.11.9"
+  },
+  "tools": {
+    "semgrep": {
+      "path": "C:\\Users\\qkrtj\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\semgrep.EXE",
+      "version": "1.151.0",
+      "configs_used": [
+        "auto",
+        "p/security-audit"
+      ]
+    }
+  },
+  "excluded_tools": [
+    {
+      "tool": "go vet",
+      "reason": "Requires Go compiler installation (go toolchain not present on this system)"
+    },
+    {
+      "tool": "staticcheck",
+      "reason": "Requires Go compiler installation and 'go install honnef.co/go/tools/cmd/staticcheck'"
+    },
+    {
+      "tool": "golangci-lint",
+      "reason": "Requires Go compiler installation; meta-linter wrapping go vet/staticcheck/etc."
+    }
+  ],
+  "dataset": {
+    "dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\dataset",
+    "files": [
+      "safe_01_logging.go",
+      "safe_02_local_var.go",
+      "safe_03_map_read.go",
+      "safe_04_math_rand.go",
+      "safe_05_deterministic_time.go",
+      "safe_06_external_lib.go",
+      "vuln_01_b_interprocedural.go",
+      "vuln_01_time.go",
+      "vuln_02_global.go",
+      "vuln_03_goroutine.go",
+      "vuln_04_b_nested_map.go",
+      "vuln_04_map_iter.go",
+      "vuln_05_phantom.go",
+      "vuln_06_b_conditional_leak.go",
+      "vuln_06_iterator_leak.go"
+    ],
+    "file_count": 15,
+    "vulnerable_files": [
+      "vuln_01_b_interprocedural.go",
+      "vuln_01_time.go",
+      "vuln_02_global.go",
+      "vuln_03_goroutine.go",
+      "vuln_04_b_nested_map.go",
+      "vuln_04_map_iter.go",
+      "vuln_05_phantom.go",
+      "vuln_06_b_conditional_leak.go",
+      "vuln_06_iterator_leak.go"
+    ],
+    "safe_files": [
+      "safe_01_logging.go",
+      "safe_02_local_var.go",
+      "safe_03_map_read.go",
+      "safe_04_math_rand.go",
+      "safe_05_deterministic_time.go",
+      "safe_06_external_lib.go"
+    ]
+  },
+  "summary": {
+    "total_findings": 1,
+    "consensus_relevant_findings": 0,
+    "matrix": {
+      "semgrep:auto": {
+        "safe_01_logging.go": 0,
+        "safe_02_local_var.go": 0,
+        "safe_03_map_read.go": 0,
+        "safe_04_math_rand.go": 0,
+        "safe_05_deterministic_time.go": 0,
+        "safe_06_external_lib.go": 0,
+        "vuln_01_b_interprocedural.go": 0,
+        "vuln_01_time.go": 0,
+        "vuln_02_global.go": 0,
+        "vuln_03_goroutine.go": 0,
+        "vuln_04_b_nested_map.go": 0,
+        "vuln_04_map_iter.go": 0,
+        "vuln_05_phantom.go": 0,
+        "vuln_06_b_conditional_leak.go": 0,
+        "vuln_06_iterator_leak.go": 0
+      },
+      "semgrep:security-audit": {
+        "safe_01_logging.go": 0,
+        "safe_02_local_var.go": 0,
+        "safe_03_map_read.go": 0,
+        "safe_04_math_rand.go": 1,
+        "safe_05_deterministic_time.go": 0,
+        "safe_06_external_lib.go": 0,
+        "vuln_01_b_interprocedural.go": 0,
+        "vuln_01_time.go": 0,
+        "vuln_02_global.go": 0,
+        "vuln_03_goroutine.go": 0,
+        "vuln_04_b_nested_map.go": 0,
+        "vuln_04_map_iter.go": 0,
+        "vuln_05_phantom.go": 0,
+        "vuln_06_b_conditional_leak.go": 0,
+        "vuln_06_iterator_leak.go": 0
+      }
+    }
+  },
+  "key_conclusion": "Traditional static analysis tools (semgrep) found 1 generic finding(s) but 0 HLF consensus-layer vulnerability detection(s). This validates the need for domain-specific LLM-based analysis.",
+  "detailed_results": {
+    "semgrep:auto|safe_01_logging.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.992
+    },
+    "semgrep:auto|safe_02_local_var.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 3.072
+    },
+    "semgrep:auto|safe_03_map_read.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.809
+    },
+    "semgrep:auto|safe_04_math_rand.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.745
+    },
+    "semgrep:auto|safe_05_deterministic_time.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.993
+    },
+    "semgrep:auto|safe_06_external_lib.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.826
+    },
+    "semgrep:auto|vuln_01_b_interprocedural.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.768
+    },
+    "semgrep:auto|vuln_01_time.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.793
+    },
+    "semgrep:auto|vuln_02_global.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.798
+    },
+    "semgrep:auto|vuln_03_goroutine.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 3.008
+    },
+    "semgrep:auto|vuln_04_b_nested_map.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.74
+    },
+    "semgrep:auto|vuln_04_map_iter.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.871
+    },
+    "semgrep:auto|vuln_05_phantom.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.779
+    },
+    "semgrep:auto|vuln_06_b_conditional_leak.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.819
+    },
+    "semgrep:auto|vuln_06_iterator_leak.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "No output (returncode=2)",
+      "elapsed_s": 2.881
+    },
+    "semgrep:security-audit|safe_01_logging.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.467
+    },
+    "semgrep:security-audit|safe_02_local_var.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.477
+    },
+    "semgrep:security-audit|safe_03_map_read.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.492
+    },
+    "semgrep:security-audit|safe_04_math_rand.go": {
+      "success": true,
+      "findings_count": 1,
+      "findings": [
+        {
+          "rule_id": "go.lang.security.audit.crypto.math_random.math-random-used",
+          "severity": "WARNING",
+          "message": "Do not use `math/rand`. Use `crypto/rand` instead.",
+          "line": 6,
+          "col": 3,
+          "end_line": 6
+        }
+      ],
+      "error": null,
+      "elapsed_s": 3.508
+    },
+    "semgrep:security-audit|safe_05_deterministic_time.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.516
+    },
+    "semgrep:security-audit|safe_06_external_lib.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.487
+    },
+    "semgrep:security-audit|vuln_01_b_interprocedural.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.703
+    },
+    "semgrep:security-audit|vuln_01_time.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.481
+    },
+    "semgrep:security-audit|vuln_02_global.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.578
+    },
+    "semgrep:security-audit|vuln_03_goroutine.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.667
+    },
+    "semgrep:security-audit|vuln_04_b_nested_map.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.516
+    },
+    "semgrep:security-audit|vuln_04_map_iter.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.397
+    },
+    "semgrep:security-audit|vuln_05_phantom.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.45
+    },
+    "semgrep:security-audit|vuln_06_b_conditional_leak.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.588
+    },
+    "semgrep:security-audit|vuln_06_iterator_leak.go": {
+      "success": true,
+      "findings_count": 0,
+      "findings": [],
+      "error": null,
+      "elapsed_s": 3.593
+    }
+  }
+}

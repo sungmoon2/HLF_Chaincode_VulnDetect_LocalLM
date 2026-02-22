@@ -1,0 +1,175 @@
+{
+  "script_version": "1.0",
+  "script": "12_run_cloud_fewshot.py",
+  "experiment": "B3 - Micro-benchmark x Cloud Models (few-shot)",
+  "run_start": "2026-02-10T13:36:27.217756",
+  "run_end": "2026-02-10T14:01:17.315682",
+  "run_duration_s": 1490.1,
+  "output_csv": "cloud_fewshot_260210_1336.csv",
+  "output_csv_bytes": 379718,
+  "total_records": 90,
+  "error_count": 0,
+  "dataset_dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\dataset",
+  "dataset_files": [
+    "safe_01_logging.go",
+    "safe_02_local_var.go",
+    "safe_03_map_read.go",
+    "safe_04_math_rand.go",
+    "safe_05_deterministic_time.go",
+    "safe_06_external_lib.go",
+    "vuln_01_b_interprocedural.go",
+    "vuln_01_time.go",
+    "vuln_02_global.go",
+    "vuln_03_goroutine.go",
+    "vuln_04_b_nested_map.go",
+    "vuln_04_map_iter.go",
+    "vuln_05_phantom.go",
+    "vuln_06_b_conditional_leak.go",
+    "vuln_06_iterator_leak.go"
+  ],
+  "dataset_file_count": 15,
+  "claude_models": [
+    "claude-haiku-4-5@20251001",
+    "claude-sonnet-4-5@20250929",
+    "claude-opus-4-5@20251101"
+  ],
+  "gemini_models": [
+    "google/gemini-2.5-pro",
+    "google/gemini-2.5-flash",
+    "google/gemini-2.5-flash-lite"
+  ],
+  "inference_params": {
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "system_prompt": "PROMPT_FEW_SHOT (same as 02_run_audit_v3.py)",
+  "timing_summary": {
+    "claude-haiku-4-5@20251001": {
+      "total_s": 189.9,
+      "avg_s": 12.662,
+      "per_file": [
+        14.598,
+        12.797,
+        13.594,
+        10.827,
+        10.915,
+        12.144,
+        13.19,
+        9.642,
+        14.007,
+        12.513,
+        12.164,
+        11.958,
+        15.426,
+        14.01,
+        12.142
+      ]
+    },
+    "claude-sonnet-4-5@20250929": {
+      "total_s": 403.5,
+      "avg_s": 26.899,
+      "per_file": [
+        21.43,
+        22.61,
+        32.157,
+        23.76,
+        24.109,
+        22.106,
+        25.983,
+        21.253,
+        30.966,
+        30.648,
+        28.316,
+        27.587,
+        32.688,
+        35.412,
+        24.462
+      ]
+    },
+    "claude-opus-4-5@20251101": {
+      "total_s": 342.3,
+      "avg_s": 22.818,
+      "per_file": [
+        18.745,
+        16.759,
+        18.756,
+        16.581,
+        19.381,
+        21.712,
+        24.143,
+        20.406,
+        26.74,
+        26.523,
+        24.503,
+        22.957,
+        31.266,
+        30.134,
+        23.657
+      ]
+    },
+    "google/gemini-2.5-pro": {
+      "total_s": 296.0,
+      "avg_s": 19.733,
+      "per_file": [
+        20.602,
+        20.137,
+        21.747,
+        17.992,
+        19.216,
+        20.152,
+        19.449,
+        18.69,
+        19.361,
+        19.53,
+        19.745,
+        19.619,
+        19.266,
+        20.231,
+        20.261
+      ]
+    },
+    "google/gemini-2.5-flash": {
+      "total_s": 178.3,
+      "avg_s": 11.886,
+      "per_file": [
+        11.958,
+        11.179,
+        12.592,
+        11.48,
+        13.815,
+        12.84,
+        10.03,
+        11.529,
+        11.205,
+        12.37,
+        11.75,
+        10.8,
+        14.313,
+        11.499,
+        10.927
+      ]
+    },
+    "google/gemini-2.5-flash-lite": {
+      "total_s": 77.5,
+      "avg_s": 5.163,
+      "per_file": [
+        2.243,
+        3.458,
+        5.996,
+        1.71,
+        2.039,
+        3.292,
+        6.588,
+        6.312,
+        7.103,
+        6.868,
+        6.541,
+        6.438,
+        7.943,
+        5.393,
+        5.526
+      ]
+    }
+  },
+  "run_id": "532898da"
+}

@@ -1,0 +1,267 @@
+{
+  "timestamp": "2026-02-10 00:50:20",
+  "stage1_classifier": {
+    "v1_dist": {
+      "vulnerable": 380,
+      "safe": 277
+    },
+    "v2_dist": {
+      "vulnerable": 477,
+      "safe": 180
+    },
+    "changed_count": 97,
+    "re_v1_accuracy": "1/5",
+    "re_v2_accuracy": "3/5",
+    "re_details": [
+      {
+        "file": "Channel.go",
+        "type": "goroutine",
+        "v1": "safe",
+        "v2": "safe"
+      },
+      {
+        "file": "GlobalVariable.go",
+        "type": "global_var",
+        "v1": "safe",
+        "v2": "vulnerable"
+      },
+      {
+        "file": "GoRoutines.go",
+        "type": "goroutine",
+        "v1": "vulnerable",
+        "v2": "vulnerable"
+      },
+      {
+        "file": "MapIteration.go",
+        "type": "map_iter",
+        "v1": "safe",
+        "v2": "safe"
+      },
+      {
+        "file": "MethodFunction.go",
+        "type": "timestamp",
+        "v1": "safe",
+        "v2": "vulnerable"
+      }
+    ]
+  },
+  "stage2_multi_prompt": [
+    {
+      "file": "Channel.go",
+      "vuln_type": "goroutine",
+      "prompt": "zero_shot",
+      "classification": "safe",
+      "classification_v1": "safe",
+      "match": false,
+      "elapsed_s": 0.199,
+      "response_len": 28
+    },
+    {
+      "file": "Channel.go",
+      "vuln_type": "goroutine",
+      "prompt": "few_shot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 7.691,
+      "response_len": 4103
+    },
+    {
+      "file": "Channel.go",
+      "vuln_type": "goroutine",
+      "prompt": "cot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 5.88,
+      "response_len": 3004
+    },
+    {
+      "file": "Channel.go",
+      "vuln_type": "goroutine",
+      "prompt": "json_mode",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 0.737,
+      "response_len": 343
+    },
+    {
+      "file": "GlobalVariable.go",
+      "vuln_type": "global_var",
+      "prompt": "zero_shot",
+      "classification": "vulnerable",
+      "classification_v1": "safe",
+      "match": true,
+      "elapsed_s": 5.437,
+      "response_len": 3184
+    },
+    {
+      "file": "GlobalVariable.go",
+      "vuln_type": "global_var",
+      "prompt": "few_shot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 3.406,
+      "response_len": 1999
+    },
+    {
+      "file": "GlobalVariable.go",
+      "vuln_type": "global_var",
+      "prompt": "cot",
+      "classification": "safe",
+      "classification_v1": "safe",
+      "match": false,
+      "elapsed_s": 3.13,
+      "response_len": 1639
+    },
+    {
+      "file": "GlobalVariable.go",
+      "vuln_type": "global_var",
+      "prompt": "json_mode",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 0.744,
+      "response_len": 371
+    },
+    {
+      "file": "GoRoutines.go",
+      "vuln_type": "goroutine",
+      "prompt": "zero_shot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 2.655,
+      "response_len": 1204
+    },
+    {
+      "file": "GoRoutines.go",
+      "vuln_type": "goroutine",
+      "prompt": "few_shot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 5.13,
+      "response_len": 2319
+    },
+    {
+      "file": "GoRoutines.go",
+      "vuln_type": "goroutine",
+      "prompt": "cot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 6.558,
+      "response_len": 3269
+    },
+    {
+      "file": "GoRoutines.go",
+      "vuln_type": "goroutine",
+      "prompt": "json_mode",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 0.798,
+      "response_len": 379
+    },
+    {
+      "file": "MapIteration.go",
+      "vuln_type": "map_iter",
+      "prompt": "zero_shot",
+      "classification": "safe",
+      "classification_v1": "safe",
+      "match": false,
+      "elapsed_s": 0.075,
+      "response_len": 28
+    },
+    {
+      "file": "MapIteration.go",
+      "vuln_type": "map_iter",
+      "prompt": "few_shot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 3.148,
+      "response_len": 1630
+    },
+    {
+      "file": "MapIteration.go",
+      "vuln_type": "map_iter",
+      "prompt": "cot",
+      "classification": "safe",
+      "classification_v1": "safe",
+      "match": false,
+      "elapsed_s": 3.406,
+      "response_len": 1855
+    },
+    {
+      "file": "MapIteration.go",
+      "vuln_type": "map_iter",
+      "prompt": "json_mode",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 0.656,
+      "response_len": 301
+    },
+    {
+      "file": "MethodFunction.go",
+      "vuln_type": "timestamp",
+      "prompt": "zero_shot",
+      "classification": "safe",
+      "classification_v1": "safe",
+      "match": false,
+      "elapsed_s": 0.07,
+      "response_len": 28
+    },
+    {
+      "file": "MethodFunction.go",
+      "vuln_type": "timestamp",
+      "prompt": "few_shot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 3.177,
+      "response_len": 1850
+    },
+    {
+      "file": "MethodFunction.go",
+      "vuln_type": "timestamp",
+      "prompt": "cot",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 4.804,
+      "response_len": 2585
+    },
+    {
+      "file": "MethodFunction.go",
+      "vuln_type": "timestamp",
+      "prompt": "json_mode",
+      "classification": "vulnerable",
+      "classification_v1": "vulnerable",
+      "match": true,
+      "elapsed_s": 0.638,
+      "response_len": 297
+    }
+  ],
+  "stage3_context_injection": {
+    "original": {
+      "cls": "safe",
+      "elapsed": 0.08114075660705566,
+      "response": "No vulnerabilities detected."
+    },
+    "modified": {
+      "cls": "safe",
+      "elapsed": 1.7654914855957031,
+      "response": "No vulnerabilities detected.\n\nThe provided Go chaincode does not contain any of the security vulnerabilities mentioned in the question. Here's a brief analysis:\n\n1. **Access control issues**: The code does not involve any access control mechanisms, so this is not applicable.\n2. **Input validation flaws**: There is no user input or external data being processed, so input validation is not an issue.\n3. **Read-after-write conflicts (phantom reads)**: The code does not involve any state reads or wri"
+    },
+    "modified_cot": {
+      "cls": "safe",
+      "elapsed": 3.553809404373169,
+      "response": "Let's analyze the provided Go chaincode step-by-step to identify any security vulnerabilities.\n\n### Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.\nThe state-modifying operation in the code is:\n- `stub.PutState(\"key\", []byte(x + y))`\n\n### Step 2: For each PutState/DelState call, trace the data backward to its source. Determine whether each value written to the ledger is deterministic (same on all endorsing peers) or nondeterministic (varies per peer).\n- The valu"
+    }
+  }
+}

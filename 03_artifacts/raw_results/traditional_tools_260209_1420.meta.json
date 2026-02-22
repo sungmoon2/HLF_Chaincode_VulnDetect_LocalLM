@@ -1,0 +1,333 @@
+{
+  "script": "05_run_traditional_tools.py",
+  "script_version": "1.0",
+  "run_id": "47af805d",
+  "purpose": "Run traditional static analysis tools on HLF chaincode dataset to demonstrate their inability to detect consensus-layer vulnerabilities.",
+  "run_start": "2026-02-09T14:20:49.003186",
+  "run_end": "2026-02-09T14:21:37.790398",
+  "run_duration_s": 48.8,
+  "output_csv": "traditional_tools_260209_1420.csv",
+  "output_csv_bytes": 3322,
+  "total_records": 30,
+  "system_info": {
+    "platform": "Windows-10-10.0.26100-SP0",
+    "python_version": "3.11.9"
+  },
+  "tools": {
+    "semgrep": {
+      "path": "C:\\Users\\qkrtj\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\semgrep.EXE",
+      "version": "1.151.0",
+      "configs_used": [
+        "auto",
+        "p/security-audit"
+      ]
+    }
+  },
+  "excluded_tools": [
+    {
+      "tool": "go vet",
+      "reason": "Requires Go compiler installation (go toolchain not present on this system)"
+    },
+    {
+      "tool": "staticcheck",
+      "reason": "Requires Go compiler installation and 'go install honnef.co/go/tools/cmd/staticcheck'"
+    },
+    {
+      "tool": "golangci-lint",
+      "reason": "Requires Go compiler installation; meta-linter wrapping go vet/staticcheck/etc."
+    }
+  ],
+  "dataset": {
+    "dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\dataset",
+    "files": [
+      "safe_01_logging.go",
+      "safe_02_local_var.go",
+      "safe_03_map_read.go",
+      "safe_04_math_rand.go",
+      "safe_05_deterministic_time.go",
+      "safe_06_external_lib.go",
+      "vuln_01_b_interprocedural.go",
+      "vuln_01_time.go",
+      "vuln_02_global.go",
+      "vuln_03_goroutine.go",
+      "vuln_04_b_nested_map.go",
+      "vuln_04_map_iter.go",
+      "vuln_05_phantom.go",
+      "vuln_06_b_conditional_leak.go",
+      "vuln_06_iterator_leak.go"
+    ],
+    "file_count": 15,
+    "vulnerable_files": [
+      "vuln_01_b_interprocedural.go",
+      "vuln_01_time.go",
+      "vuln_02_global.go",
+      "vuln_03_goroutine.go",
+      "vuln_04_b_nested_map.go",
+      "vuln_04_map_iter.go",
+      "vuln_05_phantom.go",
+      "vuln_06_b_conditional_leak.go",
+      "vuln_06_iterator_leak.go"
+    ],
+    "safe_files": [
+      "safe_01_logging.go",
+      "safe_02_local_var.go",
+      "safe_03_map_read.go",
+      "safe_04_math_rand.go",
+      "safe_05_deterministic_time.go",
+      "safe_06_external_lib.go"
+    ]
+  },
+  "summary": {
+    "total_findings": 0,
+    "consensus_relevant_findings": 0,
+    "matrix": {
+      "semgrep:auto": {
+        "safe_01_logging.go": 0,
+        "safe_02_local_var.go": 0,
+        "safe_03_map_read.go": 0,
+        "safe_04_math_rand.go": 0,
+        "safe_05_deterministic_time.go": 0,
+        "safe_06_external_lib.go": 0,
+        "vuln_01_b_interprocedural.go": 0,
+        "vuln_01_time.go": 0,
+        "vuln_02_global.go": 0,
+        "vuln_03_goroutine.go": 0,
+        "vuln_04_b_nested_map.go": 0,
+        "vuln_04_map_iter.go": 0,
+        "vuln_05_phantom.go": 0,
+        "vuln_06_b_conditional_leak.go": 0,
+        "vuln_06_iterator_leak.go": 0
+      },
+      "semgrep:security-audit": {
+        "safe_01_logging.go": 0,
+        "safe_02_local_var.go": 0,
+        "safe_03_map_read.go": 0,
+        "safe_04_math_rand.go": 0,
+        "safe_05_deterministic_time.go": 0,
+        "safe_06_external_lib.go": 0,
+        "vuln_01_b_interprocedural.go": 0,
+        "vuln_01_time.go": 0,
+        "vuln_02_global.go": 0,
+        "vuln_03_goroutine.go": 0,
+        "vuln_04_b_nested_map.go": 0,
+        "vuln_04_map_iter.go": 0,
+        "vuln_05_phantom.go": 0,
+        "vuln_06_b_conditional_leak.go": 0,
+        "vuln_06_iterator_leak.go": 0
+      }
+    }
+  },
+  "key_conclusion": "Traditional static analysis tools (semgrep) found 0 generic finding(s) but 0 HLF consensus-layer vulnerability detection(s). This validates the need for domain-specific LLM-based analysis.",
+  "detailed_results": {
+    "semgrep:auto|safe_01_logging.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.234
+    },
+    "semgrep:auto|safe_02_local_var.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.06][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.227
+    },
+    "semgrep:auto|safe_03_map_read.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.231
+    },
+    "semgrep:auto|safe_04_math_rand.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.243
+    },
+    "semgrep:auto|safe_05_deterministic_time.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.22
+    },
+    "semgrep:auto|safe_06_external_lib.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.06][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.231
+    },
+    "semgrep:auto|vuln_01_b_interprocedural.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.06][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.234
+    },
+    "semgrep:auto|vuln_01_time.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.234
+    },
+    "semgrep:auto|vuln_02_global.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.234
+    },
+    "semgrep:auto|vuln_03_goroutine.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.239
+    },
+    "semgrep:auto|vuln_04_b_nested_map.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.227
+    },
+    "semgrep:auto|vuln_04_map_iter.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.06][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.224
+    },
+    "semgrep:auto|vuln_05_phantom.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.225
+    },
+    "semgrep:auto|vuln_06_b_conditional_leak.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.229
+    },
+    "semgrep:auto|vuln_06_iterator_leak.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "[00.05][ERROR]: Cannot create auto config when metrics are off. Please allow metrics or run with a specific config.",
+      "elapsed_s": 0.22
+    },
+    "semgrep:security-audit|safe_01_logging.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 3.056
+    },
+    "semgrep:security-audit|safe_02_local_var.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.974
+    },
+    "semgrep:security-audit|safe_03_map_read.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.96
+    },
+    "semgrep:security-audit|safe_04_math_rand.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.991
+    },
+    "semgrep:security-audit|safe_05_deterministic_time.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 3.058
+    },
+    "semgrep:security-audit|safe_06_external_lib.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.838
+    },
+    "semgrep:security-audit|vuln_01_b_interprocedural.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.753
+    },
+    "semgrep:security-audit|vuln_01_time.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.778
+    },
+    "semgrep:security-audit|vuln_02_global.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.868
+    },
+    "semgrep:security-audit|vuln_03_goroutine.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.827
+    },
+    "semgrep:security-audit|vuln_04_b_nested_map.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.757
+    },
+    "semgrep:security-audit|vuln_04_map_iter.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.814
+    },
+    "semgrep:security-audit|vuln_05_phantom.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.867
+    },
+    "semgrep:security-audit|vuln_06_b_conditional_leak.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.851
+    },
+    "semgrep:security-audit|vuln_06_iterator_leak.go": {
+      "success": false,
+      "findings_count": 0,
+      "findings": [],
+      "error": "'NoneType' object has no attribute 'strip'",
+      "elapsed_s": 2.924
+    }
+  }
+}

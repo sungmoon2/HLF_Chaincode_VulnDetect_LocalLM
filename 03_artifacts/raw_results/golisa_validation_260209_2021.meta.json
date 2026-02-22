@@ -1,0 +1,92 @@
+{
+  "script": "08_run_golisa_validation.py",
+  "script_version": "1.0",
+  "run_id": "d2af1a71",
+  "purpose": "External validation of Qwen2.5-Coder-7B zero-shot vulnerability detection on 657 real-world HLF chaincodes from GoLiSA ECOOP 2023 benchmark, with Semgrep baseline comparison.",
+  "run_start": "2026-02-09T20:21:06.756197",
+  "run_end": "2026-02-09T23:02:30.928544",
+  "run_duration_s": 9684.2,
+  "system_info": {
+    "platform": "Windows-10-10.0.26100-SP0",
+    "python_version": "3.11.9"
+  },
+  "dataset": {
+    "source": "GoLiSA ECOOP 2023 Benchmark (Olivieri et al.)",
+    "benchmark_dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark",
+    "total_files": 657,
+    "total_repos": 326,
+    "total_bytes": 5438685
+  },
+  "qwen": {
+    "skipped": false,
+    "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+    "prompt_strategy": "zero_shot",
+    "inference_params": {
+      "n_gpu_layers": -1,
+      "n_ctx": 16384,
+      "temperature": 0.1,
+      "max_tokens": 2048
+    },
+    "prompt": "You are a Hyperledger Fabric Security Expert. Analyze the following Go chaincode for security vulnerabilities. Focus on: access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, and insecure key management. For each vulnerability found, provide:\n1. Vulnerability type\n2. Severity (Critical/High/Medium/Low)\n3. Affected code location (function name and line reference)\n4. Description of the issue\n5. Recommended fix\nIf no vulnerabilities are found, state 'No vulnerabilities detected.'",
+    "output_csv": "golisa_qwen_260209_2021.csv",
+    "total_records": 657,
+    "total_time_s": 5256.1,
+    "classification_summary": {
+      "vulnerable": 380,
+      "safe": 277
+    },
+    "vuln_type_distribution": {
+      "access_control": 379,
+      "input_validation": 379,
+      "phantom_read": 371,
+      "goroutine": 128,
+      "random": 68,
+      "timestamp": 52,
+      "iterator_leak": 29,
+      "external_call": 1
+    }
+  },
+  "semgrep": {
+    "skipped": false,
+    "version": "1.151.0",
+    "configs": [
+      "auto",
+      "p/security-audit"
+    ],
+    "output_csv": "golisa_semgrep_260209_2021.csv",
+    "total_findings": 12,
+    "consensus_relevant_findings": 0
+  },
+  "running_examples_validation": {
+    "total": 5,
+    "correct": 1,
+    "details": {
+      "Running_Examples/channel/Channel.go": {
+        "expected": "vulnerable",
+        "actual": "safe",
+        "match": false
+      },
+      "Running_Examples/global/GlobalVariable.go": {
+        "expected": "vulnerable",
+        "actual": "safe",
+        "match": false
+      },
+      "Running_Examples/goroutine/GoRoutines.go": {
+        "expected": "vulnerable",
+        "actual": "vulnerable",
+        "match": true
+      },
+      "Running_Examples/map-iter/MapIteration.go": {
+        "expected": "vulnerable",
+        "actual": "safe",
+        "match": false
+      },
+      "Running_Examples/method-function/MethodFunction.go": {
+        "expected": "vulnerable",
+        "actual": "safe",
+        "match": false
+      }
+    }
+  },
+  "report_path": "GOLISA_VALIDATION_REPORT.md"
+}

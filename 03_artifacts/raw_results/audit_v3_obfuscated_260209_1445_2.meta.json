@@ -1,0 +1,90 @@
+{
+  "script_version": "3.0",
+  "run_start": "2026-02-09T14:45:02.364183",
+  "run_end": "2026-02-09T14:54:16.914352",
+  "run_duration_s": 554.6,
+  "output_csv": "audit_v3_obfuscated_260209_1445_2.csv",
+  "output_csv_bytes": 110290,
+  "total_records": 30,
+  "dataset_dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\dataset_obfuscated",
+  "dataset_files": [
+    "safe_01_logging.go",
+    "safe_02_local_var.go",
+    "safe_03_map_read.go",
+    "safe_04_math_rand.go",
+    "safe_05_deterministic_time.go",
+    "safe_06_external_lib.go",
+    "vuln_01_b_interprocedural.go",
+    "vuln_01_time.go",
+    "vuln_02_global.go",
+    "vuln_03_goroutine.go",
+    "vuln_04_b_nested_map.go",
+    "vuln_04_map_iter.go",
+    "vuln_05_phantom.go",
+    "vuln_06_b_conditional_leak.go",
+    "vuln_06_iterator_leak.go"
+  ],
+  "dataset_file_count": 15,
+  "models": [
+    "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+    "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+  ],
+  "prompt_strategies": [
+    "zero_shot"
+  ],
+  "prompts": {
+    "zero_shot": "You are a Hyperledger Fabric Security Expert. Analyze the following Go chaincode for security vulnerabilities. Focus on: access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, and insecure key management. For each vulnerability found, provide:\n1. Vulnerability type\n2. Severity (Critical/High/Medium/Low)\n3. Affected code location (function name and line reference)\n4. Description of the issue\n5. Recommended fix\nIf no vulnerabilities are found, state 'No vulnerabilities detected.'"
+  },
+  "inference_params": {
+    "n_gpu_layers": -1,
+    "n_ctx": 4096,
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "tag": "obfuscated",
+  "timing_summary": {
+    "qwen2.5-coder-7b-instruct-q4_k_m.gguf|zero_shot": {
+      "total_s": 261.4,
+      "avg_s": 17.428,
+      "per_file": [
+        20.883,
+        0.69,
+        18.089,
+        16.686,
+        0.61,
+        0.689,
+        15.665,
+        18.748,
+        20.176,
+        38.93,
+        19.467,
+        20.904,
+        18.691,
+        39.043,
+        12.146
+      ]
+    },
+    "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf|zero_shot": {
+      "total_s": 287.4,
+      "avg_s": 19.157,
+      "per_file": [
+        15.685,
+        14.328,
+        17.03,
+        16.23,
+        15.887,
+        18.763,
+        16.56,
+        26.915,
+        15.752,
+        16.516,
+        18.427,
+        17.52,
+        16.242,
+        45.273,
+        16.229
+      ]
+    }
+  },
+  "run_id": "f2b81522"
+}

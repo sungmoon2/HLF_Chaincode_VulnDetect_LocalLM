@@ -1,0 +1,113 @@
+{
+  "script_version": "1.0",
+  "script": "04_run_claude_audit.py",
+  "backend": "Vertex AI (AnthropicVertex)",
+  "vertex_project_id": "hyperscale-ai-442809",
+  "vertex_region": "us-east5",
+  "run_start": "2026-02-09T15:03:52.252239",
+  "run_end": "2026-02-09T15:19:41.461950",
+  "run_duration_s": 949.2,
+  "output_csv": "claude_audit_260209_1503.csv",
+  "output_csv_bytes": 272744,
+  "total_records": 45,
+  "error_count": 0,
+  "dataset_dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\dataset",
+  "dataset_files": [
+    "safe_01_logging.go",
+    "safe_02_local_var.go",
+    "safe_03_map_read.go",
+    "safe_04_math_rand.go",
+    "safe_05_deterministic_time.go",
+    "safe_06_external_lib.go",
+    "vuln_01_b_interprocedural.go",
+    "vuln_01_time.go",
+    "vuln_02_global.go",
+    "vuln_03_goroutine.go",
+    "vuln_04_b_nested_map.go",
+    "vuln_04_map_iter.go",
+    "vuln_05_phantom.go",
+    "vuln_06_b_conditional_leak.go",
+    "vuln_06_iterator_leak.go"
+  ],
+  "dataset_file_count": 15,
+  "models": [
+    "claude-haiku-4-5@20251001",
+    "claude-sonnet-4-5@20250929",
+    "claude-opus-4-5@20251101"
+  ],
+  "inference_params": {
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "retry_config": {
+    "max_retries": 3,
+    "retry_base_delay_s": 2
+  },
+  "system_prompt": "You are a Hyperledger Fabric Security Expert. Analyze the following Go chaincode for security vulnerabilities. Focus on: access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, and insecure key management. For each vulnerability found, provide:\n1. Vulnerability type\n2. Severity (Critical/High/Medium/Low)\n3. Affected code location (function name and line reference)\n4. Description of the issue\n5. Recommended fix\nIf no vulnerabilities are found, state 'No vulnerabilities detected.'",
+  "timing_summary": {
+    "claude-haiku-4-5@20251001": {
+      "total_s": 193.4,
+      "avg_s": 12.894,
+      "per_file": [
+        12.855,
+        13.064,
+        14.712,
+        9.569,
+        11.044,
+        12.042,
+        14.367,
+        11.75,
+        14.598,
+        13.43,
+        13.823,
+        11.559,
+        15.603,
+        13.175,
+        11.812
+      ]
+    },
+    "claude-sonnet-4-5@20250929": {
+      "total_s": 418.1,
+      "avg_s": 27.875,
+      "per_file": [
+        31.905,
+        32.46,
+        33.771,
+        18.746,
+        20.349,
+        26.356,
+        30.3,
+        25.09,
+        29.456,
+        28.656,
+        27.038,
+        25.045,
+        33.241,
+        29.358,
+        26.354
+      ]
+    },
+    "claude-opus-4-5@20251101": {
+      "total_s": 337.3,
+      "avg_s": 22.489,
+      "per_file": [
+        15.433,
+        19.398,
+        18.545,
+        16.573,
+        14.468,
+        15.581,
+        29.397,
+        24.519,
+        28.454,
+        24.55,
+        26.124,
+        21.925,
+        27.97,
+        29.698,
+        24.701
+      ]
+    }
+  },
+  "run_id": "8bae1d14"
+}

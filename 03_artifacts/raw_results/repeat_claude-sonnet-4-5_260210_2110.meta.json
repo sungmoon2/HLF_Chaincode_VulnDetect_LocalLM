@@ -1,0 +1,17 @@
+{
+  "script": "17_cloud_single_model_repeat.py",
+  "model": "claude-sonnet-4-5@20250929",
+  "backend": "claude",
+  "n_runs": 5,
+  "total_records": 225,
+  "error_count": 0,
+  "run_start": "2026-02-10T21:10:25.241371",
+  "run_end": "2026-02-10T22:53:52.546236",
+  "run_duration_s": 6207.3,
+  "output_csv": "repeat_claude-sonnet-4-5_260210_2110.csv",
+  "inference_params": {
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "run_id": "0e29699a"
+}

@@ -1,0 +1,17 @@
+{
+  "script": "17_cloud_single_model_repeat.py",
+  "model": "claude-opus-4-5@20251101",
+  "backend": "claude",
+  "n_runs": 5,
+  "total_records": 225,
+  "error_count": 0,
+  "run_start": "2026-02-10T21:10:27.057325",
+  "run_end": "2026-02-10T22:46:16.175023",
+  "run_duration_s": 5749.1,
+  "output_csv": "repeat_claude-opus-4-5_260210_2110.csv",
+  "inference_params": {
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "run_id": "75da8052"
+}

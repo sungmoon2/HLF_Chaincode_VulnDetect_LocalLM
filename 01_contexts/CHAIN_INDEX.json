@@ -1,0 +1,272 @@
+{
+  "version": "3.0",
+  "project": "Exp_HLF_Chaincode_VulnDetect_LocalLM",
+  "created": "2026-02-09T01:50:00",
+  "last_updated": "2026-02-22T19:31:00",
+  "genesis_hash": "00000000",
+
+  "chain": {
+    "latest_session": "S260222-1931",
+    "total_sessions": 22
+  },
+
+  "works": {
+    "WORK-001": {
+      "status": "In Progress",
+      "goal": "Local sLM HLF Vulnerability Detection",
+      "sessions": ["S260209-0433", "S260209-2008", "S260209-0530", "S260209-1220", "S260209-1400", "S260209-1555", "S260209-1730", "S260209-1850", "S260209-1940", "S260209-2105", "S260209-2237", "S260210-0941", "S260210-1308", "S260210-1610", "S260210-2006", "S260210-2115", "S260211-0030", "S260211-0508", "S260211-1347", "S260214-1917", "S260222-1931"]
+    }
+  },
+
+  "experiment_phases": {
+    "environment_setup": {
+      "status": "completed",
+      "last_modified": "2026-02-09T02:10:00"
+    },
+    "model_download": {
+      "status": "completed",
+      "last_modified": "2026-02-09T03:00:00",
+      "disk_usage_reported": "9.0G"
+    },
+    "dataset_preparation": {
+      "status": "completed",
+      "last_modified": "2026-02-09T14:20:00",
+      "run_id": "run_04",
+      "total_files": 15,
+      "total_size_bytes": 82151
+    },
+    "audit_execution": {
+      "status": "completed",
+      "last_modified": "2026-02-10T14:01:00",
+      "total_records_all": 380
+    },
+    "result_analysis": {
+      "status": "completed",
+      "last_modified": "2026-02-10T16:00:00"
+    },
+    "reference_verification": {
+      "status": "completed",
+      "last_modified": "2026-02-10T20:06:00",
+      "method": "Gemini DR 6-stage + v6 re-verification + v20 딥리서치 13건 전수 검증 + IEEE Xplore VulFinder 저자확인",
+      "total_references": 13,
+      "orphaned_deleted": 2,
+      "cite_added": 1,
+      "hallucinations_found": 0
+    },
+    "golisa_acquisition": {
+      "status": "completed",
+      "last_modified": "2026-02-22T19:31:00",
+      "benchmark_go_files": 657,
+      "benchmark_repos": 326,
+      "benchmark_total_bytes": 5438685,
+      "api_research": {
+        "location": "02_resources/golisa_benchmark/api_research/",
+        "index": "INDEX.json",
+        "files": 7,
+        "total_bytes": 99240,
+        "github_api_files": ["golisa_contents.json", "golisa_sub.json", "golisa_testcases.json", "golisa_nondet.json"],
+        "zenodo_api_files": ["zenodo_golisa.json", "zenodo_search.json", "zenodo_search2.json"],
+        "organized": "2026-02-22",
+        "note": "바탕화면 산재 파일 → 프로젝트 디렉토리 구조화 이동"
+      }
+    },
+    "golisa_external_validation": {
+      "status": "completed",
+      "last_modified": "2026-02-10T16:00:00"
+    },
+    "json_mode_microbenchmark": {
+      "status": "completed",
+      "last_modified": "2026-02-10T12:53:00",
+      "script": "scripts/10_run_json_mode_microbenchmark.py",
+      "csv": "json_mode_microbenchmark_260210_1253.csv (11,328 bytes, 15 records)",
+      "tpr": "9/9",
+      "tnr": "6/6",
+      "total_time_s": 23.5,
+      "avg_time_per_file_s": 1.568
+    },
+    "b1_cloud_running_examples": {
+      "status": "completed",
+      "last_modified": "2026-02-10T13:44:00",
+      "script": "scripts/11_run_golisa_re_cloud.py",
+      "csv": "golisa_re_cloud_260210_1336.csv (104,849 bytes, 30 records)",
+      "run_duration_s": 462.2,
+      "results": {
+        "claude_haiku": "5/5",
+        "claude_sonnet": "5/5",
+        "claude_opus": "5/5",
+        "gemini_pro": "5/5",
+        "gemini_flash": "5/5",
+        "gemini_flash_lite": "2/5"
+      }
+    },
+    "b2_llama_running_examples": {
+      "status": "completed",
+      "last_modified": "2026-02-10T13:37:00",
+      "script": "scripts/13_run_golisa_re_llama.py",
+      "csv": "golisa_re_llama_260210_1336.csv (33,656 bytes, 5 records)",
+      "run_duration_s": 85.1,
+      "result": "5/5 (extensive non-consensus findings)"
+    },
+    "b3_cloud_fewshot": {
+      "status": "completed",
+      "last_modified": "2026-02-10T14:01:00",
+      "script": "scripts/12_run_cloud_fewshot.py",
+      "csv": "cloud_fewshot_260210_1336.csv (379,718 bytes, 90 records)",
+      "run_duration_s": 1490.1,
+      "results": {
+        "claude_haiku_fewshot": {"tpr": "9/9", "tnr": "6/6"},
+        "claude_sonnet_fewshot": {"tpr": "9/9", "tnr": "5/6"},
+        "claude_opus_fewshot": {"tpr": "9/9", "tnr": "6/6"},
+        "gemini_pro_fewshot": {"tpr": "9/9", "tnr": "0/6"},
+        "gemini_flash_fewshot": {"tpr": "9/9", "tnr": "0/6"},
+        "gemini_flash_lite_fewshot": {"tpr": "9/9", "tnr": "3/6"}
+      }
+    },
+    "visualization": {
+      "status": "completed",
+      "last_modified": "2026-02-10T16:10:00",
+      "figure_dir": "figure/",
+      "subdirs": ["fig1_context_gap", "fig2_capability_landscape", "fig3_fragility_test", "fig4_audit_pitfall"],
+      "v12_figures": ["Fig1.png (prompt strategy)", "Fig2.png (capability comparison, pending)", "Fig3.png (obfuscation)"],
+      "v9_deleted": ["Fig4.png (classifier, text sufficient)"],
+      "terminology_fix": "TNR Precision->Specificity (Fig 2, Fig 3)"
+    },
+    "paper_drafting": {
+      "status": "submitted",
+      "last_modified": "2026-02-11",
+      "latest_version": "v31",
+      "submitted_version": "v30",
+      "submitted_file": "260210_v30_서브섹션병합.tex",
+      "latest_files": {
+        "english_v31_correction": "260211_v31_GPT52교정.tex",
+        "english_submitted": "260210_v30_서브섹션병합.tex",
+        "english_v29": "260210_v29_공백최적화.tex",
+        "english_v28": "260210_v28_Fig2캡션수정.tex",
+        "english_v27": "260210_v27_CoT전모델_저자4인.tex",
+        "english_v26": "260210_v26_H배치_최종.tex",
+        "korean_v26": "260210_v26_H배치_최종_한글.tex",
+        "korean_v31": "260211_v31_GPT52교정_한글.tex"
+      },
+      "v26_changes": {
+        "float_placement": "[H] forced placement via \\usepackage{float} — all floats fixed at source position",
+        "float_barrier": "\\FloatBarrier at Section IV and V boundaries",
+        "float_spacing": "textfloatsep 8pt, floatsep 6pt, belowcaptionskip 2pt",
+        "pdflatex_verified": "English 6p, Korean 7p, 0 overfull, 0 errors",
+        "text_interruption": "Resolved — no floats cutting through text"
+      },
+      "v25_changes": {
+        "gemini_layout": "Table I after Models text, Table II+III at Methodology end, Table III [!b], Fig 1 after Obfuscation heading [!tb]",
+        "result": "Text interruption still present in English PDF"
+      },
+      "v24_changes": {
+        "float_source_move": "Table I to Section III start, Fig 1 to Evaluation Metrics end, Table IV to External Validation heading",
+        "threats_fix": "Removed 'extended version' reference, replaced with 'CoT evaluation on local models only'",
+        "korean_version": "Created by agent a7178fd"
+      },
+      "v23_changes": {
+        "author_order": "Park, Kim, Jeong, Choi, Yang(corresponding, last)",
+        "table_ii_expansion": "Cloud few-shot rows added (12→18 rows)",
+        "json_mode_defense": "Added in Section III.D",
+        "float_optimization": "Initial float position adjustments"
+      },
+      "v22_changes": {
+        "target": "6 pages (AMLDS limit)",
+        "authors": "Park, Kim, Yang(corresponding), Jeong, Choi (5)",
+        "acknowledgment": "IITP (IITP-2025-RS-2024-00436773) + KIAT (P0026190)",
+        "figures": ["Fig 1 (Prompt Strategy)", "Fig 2 (Capability Comparison, pending)", "Fig 3 (Obfuscation)"],
+        "tables": 4,
+        "references_count": 13,
+        "preamble": "dblfloatfix, float parameter tuning (topfraction 0.9, bottomfraction 0.8, textfraction 0.05)",
+        "narrative_shift": "Superiority -> Parity + Privacy"
+      },
+      "version_history_v13_to_v22": [
+        "v13: cite키 오타 수정, Flash Lite outlier, Future Work 난독화",
+        "v14: 인라인 참조 추가, float 위치 이동",
+        "v15: FloatBarrier + [!t] (공백 과다)",
+        "v16: stfloats + [!tb] (FloatBarrier 제거)",
+        "v17: float을 참조 문단 뒤로 이동",
+        "v18: Table II → Section III 끝, Table III [!b], Fig 1 → V-A",
+        "v19: TPR/TNR 풀이, GoLiSA 5파일 명시, preliminary→empirical",
+        "v20: \\cite{semgrep} 추가, 고아인용 2건 삭제 (15→13개)",
+        "v21: 저자5인, ACK IITP+KIAT, dblfloatfix, float파라미터튜닝",
+        "v22: 교신저자(Yang), Gemini 배치플랜 float 재배치"
+      ],
+      "v31_changes": {
+        "source": "GPT 5.2 advisor feedback (C1~C16)",
+        "corrections_applied": 61,
+        "key_changes": ["consensus-layer 용어 정의 신설", "과장/추정 표현 7건 완화", "서지 오류 수정 (llama-cpp-python 인용 제거)", "context window 불일치 해소", "TPR/TNR 정의 명확화", "결론부 조건 명시"],
+        "pdflatex_verified": "6p, 0 errors, 0 overfull"
+      },
+      "v31_korean": {
+        "file": "260211_v31_GPT52교정_한글.tex",
+        "verification": "12항목 전수검증 PASS (구조, 저자, 수치, 테이블, 참고문헌, Figure, 캡션, GPT52교정, 누락, 할루시네이션, LaTeX, cite)",
+        "pdflatex_verified": "7p, 0 errors, 0 overfull, 2 underfull (harmless)"
+      },
+      "paper_explanation": "260211_v31_논문전체풀이_AtoZ.md",
+      "oral_presentation_analysis": "비판적 분석 완료 (12-14장 구조, Q&A 방어전략), 실제 제작은 카메라레디 확정 후",
+      "remaining": ["카메라레디 리뷰어 피드백 대응", "Fig2 CoT 이미지 업데이트", "오랄 발표 슬라이드+대본 (카메라레디 후)"]
+    },
+    "amlds_submission": {
+      "status": "under_review",
+      "paper_id": "S2700",
+      "confirmation_received": "2026-02-12",
+      "author_info_submitted": "2026-02-14",
+      "contact": "Dr. Lily Van <amlds_conf@163.com>",
+      "conference": "AMLDS 2026, Osaka, Japan, July 21-23, 2026 (Hybrid)"
+    }
+  },
+
+  "statistics": {
+    "total_sessions": 22,
+    "total_snapshots": 18,
+    "total_exports": 16,
+    "models_downloaded": 2,
+    "chaincodes_current": 15,
+    "chaincodes_obfuscated": 15,
+    "chaincodes_golisa_benchmark": 657,
+    "golisa_repos": 326,
+    "audit_records_run_04": 380,
+    "golisa_qwen_records": 657,
+    "golisa_semgrep_records": 1314,
+    "reference_files": 15,
+    "paper_references": 13,
+    "paper_versions": 31,
+    "feedback_entries": 6,
+    "feedback_issues": 23,
+    "feedback_issues_open": 2,
+    "feedback_issues_in_progress": 2,
+    "feedback_issues_resolved": 19,
+    "scripts": 18
+  },
+
+  "directory_status": {
+    "exports": "14개",
+    "snapshots": "18개",
+    "references": "15개 파일",
+    "archive": "run_01_generic/ + run_02_vuln_only/",
+    "figures": "figure/ (fig1~fig4 디렉토리, Fig[n].png + v1/v2.py)",
+    "raw_results": "Run 04 CSV 9개 + GoLiSA CSV 2개 + supplementary JSON 1개 + meta.json 10개 + ANALYSIS_REPORT.md + GOLISA_VALIDATION_REPORT.md",
+    "dataset": "15개 .go (82,151 bytes)",
+    "dataset_obfuscated": "15개 .go (44,658 bytes, 459 identifiers)",
+    "golisa_benchmark": "657개 .go (326 repos, 5,438,685 bytes) + api_research/ (7 JSON, 99,240 bytes)",
+    "초안": "45개+ .tex (v1~v22 영문+한글 + AUTHOR_ACK_INFO) + IEEEtran.cls",
+    "04_feedback": "FEEDBACK_INDEX.json v1.3 + 4 FB + 18 ISS + RESPONSE_STRATEGY.md"
+  },
+
+  "blocked_issues": [],
+
+  "open_issues": [],
+
+  "in_progress_issues": [
+    "ISS_006 (N=15 일반화 -- GoLiSA 657개 + B1/B2 Running_Examples 모델간 비교로 부분 대응)"
+  ],
+
+  "next_actions": [
+    "리뷰 결과 대기 (Paper ID: S2700)",
+    "카메라레디 리뷰어 피드백 대응",
+    "Fig2.png CoT 반영 이미지 업데이트 (사용자 작업중)",
+    "오랄 발표 슬라이드 + 대본 작성 (카메라레디 확정 후)",
+    "디스크 정리: golisa_ecoop2023_corrupted.ova + golisa_disk.raw (~18GB)",
+    "CPR/할루시네이션 수동 검증 (제출 후 보완 가능)"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "description": "GoLiSA benchmark source investigation API responses",
+  "purpose": "GoLiSA OVA 획득 과정에서 레포 구조 탐색 및 Zenodo artifact 검색에 사용된 API 응답 원본",
+  "created": "2026-02-09",
+  "organized": "2026-02-22",
+  "source_location": "C:/Users/qkrtj/Desktop/ (바탕화면에서 이동)",
+  "related_experiment_phase": "golisa_acquisition",
+
+  "files": {
+    "github/golisa_contents.json": {
+      "api": "GitHub Contents API",
+      "endpoint": "GET /repos/lisa-analyzer/go-lisa/contents/?ref=master",
+      "description": "go-lisa 레포 루트 디렉토리 목록 (6 entries: .github, .gitignore, .gitmodules, LICENSE, README.md, go-lisa/)",
+      "fetched": "2026-02-09T17:18",
+      "size_bytes": 5004
+    },
+    "github/golisa_sub.json": {
+      "api": "GitHub Contents API",
+      "endpoint": "GET /repos/lisa-analyzer/go-lisa/contents/go-lisa?ref=master",
+      "description": "go-lisa/ 하위 디렉토리 목록 (12 entries: .gitattributes, .gitignore, build.gradle, checkstyle-config.xml, go-testcases/, gradle/, gradlew, gradlew.bat, settings.gradle, sources-sinks.md, spotless-formatting.xml, src/)",
+      "fetched": "2026-02-09T17:18",
+      "size_bytes": 10975
+    },
+    "github/golisa_testcases.json": {
+      "api": "GitHub Contents API",
+      "endpoint": "GET /repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases?ref=master",
+      "description": "go-testcases/ 디렉토리: 14개 테스트 카테고리 (blankidentifier, cc, cfg, collections, div-by-zero, go-projects, heap, instrumentation, interprocedural, non-det, strings-typing, taint, tarsis, typing, variablescoping, vmcai2022)",
+      "fetched": "2026-02-09T17:18",
+      "size_bytes": 14321
+    },
+    "github/golisa_nondet.json": {
+      "api": "GitHub Contents API",
+      "endpoint": "GET /repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases/non-det?ref=master",
+      "description": "non-det/ 디렉토리: 3개 비결정성 테스트 유형 (channel, goroutines, map-iter)",
+      "fetched": "2026-02-09T17:18",
+      "size_bytes": 2790
+    },
+    "zenodo/zenodo_golisa.json": {
+      "api": "Zenodo Records API",
+      "endpoint": "GET /api/records/7896324",
+      "description": "Zenodo 레코드 7896324 단건 조회 결과 - FALSE POSITIVE (우즈벡어 법학 논문, GoLiSA와 무관). DOI: 10.54952/DHR.2022.55.90.002",
+      "fetched": "2026-02-09T17:17",
+      "size_bytes": 7890,
+      "note": "GoLiSA Zenodo artifact를 찾기 위한 시도였으나 관련 없는 레코드"
+    },
+    "zenodo/zenodo_search.json": {
+      "api": "Zenodo Search API",
+      "endpoint": "GET /api/records?q=GoLiSA+blockchain+non-determinism&size=5&sort=bestmatch",
+      "description": "Zenodo 검색 'GoLiSA blockchain non-determinism' (총 91,535건 중 상위 5건). 주요 결과: Rethinking Permissioned Blockchains (Vukolic 2017), Background Temperature in LLMs (2025), Non-determinism in BFT Replication (Cachin 2016)",
+      "fetched": "2026-02-09T17:17",
+      "size_bytes": 35240,
+      "note": "GoLiSA 직접 artifact는 미발견"
+    },
+    "zenodo/zenodo_search2.json": {
+      "api": "Zenodo Search API",
+      "endpoint": "GET /api/records?q=go-lisa+chaincode+ECOOP&size=5&sort=bestmatch",
+      "description": "Zenodo 검색 'go-lisa chaincode ECOOP' (총 14,673건 중 상위 5건). 주요 결과: chaincode-bpet case study (2022), ECOOP 2022 AE Call for Artifacts, SCV formal verification framework",
+      "fetched": "2026-02-09T17:18",
+      "size_bytes": 23020,
+      "note": "GoLiSA 직접 artifact는 미발견. GoLiSA OVA는 최종적으로 별도 경로로 획득"
+    }
+  },
+
+  "summary": {
+    "total_files": 7,
+    "github_files": 4,
+    "zenodo_files": 3,
+    "total_size_bytes": 99240,
+    "finding": "GoLiSA Zenodo artifact 직접 검색 실패. GitHub 레포 구조 탐색으로 go-testcases/non-det/ 하위 3개 비결정성 카테고리(channel, goroutines, map-iter) 확인. 최종적으로 GoLiSA OVA는 별도 경로로 다운로드하여 657개 .go 파일 추출 완료."
+  }
+}

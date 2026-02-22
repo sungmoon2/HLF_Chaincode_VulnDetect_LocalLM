@@ -1,0 +1,2733 @@
+timestamp,model,prompt_strategy,file,code_chars,elapsed_s,result
+2026-02-09T14:59:51.993935,claude-haiku-4-5@20251001,zero_shot,safe_01_logging.go,5177,11.052,"# Security Analysis: safe_01_logging.go
+
+## Summary
+**No vulnerabilities detected.**
+
+This chaincode demonstrates **secure patterns** for timestamp handling in Hyperledger Fabric. The code correctly separates non-deterministic operations (console logging) from deterministic ledger writes.
+
+---
+
+## Detailed Findings
+
+### ✅ Secure Pattern: Deterministic Timestamps
+**Location:** `CreateDocument()` (lines 39-42), `ApproveDocument()` (lines 79-82)
+
+**Analysis:**
+- Uses `ctx.GetStub().GetTxTimestamp()` for all ledger writes
+- This timestamp originates from the channel header, validated by the ordering service
+- Identical across all endorsing peers → deterministic write set
+- Complies with Fabric consensus requirements
+
+---
+
+### ✅ Secure Pattern: Non-Deterministic Operations Isolated
+**Location:** `CreateDocument()` (line 36), `ApproveDocument()` (line 75), `QueryDocument()` (line 105)
+
+**Analysis:**
+- `time.Now()` used **only** for console output via `fmt.Printf()`
+- Never written to ledger state
+- Does not affect write set or consensus
+- Acceptable for operator diagnostics and performance monitoring
+
+---
+
+### ✅ Secure Pattern: Input Validation
+**Location:** `CreateDocument()` (lines 28-32), `ApproveDocument()` (lines 65-70)
+
+**Analysis:**
+- Existence checks prevent duplicate document creation
+- Status validation ensures state machine integrity
+- Proper error handling with descriptive messages
+
+---
+
+### ✅ Secure Pattern: JSON Unmarshaling
+**Location:** `CreateDocument()` (line 47), `ApproveDocument()` (line 68), `QueryDocument()` (line 113)
+
+**Analysis:**
+- Proper error handling for JSON operations
+- No unsafe deserialization patterns
+- Type-safe struct binding
+
+---
+
+### ✅ Secure Pattern: Access Control Consideration
+**Location:** `ApproveDocument()` (line 61)
+
+**Analysis:**
+- Accepts `approver` parameter (client-provided)
+- **Note:** No validation that caller is authorized to approve
+- **Recommendation:** Consider adding client identity verification:
+  ```go
+  clientID, err := ctx.GetClientIdentity().GetID()
+  if err != nil {
+      return fmt.Errorf(""failed to get client identity: %v"", err)
+  }
+  // Validate clientID has approval role
+  ```
+
+---
+
+### ✅ Secure Pattern: Error Handling
+**Location:** Throughout all functions
+
+**Analysis:**
+- Consistent error propagation
+- No silent failures
+- Descriptive error messages for debugging
+
+---
+
+## Recommendations (Best Practices)
+
+1. **Add Client Identity Verification** (Medium Priority)
+   ```go
+   func (a *AuditLogContract) ApproveDocument(ctx contractapi.TransactionContextInterface, id string, approver string) error {
+       // Verify caller identity
+       clientID, err := ctx.GetClientIdentity().GetID()
+       if err != nil {
+           return fmt.Errorf(""failed to get client identity: %v"", err)
+       }
+       // Optionally validate approver matches clientID or has role
+   ```
+
+2. **Add Audit Trail** (Enhancement)
+   - Consider creating separate audit log entries for state changes
+   - Track who initiated each approval
+
+3. **Input Sanitization** (Low Priority)
+   - Add length/format validation for `id`, `title`, `author` fields
+   - Prevent excessively large strings
+
+4. **Query Pagination** (Enhancement)
+   - Add range query methods for bulk document retrieval
+   - Implement pagination for large result sets
+
+---
+
+## Conclusion
+
+This is a **well-written, security-conscious chaincode** that correctly implements deterministic timestamp handling. The separation of console logging (non-deterministic) from ledger writes (deterministic) is exemplary. The main enhancement opportunity is adding explicit access control validation for the approval function."
+2026-02-09T15:00:05.129867,claude-haiku-4-5@20251001,zero_shot,safe_02_local_var.go,6316,13.135,"# Security Analysis: safe_02_local_var.go
+
+## Summary
+**No vulnerabilities detected.**
+
+This chaincode demonstrates **secure patterns** for Hyperledger Fabric development. The code properly avoids common pitfalls through careful design choices.
+
+---
+
+## Detailed Analysis
+
+### ✅ Access Control
+**Status: SECURE**
+- No explicit access control is implemented, but this is appropriate for a generic payment contract. The chaincode relies on Fabric's built-in identity and channel-level access controls.
+- All functions are public methods on the contract struct, which is standard practice.
+- **Recommendation**: If role-based access is needed (e.g., only admins can call certain functions), implement client certificate validation using `ctx.GetClientIdentity()`.
+
+### ✅ Input Validation
+**Status: SECURE**
+- **CreatePayment**: Validates `amount > 0`, checks against `maxTransferLimit` (const), and validates `currency` against a read-only list.
+- **RefundPayment**: Validates payment existence and status before processing.
+- **QueryPayment**: Properly handles nil responses and unmarshalling errors.
+- All inputs are validated before use in state mutations.
+
+### ✅ Read-After-Write Conflicts (Phantom Reads)
+**Status: SECURE**
+- **CreatePayment**: No reads before writes. All state mutations are based on function arguments and constants only.
+- **RefundPayment**: Reads the payment once, modifies it locally, and writes back. The read-modify-write pattern is safe because:
+  - The payment is read into a local variable
+  - All modifications are deterministic (status change, refund record creation)
+  - No subsequent reads that could be affected by concurrent transactions
+- **QueryPayment**: Read-only operation; no conflict risk.
+
+### ✅ Private Data Leakage
+**Status: SECURE**
+- No sensitive data (private keys, passwords, PII) is stored in the chaincode.
+- All stored data (Payment records) is appropriate for ledger storage.
+- No logging of sensitive information.
+- **Note**: If sensitive data must be stored, use Fabric's Private Data Collections (PDCs) instead of the main ledger.
+
+### ✅ Non-Deterministic Operations
+**Status: SECURE**
+- **No random number generation**: All values are deterministic.
+- **No timestamp usage**: Status is hardcoded (""COMPLETED"", ""REFUNDED"", ""REFUND"").
+- **No external calls**: No HTTP requests or external service dependencies.
+- **Math operations**: Uses `math.Round()` which is deterministic for the same inputs.
+- **JSON marshalling**: Deterministic for the same struct values.
+- **Key generation**: `refundID` is derived deterministically from input (`""REFUND_"" + paymentID`).
+
+### ✅ Insecure Key Management
+**Status: SECURE**
+- No cryptographic keys are generated, stored, or managed in the chaincode.
+- State keys are derived from function arguments (e.g., `id`, `paymentID`, `refundID`), which is appropriate.
+- No hardcoded secrets or credentials.
+
+### ✅ Package-Level Variables
+**Status: SECURE**
+- **Constants** (`maxTransferLimit`, `defaultCurrency`, `feeRateBasisPts`, `decimalPrecision`): Compiled into the binary; identical across all peers.
+- **Read-only slice** (`supportedCurrencies`): Initialized once at startup and never modified; safe for deterministic validation.
+- **No mutable global state**: The pattern explicitly avoids mutable package-level variables that could cause endorsement mismatches.
+
+---
+
+## Best Practices Observed
+
+| Practice | Status | Notes |
+|----------|--------|-------|
+| Deterministic state writes | ✅ | All writes derived from inputs and constants |
+| Input validation | ✅ | Comprehensive checks before state mutations |
+| Error handling | ✅ | Proper error returns with descriptive messages |
+| JSON marshalling | ✅ | Errors checked; safe serialization |
+| Immutable configuration | ✅ | Constants and read-only slices used correctly |
+| No external dependencies | ✅ | Only uses Fabric API and standard library |
+| Local variable usage | ✅ | Proper scoping; no global mutable state |
+
+---
+
+## Recommendations for Enhancement
+
+1. **Access Control** (if needed):
+   ```go
+   clientID, err := ctx.GetClientIdentity().GetID()
+   if err != nil {
+       return fmt.Errorf(""failed to get client identity: %v"", err)
+   }
+   // Validate clientID against allowed roles
+   ```
+
+2. **Audit Logging**:
+   ```go
+   ctx.GetStub().SetEvent(""PaymentCreated"", paymentJSON)
+   ```
+
+3. **Private Data** (if sensitive):
+   - Use `ctx.GetStub().PutPrivateData(collection, key, value)` for confidential payment details.
+
+4. **Idempotency** (optional):
+   - Check if payment ID already exists before creating to prevent duplicates.
+
+---
+
+## Conclusion
+
+This chaincode is **well-designed and secure**. It demonstrates proper Hyperledger Fabric patterns by:
+- Avoiding mutable global state
+- Using only deterministic operations
+- Validating all inputs
+- Properly handling errors
+- Maintaining consistency across peer endorsements
+
+No security vulnerabilities were identified."
+2026-02-09T15:00:20.296809,claude-haiku-4-5@20251001,zero_shot,safe_03_map_read.go,6388,15.166,"# Security Analysis: safe_03_map_read.go
+
+## Summary
+**Overall Assessment:** This chaincode demonstrates **safe patterns** for map usage in Hyperledger Fabric. The code correctly avoids non-determinism pitfalls by using maps only for validation/lookup purposes, not for controlling write sets. However, several **Medium-severity vulnerabilities** exist related to access control and input validation.
+
+---
+
+## Vulnerabilities Detected
+
+### 1. **Missing Access Control / Caller Authentication**
+- **Vulnerability Type:** Access Control Issue
+- **Severity:** High
+- **Affected Code Location:** `CastVote()` function (lines 31-67)
+- **Description:**
+  - The `CastVote()` function does not verify the identity of the caller before allowing a vote to be cast.
+  - Any authenticated user can vote on behalf of any `voterID` without proving they are that voter.
+  - No use of `ctx.GetClientIdentity()` to validate that the caller is the actual voter.
+  - This enables **vote impersonation attacks** where one user casts votes for multiple voters.
+
+- **Recommended Fix:**
+  ```go
+  func (v *VotingContract) CastVote(ctx contractapi.TransactionContextInterface, electionID string, voterID string, candidateID string) error {
+      // Verify caller identity matches voterID
+      clientID, err := ctx.GetClientIdentity().GetID()
+      if err != nil {
+          return fmt.Errorf(""failed to get client identity: %v"", err)
+      }
+      
+      // Extract CN (Common Name) from the certificate
+      clientCN, err := ctx.GetClientIdentity().GetAttributeValue(""hf.EnrollmentID"")
+      if err != nil || clientCN != voterID {
+          return fmt.Errorf(""unauthorized: caller cannot vote on behalf of voter %s"", voterID)
+      }
+      
+      // ... rest of function
+  }
+  ```
+
+---
+
+### 2. **Insufficient Input Validation**
+- **Vulnerability Type:** Input Validation Flaw
+- **Severity:** Medium
+- **Affected Code Location:** `CastVote()` function (lines 31-35)
+- **Description:**
+  - Function parameters (`electionID`, `voterID`, `candidateID`) are not validated for:
+    - Empty strings
+    - Excessive length (potential DoS via large key generation)
+    - Invalid characters or format
+  - The `ballotKey` is constructed directly from user input without sanitization: `electionID + ""_"" + voterID`
+  - An attacker could pass `electionID = ""TALLY_ELECTION1""` and `voterID = ""X""` to create key `""TALLY_ELECTION1_X""` that might collide with tally keys.
+
+- **Recommended Fix:**
+  ```go
+  func (v *VotingContract) CastVote(ctx contractapi.TransactionContextInterface, electionID string, voterID string, candidateID string) error {
+      // Validate inputs
+      if electionID == """" || voterID == """" || candidateID == """" {
+          return fmt.Errorf(""electionID, voterID, and candidateID cannot be empty"")
+      }
+      if len(electionID) > 64 || len(voterID) > 64 || len(candidateID) > 64 {
+          return fmt.Errorf(""input parameters exceed maximum length"")
+      }
+      
+      // Use a composite key to prevent collisions
+      ballotKey, err := ctx.GetStub().CreateCompositeKey(""ballot"", []string{electionID, voterID})
+      if err != nil {
+          return fmt.Errorf(""failed to create composite key: %v"", err)
+      }
+      
+      // ... rest of function
+  }
+  ```
+
+---
+
+### 3. **Hardcoded Candidate List (Immutable Configuration)**
+- **Vulnerability Type:** Configuration/Design Flaw
+- **Severity:** Medium
+- **Affected Code Location:** `CastVote()` function (lines 37-42)
+- **Description:**
+  - The `allowedCandidates` map is hardcoded in the chaincode.
+  - Candidates cannot be added or removed without redeploying the entire chaincode.
+  - This violates the principle of separating configuration from code and prevents dynamic election management.
+  - In a real voting system, candidates should be stored on the ledger and managed through separate functions.
+
+- **Recommended Fix:**
+  ```go
+  func (v *VotingContract) CastVote(ctx contractapi.TransactionContextInterface, electionID string, voterID string, candidateID string) error {
+      // Retrieve allowed candidates from ledger
+      candidatesKey := ""CANDIDATES_"" + electionID
+      candidatesJSON, err := ctx.GetStub().GetState(candidatesKey)
+      if err != nil {
+          return fmt.Errorf(""failed to read candidates: %v"", err)
+      }
+      if candidatesJSON == nil {
+          return fmt.Errorf(""no candidates registered for election %s"", electionID)
+      }
+      
+      var allowedCandidates map[string]string
+      err = json.Unmarshal(candidatesJSON, &allowedCandidates)
+      if err != nil {
+          return fmt.Errorf(""failed to parse candidates: %v"", err)
+      }
+      
+      // ... rest of validation
+  }
+  ```
+
+---
+
+### 4. **Missing Voter Eligibility Check in CastVote**
+- **Vulnerability Type:** Access Control / Business Logic Flaw
+- **Severity:** High
+- **Affected Code Location:** `CastVote()` function (lines 31-67)
+- **Description:**
+  - The `CastVote()` function does not call `ValidateVoterEligibility()` before accepting a vote.
+  - An ineligible voter (e.g., from a suspended district) can still cast a vote.
+  - The eligibility validation exists but is never enforced in the voting flow.
+
+- **Recommended Fix:**
+  ```go
+  func (v *VotingContract) CastVote(ctx contractapi.TransactionContextInterface, electionID string, voterID string, candidateID string) error {
+      // ... authentication check ...
+      
+      // Validate voter eligibility
+      eligible, err := v.ValidateVoterEligibility(ctx, voterID)
+      if err != nil {
+          return fmt.Errorf(""failed to validate voter eligibility: %v"", err)
+      }
+      if !eligible {
+          return fmt.Errorf(""voter %s is not eligible to vote"", voterID)
+      }
+      
+      // ... rest of function
+  }
+  ```
+
+---
+
+### 5. **Potential Read-After-Write Conflict in TallyVotes**
+- **Vulnerability Type:** Phantom Read / Race Condition
+- **Severity:** Medium
+- **Affected Code Location:** `TallyVotes()` function (lines 70-110)
+- **Description:**
+  - The function reads multiple ballots (`GetState()` in a loop) and then writes a single tally.
+  - If a concurrent transaction casts a new vote after the tally reads but before it writes, that vote will not be included in the tally.
+  - This is a **phantom read**: the tally is incomplete because new ballots were added after the read phase.
+  - The function accepts a `voterIDs` parameter, which means it only tallies votes from a specific subset—this is inflexible and error-prone.
+
+- **Recommended Fix:**
+  ```go
+  func (v *VotingContract) TallyVotes(ctx contractapi.TransactionContextInterface, electionID string) error {
+      // Use range query to get all ballots for the election
+      iterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""ballot"", []string{electionID})
+      if err != nil {
+          return fmt.Errorf(""failed to query ballots: %v"", err)
+      }
+      defer iterator.Close()
+      
+      tally := make(map[string]int)
+      
+      for iterator.HasNext() {
+          result, err := iterator.Next()
+          if err != nil {
+              return fmt.Errorf(""failed to iterate ballots: %v"", err)
+          }
+          
+          var ballot Ballot
+          err = json.Unmarshal(result.Value, &ballot)"
+2026-02-09T15:00:29.725176,claude-haiku-4-5@20251001,zero_shot,safe_04_math_rand.go,5307,9.428,"# Security Analysis: safe_04_math_rand.go
+
+## Summary
+**No vulnerabilities detected.**
+
+This chaincode demonstrates **secure use of non-deterministic operations** in Hyperledger Fabric. The `math/rand` package is used exclusively for **logging and diagnostics purposes** and is properly isolated from ledger write operations.
+
+---
+
+## Detailed Findings
+
+### ✅ Secure Pattern: Non-Deterministic Operations Isolated from Write Sets
+
+**Locations:**
+- `RegisterPackage()` lines 38-40
+- `TransferPackage()` lines 62-65
+- `DeliverPackage()` lines 89-95
+
+**Analysis:**
+The chaincode correctly uses `math/rand` for:
+1. **Trace IDs** (console logging only)
+2. **Correlation IDs** (peer-side diagnostics)
+3. **Log message selection** (cosmetic output)
+
+**Why This Is Safe:**
+- Random values are **never passed to `PutState()`**
+- All ledger writes use **deterministic function arguments** or **hardcoded constants**
+- The write set is **identical across all endorsing peers**, ensuring consensus
+- Random values only affect **local peer logs**, not the distributed ledger state
+
+---
+
+## Strengths of This Implementation
+
+| Aspect | Status | Evidence |
+|--------|--------|----------|
+| **Deterministic Writes** | ✅ Secure | All `PutState()` calls use function args or constants |
+| **Input Validation** | ✅ Adequate | Existence checks before writes; JSON unmarshaling validated |
+| **Access Control** | ✅ Present | Implicit via Fabric's peer-level authentication |
+| **Non-Determinism Isolation** | ✅ Excellent | Random ops completely separated from state mutations |
+| **Private Data** | ✅ Safe | No sensitive data in logs; no private data collections |
+| **Key Management** | ✅ Appropriate | Uses Fabric's built-in key management (trackingID as key) |
+
+---
+
+## Code Quality Notes
+
+**Positive Observations:**
+1. **Clear inline documentation** explaining the safe pattern
+2. **Consistent use of deterministic values** for all state changes
+3. **Proper error handling** for GetState/Unmarshal operations
+4. **Logical state transitions** (REGISTERED → IN_TRANSIT → DELIVERED)
+
+**Minor Recommendations (Non-Critical):**
+
+1. **Input Validation Enhancement** (Low Priority):
+   ```go
+   // Consider validating inputs before use
+   if trackingID == """" || sender == """" || receiver == """" {
+       return fmt.Errorf(""invalid input: empty required fields"")
+   }
+   if weight <= 0 {
+       return fmt.Errorf(""invalid weight: must be positive"")
+   }
+   ```
+
+2. **Access Control Consideration** (Low Priority):
+   - Current implementation relies on Fabric's peer-level authentication
+   - For production, consider adding client identity checks:
+   ```go
+   clientID, err := ctx.GetClientIdentity().GetID()
+   if err != nil {
+       return fmt.Errorf(""failed to get client identity: %v"", err)
+   }
+   ```
+
+3. **Warehouse ID Validation** (Low Priority):
+   ```go
+   validWarehouses := map[string]bool{""WH_INTAKE"": true, ""WH_DIST"": true}
+   if !validWarehouses[newWarehouseID] {
+       return fmt.Errorf(""invalid warehouse ID: %s"", newWarehouseID)
+   }
+   ```
+
+---
+
+## Conclusion
+
+This chaincode exemplifies **best practices for using non-deterministic operations in Hyperledger Fabric**. The separation of random values (used only for logging) from deterministic ledger writes ensures:
+
+- ✅ **Consensus safety** — all peers write identical state
+- ✅ **Auditability** — trace IDs aid in debugging without compromising ledger integrity
+- ✅ **Determinism guarantee** — no phantom reads or write-set conflicts
+
+**Recommendation:** This code is **safe for production use** as-is. The optional enhancements above would further strengthen input validation and access control but are not required for security."
+2026-02-09T15:00:40.013471,claude-haiku-4-5@20251001,zero_shot,safe_05_deterministic_time.go,5861,10.287,"# Security Analysis: safe_05_deterministic_time.go
+
+## Summary
+**No vulnerabilities detected.**
+
+This chaincode demonstrates **secure patterns** for handling time-dependent operations in Hyperledger Fabric. All time values written to the ledger are derived from deterministic sources (`GetTxTimestamp()`), and non-deterministic `time.Now()` calls are properly isolated from ledger writes.
+
+---
+
+## Detailed Findings
+
+### ✅ Deterministic Time Handling (IssueCertificate)
+**Status:** SECURE
+
+- `time.Now()` is captured in `startLocal` for local performance measurement only
+- The actual ledger timestamps (`IssuedAt`, `ExpiresAt`) use `ctx.GetStub().GetTxTimestamp()`, which is deterministic across all peers
+- Data flow is correctly isolated: `startLocal` is never serialized or written to state
+- **Pattern:** Proper separation of concerns between local diagnostics and ledger writes
+
+### ✅ Variable Reassignment Pattern (RenewCertificate)
+**Status:** SECURE
+
+- Variable `now` is initially assigned `time.Now()` (line 95)
+- **Critical:** `now` is immediately reassigned to the deterministic transaction timestamp (line 101)
+- The original non-deterministic value is discarded before use in `PutState()`
+- The reassignment ensures `cert.ExpiresAt` uses only deterministic data
+- **Pattern:** Demonstrates safe variable overwriting to eliminate non-determinism
+
+### ✅ Logging-Only Time Usage (RevokeCertificate)
+**Status:** SECURE
+
+- `time.Now()` appears only in the `fmt.Printf()` logging statement (line 127)
+- The ledger write (`PutState`) uses only the hardcoded constant `""REVOKED""` status
+- No time value reaches the ledger state
+- **Pattern:** Proper isolation of diagnostic logging from state mutations
+
+### ✅ Input Validation
+**Status:** SECURE
+
+- All functions validate preconditions:
+  - `IssueCertificate`: Checks for duplicate certificate IDs via `CertExists()`
+  - `RenewCertificate` & `RevokeCertificate`: Verify certificate existence before modification
+  - JSON unmarshaling errors are properly handled
+
+### ✅ Access Control
+**Status:** SECURE
+
+- No explicit access control vulnerabilities detected
+- All functions follow standard Hyperledger Fabric patterns
+- No sensitive operations bypass authentication
+
+### ✅ Private Data Handling
+**Status:** SECURE
+
+- No private data collections are used
+- No sensitive information is logged to stdout (only diagnostic timestamps)
+- Certificate data is stored in public world state as intended
+
+### ✅ Key Management
+**Status:** SECURE
+
+- No cryptographic keys are hardcoded
+- No secrets are embedded in the code
+- Certificate IDs are used as state keys appropriately
+
+---
+
+## Code Quality Observations
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Determinism | ✅ Excellent | Consistent use of `GetTxTimestamp()` for all ledger writes |
+| Error Handling | ✅ Good | Proper error propagation and context |
+| JSON Marshaling | ✅ Safe | Errors checked before `PutState()` |
+| State Management | ✅ Correct | Proper read-modify-write pattern with existence checks |
+
+---
+
+## Recommendations (Best Practices)
+
+1. **Add timestamp validation** in `RenewCertificate` to prevent renewing already-expired certificates:
+   ```go
+   if cert.ExpiresAt < now.Format(time.RFC3339) {
+       return fmt.Errorf(""cannot renew expired certificate"")
+   }
+   ```
+
+2. **Consider adding a `RevokedAt` field** to track when revocation occurred (using deterministic timestamp):
+   ```go
+   cert.RevokedAt = now.Format(time.RFC3339)
+   ```
+
+3. **Add event emission** for audit trails:
+   ```go
+   ctx.GetStub().SetEvent(""CertificateIssued"", certJSON)
+   ```
+
+4. **Validate input parameters** for empty strings:
+   ```go
+   if certID == """" || holderName == """" || courseID == """" {
+       return fmt.Errorf(""certID, holderName, and courseID cannot be empty"")
+   }
+   ```
+
+---
+
+## Conclusion
+
+This chaincode exemplifies **secure time handling in Hyperledger Fabric**. All non-deterministic operations are properly isolated from ledger writes, and deterministic timestamps from the ordering service are consistently used for state mutations. The code is production-ready from a security perspective."
+2026-02-09T15:00:49.189093,claude-haiku-4-5@20251001,zero_shot,safe_06_external_lib.go,6189,9.175,"# Security Analysis: safe_06_external_lib.go
+
+## Summary
+**No vulnerabilities detected.**
+
+This chaincode demonstrates secure patterns for Hyperledger Fabric development. The code properly handles deterministic operations, input validation, and state management.
+
+---
+
+## Detailed Analysis
+
+### ✅ Strengths
+
+1. **Deterministic Operations**
+   - `crypto/sha256`: Standard library cryptographic function with guaranteed deterministic behavior across all peers
+   - `strconv.Atoi` and `strconv.Itoa`: Pure deterministic parsers/formatters
+   - `determineTier()`: Pure function with no side effects or external dependencies
+   - `computeChecksum()`: Deterministic hash computation using standard library
+
+2. **Input Validation**
+   - `AddPoints()`: Validates `pointsStr` conversion with error handling (line 95)
+   - `RedeemPoints()`: Validates sufficient points before deduction (line 127)
+   - `CreateAccount()`: Checks account existence before creation (line 60)
+
+3. **Access Control**
+   - No sensitive operations exposed without proper context validation
+   - All functions use `contractapi.TransactionContextInterface` for proper transaction context
+
+4. **State Management**
+   - Proper read-before-write pattern in `AddPoints()` and `RedeemPoints()`
+   - No phantom read vulnerabilities (reads are immediately followed by writes)
+   - Checksum validation mechanism provides integrity assurance
+
+5. **Error Handling**
+   - Comprehensive error checking on all state operations
+   - Proper error propagation with descriptive messages
+   - JSON marshaling/unmarshaling errors are caught
+
+6. **Non-Deterministic Operations**
+   - `fmt.Printf()` (line 131) is correctly used only for logging, not for state changes
+   - No randomness, timestamps, or external calls affecting ledger state
+
+---
+
+## Code Quality Notes
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Determinism | ✅ Safe | All ledger-affecting operations are deterministic |
+| Input Validation | ✅ Safe | String-to-int conversion validated; bounds checking present |
+| Access Control | ✅ Safe | No privilege escalation vectors identified |
+| Private Data | ✅ Safe | No sensitive data leakage; checksum provides integrity |
+| Key Management | ✅ Safe | Uses standard library crypto; no key storage issues |
+| State Consistency | ✅ Safe | Proper read-before-write; checksum ensures integrity |
+
+---
+
+## Recommendations (Best Practices)
+
+While no vulnerabilities exist, consider these enhancements:
+
+1. **Add caller authentication** (optional):
+   ```go
+   clientID, err := ctx.GetClientIdentity().GetID()
+   if err != nil {
+       return err
+   }
+   // Verify clientID has permission to modify account
+   ```
+
+2. **Validate input ranges**:
+   ```go
+   if initialPoints < 0 {
+       return fmt.Errorf(""initial points cannot be negative"")
+   }
+   if redeemAmount < 0 {
+       return fmt.Errorf(""redeem amount cannot be negative"")
+   }
+   ```
+
+3. **Add event emission** for audit trails:
+   ```go
+   ctx.GetStub().SetEvent(""PointsAdded"", []byte(accountID))
+   ```
+
+4. **Consider checksum validation** on read:
+   ```go
+   expectedChecksum := computeChecksum(account.AccountID, account.Points, account.Tier)
+   if account.Checksum != expectedChecksum {
+       return fmt.Errorf(""checksum mismatch - data integrity compromised"")
+   }
+   ```
+
+---
+
+## Conclusion
+
+This chaincode exemplifies secure Hyperledger Fabric development practices. The use of standard library functions (`crypto/sha256`, `strconv`) is appropriate and deterministic. All state-modifying operations are properly validated and deterministic, ensuring consistency across the blockchain network."
+2026-02-09T15:01:03.317956,claude-haiku-4-5@20251001,zero_shot,vuln_01_b_interprocedural.go,5157,14.128,"# Hyperledger Fabric Chaincode Security Analysis
+
+## Summary
+**Vulnerabilities Found: 5 Critical Issues**
+
+All vulnerabilities relate to **non-deterministic operations** through interprocedural data flows that hide `time.Now()` calls behind helper functions. This violates Fabric's determinism requirement and will cause transaction failures during consensus.
+
+---
+
+## Vulnerability Details
+
+### 1. Non-Deterministic Timestamp in CreateRecord via getCurrentTimestamp()
+
+**Vulnerability Type:** Non-Deterministic Operation (Interprocedural)
+
+**Severity:** Critical
+
+**Affected Code Location:** 
+- Function: `CreateRecord` (line 54)
+- Helper: `getCurrentTimestamp()` (line 28)
+
+**Description:**
+The `RecordedAt` field is populated by calling `getCurrentTimestamp()`, which wraps `time.Now()`. Each endorsing peer will execute this function at different wall-clock times, producing different values. When peers compare transaction results during consensus, the serialized JSON will differ, causing the transaction to fail validation.
+
+**Recommended Fix:**
+```go
+// Option 1: Use transaction timestamp from context (deterministic)
+func (m *MedicalRecordContract) CreateRecord(ctx contractapi.TransactionContextInterface, recordID string, patientID string, diagnosis string, doctor string) error {
+	exists, err := m.RecordExists(ctx, recordID)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return fmt.Errorf(""record %s already exists"", recordID)
+	}
+
+	// Get deterministic timestamp from transaction context
+	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+	if err != nil {
+		return err
+	}
+	
+	record := MedicalRecord{
+		RecordID:    recordID,
+		PatientID:   patientID,
+		Diagnosis:   diagnosis,
+		Doctor:      doctor,
+		RecordedAt:  time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339),
+		LastChecked: time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339Nano),
+	}
+	// ... rest of function
+}
+```
+
+---
+
+### 2. Non-Deterministic Timestamp in CreateRecord via formatTimestampNano()
+
+**Vulnerability Type:** Non-Deterministic Operation (Interprocedural)
+
+**Severity:** Critical
+
+**Affected Code Location:**
+- Function: `CreateRecord` (line 55)
+- Helper: `formatTimestampNano()` (line 33)
+
+**Description:**
+The `LastChecked` field calls `formatTimestampNano()`, which also wraps `time.Now()`. This creates a second source of non-determinism in the same transaction. The nanosecond precision makes the divergence even more likely across peers.
+
+**Recommended Fix:**
+Replace with deterministic transaction timestamp (see Fix #1 above).
+
+---
+
+### 3. Non-Deterministic Timestamp in UpdateDiagnosis via buildTimestampedNote()
+
+**Vulnerability Type:** Non-Deterministic Operation (Three-Level Interprocedural)
+
+**Severity:** Critical
+
+**Affected Code Location:**
+- Function: `UpdateDiagnosis` (line 72)
+- Call chain: `buildTimestampedNote()` → `getCurrentTimestamp()` → `time.Now()`
+
+**Description:**
+The diagnosis is updated with a string produced by `buildTimestampedNote()`, which internally calls `getCurrentTimestamp()`. This three-level indirection obscures the non-deterministic operation. The resulting diagnosis string will differ across endorsing peers, causing consensus failure.
+
+**Recommended Fix:**
+```go
+func (m *MedicalRecordContract) UpdateDiagnosis(ctx contractapi.TransactionContextInterface, recordID string, newDiagnosis string) error {
+	recordJSON, err := ctx.GetStub().GetState(recordID)
+	if err != nil {
+		return fmt.Errorf(""failed to read record %s: %v"", recordID, err)
+	}
+	if recordJSON == nil {
+		return fmt.Errorf(""record %s does not exist"", recordID)
+	}
+
+	var record MedicalRecord
+	err = json.Unmarshal(recordJSON, &record)
+	if err != nil {
+		return err
+	}
+
+	// Use deterministic transaction timestamp
+	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+	if err != nil {
+		return err
+	}
+	tsStr := time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339)
+	
+	record.Diagnosis = fmt.Sprintf(""%s (recorded at %s)"", newDiagnosis, tsStr)
+	record.LastChecked = tsStr
+
+	updatedJSON, err := json.Marshal(record)
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(recordID, updatedJSON)
+}
+```
+
+---
+
+### 4. Non-Deterministic Timestamp in UpdateDiagnosis via getCurrentTimestamp()
+
+**Vulnerability Type:** Non-Deterministic Operation (Interprocedural)
+
+**Severity:** Critical
+
+**Affected Code Location:**
+- Function: `UpdateDiagnosis` (line 73)
+- Helper: `getCurrentTimestamp()` (line 28)
+
+**Description:**
+The `LastChecked` field is updated with another call to `getCurrentTimestamp()`. This creates a second non-deterministic value in the same transaction, compounding the consensus failure risk.
+
+**Recommended Fix:**
+See Fix #3 above.
+
+---
+
+### 5. Non-Deterministic Key Generation in AddCheckupNote()
+
+**Vulnerability Type:** Non-Deterministic Operation (Interprocedural + Key Generation)
+
+**Severity:** Critical
+
+**Affected Code Location:**
+- Function: `AddCheckupNote` (line 85)
+- Call chain: `noteKey` construction with `getCurrentTimestamp()`
+
+**Description:**
+The composite key `noteKey` is constructed using `getCurrentTimestamp()`, which returns different values across peers. This causes:
+1. **Non-deterministic state writes**: Different peers write to different keys
+2. **Consensus failure**: The transaction results diverge
+3. **Potential data loss**: Some peers' writes may be discarded during consensus
+
+Additionally, the note value itself contains a non-deterministic timestamp from `buildTimestampedNote()`.
+
+**Recommended Fix:**
+```go
+func (m *MedicalRecordContract) AddCheckupNote(ctx contractapi.TransactionContextInterface, recordID string, note string) error {
+	_, err := ctx.GetStub().GetState(recordID)
+	if err != nil {
+		return fmt.Errorf(""failed to read record %s: %v"", recordID, err)
+	}
+
+	// Get deterministic transaction timestamp
+	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+	if err != nil {
+		return err
+	}
+	tsStr := time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339)
+	
+	// Use deterministic timestamp in both key and value
+	compositeNote := fmt.Sprintf(""%s (recorded at %s)"", note, tsStr)
+	noteKey := ""NOTE_"" + recordID + ""_"" + tsStr
+
+	return ctx.GetStub().PutState(noteKey, []byte(compositeNote))
+}
+```
+
+---
+
+## Root Cause Analysis
+
+The chaincode violates Fabric's **determinism requirement** by:
+1. Calling `time.Now()` indirectly through helper functions
+2. Using wall-clock time instead of transaction-provided timestamps
+3. Embedding non-deterministic values in ledger state and keys
+
+Endorsing peers execute transactions at different times, producing different results. During consensus, these divergent results cause the transaction to be rejected.
+
+---
+
+## Remediation Summary
+
+| Function | Issue | Fix |
+|----------|-------|-----|
+| `CreateRecord` | 2 non-deterministic timestamps | Use `ctx.GetStub().GetTxTimestamp()` |
+| `UpdateDiagnosis` | 2 non-deterministic timestamps | Use `ctx.GetStub().GetTxTimestamp()` |
+| `AddCheckupNote` | Non-deterministic key + value | Use `ctx.GetStub().GetTxTimestamp()` |
+| `getCurrentTimestamp()` |"
+2026-02-09T15:01:15.355961,claude-haiku-4-5@20251001,zero_shot,vuln_01_time.go,4291,12.038,"# Hyperledger Fabric Chaincode Security Analysis: vuln_01_time.go
+
+## Summary
+**Vulnerabilities Found: 4 (All related to non-deterministic operations)**
+
+---
+
+## Vulnerability Details
+
+### 1. Non-Deterministic Timestamp in CreateShipment (CreatedAt)
+
+**Vulnerability Type:** Non-Deterministic Operation  
+**Severity:** Critical  
+**Location:** `CreateShipment()` function, line 35
+
+**Description:**
+```go
+now := time.Now()
+CreatedAt: now.Format(time.RFC3339),
+```
+The `time.Now()` call produces different wall-clock times on each endorsing peer. When multiple peers execute this transaction independently, they generate different `CreatedAt` values. This causes the serialized JSON to differ across peers, resulting in endorsement policy failures. The transaction will be rejected because the read-write sets don't match.
+
+**Impact:**
+- Transaction endorsement mismatch across peers
+- Chaincode execution failure
+- Ledger consistency violations
+
+**Recommended Fix:**
+Use the transaction timestamp from the blockchain context instead:
+```go
+txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+if err != nil {
+    return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+}
+shipment := Shipment{
+    ID:          id,
+    Origin:      origin,
+    Destination: destination,
+    Status:      ""CREATED"",
+    CreatedAt:   time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339),
+    UpdatedAt:   time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339),
+}
+```
+
+---
+
+### 2. Non-Deterministic Timestamp in CreateShipment (UpdatedAt with Nanosecond Precision)
+
+**Vulnerability Type:** Non-Deterministic Operation  
+**Severity:** Critical  
+**Location:** `CreateShipment()` function, line 36
+
+**Description:**
+```go
+UpdatedAt: now.Format(time.RFC3339Nano),
+```
+Using nanosecond precision (`RFC3339Nano`) exacerbates the non-determinism problem. Even if peers execute within milliseconds of each other, the nanosecond differences will be captured, guaranteeing different values across endorsers.
+
+**Impact:**
+- Guaranteed endorsement failure due to nanosecond-level variance
+- Deterministic transaction rejection
+
+**Recommended Fix:**
+Replace with blockchain timestamp (see Vulnerability #1 fix). If timestamp precision is needed, use only second or millisecond granularity from the blockchain context, never wall-clock time.
+
+---
+
+### 3. Non-Deterministic Timestamp in UpdateShipmentStatus
+
+**Vulnerability Type:** Non-Deterministic Operation  
+**Severity:** Critical  
+**Location:** `UpdateShipmentStatus()` function, line 58
+
+**Description:**
+```go
+shipment.UpdatedAt = time.Now().Format(time.RFC3339)
+```
+Same issue as Vulnerability #1. Each peer records a different update time, causing the marshalled JSON to differ and breaking endorsement consensus.
+
+**Impact:**
+- Endorsement mismatch
+- Transaction rejection
+- Status updates fail consistently
+
+**Recommended Fix:**
+```go
+txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+if err != nil {
+    return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+}
+shipment.UpdatedAt = time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)).Format(time.RFC3339)
+```
+
+---
+
+### 4. Non-Deterministic Timestamp in RecordTemperature (Composite String)
+
+**Vulnerability Type:** Non-Deterministic Operation  
+**Severity:** Critical  
+**Location:** `RecordTemperature()` function, line 82
+
+**Description:**
+```go
+shipment.Temperature = fmt.Sprintf(""%s°C at %s"", tempCelsius, time.Now().Format(""15:04:05.000""))
+shipment.UpdatedAt = time.Now().Format(time.RFC3339)
+```
+Two separate `time.Now()` calls create non-deterministic values:
+- The `Temperature` field embeds a time string that differs across peers
+- The `UpdatedAt` field is updated again with another non-deterministic timestamp
+
+This is particularly problematic because the temperature reading itself becomes non-deterministic, not just the metadata.
+
+**Impact:**
+- Temperature readings are unreliable and differ across peers
+- Double non-determinism (two `time.Now()` calls) guarantees failure
+- Audit trail integrity compromised
+
+**Recommended Fix:**
+```go
+txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+if err != nil {
+    return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+}
+txTime := time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos))
+shipment.Temperature = fmt.Sprintf(""%s°C at %s"", tempCelsius, txTime.Format(""15:04:05.000""))
+shipment.UpdatedAt = txTime.Format(time.RFC3339)
+```
+
+---
+
+## Summary Table
+
+| # | Function | Issue | Severity | Fix |
+|---|----------|-------|----------|-----|
+| 1 | CreateShipment | time.Now() for CreatedAt | Critical | Use ctx.GetStub().GetTxTimestamp() |
+| 2 | CreateShipment | time.Now() with RFC3339Nano | Critical | Use blockchain timestamp |
+| 3 | UpdateShipmentStatus | time.Now() for UpdatedAt | Critical | Use blockchain timestamp |
+| 4 | RecordTemperature | Two time.Now() calls | Critical | Use single blockchain timestamp |
+
+---
+
+## General Recommendations
+
+1. **Never use `time.Now()` in chaincode** — it violates determinism requirements
+2. **Always use `ctx.GetStub().GetTxTimestamp()`** for any timestamp needs
+3. **Implement a helper function** to convert blockchain timestamps:
+```go
+func getTxTime(ctx contractapi.TransactionContextInterface) (time.Time, error) {
+    txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+    if err != nil {
+        return time.Time{}, err
+    }
+    return time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos)), nil
+}
+```
+4. **Add input validation** for `tempCelsius` parameter (currently accepts any string)
+5. **Consider access control** — no caller authentication checks are present"
+2026-02-09T15:01:29.688970,claude-haiku-4-5@20251001,zero_shot,vuln_02_global.go,4833,14.332,"# Security Analysis: vuln_02_global.go
+
+## Summary
+**Critical vulnerabilities detected: 5**
+
+This chaincode contains severe non-determinism issues caused by reliance on global variables. These will cause **endorsement failures** and **ledger inconsistencies** across peers.
+
+---
+
+## Vulnerability Details
+
+### 1. Non-Deterministic Global Counter in IssueToken
+**Vulnerability Type:** Non-Deterministic Operations / Global State Mutation  
+**Severity:** Critical  
+**Location:** `IssueToken()` function, lines 35-36
+
+**Description:**
+```go
+transactionCounter++  // Line 35
+token := Token{
+    TxCount: transactionCounter,  // Line 40 - peer-specific value
+    ...
+}
+```
+The global `transactionCounter` is incremented and written to the ledger. Each peer maintains its own in-memory copy with different values:
+- Peer A may have `transactionCounter=5`
+- Peer B may have `transactionCounter=3`
+
+When both endorse the same transaction, they produce different `TxCount` values, causing **endorsement mismatch** and transaction rejection.
+
+**Recommended Fix:**
+```go
+// Use ledger-based counter instead
+func (t *TokenContract) IssueToken(ctx contractapi.TransactionContextInterface, owner string, amount float64) error {
+    // Retrieve counter from ledger
+    counterBytes, _ := ctx.GetStub().GetState(""GLOBAL_TX_COUNTER"")
+    txCount := 0
+    if counterBytes != nil {
+        json.Unmarshal(counterBytes, &txCount)
+    }
+    txCount++
+    
+    token := Token{
+        Owner:   owner,
+        Balance: amount,
+        TxCount: txCount,  // Deterministic across peers
+        LastTx:  ""ISSUE"",
+    }
+    
+    tokenJSON, _ := json.Marshal(token)
+    ctx.GetStub().PutState(owner, tokenJSON)
+    
+    // Persist counter to ledger
+    counterJSON, _ := json.Marshal(txCount)
+    return ctx.GetStub().PutState(""GLOBAL_TX_COUNTER"", counterJSON)
+}
+```
+
+---
+
+### 2. Non-Deterministic Global Counter in TransferToken
+**Vulnerability Type:** Non-Deterministic Operations / Global State Mutation  
+**Severity:** Critical  
+**Location:** `TransferToken()` function, lines 68-69
+
+**Description:**
+```go
+transactionCounter++  // Line 68
+fromToken.TxCount = transactionCounter  // Line 69 - diverges per peer
+```
+Same issue as vulnerability #1. The `TxCount` field will differ across endorsing peers, causing transaction rejection.
+
+**Recommended Fix:**
+Apply the same ledger-based counter pattern as shown in vulnerability #1.
+
+---
+
+### 3. Non-Deterministic Key Generation in BurnToken
+**Vulnerability Type:** Non-Deterministic Operations / Dynamic Key Generation  
+**Severity:** Critical  
+**Location:** `BurnToken()` function, lines 107-109
+
+**Description:**
+```go
+transactionCounter++
+receiptKey := ""BURN_RECEIPT_"" + strconv.Itoa(transactionCounter)  // Line 108
+ctx.GetStub().PutState(receiptKey, receiptJSON)  // Line 113
+```
+The receipt key itself is derived from the global counter. Different peers will:
+- Peer A writes to `BURN_RECEIPT_10`
+- Peer B writes to `BURN_RECEIPT_8`
+
+This causes **different ledger writes** across peers, making consensus impossible.
+
+**Recommended Fix:**
+```go
+func (t *TokenContract) BurnToken(ctx contractapi.TransactionContextInterface, owner string, amount float64) error {
+    // ... existing code ...
+    
+    // Use deterministic key based on transaction ID
+    txID := ctx.GetStub().GetTxID()
+    receiptKey := ""BURN_RECEIPT_"" + txID  // Deterministic per transaction
+    
+    receipt := map[string]interface{}{
+        ""owner"":  owner,
+        ""burned"": amount,
+        ""txID"":   txID,
+    }
+    receiptJSON, _ := json.Marshal(receipt)
+    ctx.GetStub().PutState(receiptKey, receiptJSON)
+    
+    // ... rest of function ...
+}
+```
+
+---
+
+### 4. Global Variable State Leakage in GetGlobalStats
+**Vulnerability Type:** Private Data Leakage / Non-Deterministic Query  
+**Severity:** High  
+**Location:** `GetGlobalStats()` function, lines 80-85
+
+**Description:**
+```go
+return fmt.Sprintf(""counter=%d, lastID=%s"", transactionCounter, lastProcessedID), nil
+```
+This function exposes peer-local global state. Query results will differ across peers, violating the principle that **read-only queries should return consistent results**. This can be exploited to:
+- Detect peer-specific state
+- Identify which peer processed a transaction
+- Cause confusion in client applications
+
+**Recommended Fix:**
+```go
+func (t *TokenContract) GetGlobalStats(ctx contractapi.TransactionContextInterface) (string, error) {
+    // Read deterministic state from ledger
+    counterBytes, _ := ctx.GetStub().GetState(""GLOBAL_TX_COUNTER"")
+    txCount := 0
+    if counterBytes != nil {
+        json.Unmarshal(counterBytes, &txCount)
+    }
+    
+    lastIDBytes, _ := ctx.GetStub().GetState(""LAST_PROCESSED_ID"")
+    lastID := """"
+    if lastIDBytes != nil {
+        lastID = string(lastIDBytes)
+    }
+    
+    return fmt.Sprintf(""counter=%d, lastID=%s"", txCount, lastID), nil
+}
+```
+
+---
+
+### 5. Persistent Global State Across Invocations
+**Vulnerability Type:** Non-Deterministic Operations / State Persistence  
+**Severity:** High  
+**Location:** `IssueToken()` function, line 44
+
+**Description:**
+```go
+lastProcessedID = owner  // Line 44
+```
+The `lastProcessedID` global variable persists across transaction invocations within the same chaincode container. This creates:
+- **Ordering dependency:** Results depend on transaction execution order
+- **Non-determinism:** Different peer orderings produce different values
+- **State leakage:** Exposes internal peer state
+
+**Recommended Fix:**
+```go
+// Store in ledger instead of global variable
+func (t *TokenContract) IssueToken(ctx contractapi.TransactionContextInterface, owner string, amount float64) error {
+    // ... token creation ...
+    
+    ctx.GetStub().PutState(owner, tokenJSON)
+    
+    // Persist last processed ID to ledger
+    return ctx.GetStub().PutState(""LAST_PROCESSED_ID"", []byte(owner))
+}
+```
+
+---
+
+## Impact Assessment
+
+| Vulnerability | Impact | Likelihood |
+|---|---|---|
+| Global counter in IssueToken | Endorsement failure, transaction rejection | Very High |
+| Global counter in TransferToken | Endorsement failure, transaction rejection | Very High |
+| Dynamic key generation in BurnToken | Ledger inconsistency, data loss | Very High |
+| Global stats exposure | Information disclosure, peer detection | High |
+| Persistent global state | Non-deterministic behavior, ordering dependency | High |
+
+---
+
+## Remediation Priority
+
+1. **Immediate (Critical):** Replace all global variable usage with ledger-based state
+2. **High:** Implement deterministic key generation using transaction IDs
+3. **High:** Remove peer-local state exposure from query functions
+4. **Medium:** Add input validation for `amount` parameters (negative values not checked)
+
+---
+
+## General Best Practices for Fabric Chaincode
+
+✅ **DO:**
+- Store all state in the ledger via `PutState()`
+- Use transaction IDs for deterministic key generation
+- Validate all inputs (ranges, types, formats)
+- Use `GetState()` for all reads
+
+❌ **DON'T:**
+- Use global variables for state
+- Rely on in-memory counters
+- Generate keys from non-deterministic sources
+- Expose peer-local state in queries"
+2026-02-09T15:01:44.515726,claude-haiku-4-5@20251001,zero_shot,vuln_03_goroutine.go,5336,14.827,"# Hyperledger Fabric Chaincode Security Analysis: vuln_03_goroutine.go
+
+## Summary
+**Critical vulnerabilities detected: 4**
+
+This chaincode contains multiple severe security flaws related to concurrent goroutine usage, which violates Hyperledger Fabric's deterministic execution model. All goroutine-based operations will cause non-deterministic behavior and endorsement failures.
+
+---
+
+## Vulnerability Details
+
+### 1. Non-Deterministic Goroutine Execution in TallyVotes
+**Vulnerability Type:** Non-Deterministic Operations / Read-After-Write Conflicts  
+**Severity:** **CRITICAL**  
+**Location:** `TallyVotes()` function, lines 62-89  
+**Description:**
+- Goroutines are spawned to read proposal states concurrently (lines 68-85)
+- The execution order of goroutines is non-deterministic and varies across peers
+- Each goroutine calls `ctx.GetStub().GetState(id)` in unpredictable order, creating different read-sets on different peers
+- Even with mutex protection on the `results` map, the underlying stub calls are unordered
+- This causes **endorsement mismatch**: peer A may read proposals in order [P1, P2, P3] while peer B reads [P3, P1, P2], resulting in different transaction read-sets
+- The final `PutState(""TALLY_RESULT"", ...)` will be endorsed inconsistently
+
+**Recommended Fix:**
+```go
+// CORRECT: Sequential, deterministic processing
+func (v *VotingContract) TallyVotes(ctx contractapi.TransactionContextInterface, proposalIDs []string) error {
+	results := make(map[string]int)
+
+	// Process proposals in order (deterministic)
+	for _, pid := range proposalIDs {
+		proposalJSON, err := ctx.GetStub().GetState(pid)
+		if err != nil {
+			return fmt.Errorf(""failed to read proposal %s: %v"", pid, err)
+		}
+		if proposalJSON == nil {
+			continue
+		}
+
+		var proposal Proposal
+		if err := json.Unmarshal(proposalJSON, &proposal); err != nil {
+			return err
+		}
+
+		results[pid] = proposal.VoteCount
+	}
+
+	summaryJSON, err := json.Marshal(results)
+	if err != nil {
+		return err
+	}
+	return ctx.GetStub().PutState(""TALLY_RESULT"", summaryJSON)
+}
+```
+
+---
+
+### 2. Concurrent PutState Calls in BatchUpdateStatus
+**Vulnerability Type:** Non-Deterministic Operations / Concurrent Stub Access  
+**Severity:** **CRITICAL**  
+**Location:** `BatchUpdateStatus()` function, lines 92-130  
+**Description:**
+- Multiple goroutines issue `PutState()` calls concurrently (line 119)
+- The Fabric stub is **not thread-safe** and not designed for concurrent access
+- Goroutine scheduling is non-deterministic; different peers will execute `PutState` in different orders
+- This creates different write-sets on different peers, causing endorsement failure
+- The transaction will be rejected during validation phase when peers compare read-write sets
+- Error handling via `errChan` does not address the fundamental non-determinism
+
+**Recommended Fix:**
+```go
+// CORRECT: Sequential status updates
+func (v *VotingContract) BatchUpdateStatus(ctx contractapi.TransactionContextInterface, proposalIDs []string, newStatus string) error {
+	for _, pid := range proposalIDs {
+		proposalJSON, err := ctx.GetStub().GetState(pid)
+		if err != nil {
+			return fmt.Errorf(""failed to read proposal %s: %v"", pid, err)
+		}
+		if proposalJSON == nil {
+			continue
+		}
+
+		var proposal Proposal
+		if err := json.Unmarshal(proposalJSON, &proposal); err != nil {
+			return err
+		}
+
+		proposal.Status = newStatus
+		updatedJSON, err := json.Marshal(proposal)
+		if err != nil {
+			return err
+		}
+
+		if err := ctx.GetStub().PutState(pid, updatedJSON); err != nil {
+			return fmt.Errorf(""failed to update proposal %s: %v"", pid, err)
+		}
+	}
+	return nil
+}
+```
+
+---
+
+### 3. Fire-and-Forget Goroutine with Stub Access in AsyncNotify
+**Vulnerability Type:** Non-Deterministic Operations / Unsafe Stub Access  
+**Severity:** **CRITICAL**  
+**Location:** `AsyncNotify()` function, lines 133-149  
+**Description:**
+- A goroutine is spawned without synchronization (line 138)
+- The goroutine calls `ctx.GetStub().SetEvent()` asynchronously (line 145)
+- The transaction may complete and be endorsed before the goroutine executes
+- The stub context may be closed or invalidated by the time the goroutine runs
+- Different peers will have different timing; some may execute the SetEvent, others may fail silently
+- This causes **non-deterministic event emission** and potential undefined behavior
+- The function returns immediately without waiting for the goroutine, violating transaction atomicity
+
+**Recommended Fix:**
+```go
+// CORRECT: Synchronous event emission
+func (v *VotingContract) AsyncNotify(ctx contractapi.TransactionContextInterface, proposalID string, message string) error {
+	payload := map[string]string{
+		""proposal"": proposalID,
+		""message"":  message,
+	}
+	eventData, err := json.Marshal(payload)
+	if err != nil {
+		return fmt.Errorf(""failed to marshal event data: %v"", err)
+	}
+	
+	// SetEvent is called synchronously within the transaction context
+	return ctx.GetStub().SetEvent(""NOTIFY"", eventData)
+}
+```
+
+---
+
+### 4. Unhandled JSON Unmarshal Errors
+**Vulnerability Type:** Input Validation / Error Handling  
+**Severity:** **HIGH**  
+**Location:** Multiple functions:
+  - `CastVote()` line 48
+  - `TallyVotes()` line 79
+  - `BatchUpdateStatus()` line 113  
+**Description:**
+- `json.Unmarshal()` calls ignore errors (using blank identifier `_`)
+- If malformed JSON is stored in state, unmarshaling silently fails and uses zero-initialized struct
+- This causes silent data corruption: `proposal.Status` becomes empty string, `proposal.VoteCount` becomes 0
+- In `CastVote()`, a corrupted proposal with empty Status will pass the `Status != ""OPEN""` check
+- Attackers can exploit this to vote on closed proposals or corrupt proposal data
+
+**Recommended Fix:**
+```go
+// Example for CastVote
+var proposal Proposal
+if err := json.Unmarshal(proposalJSON, &proposal); err != nil {
+	return fmt.Errorf(""failed to unmarshal proposal: %v"", err)
+}
+```
+
+---
+
+## Additional Issues
+
+### 5. Missing Access Control in CastVote
+**Vulnerability Type:** Access Control  
+**Severity:** **HIGH**  
+**Location:** `CastVote()` function, lines 40-57  
+**Description:**
+- No validation that `voterID` is authorized to vote
+- No duplicate vote prevention (same voter can vote multiple times)
+- No caller identity verification using `ctx.GetClientIdentity()`
+- Any transaction submitter can vote on behalf of any voter ID
+
+**Recommended Fix:**
+```go
+func (v *VotingContract) CastVote(ctx contractapi.TransactionContextInterface, proposalID string, voterID string) error {
+	// Verify caller identity
+	clientID, err := ctx.GetClientIdentity().GetID()
+	if err != nil {
+		return fmt.Errorf(""failed to get client identity: %v"", err)
+	}
+	
+	// Ensure voter can only vote for themselves
+	if clientID != voterID {
+		return fmt.Errorf(""unauthorized: cannot vote on behalf of another user"")
+	}
+
+	proposalJSON, err := ctx.GetStub().GetState(proposalID)
+	if err != nil {
+		return fmt.Errorf(""failed to read proposal: %v"", err)
+	}
+	if proposalJSON == nil {
+		return fmt.Errorf(""proposal %s does not exist"", proposalID"
+2026-02-09T15:01:56.103384,claude-haiku-4-5@20251001,zero_shot,vuln_04_b_nested_map.go,5711,11.588,"# Security Analysis: vuln_04_b_nested_map.go
+
+## Summary
+**Critical vulnerabilities detected: 4**
+
+This chaincode contains **multiple critical non-determinism vulnerabilities** stemming from unordered map iterations in nested structures. These will cause **transaction endorsement failures** across peers due to differing write-sets.
+
+---
+
+## Vulnerability Details
+
+### 1. Non-Deterministic Nested Map Iteration in BatchUpdateInventory
+**Vulnerability Type:** Non-Deterministic Operations (Nested Map Iteration)  
+**Severity:** Critical  
+**Location:** `BatchUpdateInventory()` function, lines 35-60
+
+**Description:**
+The function iterates over two nested maps (`updates map[string]map[string]int`) without enforcing deterministic ordering:
+- **Outer loop** (line 40): `for zoneID, itemUpdates := range updates` — zones processed in random order
+- **Inner loop** (line 50): `for itemID, qtyDelta := range itemUpdates` — items within each zone processed in random order
+- **Result:** The write-set order differs across endorsing peers, causing consensus failure
+
+**Example Scenario:**
+```
+Peer A write-set order:  ZONE_A → ZONE_A_ITEM_X → ZONE_A_ITEM_Y → ZONE_B → ZONE_B_ITEM_Z
+Peer B write-set order:  ZONE_B → ZONE_B_ITEM_Z → ZONE_A → ZONE_A_ITEM_Y → ZONE_A_ITEM_X
+Result: ENDORSEMENT MISMATCH ✗
+```
+
+**Recommended Fix:**
+```go
+func (w *WarehouseContract) BatchUpdateInventory(ctx contractapi.TransactionContextInterface, updateJSON string) error {
+	var updates map[string]map[string]int
+	err := json.Unmarshal([]byte(updateJSON), &updates)
+	if err != nil {
+		return fmt.Errorf(""invalid update JSON: %v"", err)
+	}
+
+	// Sort zone IDs for deterministic outer iteration
+	zoneIDs := make([]string, 0, len(updates))
+	for zoneID := range updates {
+		zoneIDs = append(zoneIDs, zoneID)
+	}
+	sort.Strings(zoneIDs)
+
+	for _, zoneID := range zoneIDs {
+		itemUpdates := updates[zoneID]
+		zoneKey := ""ZONE_"" + zoneID
+		zoneJSON, err := ctx.GetStub().GetState(zoneKey)
+		if err != nil {
+			return fmt.Errorf(""failed to read zone %s: %v"", zoneID, err)
+		}
+
+		var zone ZoneInventory
+		if zoneJSON != nil {
+			json.Unmarshal(zoneJSON, &zone)
+		} else {
+			zone = ZoneInventory{ZoneID: zoneID, Items: make(map[string]int)}
+		}
+
+		// Sort item IDs for deterministic inner iteration
+		itemIDs := make([]string, 0, len(itemUpdates))
+		for itemID := range itemUpdates {
+			itemIDs = append(itemIDs, itemID)
+		}
+		sort.Strings(itemIDs)
+
+		for _, itemID := range itemIDs {
+			qtyDelta := itemUpdates[itemID]
+			zone.Items[itemID] += qtyDelta
+			zone.ItemCount += qtyDelta
+
+			itemKey := zoneID + ""_ITEM_"" + itemID
+			itemRecord := fmt.Sprintf(`{""zone"":""%s"",""item"":""%s"",""qty"":%d}`, zoneID, itemID, zone.Items[itemID])
+			ctx.GetStub().PutState(itemKey, []byte(itemRecord))
+		}
+
+		updatedZoneJSON, _ := json.Marshal(zone)
+		ctx.GetStub().PutState(zoneKey, updatedZoneJSON)
+	}
+
+	return nil
+}
+```
+
+---
+
+### 2. Non-Deterministic Report Generation in GenerateZoneReport
+**Vulnerability Type:** Non-Deterministic Operations (Map Iteration)  
+**Severity:** Critical  
+**Location:** `GenerateZoneReport()` function, lines 63-90
+
+**Description:**
+The function builds a report string by iterating unordered maps:
+- **Outer loop** (line 75): `for zoneID, items := range zoneData` — zones in random order
+- **Inner loop** (line 78): `for itemID, qty := range items` — items in random order
+- **Result:** The report content differs across peers, causing write-set mismatch
+
+**Example Output Variance:**
+```
+Peer A: ""[Zone-A: Item-X=5,Item-Y=3][Zone-B: Item-Z=1]""
+Peer B: ""[Zone-B: Item-Z=1][Zone-A: Item-Y=3,Item-X=5]""
+```
+
+**Recommended Fix:**
+```go
+func (w *WarehouseContract) GenerateZoneReport(ctx contractapi.TransactionContextInterface, zonesJSON string) error {
+	var zoneData map[string]map[string]int
+	err := json.Unmarshal([]byte(zonesJSON), &zoneData)
+	if err != nil {
+		return fmt.Errorf(""invalid zone data: %v"", err)
+	}
+
+	// Sort zone IDs
+	zoneIDs := make([]string, 0, len(zoneData))
+	for zoneID := range zoneData {
+		zoneIDs = append(zoneIDs, zoneID)
+	}
+	sort.Strings(zoneIDs)
+
+	var reportParts []string
+
+	for _, zoneID := range zoneIDs {
+		items := zoneData[zoneID]
+		var itemParts []string
+
+		// Sort item IDs
+		itemIDs := make([]string, 0, len(items))
+		for itemID := range items {
+			itemIDs = append(itemIDs, itemID)
+		}
+		sort.Strings(itemIDs)
+
+		for _, itemID := range itemIDs {
+			qty := items[itemID]
+			itemParts = append(itemParts, fmt.Sprintf(""%s=%d"", itemID, qty))
+		}
+
+		zoneSummary := fmt.Sprintf(""[%s: %s]"", zoneID, strings.Join(itemParts, "",""))
+		reportParts = append(reportParts, zoneSummary)
+	}
+
+	report := strings.Join(reportParts, "" | "")
+	return ctx.GetStub().PutState(""WAREHOUSE_REPORT"", []byte(report))
+}
+```
+
+---
+
+### 3. Non-Deterministic Map Iteration in MergeZones
+**Vulnerability Type:** Non-Deterministic Operations (Map Iteration)  
+**Severity:** Critical  
+**Location:** `MergeZones()` function, lines 93-125
+
+**Description:**
+The function iterates the `merged` map (line 113) without enforcing order:
+```go
+for itemID, totalQty := range merged {
+    mergedKey := targetZoneID + ""_ITEM_"" + itemID
+    ctx.GetStub().PutState(mergedKey, []byte(record))
+}
+```
+- The write-set order varies across peers
+- Causes endorsement mismatch despite correct accumulation logic
+
+**Recommended Fix:**
+```go
+func (w *WarehouseContract) MergeZones(ctx contractapi.TransactionContextInterface, targetZoneID string, sourceZoneIDs []string) error {
+	merged := make(map[string]int)
+
+	for _, srcID := range sourceZoneIDs {
+		zoneKey := ""ZONE_"" + srcID
+		zoneJSON, err := ctx.GetStub().GetState(zoneKey)
+		if err != nil || zoneJSON == nil {
+			continue
+		}
+
+		var zone ZoneInventory
+		json.Unmarshal(zoneJSON, &zone)
+
+		for itemID, qty := range zone.Items {
+			merged[itemID] += qty
+		}
+
+		ctx.GetStub().DelState(zoneKey)
+	}
+
+	// Sort item IDs for deterministic write order
+	itemIDs := make([]string, 0, len(merged))
+	"
+2026-02-09T15:02:07.649272,claude-haiku-4-5@20251001,zero_shot,vuln_04_map_iter.go,4688,11.545,"# Security Analysis: vuln_04_map_iter.go
+
+## Summary
+**4 Critical Vulnerabilities Detected** - All related to non-deterministic map iteration causing endorsement failures and consensus violations.
+
+---
+
+## Vulnerability 1: Non-Deterministic Write-Set Ordering in BatchRestock
+
+**Vulnerability Type:** Non-Deterministic Operations / Endorsement Policy Violation
+
+**Severity:** Critical
+
+**Affected Code Location:** `BatchRestock()` function, lines 47-67
+
+**Description:**
+The function iterates over `restockMap` (a Go map) and calls `PutState()` for each entry. Go's map iteration order is intentionally randomized by the runtime for security reasons. This causes:
+- **Peer A** may write products in order: [X, Y, Z]
+- **Peer B** may write products in order: [Z, X, Y]
+
+Since each `PutState()` appends to the transaction's write-set in the order called, different peers generate different write-sets. When endorsement policies require multiple peer signatures, the proposals will not match, causing **endorsement failure** and transaction rejection.
+
+**Recommended Fix:**
+Sort the map keys before iteration:
+
+```go
+func (ic *InventoryContract) BatchRestock(ctx contractapi.TransactionContextInterface, restockJSON string) error {
+	var restockMap map[string]int
+	err := json.Unmarshal([]byte(restockJSON), &restockMap)
+	if err != nil {
+		return fmt.Errorf(""invalid restock JSON: %v"", err)
+	}
+
+	// Sort keys for deterministic iteration
+	keys := make([]string, 0, len(restockMap))
+	for k := range restockMap {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	for _, productID := range keys {
+		addQty := restockMap[productID]
+		productJSON, err := ctx.GetStub().GetState(productID)
+		if err != nil {
+			return fmt.Errorf(""failed to read product %s: %v"", productID, err)
+		}
+		if productJSON == nil {
+			continue
+		}
+
+		var product Product
+		json.Unmarshal(productJSON, &product)
+		product.Quantity += addQty
+
+		updatedJSON, _ := json.Marshal(product)
+		ctx.GetStub().PutState(productID, updatedJSON)
+	}
+
+	return nil
+}
+```
+
+---
+
+## Vulnerability 2: Non-Deterministic Report Generation in GenerateReport
+
+**Vulnerability Type:** Non-Deterministic Operations / Ledger State Inconsistency
+
+**Severity:** Critical
+
+**Affected Code Location:** `GenerateReport()` function, lines 70-103
+
+**Description:**
+The function builds a report string by iterating over the `totals` map (lines 89-92):
+```go
+for name, total := range totals {
+    parts = append(parts, fmt.Sprintf(""%s:%.2f"", name, total))
+}
+```
+
+Different peers will iterate in different orders, producing different report strings:
+- **Peer A:** ""Apples:100.00|Bananas:200.00""
+- **Peer B:** ""Bananas:200.00|Apples:100.00""
+
+The non-deterministic string is then written to the ledger (line 95), causing consensus violations.
+
+**Recommended Fix:**
+Sort the map keys before building the report:
+
+```go
+func (ic *InventoryContract) GenerateReport(ctx contractapi.TransactionContextInterface, productIDs []string) error {
+	totals := make(map[string]float64)
+
+	for _, id := range productIDs {
+		productJSON, err := ctx.GetStub().GetState(id)
+		if err != nil {
+			continue
+		}
+		if productJSON == nil {
+			continue
+		}
+
+		var product Product
+		json.Unmarshal(productJSON, &product)
+		totals[product.Name] = float64(product.Quantity) * product.Price
+	}
+
+	// Sort names for deterministic output
+	names := make([]string, 0, len(totals))
+	for name := range totals {
+		names = append(names, name)
+	}
+	sort.Strings(names)
+
+	var parts []string
+	for _, name := range names {
+		parts = append(parts, fmt.Sprintf(""%s:%.2f"", name, totals[name]))
+	}
+	report := strings.Join(parts, ""|"")
+
+	return ctx.GetStub().PutState(""INVENTORY_REPORT"", []byte(report))
+}
+```
+
+---
+
+## Vulnerability 3: Non-Deterministic Write-Set Ordering in ApplyDiscounts
+
+**Vulnerability Type:** Non-Deterministic Operations / Endorsement Policy Violation
+
+**Severity:** Critical
+
+**Affected Code Location:** `ApplyDiscounts()` function, lines 106-133
+
+**Description:**
+Similar to Vulnerability 1, this function iterates over the `discounts` map and calls `PutState()` for each product (line 128). The non-deterministic iteration order causes different peers to generate different write-sets, leading to endorsement mismatches.
+
+**Recommended Fix:**
+Sort the discount keys before iteration:
+
+```go
+func (ic *InventoryContract) ApplyDiscounts(ctx contractapi.TransactionContextInterface, discountsJSON string) error {
+	var discounts map[string]float64
+	err := json.Unmarshal([]byte(discountsJSON), &discounts)
+	if err != nil {
+		return fmt.Errorf(""invalid discounts JSON: %v"", err)
+	}
+
+	// Sort keys for deterministic iteration
+	keys := make([]string, 0, len(discounts))
+	for k := range discounts {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	for _, productID := range keys {
+		discountPct := discounts[productID]
+		productJSON, err := ctx.GetStub().GetState(productID)
+		if err != nil {
+			continue
+		}
+		if productJSON == nil {
+			continue
+		}
+
+		var product Product
+		json.Unmarshal(productJSON, &product)
+		product.Price = product.Price * (1 - discountPct/100)
+
+		updatedJSON, _ := json.Marshal(product)
+		ctx.GetStub().PutState(productID, updatedJSON)
+	}
+
+	return nil
+}
+```
+
+---
+
+## Vulnerability 4: Missing Input Validation in RegisterProduct
+
+**Vulnerability Type:** Input Validation Flaw
+
+**Severity:** Medium
+
+**Affected Code Location:** `RegisterProduct()` function, lines 24-38
+
+**Description:**
+The function accepts user input without validation:
+- No check for empty `id` or `name`
+- No validation that `quantity >= 0` or `price >= 0`
+- No check for duplicate product IDs (overwrites existing products silently)
+
+This could allow invalid or malicious data to be written to the ledger.
+
+**Recommended Fix:**
+
+```go
+func (ic *InventoryContract) RegisterProduct(ctx contractapi.TransactionContextInterface, id string, name string, quantity int, price float64) error {
+	// Input validation
+	if strings.TrimSpace(id) == """" {
+		return fmt.Errorf(""product ID cannot be empty"")
+	}
+	if strings.TrimSpace(name) == """" {
+		return fmt.Errorf(""product name cannot be empty"")
+	}
+	if quantity < 0 {
+		return fmt.Errorf(""quantity cannot be negative"")
+	}
+	if price < 0 {
+		return fmt.Errorf(""price cannot be negative"")
+	}
+
+	// Check for duplicate
+	existing, err := ctx.GetStub().GetState(id)
+	if err != nil {
+		return fmt.Errorf(""failed to check existing product: %v"", err)
+	}
+	if existing != nil {
+		return fmt.Errorf(""product %s already exists"", id)
+	}
+
+	product := Product{
+		ID:       id,
+		Name:     name,
+		Quantity: quantity,
+		Price:    price,
+	}
+
+	productJSON, err := json.Marshal(product)
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(id, productJSON)
+}
+```
+
+---
+
+## Additional"
+2026-02-09T15:02:23.904729,claude-haiku-4-5@20251001,zero_shot,vuln_05_phantom.go,5565,16.255,"# Security Analysis: vuln_05_phantom.go
+
+## Summary
+**5 Critical Vulnerabilities Detected** - All related to phantom reads and MVCC conflicts in Hyperledger Fabric.
+
+---
+
+## Vulnerability 1: Phantom Read in CloseAuction
+
+**Type:** Phantom Read / MVCC Conflict (Read-After-Write)
+
+**Severity:** Critical
+
+**Location:** `CloseAuction()` function, lines 57-95
+
+**Description:**
+The function performs a range query on all bids for an auction using `GetStateByPartialCompositeKey()`, then writes an aggregated summary. The broad read-set created by the range query is vulnerable to phantom reads:
+- Transaction T1 reads bids {Bid1, Bid2} for AuctionID=""A1""
+- Transaction T2 concurrently inserts Bid3 for AuctionID=""A1""
+- T1's read-set becomes stale; MVCC validation fails
+- The transaction is rejected despite logical correctness
+
+**Recommended Fix:**
+```go
+// Option 1: Use GetStateByRange with explicit key bounds to minimize read-set
+// Option 2: Accept phantom read risk and implement retry logic
+// Option 3: Use private data collections with deterministic ordering
+// Option 4: Implement application-level locking via a state-based mutex
+
+func (a *AuctionContract) CloseAuction(ctx contractapi.TransactionContextInterface, auctionID string) error {
+	// Add explicit version check or use transient data for auction state
+	auctionStateKey := ""AUCTION_STATE_"" + auctionID
+	auctionStateBytes, _ := ctx.GetStub().GetState(auctionStateKey)
+	if auctionStateBytes == nil {
+		return fmt.Errorf(""auction not found or already closed"")
+	}
+	
+	// Minimize read-set by reading only necessary keys
+	// Consider using a pre-computed summary updated incrementally
+	// rather than scanning all bids at close time
+	
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Bid"", []string{auctionID})
+	if err != nil {
+		return fmt.Errorf(""failed to query bids: %v"", err)
+	}
+	defer resultsIterator.Close()
+	
+	// ... rest of logic ...
+	
+	// Write with explicit version to detect conflicts
+	return ctx.GetStub().PutState(""AUCTION_RESULT_""+auctionID, summaryJSON)
+}
+```
+
+---
+
+## Vulnerability 2: Lost Update in IncrementCounter
+
+**Type:** Phantom Read / Lost Update (Read-Modify-Write Conflict)
+
+**Severity:** Critical
+
+**Location:** `IncrementCounter()` function, lines 98-120
+
+**Description:**
+Classic read-modify-write race condition:
+- Transaction T1 reads counter=5, increments to 6, writes 6
+- Transaction T2 reads counter=5, increments to 6, writes 6
+- Expected result: counter=7; Actual result: counter=6 (lost update)
+- MVCC validation detects the conflict and rejects one transaction
+
+This pattern is fundamentally incompatible with Fabric's MVCC model for concurrent operations.
+
+**Recommended Fix:**
+```go
+// Option 1: Use atomic increment via chaincode-level state management
+// Option 2: Avoid read-modify-write; use append-only log instead
+// Option 3: Implement optimistic locking with version numbers
+
+func (a *AuctionContract) IncrementCounter(ctx contractapi.TransactionContextInterface, counterKey string) error {
+	// BETTER: Use a composite key with timestamp to create unique entries
+	// instead of modifying a single counter
+	timestamp := ctx.GetStub().GetTxTimestamp()
+	incrementKey := fmt.Sprintf(""%s#%d"", counterKey, timestamp.Seconds)
+	
+	return ctx.GetStub().PutState(incrementKey, []byte(""1""))
+	
+	// Query aggregates all increment entries when count is needed:
+	// SELECT COUNT(*) FROM ledger WHERE key LIKE counterKey#%
+}
+
+// Alternative: Use a state-based lock
+func (a *AuctionContract) IncrementCounterWithLock(ctx contractapi.TransactionContextInterface, counterKey string) error {
+	lockKey := counterKey + ""_LOCK""
+	
+	// Attempt to acquire lock (non-blocking)
+	lockBytes, _ := ctx.GetStub().GetState(lockKey)
+	if lockBytes != nil {
+		return fmt.Errorf(""counter locked by another transaction"")
+	}
+	
+	// Acquire lock
+	ctx.GetStub().PutState(lockKey, []byte(""LOCKED""))
+	
+	// Perform read-modify-write
+	counterBytes, _ := ctx.GetStub().GetState(counterKey)
+	counter := 0
+	if counterBytes != nil {
+		counter, _ = strconv.Atoi(string(counterBytes))
+	}
+	counter++
+	
+	// Release lock and write
+	ctx.GetStub().DelState(lockKey)
+	return ctx.GetStub().PutState(counterKey, []byte(strconv.Itoa(counter)))
+}
+```
+
+---
+
+## Vulnerability 3: Phantom Read in TransferWithBalanceCheck
+
+**Type:** Phantom Read / Check-Then-Act Race Condition
+
+**Severity:** Critical
+
+**Location:** `TransferWithBalanceCheck()` function, lines 123-155
+
+**Description:**
+The function reads balance, validates it, then writes back. Between the read and write, another transaction may modify the balance:
+- Transaction T1 reads from.balance=100, checks 100 >= 50 ✓
+- Transaction T2 reads from.balance=100, transfers 60 to another account
+- T2 writes from.balance=40
+- T1 writes from.balance=50 (should be -10, but check passed)
+- Result: Double-spending or incorrect balance
+
+MVCC will reject one transaction, but the check-then-act pattern is inherently unsafe.
+
+**Recommended Fix:**
+```go
+func (a *AuctionContract) TransferWithBalanceCheck(ctx contractapi.TransactionContextInterface, from string, to string, amount float64) error {
+	// Option 1: Use a single atomic operation (not available in Fabric)
+	// Option 2: Use private data with endorsement policy requiring both parties
+	// Option 3: Implement a two-phase commit pattern
+	// Option 4: Use a transaction log with settlement
+	
+	// RECOMMENDED: Append-only transaction log approach
+	txID := ctx.GetStub().GetTxID()
+	txKey := fmt.Sprintf(""TX_%s_%s_%s"", from, to, txID)
+	
+	txRecord := map[string]interface{}{
+		""from"":   from,
+		""to"":     to,
+		""amount"": amount,
+		""status"": ""PENDING"",
+	}
+	
+	txJSON, _ := json.Marshal(txRecord)
+	ctx.GetStub().PutState(txKey, txJSON)
+	
+	// In a separate chaincode or off-chain process, settle transactions
+	// after verifying final balances
+	
+	return nil
+}
+
+// Alternative: Use endorsement policy to enforce mutual agreement
+func (a *AuctionContract) TransferWithMutualEndorsement(ctx contractapi.TransactionContextInterface, from string, to string, amount float64) error {
+	// Requires endorsement from both 'from' and 'to' organizations
+	// This prevents one party from unilaterally modifying balances
+	
+	clientID := ctx.GetClientIdentity().GetID()
+	
+	// Verify caller is either sender or receiver
+	if clientID != from && clientID != to {
+		return fmt.Errorf(""unauthorized: caller must be sender or receiver"")
+	}
+	
+	// Create pending transfer that requires both signatures
+	transferKey := fmt.Sprintf(""TRANSFER_%s_%s_%s"", from, to, ctx.GetStub().GetTxID())
+	transferRecord := map[string]interface{}{
+		""from"":      from,
+		""to"":        to,
+		""amount"":    amount,
+		""approver"":  clientID,
+		""timestamp"": ctx.GetStub().GetTxTimestamp(),
+	}
+	
+	transferJSON, _ := json.Marshal(transferRecord)
+	return ctx.GetStub().PutState(transferKey,"
+2026-02-09T15:02:37.988536,claude-haiku-4-5@20251001,zero_shot,vuln_06_b_conditional_leak.go,5739,14.083,"# Security Analysis: vuln_06_b_conditional_leak.go
+
+## Summary
+**Vulnerabilities Found: 3 Critical Issues**
+
+All vulnerabilities relate to **Iterator Resource Leaks** - a critical issue in Hyperledger Fabric that can exhaust gRPC stream resources, cause peer crashes, and enable denial-of-service attacks.
+
+---
+
+## Vulnerability 1: Iterator Leak via Early Return Before Defer
+
+**Vulnerability Type:** Resource Leak / Iterator Not Closed  
+**Severity:** Critical  
+**Affected Code Location:** `ProcessClaimsByRange()` function, lines 28-35
+
+**Description:**
+```go
+for resultsIterator.HasNext() {
+    claimCount++
+    resultsIterator.Next()
+}
+if claimCount == 0 {
+    return fmt.Errorf(""no claims found in range %s to %s"", startKey, endKey)  // Line 35
+}
+
+defer resultsIterator.Close()  // Line 38 - Never reached if early return occurs
+```
+
+The `defer` statement is placed **after** the early return. In Go, `defer` statements are only registered when execution reaches them. If the function returns at line 35, the `defer` at line 38 is never registered, leaving `resultsIterator` unclosed.
+
+**Impact:**
+- gRPC stream remains open on the peer
+- Repeated calls exhaust peer resources
+- Can lead to peer unresponsiveness or crash
+- Enables resource exhaustion DoS attacks
+
+**Recommended Fix:**
+```go
+func (ic *InsuranceContract) ProcessClaimsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string, approver string) error {
+	if approver == """" {
+		return fmt.Errorf(""approver cannot be empty"")
+	}
+
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return fmt.Errorf(""failed to get state by range: %v"", err)
+	}
+	defer resultsIterator.Close()  // MOVE DEFER HERE - immediately after opening iterator
+
+	claimCount := 0
+	for resultsIterator.HasNext() {
+		claimCount++
+		resultsIterator.Next()
+	}
+	if claimCount == 0 {
+		return fmt.Errorf(""no claims found in range %s to %s"", startKey, endKey)
+	}
+
+	// Re-query to actually process
+	resultsIterator2, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return err
+	}
+	defer resultsIterator2.Close()
+	// ... rest of function
+}
+```
+
+---
+
+## Vulnerability 2: Iterator Leak via Conditional Close
+
+**Vulnerability Type:** Resource Leak / Iterator Not Closed on Normal Path  
+**Severity:** Critical  
+**Affected Code Location:** `GetHighValueClaims()` function, lines 56-85
+
+**Description:**
+```go
+if threshold > 0 {
+    // Normal processing path — iterator iterated but never closed
+    for resultsIterator.HasNext() {
+        queryResult, err := resultsIterator.Next()
+        if err != nil {
+            return nil, err  // Leaked iterator on error path
+        }
+        // ... process claim
+    }
+    // Falls through to return without Close()
+} else {
+    resultsIterator.Close()  // Only closed in error case
+    return nil, fmt.Errorf(""threshold must be positive, got %d"", threshold)
+}
+
+return highValue, nil  // Iterator not closed on normal path
+```
+
+The iterator is only closed in the `else` branch (error case). The normal execution path (`threshold > 0`) completes the loop and returns without closing the iterator.
+
+**Impact:**
+- Most common code path leaks resources
+- Systematic resource exhaustion with normal usage
+- Peer degradation over time
+
+**Recommended Fix:**
+```go
+func (ic *InsuranceContract) GetHighValueClaims(ctx contractapi.TransactionContextInterface, startKey string, endKey string, threshold int) ([]*Claim, error) {
+	if threshold <= 0 {
+		return nil, fmt.Errorf(""threshold must be positive, got %d"", threshold)
+	}
+
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return nil, fmt.Errorf(""failed to query range: %v"", err)
+	}
+	defer resultsIterator.Close()  // Single defer for all paths
+
+	var highValue []*Claim
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err
+		}
+
+		var claim Claim
+		json.Unmarshal(queryResult.Value, &claim)
+		if claim.Amount >= threshold {
+			highValue = append(highValue, &claim)
+		}
+	}
+
+	return highValue, nil
+}
+```
+
+---
+
+## Vulnerability 3: Iterator Leak via Early Return in Loop
+
+**Vulnerability Type:** Resource Leak / Iterator Not Closed on Early Exit  
+**Severity:** Critical  
+**Affected Code Location:** `ArchiveOldClaims()` function, lines 88-120
+
+**Description:**
+```go
+resultsIterator, err := ctx.GetStub().GetStateByRange(prefix+""_0000"", prefix+""_9999"")
+if err != nil {
+    return 0, err
+}
+// No defer — relying on manual Close() at end
+
+archived := 0
+for resultsIterator.HasNext() {
+    queryResult, err := resultsIterator.Next()
+    if err != nil {
+        return archived, err  // Leaked — manual Close() never reached
+    }
+    // ... process claim
+    
+    if archived >= 100 {
+        return archived, nil  // Leaked — manual Close() never reached
+    }
+}
+
+resultsIterator.Close()  // Only reached if loop completes normally
+return archived, nil
+```
+
+Multiple early return paths (error handling and batch limit) bypass the manual `Close()` call at the end.
+
+**Impact:**
+- Iterator leaks on both error and success paths
+- Batch processing creates systematic leaks
+- Predictable resource exhaustion pattern
+
+**Recommended Fix:**
+```go
+func (ic *InsuranceContract) ArchiveOldClaims(ctx contractapi.TransactionContextInterface, prefix string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(prefix+""_0000"", prefix+""_9999"")
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close()  // Use defer instead of manual Close()
+
+	archived := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return archived, err  // Now safe — defer will close
+		}
+
+		var claim Claim
+		json.Unmarshal(queryResult.Value, &claim)
+
+		if claim.Status == ""CLOSED"" {
+			archiveKey := ""ARCHIVE_"" + claim.ClaimID
+			ctx.GetStub().PutState(archiveKey, queryResult.Value)
+			ctx.GetStub().DelState(claim.ClaimID)
+			archived++
+
+			if archived >= 100 {
+				return archived, nil  // Now safe — defer will close
+			}
+		}
+	}
+
+	return archived, nil  // defer automatically closes
+}
+```
+
+---
+
+## Additional Issues
+
+### Minor: Unchecked Error in JSON Unmarshal
+**Location:** Lines 72, 103, 113  
+**Severity:** Medium
+
+```go
+json.Unmarshal(queryResult.Value, &claim)  // Error ignored
+```
+
+**Fix:**
+```go
+if err := json.Unmarshal(queryResult.Value, &claim); err != nil {
+    return nil, fmt.Errorf(""failed to unmarshal claim: %v"", err)
+}
+```
+
+---
+
+## Summary Table
+
+| Function | Vulnerability | Type | Severity |
+|----------|---|---|---|
+| `ProcessClaimsByRange` | Defer after early return | Iterator Leak | Critical |
+| `GetHighValueClaims` | Conditional close on error path only | Iterator Leak | Critical |
+| `ArchiveOldClaims` | Multiple early returns"
+2026-02-09T15:02:49.920211,claude-haiku-4-5@20251001,zero_shot,vuln_06_iterator_leak.go,5460,11.931,"# Security Analysis: vuln_06_iterator_leak.go
+
+## Summary
+**4 Critical Vulnerabilities Detected** — All related to iterator resource leaks in range query operations.
+
+---
+
+## Vulnerability Details
+
+### 1. Iterator Resource Leak in GetAssetsByRange()
+**Vulnerability Type:** Resource Exhaustion / Iterator Leak  
+**Severity:** Critical  
+**Location:** `GetAssetsByRange()` function, lines 43-67
+
+**Description:**
+The `GetStateByRange()` iterator is never closed. The iterator maintains an open gRPC stream to the peer's state database. Without explicit closure via `defer resultsIterator.Close()`, the stream remains open indefinitely, causing:
+- File descriptor exhaustion on the peer
+- gRPC connection pool depletion
+- Memory leaks
+- Eventual denial of service
+
+Multiple early return paths (lines 54, 59) compound the issue by exiting without cleanup.
+
+**Recommended Fix:**
+```go
+func (ar *AssetRegistryContract) GetAssetsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) ([]*RegistryAsset, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return nil, fmt.Errorf(""failed to get state by range: %v"", err)
+	}
+	defer resultsIterator.Close()  // ADD THIS LINE
+
+	var assets []*RegistryAsset
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return nil, err  // Now safe — defer will close iterator
+		}
+
+		var asset RegistryAsset
+		err = json.Unmarshal(queryResult.Value, &asset)
+		if err != nil {
+			return nil, err  // Now safe — defer will close iterator
+		}
+
+		assets = append(assets, &asset)
+	}
+
+	return assets, nil
+}
+```
+
+---
+
+### 2. Iterator Resource Leak in SumAssetValues()
+**Vulnerability Type:** Resource Exhaustion / Iterator Leak  
+**Severity:** Critical  
+**Location:** `SumAssetValues()` function, lines 70-95
+
+**Description:**
+Same pattern as vulnerability #1. The `GetStateByRange()` iterator at line 75 is never closed. The early return at line 84 exits without cleanup, leaking the gRPC stream and database cursor.
+
+**Recommended Fix:**
+```go
+func (ar *AssetRegistryContract) SumAssetValues(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, fmt.Errorf(""failed to query range: %v"", err)
+	}
+	defer resultsIterator.Close()  // ADD THIS LINE
+
+	totalValue := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return 0, err  // Now safe — defer will close iterator
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		if asset.IsActive {
+			totalValue += asset.Value
+		}
+	}
+
+	return totalValue, nil
+}
+```
+
+---
+
+### 3. Iterator Resource Leak in TransferAssetsByOwner()
+**Vulnerability Type:** Resource Exhaustion / Iterator Leak  
+**Severity:** Critical  
+**Location:** `TransferAssetsByOwner()` function, lines 98-127
+
+**Description:**
+The `GetStateByPartialCompositeKey()` iterator at line 105 is never closed. Although this uses a different query method than `GetStateByRange()`, it still returns an iterator that holds database resources. Multiple error paths (lines 112, 119) exit without cleanup.
+
+**Recommended Fix:**
+```go
+func (ar *AssetRegistryContract) TransferAssetsByOwner(ctx contractapi.TransactionContextInterface, fromOwner string, toOwner string) error {
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Asset"", []string{fromOwner})
+	if err != nil {
+		return fmt.Errorf(""failed to query assets by owner: %v"", err)
+	}
+	defer resultsIterator.Close()  // ADD THIS LINE
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return err  // Now safe — defer will close iterator
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		asset.Owner = toOwner
+
+		updatedJSON, _ := json.Marshal(asset)
+		err = ctx.GetStub().PutState(asset.ID, updatedJSON)
+		if err != nil {
+			return err  // Now safe — defer will close iterator
+		}
+	}
+
+	return nil
+}
+```
+
+---
+
+### 4. Iterator Resource Leak in DeactivateRange()
+**Vulnerability Type:** Resource Exhaustion / Iterator Leak  
+**Severity:** Critical  
+**Location:** `DeactivateRange()` function, lines 130-158
+
+**Description:**
+The `GetStateByRange()` iterator at line 135 is never closed. The error return at line 145 exits without cleanup. This is particularly dangerous in write-heavy operations where the function may be called frequently, rapidly exhausting peer resources.
+
+**Recommended Fix:**
+```go
+func (ar *AssetRegistryContract) DeactivateRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close()  // ADD THIS LINE
+
+	count := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return count, err  // Now safe — defer will close iterator
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+
+		if asset.IsActive {
+			asset.IsActive = false
+			updatedJSON, _ := json.Marshal(asset)
+			ctx.GetStub().PutState(asset.ID, updatedJSON)
+			count++
+		}
+	}
+
+	return count, nil
+}
+```
+
+---
+
+## General Remediation Pattern
+
+**All iterator-returning methods require immediate defer closure:**
+
+```go
+iterator, err := ctx.GetStub().GetStateByRange(...)
+// OR
+iterator, err := ctx.GetStub().GetStateByPartialCompositeKey(...)
+// OR
+iterator, err := ctx.GetStub().GetQueryResultsIterator(...)
+
+if err != nil {
+	return err
+}
+defer iterator.Close()  // MANDATORY for all iterator types
+```
+
+---
+
+## Impact Assessment
+
+| Aspect | Impact |
+|--------|--------|
+| **Peer Stability** | High — File descriptor exhaustion causes peer crashes |
+| **Network Availability** | High — gRPC connection pool depletion affects all chaincodes |
+| **Data Integrity** | Low — No data corruption, but availability is compromised |
+| **Exploitability** | High — Trivial to trigger via repeated range queries |
+
+---
+
+## Recommendations
+
+1. **Immediate Action:** Add `defer iterator.Close()` to all four functions
+2. **Code Review:** Audit entire codebase for iterator usage patterns
+3. **Testing:** Implement stress tests that verify iterator cleanup under error conditions
+4. **Linting:** Use static analysis tools to detect unclosed iterators (e.g., `golangci-lint` with appropriate rules)
+5. **Documentation:** Establish team guidelines requiring defer closure for all Fabric SDK iterators"
+2026-02-09T15:03:04.657226,claude-sonnet-4@20250514,zero_shot,safe_01_logging.go,5177,14.736,"After analyzing the provided Hyperledger Fabric chaincode 'safe_01_logging.go', I have conducted a thorough security review focusing on access control, input validation, read-after-write conflicts, private data leakage, non-deterministic operations, and key management.
+
+## Security Analysis Result:
+
+**No vulnerabilities detected.**
+
+## Detailed Analysis:
+
+### 1. **Non-deterministic Operations** ✅ SECURE
+The chaincode correctly handles time operations:
+- `time.Now()` is used only for console logging and performance measurement, never stored on the ledger
+- All ledger timestamps use `ctx.GetStub().GetTxTimestamp()` which provides deterministic, consensus-agreed timestamps
+- The comments clearly document this safe pattern
+
+### 2. **Input Validation** ✅ SECURE
+- Proper existence checks before document creation (`DocumentExists`)
+- Status validation before approval (checks for ""PENDING"" status)
+- JSON marshaling/unmarshaling with proper error handling
+- Null checks for retrieved data
+
+### 3. **Access Control** ✅ ACCEPTABLE
+- While there's no explicit role-based access control, this appears to be a basic audit logging contract
+- The `approver` parameter allows tracking of who approved documents
+- For production use, additional access controls might be needed depending on requirements
+
+### 4. **Read-After-Write Conflicts** ✅ SECURE
+- Proper read-modify-write pattern in `ApproveDocument`
+- Status checks prevent invalid state transitions
+- No phantom read vulnerabilities detected
+
+### 5. **Private Data Leakage** ✅ SECURE
+- No private data collections used
+- All data operations use public state
+- No sensitive data exposure risks identified
+
+### 6. **Key Management** ✅ SECURE
+- Uses simple string IDs as keys
+- Proper key existence validation
+- No cryptographic key management issues
+
+### 7. **Error Handling** ✅ SECURE
+- Comprehensive error handling throughout
+- Proper error propagation
+- No information leakage through error messages
+
+## Code Quality Observations:
+
+**Strengths:**
+- Excellent documentation of safe patterns with detailed comments
+- Proper use of deterministic vs non-deterministic operations
+- Clean separation of concerns
+- Robust error handling
+
+**Best Practices Demonstrated:**
+- Deterministic timestamp usage for ledger data
+- Safe logging patterns for debugging
+- Proper JSON serialization handling
+- Clear function documentation
+
+This chaincode demonstrates excellent security practices and serves as a good example of how to safely handle time-based operations in Hyperledger Fabric while maintaining deterministic behavior across the network."
+2026-02-09T15:03:29.330883,claude-sonnet-4@20250514,zero_shot,safe_02_local_var.go,6316,24.674,"After analyzing the Hyperledger Fabric chaincode file 'safe_02_local_var.go', I found the following security vulnerabilities:
+
+## Vulnerability 1: Missing Access Control
+**Type:** Access Control Issues  
+**Severity:** Critical  
+**Location:** All transaction functions (CreatePayment, RefundPayment)  
+**Description:** The chaincode lacks any access control mechanisms. Any user can create payments on behalf of any other user, refund any payment, and perform administrative operations without authentication or authorization checks.  
+**Recommended Fix:** Implement proper access control using client identity checks:
+```go
+func (p *PaymentContract) CreatePayment(ctx contractapi.TransactionContextInterface, id string, from string, to string, amount float64, currency string) error {
+    // Add access control
+    clientID, err := ctx.GetClientIdentity().GetID()
+    if err != nil {
+        return fmt.Errorf(""failed to get client identity: %v"", err)
+    }
+    
+    // Verify the caller is authorized to create payments for 'from' account
+    if !isAuthorized(clientID, from) {
+        return fmt.Errorf(""unauthorized: client %s cannot create payment for account %s"", clientID, from)
+    }
+    // ... rest of function
+}
+```
+
+## Vulnerability 2: Insufficient Input Validation
+**Type:** Input Validation Flaws  
+**Severity:** High  
+**Location:** CreatePayment function (lines 45-80)  
+**Description:** The function lacks comprehensive input validation for critical parameters:
+- No validation for empty/null strings (id, from, to)
+- No validation for maximum string lengths
+- No validation for special characters or injection attempts
+- Amount validation only checks if positive, not for reasonable upper bounds beyond maxTransferLimit
+
+**Recommended Fix:** Add comprehensive input validation:
+```go
+func validateInput(id, from, to string, amount float64) error {
+    if strings.TrimSpace(id) == """" || len(id) > 50 {
+        return fmt.Errorf(""invalid payment ID"")
+    }
+    if strings.TrimSpace(from) == """" || len(from) > 100 {
+        return fmt.Errorf(""invalid from account"")
+    }
+    if strings.TrimSpace(to) == """" || len(to) > 100 {
+        return fmt.Errorf(""invalid to account"")
+    }
+    if from == to {
+        return fmt.Errorf(""from and to accounts cannot be the same"")
+    }
+    if amount <= 0 || math.IsInf(amount, 0) || math.IsNaN(amount) {
+        return fmt.Errorf(""invalid amount"")
+    }
+    return nil
+}
+```
+
+## Vulnerability 3: Read-After-Write Conflict (Phantom Read)
+**Type:** Read-After-Write Conflicts  
+**Severity:** Medium  
+**Location:** CreatePayment function (line 79)  
+**Description:** The function doesn't check if a payment with the given ID already exists before creating a new one. This could lead to race conditions where multiple transactions attempt to create the same payment ID simultaneously, potentially causing inconsistent state across endorsing peers.
+
+**Recommended Fix:** Add existence check before creation:
+```go
+func (p *PaymentContract) CreatePayment(ctx contractapi.TransactionContextInterface, id string, from string, to string, amount float64, currency string) error {
+    // Check if payment already exists
+    existingPayment, err := ctx.GetStub().GetState(id)
+    if err != nil {
+        return fmt.Errorf(""failed to check payment existence: %v"", err)
+    }
+    if existingPayment != nil {
+        return fmt.Errorf(""payment with ID %s already exists"", id)
+    }
+    
+    // ... rest of validation and creation logic
+}
+```
+
+## Vulnerability 4: Potential Floating Point Precision Issues
+**Type:** Non-deterministic Operations  
+**Severity:** Medium  
+**Location:** Fee calculation and roundToDecimal function (lines 65, 130-133)  
+**Description:** While the code attempts to handle floating-point precision with rounding, floating-point arithmetic can still lead to slight variations across different architectures or compiler optimizations, potentially causing endorsement mismatches.
+
+**Recommended Fix:** Use integer arithmetic for financial calculations:
+```go
+// Use integer arithmetic (cents instead of dollars)
+type Payment struct {
+    ID       string `json:""id""`
+    From     string `json:""from""`
+    To       string `json:""to""`
+    AmountCents int64 `json:""amount_cents""` // Store as cents
+    FeeCents    int64 `json:""fee_cents""`
+    Currency string `json:""currency""`
+    Status   string `json:""status""`
+}
+
+// Calculate fee in cents
+func calculateFeeCents(amountCents int64) int64 {
+    return (amountCents * int64(feeRateBasisPts)) / 10000
+}
+```
+
+## Vulnerability 5: Missing Transaction Atomicity Check
+**Type:** Read-After-Write Conflicts  
+**Severity:** Medium  
+**Location:** RefundPayment function (lines 95-96)  
+**Description:** The refund operation performs two separate PutState operations without ensuring atomicity. If the second operation fails, the payment status will be marked as ""REFUNDED"" but no refund record will exist, leading to inconsistent state.
+
+**Recommended Fix:** Implement proper error handling and rollback mechanism:
+```go
+func (p *PaymentContract) RefundPayment(ctx contractapi.TransactionContextInterface, paymentID string) error {
+    // ... existing validation logic ...
+    
+    // Prepare both updates before committing any
+    updatedJSON, err := json.Marshal(payment)
+    if err != nil {
+        return err
+    }
+    
+    refundJSON, err := json.Marshal(refundRecord)
+    if err != nil {
+        return err
+    }
+    
+    // Commit both operations
+    err = ctx.GetStub().PutState(paymentID, updatedJSON)
+    if err != nil {
+        return fmt.Errorf(""failed to update payment status: %v"", err)
+    }
+    
+    err = ctx.GetStub().PutState(refundID, refundJSON)
+    if err != nil {
+        return fmt.Errorf(""failed to create refund record: %v"", err)
+    }
+    
+    return nil
+}
+```
+
+The most critical issue is the complete lack of access control, which should be addressed immediately before deploying this chaincode to any production environment."

@@ -1,0 +1,40 @@
+{
+  "script_version": "1.0",
+  "script": "13_run_golisa_re_llama.py",
+  "experiment": "B2 - GoLiSA Running_Examples x Llama-3.1-8B (zero-shot)",
+  "run_start": "2026-02-10T13:36:06.187711",
+  "run_end": "2026-02-10T13:37:31.305819",
+  "run_duration_s": 85.1,
+  "output_csv": "golisa_re_llama_260210_1336.csv",
+  "output_csv_bytes": 33656,
+  "total_records": 5,
+  "dataset_dir": "C:\\Users\\qkrtj\\Desktop\\00_논문모음\\[AMLDS_2026]Japan_Osaka\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Running_Examples",
+  "dataset_files": [
+    "channel/Channel.go",
+    "global/GlobalVariable.go",
+    "goroutine/GoRoutines.go",
+    "map-iter/MapIteration.go",
+    "method-function/MethodFunction.go"
+  ],
+  "dataset_file_count": 5,
+  "model": "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+  "inference_params": {
+    "n_gpu_layers": -1,
+    "n_ctx": 4096,
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "system_prompt": "You are a Hyperledger Fabric Security Expert. Analyze the following Go chaincode for security vulnerabilities. Focus on: access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, and insecure key management. For each vulnerability found, provide:\n1. Vulnerability type\n2. Severity (Critical/High/Medium/Low)\n3. Affected code location (function name and line reference)\n4. Description of the issue\n5. Recommended fix\nIf no vulnerabilities are found, state 'No vulnerabilities detected.'",
+  "timing": {
+    "total_s": 64.2,
+    "avg_s": 12.836,
+    "per_file": [
+      19.075,
+      9.07,
+      9.387,
+      7.971,
+      18.675
+    ]
+  },
+  "run_id": "7d2b66ba"
+}

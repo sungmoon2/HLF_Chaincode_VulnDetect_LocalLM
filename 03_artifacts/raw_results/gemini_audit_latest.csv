@@ -1,0 +1,1882 @@
+timestamp,model,prompt_strategy,file,code_chars,elapsed_s,result
+2026-02-09T15:56:54.002465,google/gemini-2.5-pro,zero_shot,safe_01_logging.go,5177,23.462,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_01_logging.go`). The chaincode demonstrates good practices regarding deterministic operations by correctly using `GetTxTimestamp()` for ledger state changes and restricting `time.Now()` to non-state-affecting logging. However, I have identified several security vulnerabilities, primarily related to access control and input validation.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1: Missing Caller Identity Verification (Broken Access Control)
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** `App"
+2026-02-09T15:57:13.075168,google/gemini-2.5-pro,zero_shot,safe_02_local_var.go,6316,19.073,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_02_local_var.go`).
+
+Despite the code's comments highlighting several ""safe patterns,"" which are indeed good practices for preventing non-determinism, I have identified several significant security vulnerabilities. The most critical issues relate to a complete lack of access control.
+
+Here is a detailed breakdown"
+2026-02-09T15:57:33.775531,google/gemini-2.5-pro,zero_shot,safe_03_map_read.go,6388,20.7,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_03_map_read.go`). The chaincode demonstrates safe patterns for handling Go maps to avoid non-determinism, but it contains several other significant security vulnerabilities.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1: Missing Caller Authorization
+
+*   **Vulnerability"
+2026-02-09T15:57:52.425088,google/gemini-2.5-pro,zero_shot,safe_04_math_rand.go,5307,18.65,"Based on the security analysis of the provided Hyperledger Fabric chaincode `safe_04_math_rand.go`, the following vulnerabilities have been identified.
+
+While the code correctly avoids non-determinism by isolating the use of `math/rand` to logging, it suffers from other significant security flaws.
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **"
+2026-02-09T15:58:11.890236,google/gemini-2.5-pro,zero_shot,safe_05_deterministic_time.go,5861,19.465,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_05_deterministic_time.go`).
+
+The chaincode correctly implements deterministic time handling, which is a common source of vulnerabilities. However, it contains several other significant security flaws.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `IssueCertificate` (line 30)
+    *   `RenewCertificate` (line 78)
+    *   `RevokeCertificate` (line 111)
+*   **Description of the Issue:** The chaincode functions `IssueCertificate`, `RenewCertificate`, and `RevokeCertificate` do not perform any authorization checks. This means that any identity that can successfully submit a transaction proposal to the peer (i.e., any member of the channel) can call these functions. A malicious or unauthorized user could issue fraudulent certificates, or arbitrarily renew or revoke any existing certificate on the ledger, regardless of ownership or permissions.
+*   **Recommended Fix:** Implement attribute-based or role-based access control. Before executing the core logic, each function should verify the identity of the caller.
+    *   For `IssueCertificate`, check if the caller has an ""issuer"" role or attribute.
+    *   For `RenewCertificate` and `RevokeCertificate`, check if the caller is the certificate holder or a designated administrator.
+
+    **Example"
+2026-02-09T15:58:31.434869,google/gemini-2.5-pro,zero_shot,safe_06_external_lib.go,6189,19.544,"Based on my analysis of the Hyperledger Fabric chaincode file `safe_06_external_lib.go`, I have identified several security vulnerabilities. The code, while correctly implementing deterministic logic, suffers from significant access control and input validation flaws.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type"
+2026-02-09T15:58:51.010011,google/gemini-2.5-pro,zero_shot,vuln_01_b_interprocedural.go,5157,19.575,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is a detailed report of the security vulnerabilities I have found.
+
+### Summary of Findings
+
+The chaincode contains several **Critical** and **High** severity vulnerabilities. The most critical issues relate to non-deterministic operations that will cause transaction failures and undermine the integrity of the ledger. Additionally, the lack"
+2026-02-09T15:59:10.517269,google/gemini-2.5-pro,zero_shot,vuln_01_time.go,4291,19.507,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the vulnerabilities found.
+
+***
+
+### Analysis Summary
+
+The provided chaincode contains several significant security and functional vulnerabilities. The most critical issue is the repeated use of a non-deterministic function (`time.Now()`), which will cause transaction endorsement to fail. Additionally, the chain"
+2026-02-09T15:59:30.120569,google/gemini-2.5-pro,zero_shot,vuln_02_global.go,4833,19.602,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_02_global.go`). The chaincode contains several critical security vulnerabilities related to the use of global variables, which leads to non-deterministic behavior.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1: Non-Deterministic Operations
+
+*   **Vulnerability Type:**"
+2026-02-09T15:59:49.830201,google/gemini-2.5-pro,zero_shot,vuln_03_goroutine.go,5336,19.709,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_03_goroutine.go`). The code contains several critical vulnerabilities related to non-deterministic operations, as well as significant access control and input validation flaws.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### Vulnerability 1: Non-deterministic Write Operations in"
+2026-02-09T16:00:09.215782,google/gemini-2.5-pro,zero_shot,vuln_04_b_nested_map.go,5711,19.386,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities, primarily related to non-deterministic operations which are critical failures in a blockchain context.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Vulnerability Analysis Summary
+
+| ID | Vulnerability Type | Severity | Function | Summary |
+|:---|:---|"
+2026-02-09T16:00:28.965068,google/gemini-2.5-pro,zero_shot,vuln_04_map_iter.go,4688,19.748,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_04_map_iter.go`). The code contains several significant vulnerabilities that would prevent it from functioning correctly and securely in a multi-peer Hyperledger Fabric environment.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Vulnerability Analysis Summary
+
+| ID | Vulnerability Type |"
+2026-02-09T16:00:48.970686,google/gemini-2.5-pro,zero_shot,vuln_05_phantom.go,5565,20.006,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_05_phantom.go`). The code contains several significant security and design vulnerabilities.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Vulnerability Analysis Summary
+
+| ID | Vulnerability Type | Severity | Function |
+|----|-----------------------------------|----------|--------------------------|"
+2026-02-09T16:01:07.053904,google/gemini-2.5-pro,zero_shot,vuln_06_b_conditional_leak.go,5739,18.083,"Based on my analysis of the provided Hyperledger Fabric chaincode `vuln_06_b_conditional_leak.go`, I have identified the following security vulnerabilities. All identified issues relate to resource management, which can lead to a denial-of-service condition on the peer.
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Resource Leak (Unclosed Iterator)
+"
+2026-02-09T16:01:24.998136,google/gemini-2.5-pro,zero_shot,vuln_06_iterator_leak.go,5460,17.943,"Based on my analysis of the provided Hyperledger Fabric chaincode `vuln_06_iterator_leak.go`, I have identified the following security vulnerabilities.
+
+### 1. Unclosed State Database Iterator
+
+*   **Vulnerability Type**: Resource Leak (leading to Denial of Service)
+*   **Severity**: High
+*   **Affected Code Locations**:
+    1.  `GetAssetsByRange` (Line 49)
+    2.  `SumAssetValues` (Line 74)
+    3.  `TransferAssetsByOwner` (Line 96)
+    4.  `DeactivateRange` (Line 118)
+
+*   **Description of the Issue**:
+    The chaincode functions `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, and `DeactivateRange` use state query methods (`GetStateByRange`, `GetStateByPartialCompositeKey`) that return an iterator object (`StateQueryIteratorInterface`). These iterators maintain an open connection, such as a gRPC stream and a database cursor, to the peer's state database.
+
+    The code fails to call the `Close()` method on these iterators. This means that every time these functions are invoked, a resource is consumed on the peer and never released. This leak occurs both on successful execution and when the functions exit early due to an error during iteration.
+
+    Repeated calls to these functions will progressively exhaust the peer's available resources (e.g., file descriptors, memory, gRPC connection limits). Eventually, the peer will become unstable, unresponsive, or crash, resulting in a Denial of Service (DoS) for all organizations relying on that peer.
+
+*   **Recommended Fix**:
+    Immediately after successfully creating an iterator, a `defer` statement should be used to schedule the `Close()` method. This ensures that the iterator's resources are released regardless of whether the function completes successfully or returns an error.
+
+    **Example Fix for `GetAssetsByRange`:**
+    ```go
+    func (ar *AssetRegistryContract) GetAssetsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) ([]*RegistryAsset, error) {
+        resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+        if err != nil {
+            return nil, fmt.Errorf(""failed to get state by range: %v"", err)
+        }
+        // FIX: Ensure the iterator is closed when the function returns.
+        defer resultsIterator.Close()
+
+        var assets []*RegistryAsset
+        for resultsIterator.HasNext() {
+            queryResult, err := resultsIterator.Next()
+            if err != nil {
+                return nil, err // The deferred Close() will still be called.
+            }
+
+            var asset RegistryAsset
+            err = json.Unmarshal(queryResult.Value, &asset)
+            if err != nil {
+                return nil, err // The deferred Close() will still be called.
+            }
+
+            assets = append(assets, &asset)
+        }
+
+        return assets, nil
+    }
+    ```
+    This same `defer resultsIterator.Close()` pattern should be applied in `SumAssetValues`, `TransferAssetsByOwner`, and `DeactivateRange` immediately after their respective iterators are"
+2026-02-09T16:01:36.372348,google/gemini-2.5-flash,zero_shot,safe_01_logging.go,5177,11.373,"The provided Hyperledger Fabric chaincode `safe_01_logging.go` has been analyzed for security vulnerabilities.
+
+### 1. Access Control Issue (Authorization Bypass)
+
+*   **Vulnerability type**: Access Control Issue (Authorization Bypass)
+*   **Severity**: High
+*   **Affected code location**:
+    *   `CreateDocument` function (lines 2"
+2026-02-09T16:01:47.924444,google/gemini-2.5-flash,zero_shot,safe_02_local_var.go,6316,11.552,"The provided Hyperledger Fabric chaincode `safe_02_local_var.go` demonstrates good practices regarding non-deterministic operations by carefully managing package-level variables and ensuring deterministic derivation of values. However, it exhibits significant access control vulnerabilities and some minor input validation gaps.
+
+Here's a detailed analysis:
+
+---
+
+### 1. Vulnerability Type: Access Control Issue
+*   "
+2026-02-09T16:01:59.715245,google/gemini-2.5-flash,zero_shot,safe_03_map_read.go,6388,11.79,"The provided Hyperledger Fabric chaincode `safe_03_map_read.go` demonstrates good practices for handling Go maps to ensure deterministic behavior in a distributed ledger environment. The comments within the code explicitly highlight these safe patterns, particularly regarding map iteration and `json.Marshal`'s key sorting.
+
+However, a thorough security analysis reveals some common areas that are often overlooked in chaincode development,"
+2026-02-09T16:02:09.219128,google/gemini-2.5-flash,zero_shot,safe_04_math_rand.go,5307,9.503,"Here's an analysis of the provided Hyperledger Fabric chaincode for security vulnerabilities:
+
+---
+
+**1. Vulnerability Type:** Access Control Issue (Missing Authorization)
+*   **Severity:** Critical
+*   **Affected code location:** `DeliverPackage` function (lines 80-106)
+*   **Description of the issue:** The `DeliverPackage` function allows"
+2026-02-09T16:02:20.896339,google/gemini-2.5-flash,zero_shot,safe_05_deterministic_time.go,5861,11.677,"The following is an analysis of the provided Hyperledger Fabric chaincode for security vulnerabilities:
+
+---
+
+### 1. Vulnerability Type: Access Control Issue
+*   **Severity**: Critical
+*   **Affected code location**:
+    *   `IssueCertificate` function (lines 20-56)
+    *   `RenewCertificate` function (lines 64-99)
+    *   `RevokeCertificate` function (lines 107"
+2026-02-09T16:02:32.564208,google/gemini-2.5-flash,zero_shot,safe_06_external_lib.go,6189,11.667,"The provided Hyperledger Fabric chaincode `safe_06_external_lib.go` has been analyzed for security vulnerabilities. While the code correctly handles determinism for its helper functions and standard library calls as intended by the author's comments, several critical security flaws related to access control and input validation have been identified.**
+
+---
+
+### 1. Vulnerability Type: Access Control Issue"
+2026-02-09T16:02:44.015080,google/gemini-2.5-flash,zero_shot,vuln_01_b_interprocedural.go,5157,11.45,"The provided Hyperledger Fabric chaincode `vuln_01_b_interprocedural.go` has several security vulnerabilities, primarily centered around non-deterministic operations and a general lack of access control and input validation.
+
+Here's a detailed analysis:
+
+---
+
+### 1. Non-Deterministic Operations (Critical)
+
+**Vulnerability Type:** Non-deterministic operation
+**Severity:**"
+2026-02-09T16:02:55.202899,google/gemini-2.5-flash,zero_shot,vuln_01_time.go,4291,11.188,"The following security vulnerabilities have been identified in the provided Hyperledger Fabric chaincode:
+
+---
+
+### 1. Non-deterministic Operations (time.Now())
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `CreateShipment` (lines 33, 39, "
+2026-02-09T16:03:07.668204,google/gemini-2.5-flash,zero_shot,vuln_02_global.go,4833,12.464,"The provided Hyperledger Fabric chaincode `vuln_02_global.go` contains critical security vulnerabilities primarily related to the use of global variables, leading to non-deterministic transaction execution across endorsing peers. This is a fundamental violation of Hyperledger Fabric's consensus mechanism, which requires all endorsing peers to produce identical read/write sets for a transaction to be valid.
+
+Here's a detailed analysis:
+
+---
+
+### 1. Vulnerability Type: Non-Deterministic Operations (Global Variables)
+*   **Severity**: Critical
+*   **Affected code location**:
+    *   Global variables: `var transactionCounter int`, `var lastProcessedID string` (lines 12-13)
+    *   `IssueToken` function (lines 24, 28, 34)
+    *   `TransferToken` function (lines 60, 61)
+    *   `GetGlobalStats` function (line 72)
+    *   `BurnToken` function (lines 90, 93, 96, 97, 100)
+*   **Description of the issue**:
+    Hyperledger Fabric requires chaincode to be deterministic. This means that given the same inputs, all endorsing peers must produce the exact same output (read/write set). Global variables in Go chaincode are peer-local; each peer maintains its own independent copy. Their values are not synchronized across peers and are not part of the ledger state.
+    *   **`transactionCounter`**: This integer is incremented in `IssueToken`, `TransferToken`, and `BurnToken`. Since each peer starts with `transactionCounter = 0` (or some initial value) and increments it based on its own execution history, different peers will have different values for `transactionCounter` at any given time.
+        *   When `transactionCounter` is used to set `TxCount` in `Token` objects (e.g., `IssueToken`, `TransferToken`, `BurnToken`), the `Token` JSON written to the ledger will differ across peers.
+        *   When `transactionCounter` is used to derive a key (e.g., `receiptKey` in `BurnToken`), different peers will attempt to write to different keys.
+        *   When `transactionCounter` is used to set a value within a ledger entry (e.g., `receipt[""seq""]` in `BurnToken`), the content written to the ledger will differ.
+    *   **`lastProcessedID`**: This string is updated in `IssueToken`. Similar to `transactionCounter`, its value will diverge across peers.
+    *   **Consequence**: Any transaction that uses or modifies these global variables will result in different endorsing peers producing different read/write sets. This will cause endorsement policy failures, meaning the transaction will be invalidated and rejected by the ordering service, preventing it from being committed to the ledger. The `GetGlobalStats` function explicitly demonstrates this non-determinism by returning peer-local values.
+*   **Recommended fix**:
+    All state that needs to be consistent across the network and persisted must be stored on the ledger using `ctx.GetStub().PutState()` and retrieved using `ctx.GetStub().GetState()`.
+    *   **For `transactionCounter`**:
+        *   Instead of a global variable, store the counter value as a separate key-value pair on the ledger (e.g., `ctx.GetStub().PutState(""global_transaction_counter"", []byte(strconv.Itoa(currentCount)))`).
+        *   Before using the counter, read its current value from the ledger (`ctx.GetStub().GetState(""global_transaction_counter"")`).
+        *   After incrementing, write the new value back"
+2026-02-09T16:03:18.015648,google/gemini-2.5-flash,zero_shot,vuln_03_goroutine.go,5336,10.347,"The provided Hyperledger Fabric chaincode `vuln_03_goroutine.go` contains critical security vulnerabilities primarily related to non-deterministic operations caused by the use of Go goroutines within a Fabric transaction context. Fabric chaincode execution must be strictly deterministic across all endorsing peers to ensure agreement on the transaction's read-write set. Using goroutines for state access (GetState, Put"
+2026-02-09T16:03:30.119337,google/gemini-2.5-flash,zero_shot,vuln_04_b_nested_map.go,5711,12.104,"The provided Hyperledger Fabric chaincode `vuln_04_b_nested_map.go` exhibits several critical security vulnerabilities, primarily related to non-deterministic operations due to the use of Go maps. It also has potential access control and input validation issues.
+
+Here's a detailed breakdown:
+
+---
+
+### 1. Vulnerability Type: Non-Deterministic Operations ("
+2026-02-09T16:03:41.797057,google/gemini-2.5-flash,zero_shot,vuln_04_map_iter.go,4688,11.678,"The provided Hyperledger Fabric chaincode `vuln_04_map_iter.go` contains critical vulnerabilities related to non-deterministic operations due to Go's map iteration behavior, which is a common pitfall in blockchain development. It also exhibits general access control and input validation weaknesses.
+
+Here's a detailed analysis:
+
+---
+
+### 1. Vulnerability: Non-Deterministic Write-Set Order (Map Iteration)
+
+*   **Vulnerability Type**: Non-Deterministic Operation
+*   **Severity**: Critical
+*   **Affected Code Location**:
+    *   `BatchRestock` function (lines 40-59)
+    *   `ApplyDiscounts` function (lines 100-116)
+*   **Description of the Issue**:
+    Hyperledger Fabric requires chaincode execution to be deterministic across all endorsing peers. Go's `map` iteration order is explicitly non-deterministic and can vary between executions, even on the same peer, and certainly across different peers.
+    In `BatchRestock` and `ApplyDiscounts`, the chaincode iterates over a map (`restockMap` and `discounts` respectively) and performs `ctx.GetStub().PutState()` operations inside the loop. Because the iteration order is non-deterministic, the order in which `PutState` operations are added to the transaction's write-set will differ across endorsing peers. Even if the final state of the ledger is the same, a different write-set order will cause the transaction to fail endorsement, leading to transaction invalidation and potential denial of service for legitimate operations.
+*   **Recommended Fix**:
+    To ensure deterministic execution when processing map data, convert the map keys into a sorted slice and then iterate over the sorted slice. This guarantees a consistent order of operations across all peers.
+
+    **For `BatchRestock`:**
+    ```go
+    func (ic *InventoryContract) BatchRestock(ctx contractapi.TransactionContextInterface, restockJSON string) error {
+        var restockMap map[string]int
+        err := json.Unmarshal([]byte(restockJSON), &restockMap)
+        if err != nil {
+            return fmt.Errorf(""invalid restock JSON: %v"", err)
+        }
+
+        // Fix: Get sorted keys for deterministic iteration
+        var productIDs []string
+        for id := range restockMap {
+            productIDs = append(productIDs, id)
+        }
+        sort.Strings(productIDs) // Sort the product IDs
+
+        for _, productID := range productIDs { // Iterate over sorted keys
+            addQty := restockMap[productID] // Get the quantity from the map
+
+            productJSON, err := ctx.GetStub().GetState(productID)
+            if err != nil {
+                return fmt.Errorf(""failed to read product %s: %v"", productID, err)
+            }
+            if productJSON == nil {
+                // Consider if this should be an error or just skip
+                // For now, keeping original logic to skip
+                continue
+            }
+
+            var product Product
+            if err := json.Unmarshal(productJSON, &product); err != nil {
+                return fmt.Errorf(""failed to unmarshal product %s: %v"", productID, err)
+            }
+            product.Quantity += addQty
+
+            updatedJSON, err := json.Marshal(product)
+            if err != nil {
+                return fmt.Errorf(""failed to marshal updated product %s: %v"", productID, err)
+            }
+            ctx.GetStub().PutState(productID, updatedJSON)
+        }
+
+        return nil
+    }
+    ```
+    *(Note: Added error handling for unmarshal/marshal for robustness)*
+
+    **For `ApplyDiscounts`:**
+    ```go
+    import ""sort"" // Add this import
+
+    func (ic *InventoryContract) ApplyDiscounts(ctx contractapi.TransactionContextInterface, discountsJSON string) error {
+        var discounts map[string]float64
+        err := json.Unmarshal([]byte(discountsJSON), &discounts)
+        if err != nil {
+            return fmt.Errorf(""invalid discounts JSON: %v"", err)
+        }
+
+        // Fix: Get sorted keys for deterministic iteration
+        var productIDs []string
+        for id := range discounts {
+            productIDs = append(productIDs, id)
+        }
+        sort.Strings(productIDs) // Sort the product IDs
+
+        for _, productID := range productIDs { // Iterate over sorted keys
+            discountPct :="
+2026-02-09T16:03:52.139530,google/gemini-2.5-flash,zero_shot,vuln_05_phantom.go,5565,10.342,"The provided Hyperledger Fabric chaincode `vuln_05_phantom.go` has several security vulnerabilities, primarily related to access control, input validation, and read-after-write conflicts (phantom reads/MVCC conflicts), as highlighted in the problem description.
+
+Here's a detailed analysis:
+
+---
+
+### 1. `PlaceBid` Function
+
+**1.1. Vulner"
+2026-02-09T16:04:02.726772,google/gemini-2.5-flash,zero_shot,vuln_06_b_conditional_leak.go,5739,10.585,"The provided chaincode `vuln_06_b_conditional_leak.go` contains several critical resource leakage vulnerabilities related to unclosed iterators, as well as a potential access control issue.
+
+Here's a detailed analysis:
+
+---
+
+### 1. Vulnerability: Resource Leak (Iterator Not Closed on Early Return)
+
+*   **Vulnerability Type:**"
+2026-02-09T16:04:14.973801,google/gemini-2.5-flash,zero_shot,vuln_06_iterator_leak.go,5460,12.247,"The provided Hyperledger Fabric chaincode exhibits several security vulnerabilities, primarily focusing on resource leaks due to unclosed iterators, but also including access control and input validation issues.
+
+---
+
+### 1. Vulnerability Type: Iterator Resource Leak (Denial of Service)
+*   **Severity**: Critical
+*   **Affected code location**:
+    *   `GetAssetsByRange` (lines 39-60)
+    *   `SumAssetValues` (lines 66-87)
+    *   `TransferAssetsByOwner` (lines 93-119)
+    *   `DeactivateRange` (lines 125-150)
+*   **Description of the issue**:
+    Hyperledger Fabric's `GetStateByRange` and `GetStateByPartialCompositeKey` methods return an `StateQueryIteratorInterface`. This iterator holds open a gRPC stream to the peer's state database and potentially a database cursor. If this iterator is not explicitly closed using `defer resultsIterator.Close()`, these resources are never released. Repeated calls to these functions without closing the iterators will lead to resource exhaustion (e.g., running out of file descriptors, gRPC connections, or database cursors) on the peer, eventually causing a Denial of Service (DoS) for the chaincode and potentially the peer itself. The issue is compounded by early `return` statements on error paths, which bypass any potential `Close()` call placed later in the function.
+*   **Recommended fix**:
+    Immediately after obtaining an iterator from `ctx.GetStub().GetStateByRange()` or `ctx.GetStub().GetStateByPartialCompositeKey()`, add a `defer resultsIterator.Close()` statement. This ensures that the iterator is closed when the function exits, regardless of whether it completes successfully or encounters an error.
+
+    **Example for `GetAssetsByRange`:**
+    ```go
+    func (ar *AssetRegistryContract) GetAssetsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) ([]*RegistryAsset, error) {
+        resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+        if err != nil {
+            return nil, fmt.Errorf(""failed to get state by range: %v"", err)
+        }
+        defer resultsIterator.Close() // ADD THIS LINE
+
+        var assets []*RegistryAsset
+        for resultsIterator.HasNext() {
+            queryResult, err := resultsIterator.Next()
+            if err != nil {
+                return nil, err
+            }
+            // ... rest of the logic
+        }
+        return assets, nil
+    }
+    ```
+    Apply this fix to `SumAssetValues`, `TransferAssetsByOwner`, and `DeactivateRange` as well.
+
+---
+
+### 2. Vulnerability Type: Insufficient Access Control
+*   **Severity**: High
+*   **Affected code location**:
+    *   `RegisterAsset` (lines 24-35)
+    *   `Transfer"
+2026-02-09T16:04:22.921329,google/gemini-2.5-flash-lite,zero_shot,safe_01_logging.go,5177,7.947,"Here's an analysis of the provided Go chaincode for security vulnerabilities:
+
+---
+
+### Vulnerability Analysis of `safe_01_logging.go`
+
+**1. Vulnerability Type:** Access Control Issues (Implicit Trust)
+   **Severity:** Medium
+   **Affected Code Location:**
+   - `ApproveDocument` function
+   - `CreateDocument` function
+   **Description of the Issue:**
+   The `ApproveDocument` function allows any caller to set the `ApprovedBy` field without verifying the identity or authorization of the caller. Similarly, `CreateDocument` doesn't restrict who can create documents. In a real-world scenario, you would likely want to enforce that only authorized users can perform these actions. The current implementation implicitly trusts any client invoking these functions.
+   **Recommended Fix:**
+   Implement an authorization mechanism. This can be done by:
+   - **Using client identity:** Retrieve the caller's identity using `ctx.GetStub().GetCreator()` and check if it's in an allowed list or has specific attributes.
+   - **Role-based access control (RBAC):** Define roles (e.g., ""document_creator"", ""approver"") and associate them with identities. Check the caller's role before allowing the operation.
+   - **Example for `ApproveDocument`:**
+     ```go
+     // Inside ApproveDocument, after unmarshalling docJSON
+     // ...
+     // Get caller's identity (example, actual implementation might vary)
+     creator, err := ctx.GetStub().GetCreator()
+     if err != nil {
+         return fmt.Errorf(""failed to get creator identity: %v"", err)
+     }
+     // Assume a function `isAuthorizedApprover` exists that checks if 'creator' is allowed to approve
+     if !isAuthorizedApprover(creator) {
+         return fmt.Errorf(""caller %s is not authorized to approve documents"", creator)
+     }
+     // ... rest of the function
+     ```
+     You would need to define `isAuthorizedApprover` and potentially store authorized users/roles on the ledger or in configuration.
+
+**2. Vulnerability Type:** Input Validation Flaws (Lack of Sanitization/Validation)
+   **Severity:** Low
+   **Affected Code Location:**
+   - `CreateDocument` function (parameters: `id`, `title`, `author`)
+   - `ApproveDocument` function (parameter: `approver`)
+   **Description of the Issue:**
+   The chaincode does not perform any validation on the input parameters `id`, `title`, `author`, and `approver`. While `id` is checked for existence, its format or content is not validated. Maliciously crafted inputs (e.g., excessively long strings, strings with special characters that might cause issues in downstream processing or UI rendering, or empty strings where they are not expected) could potentially lead to unexpected behavior or vulnerabilities in how the data is displayed or processed by client applications.
+   **Recommended Fix:**
+   Add input validation to ensure that the provided parameters are within acceptable limits and formats.
+   - **For `id`:** Check for empty strings, maximum length, and potentially allowed characters.
+   - **For `title` and `author`:** Check for empty strings and maximum length. Consider sanitizing for potentially harmful characters if these fields are displayed directly in a web UI without proper escaping.
+   - **For `approver`:** Check for empty strings and maximum length.
+   - **Example for `CreateDocument`:**
+     ```go
+     // Inside CreateDocument, after function signature
+     // ...
+     if id == """" {
+         return fmt.Errorf(""document ID cannot be empty"")
+     }
+     if len(id) > 64 { // Example max length
+         return fmt.Errorf(""document ID exceeds maximum length of 64 characters"")
+     }
+     if title == """" {
+         return fmt.Errorf(""document title cannot be empty"")
+     }
+     if len(title) > 255 { // Example max length
+         return fmt.Errorf(""document title exceeds maximum length of 255 characters"")
+     }
+     if author == """" {
+         return fmt.Errorf(""document author cannot be empty"")
+     }
+     if len(author) > 100 { // Example max length
+         return fmt.Errorf(""document author exceeds maximum length of 100 characters"")
+     }
+     // ... rest of the function
+     ```
+     Similar validation should be added to `ApproveDocument` for the `approver` parameter.
+
+**3. Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   **Severity:** Low (in this specific contract, but a general concern)
+   **Affected Code Location:**
+   - `ApproveDocument` function (reads document, then writes)
+   - `CreateDocument` function (checks existence, then writes)
+   **Description of the Issue:**
+   While the provided code uses `GetState` and then `PutState` within a single transaction, Fabric's MVCC (Multi-Version Concurrency Control) mechanism handles most read-write conflicts. However, if a transaction reads a state, and then another transaction modifies that state *before* the first transaction commits, the first transaction might commit with stale data or fail validation if the read state has changed.
+   In `ApproveDocument`, the code first reads the document, checks its status, and then updates it. If another transaction were to modify the same document between the `GetState` and `PutState` calls of this transaction, the `doc.Status != ""PENDING""` check might be based on outdated information. Fabric's MVCC validation at commit time would typically catch this if the state has been modified, causing the transaction to fail.
+   In `CreateDocument`, `DocumentExists` is called, which uses `GetState`. If another transaction creates the document between the `DocumentExists` call and the `PutState` call in `CreateDocument`, the `exists` check would be stale. Again, Fabric's MVCC validation would likely catch this at commit time.
+   **Recommended Fix:**
+   For most common scenarios, Fabric's MVCC handles this. However, for complex scenarios or to be absolutely certain, consider using `GetStateByRange` with appropriate query parameters or `GetHistoryForKey` if you need to ensure a specific sequence of operations. In this particular contract, the explicit check for `doc.Status != ""PENDING""` and the `exists` check before creation, combined with Fabric's MVCC, provide reasonable protection. No immediate code change is strictly necessary for this contract, but it's important to be aware of the potential for stale reads in more complex transaction flows.
+
+**4. Vulnerability Type:** Private Data Leakage
+   **Severity:** Not Applicable (No Private Data Used)
+   **Affected Code Location:** N/A
+   **Description of the Issue:**
+   The chaincode does not utilize Fabric's private data collections. Therefore, there is no risk of private data leakage through this specific contract.
+   **Recommended Fix:** N/A
+
+**5. Vulnerability Type:** Non-Deterministic Operations
+   **Severity:** Not Applicable (Code explicitly addresses determinism)
+   **Affected Code Location:** N/A
+   **Description of the Issue:**
+   The comments in the code explicitly highlight the use of `ctx.GetStub().GetTxTimestamp()` for ledger writes and the avoidance of `time.Now()` for state updates. This demonstrates a good understanding and implementation of deterministic operations for state changes. The `fmt.Printf` statements using `time.Now()` are correctly identified as non-deterministic but are only for logging and do not affect the ledger state, thus posing no risk.
+   **Recommended Fix:** N/A
+
+**6. Vulnerability Type:** Insecure Key Management
+   **Severity:** Not Applicable (No Explicit Key Management)
+   **Affected Code Location:** N/A
+   **Description of the Issue:**
+   This chaincode does not directly manage cryptographic keys or perform operations that would typically require explicit key management within the chaincode itself (e.g., encryption/decryption using keys stored on the ledger). Key management in Hyperledger Fabric is primarily handled at the identity and network level (e.g., MSPs, certificates).
+   **Recommended Fix:** N/A
+
+---
+
+**Summary of Findings:**
+
+The chaincode demonstrates good practices regarding determinism by using `GetTxTimestamp()` for ledger updates and correctly identifying `time.Now()` usage for logging as non-impacting.
+
+The primary security concerns are:
+
+1.  **Access Control:** The `ApproveDocument` and `CreateDocument` functions lack authorization checks, allowing any caller to perform these actions.
+2.  **Input Validation:** Basic validation on input parameters is missing, which could lead to unexpected behavior or issues in client applications.
+
+These vulnerabilities are rated as Medium and Low, respectively, as they don't immediately compromise the integrity of the ledger data itself but can lead to functional issues or require more robust client-side handling."
+2026-02-09T16:04:29.698516,google/gemini-2.5-flash-lite,zero_shot,safe_02_local_var.go,6316,6.777,"The provided chaincode `safe_02_local_var.go` appears to be well-written and adheres to several safe patterns, particularly concerning the use of local variables and constants. However, a thorough security analysis reveals a few potential areas for improvement.
+
+Here's a breakdown of the identified vulnerabilities:
+
+---
+
+### Vulnerability Analysis
+
+**1. Vulnerability Type:** Access Control / Authorization Bypass
+
+*   **Severity:** Critical
+*   **Affected Code Location:** `PaymentContract.CreatePayment` (line 50), `PaymentContract.RefundPayment` (line 96), `PaymentContract.QueryPayment` (line 74)
+*   **Description of the Issue:** The chaincode does not implement any form of access control. Any client that can invoke the chaincode can call `CreatePayment`, `RefundPayment`, or `QueryPayment` without any checks on the identity or role of the invoker. For instance, a malicious actor could potentially create payments with arbitrary `from` and `to` addresses, or refund payments that they are not authorized to refund, or query sensitive payment details. The `from` and `to` fields in `CreatePayment` are taken directly from the arguments and are not validated against the identity of the caller.
+*   **Recommended Fix:** Implement robust access control mechanisms. This typically involves:
+    *   Retrieving the identity of the client invoking the transaction using `ctx.GetStub().GetCreator()`.
+    *   Defining roles (e.g., ""payer"", ""payee"", ""admin"").
+    *   Implementing checks within each function to ensure the invoker has the necessary permissions to perform the requested operation. For example, in `CreatePayment`, you might want to verify that the `from` address matches the caller's identity or is authorized by the caller. In `RefundPayment`, you might want to ensure only the original payer or an administrator can initiate a refund.
+
+**2. Vulnerability Type:** Input Validation (Insufficient)
+
+*   **Severity:** Medium
+*   **Affected Code Location:** `PaymentContract.CreatePayment` (line 50)
+*   **Description of the Issue:** While the code checks if `amount` is positive and within `maxTransferLimit`, it does not validate the `id`, `from`, and `to` string arguments for potentially malicious content or excessive length. Long or specially crafted strings could lead to denial-of-service (DoS) if they cause excessive memory allocation or processing time during JSON marshaling/unmarshaling or state storage. Also, there's no check to prevent `from` and `to` from being the same, which might be an unintended scenario.
+*   **Recommended Fix:**
+    *   Add checks for the length of `id`, `from`, and `to` to prevent excessively long inputs.
+    *   Consider sanitizing or validating the format of `id`, `from`, and `to` if they are expected to adhere to specific patterns (e.g., account IDs, wallet addresses).
+    *   Add a check `if from == to { return fmt.Errorf(""sender and receiver cannot be the same"") }` in `CreatePayment`.
+
+**3. Vulnerability Type:** Non-Deterministic Operations (Potential)
+
+*   **Severity:** Low
+*   **Affected Code Location:** `PaymentContract.CreatePayment` (line 66), `PaymentContract.RefundPayment` (line 119)
+*   **Description of the Issue:** The chaincode uses `float64` for financial calculations (`amount`, `fee`). Floating-point arithmetic can be non-deterministic across different platforms or even different runs on the same platform due to variations in hardware floating-point units and compiler optimizations. While the `roundToDecimal` function attempts to mitigate this by rounding to a fixed precision, subtle differences in intermediate calculations could still lead to endorsement mismatches if not handled with extreme care. The `math.Round` function itself relies on floating-point representation.
+*   **Recommended Fix:** For financial applications, it is strongly recommended to use fixed-point arithmetic or integer-based representations (e.g., representing amounts in cents or smallest currency units) to ensure deterministic calculations. If `float64` must be used, ensure that all calculations are performed in a consistent manner and that the rounding logic is thoroughly tested for determinism across all target environments.
+
+**4. Vulnerability Type:** Private Data Leakage (Not Applicable in this code)
+
+*   **Severity:** N/A
+*   **Affected Code Location:** N/A
+*   **Description of the Issue:** This chaincode does not utilize Hyperledger Fabric's private data collections. Therefore, there is no risk of private data leakage through this specific mechanism.
+*   **Recommended Fix:** N/A
+
+**5. Vulnerability Type:** Insecure Key Management (Not Applicable in this code)
+
+*   **Severity:** N/A
+*   **Affected Code Location:** N/A
+*   **Description of the Issue:** This chaincode does not directly manage cryptographic keys. Key management is typically handled at the Fabric network level (e.g., MSPs, identity certificates).
+*   **Recommended Fix:** N/A
+
+**6. Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+
+*   **Severity:** Low
+*   **Affected Code Location:** `PaymentContract.RefundPayment` (lines 96-110)
+*   **Description of the Issue:** The `RefundPayment` function reads the payment state, modifies it, and then writes it back. If another transaction were to modify the same `paymentID` between the `GetState` and `PutState` calls in `RefundPayment`, the `RefundPayment` function would be operating on stale data. While Fabric's MVCC (Multi-Version Concurrency Control) handles write conflicts by aborting one of the transactions, a phantom read scenario could occur if a transaction reads a range of keys and another transaction inserts a new key within that range. In this specific code, the primary concern is the read-modify-write cycle on a single key. The `RefundPayment` function reads the payment, checks its status, updates it, and then writes it back. If another transaction modifies the `payment` state between the `GetState` and `PutState` calls, the `RefundPayment` might proceed with an outdated `payment` object, potentially leading to unexpected behavior, although the MVCC will likely detect and abort conflicting writes.
+*   **Recommended Fix:** For critical operations involving read-modify-write cycles, consider using optimistic concurrency control mechanisms or ensuring that the transaction logic is idempotent or can gracefully handle retries. In this case, the `RefundPayment` function updates the status and then creates a new refund record. The MVCC mechanism in Fabric will ensure that if the original payment state is modified by another transaction concurrently, one of the transactions will fail. The current implementation is generally safe due to MVCC, but being aware of this potential is important for complex transactions.
+
+---
+
+### Summary of Findings
+
+The chaincode demonstrates good practices by using constants and read-only package-level variables, which contribute to determinism. However, the most critical vulnerabilities lie in the lack of **access control** and insufficient **input validation** for string parameters. The use of `float64` for financial calculations introduces a potential for non-determinism, which should be addressed for robust financial applications. Read-after-write conflicts are mitigated by Fabric's MVCC, but awareness is key.
+
+---"
+2026-02-09T16:04:37.318888,google/gemini-2.5-flash-lite,zero_shot,safe_03_map_read.go,6388,7.618,"The provided Go chaincode file `safe_03_map_read.go` appears to be well-written and follows several ""safe patterns"" as indicated by the comments. However, a thorough security analysis reveals a potential vulnerability.
+
+---
+
+### Vulnerability Analysis
+
+1.  **Vulnerability Type**: Input Validation Flaw (Missing Validation for `voterIDs` in `TallyVotes`)
+    *   **Severity**: Medium
+    *   **Affected Code Location**: `TallyVotes` function.
+    *   **Description**: The `TallyVotes` function takes a slice of `voterIDs` as input. It iterates through these `voterIDs` to retrieve corresponding ballot records. However, there is no validation to ensure that the `voterIDs` provided in the input slice actually correspond to valid voters or that they are unique within the slice. If a malicious actor provides duplicate `voterIDs` in the `voterIDs` slice, the `tally` map will correctly increment the count for the candidate multiple times for the same voter, effectively allowing a single voter to cast multiple votes through this function. While the `CastVote` function prevents duplicate votes, this `TallyVotes` function, if used to re-tally or process a list of voters, could be exploited if the input `voterIDs` are not properly vetted before being passed to it.
+    *   **Recommended Fix**: Add validation to ensure that each `voterID` in the `voterIDs` slice is unique before processing. A common approach is to use a map to track seen `voterIDs` within the function.
+
+    ```go
+    // Inside TallyVotes function, before the loop:
+    seenVoterIDs := make(map[string]bool)
+
+    for _, voterID := range voterIDs {
+        if seenVoterIDs[voterID] {
+            // Optionally return an error or log a warning for duplicate voter IDs in the input list
+            // For this specific vulnerability, we want to prevent double counting from the input list.
+            // If the goal is to process a list that *might* have duplicates and still count them,
+            // then this check should be removed, but the vulnerability description stands.
+            // Assuming the intent is to count unique votes from a list of voters:
+            return fmt.Errorf(""duplicate voter ID '%s' found in input list for tallying"", voterID)
+        }
+        seenVoterIDs[voterID] = true
+
+        ballotKey := electionID + ""_"" + voterID
+        // ... rest of the loop
+    }
+    ```
+    *Self-correction*: The comment in `TallyVotes` states: `// [SAFE PATTERN] tally map accumulates counts; iteration order does not matter because the final value per key is determined by commutative addition.` This implies that if a `voterID` appears twice in the input `voterIDs` slice, it *will* be counted twice. If the intention is to count *all* votes cast by the voters in the provided list, even if the list contains duplicates, then this is not a vulnerability but a feature. However, if the intention is to tally *unique* votes from a list of voters, then the duplicate `voterID` in the input list would lead to an incorrect tally. Given the context of a voting system, it's more likely that the intention is to tally unique votes. If the `voterIDs` slice is expected to represent unique voters, then the duplicate `voterID` in the input is an issue. If the `voterIDs` slice is just a list of identifiers to check, and duplicates are allowed, then the current implementation is correct for that interpretation.
+
+    Let's re-evaluate based on the most common interpretation of ""tally votes"": to count the votes cast by a set of voters. If the input `voterIDs` can contain duplicates, and each duplicate entry leads to a vote being counted again, it's effectively allowing a single voter to influence the tally multiple times through this function, bypassing the `CastVote` check. Therefore, the vulnerability stands if the `voterIDs` are meant to represent unique voters.
+
+    **Revised Description**: The `TallyVotes` function accepts a slice of `voterIDs`. If this slice contains duplicate `voterIDs`, the function will process each occurrence, leading to a candidate's vote count being inflated for each duplicate `voterID` in the input. This effectively allows a single voter to be counted multiple times in the tally if their ID is repeated in the `voterIDs` input, potentially skewing election results. The `CastVote` function prevents duplicate votes from being cast, but this `TallyVotes` function does not prevent duplicate processing of voter IDs from its input.
+
+    **Revised Recommended Fix**: Add a check to ensure that each `voterID` in the input `voterIDs` slice is processed only once.
+
+    ```go
+    // Inside TallyVotes function, before the loop:
+    processedVoterIDs := make(map[string]bool)
+
+    for _, voterID := range voterIDs {
+        // If this voterID has already been processed from the input list, skip it.
+        if processedVoterIDs[voterID] {
+            continue
+        }
+        processedVoterIDs[voterID] = true
+
+        ballotKey := electionID + ""_"" + voterID
+        ballotJSON, err := ctx.GetStub().GetState(ballotKey)
+        if err != nil {
+            return fmt.Errorf(""failed to read ballot for voter %s: %v"", voterID, err)
+        }
+        if ballotJSON == nil {
+            continue
+        }
+
+        var ballot Ballot
+        err = json.Unmarshal(ballotJSON, &ballot)
+        if err != nil {
+            return err
+        }
+
+        tally[ballot.CandidateID]++
+    }
+    ```
+
+---
+
+### Other Considerations (Not Vulnerabilities based on current code)
+
+*   **Access Control Issues**: The code does not implement any explicit role-based access control. Any peer that can invoke these chaincode functions can execute them. In a production environment, access control would typically be managed at the application layer or through Fabric's channel policies.
+*   **Read-after-write conflicts (phantom reads)**: The `CastVote` function checks for existing ballots using `GetState` before writing a new one. This prevents a voter from casting a vote if they have already voted. The `TallyVotes` function reads existing ballots. If `TallyVotes` were to be called concurrently with `CastVote` for the same election and voter, there's a possibility of a race condition. However, Fabric's MVCC (Multi-Version Concurrency Control) mechanism and transaction endorsement/ordering process generally mitigate these issues for typical read-modify-write patterns. The `TallyVotes` function reads multiple states and then writes a single state. If the `voterIDs` provided to `TallyVotes` are from a static list and not dynamically generated during the transaction, the risk of phantom reads affecting the tally itself is low, as the `tally` map accumulates counts based on what's present at the time of `GetState` calls. The deterministic nature of `json.Marshal` for maps ensures the final output is consistent.
+*   **Private Data Leakage**: This chaincode does not use Fabric's private data collections. All data is stored on the ledger. Therefore, there is no risk of private data leakage through this mechanism.
+*   **Non-deterministic Operations**: The comments correctly identify that the use of maps in Go can lead to non-deterministic iteration order. However, the code demonstrates awareness of this by ensuring that:
+    *   In `CastVote`, the map is only used for a lookup, and the written data is derived solely from function arguments.
+    *   In `TallyVotes`, `json.Marshal` on a `map[string]int` sorts keys alphabetically, making the output deterministic.
+    *   In `ValidateVoterEligibility`, the map is used for a lookup, and the result is a boolean independent of iteration order.
+    The `fmt.Printf` statements are for logging and do not affect the write set, so their varying order across peers is acceptable.
+*   **Insecure Key Management**: The chaincode uses simple string concatenation for creating keys (e.g., `electionID + ""_"" + voterID`). This is a common and generally acceptable pattern for simple chaincodes. There are no cryptographic keys being managed or stored within the chaincode itself.
+
+---
+
+**Conclusion**:
+
+The primary vulnerability identified is the potential for skewed tallies in the `TallyVotes` function if the input `voterIDs` slice contains duplicates, leading to a single voter being counted multiple times in the tally. The other aspects of the code appear to follow the ""safe patterns"" described in the comments."
+2026-02-09T16:04:38.235139,google/gemini-2.5-flash-lite,zero_shot,safe_04_math_rand.go,5307,0.916,"The provided Go chaincode `safe_04_math_rand.go` appears to be well-written and adheres to the ""SAFE PATTERN"" for using `math/rand`. The comments clearly indicate that `math/rand` is used solely for generating non-deterministic values for logging purposes (trace IDs, correlation IDs, motivational messages) and that these values **never** influence the data written to the ledger. All ledger writes are based on deterministic function arguments or hardcoded constants.
+
+Based on this analysis, I found:
+
+No vulnerabilities detected."
+2026-02-09T16:04:41.829760,google/gemini-2.5-flash-lite,zero_shot,safe_05_deterministic_time.go,5861,3.593,"The provided chaincode `safe_05_deterministic_time.go` appears to be well-written with a strong focus on deterministic operations, particularly concerning timestamps. The comments explicitly highlight the safe patterns used. Based on the code and the stated goals, here's an analysis:
+
+**No vulnerabilities detected.**
+
+The code demonstrates a clear understanding and implementation of secure practices for Hyperledger Fabric chaincode, specifically addressing the common pitfall of using non-deterministic time sources for ledger state.
+
+Here's a breakdown of why the code is considered secure in the context of the requested analysis points:
+
+*   **Access Control Issues:** There are no explicit access control mechanisms implemented in this snippet. However, this is typical for basic chaincode examples. In a real-world scenario, access control would likely be handled by checking client identity (e.g., `ctx.GetClientIdentity().GetID()`) before performing sensitive operations. Since this is not a requirement of the analysis and the code itself doesn't introduce vulnerabilities in this area, it's not flagged.
+
+*   **Input Validation Flaws:**
+    *   `IssueCertificate`: Validates if `certID` already exists.
+    *   `RenewCertificate`: Validates if `certID` exists.
+    *   `RevokeCertificate`: Validates if `certID` exists.
+    *   The `certID`, `holderName`, and `courseID` parameters are passed directly to the `Certificate` struct. While more robust validation (e.g., checking for empty strings, length limits, or specific formats) could be added, the current level is acceptable for this example and doesn't represent a security vulnerability in itself.
+
+*   **Read-After-Write Conflicts (Phantom Reads):**
+    *   The code uses `GetState` and `PutState` operations. Fabric's MVCC (Multi-Version Concurrency Control) mechanism, combined with the transaction endorsement and commit phases, generally prevents read-after-write conflicts within a single transaction.
+    *   The `CertExists` helper function is used to check for existence before creating a new certificate, mitigating a common race condition.
+    *   No complex range queries or iterative state modifications that would be susceptible to phantom reads are present.
+
+*   **Private Data Leakage:**
+    *   This chaincode does not utilize Fabric's private data collections. Therefore, there is no risk of private data leakage through this code.
+
+*   **Non-Deterministic Operations:**
+    *   This is the primary focus of the code, and it is handled correctly.
+    *   In `IssueCertificate` and `RenewCertificate`, `time.Now()` is called, but its value is *not* used for state updates. Instead, `ctx.GetStub().GetTxTimestamp()` is used, which provides a deterministic timestamp from the block header. This is explicitly commented and implemented correctly.
+    *   `RevokeCertificate` uses `time.Now()` only for logging purposes, which is acceptable as it doesn't affect the ledger state.
+
+*   **Insecure Key Management:**
+    *   This chaincode does not deal with key management directly. It uses `certID` as the state key, which is a common and acceptable practice. The security of the underlying cryptographic keys used by Fabric itself is outside the scope of chaincode analysis.
+
+The comments within the code are accurate and highlight the secure patterns employed, particularly regarding the deterministic use of `GetTxTimestamp()` over `time.Now()` for ledger state."
+2026-02-09T16:04:46.441438,google/gemini-2.5-flash-lite,zero_shot,safe_06_external_lib.go,6189,4.612,"The provided Hyperledger Fabric chaincode file `safe_06_external_lib.go` appears to be well-written and follows several security best practices, particularly regarding determinism and the use of standard libraries. However, a thorough analysis reveals a potential vulnerability related to input validation.
+
+Here's a breakdown of the findings:
+
+---
+
+### Vulnerability Analysis
+
+1.  **Vulnerability Type**: Input Validation Flaw
+    *   **Severity**: Medium
+    *   **Affected Code Location**: `AddPoints` function, line 68.
+    *   **Description of the issue**: The `AddPoints` function takes `pointsStr` as a string and uses `strconv.Atoi` to convert it to an integer. While `strconv.Atoi` handles valid integer strings, it does not explicitly prevent the addition of a negative number of points. If a user provides a negative value (e.g., ""-500""), `strconv.Atoi` will successfully convert it to a negative integer. This negative value will then be added to `account.Points`, effectively allowing a user to *reduce* their loyalty points by calling the `AddPoints` function with a negative string. This is contrary to the function's name and intent.
+    *   **Recommended fix**: Add a check after converting `pointsStr` to `addPoints` to ensure it's a non-negative value.
+
+    ```go
+    // ... inside AddPoints function ...
+
+    // [SAFE PATTERN] strconv.Atoi — pure deterministic function.
+    // Converts string ""500"" to int 500 identically on all peers.
+    addPoints, err := strconv.Atoi(pointsStr)
+    if err != nil {
+        return fmt.Errorf(""invalid points value: %v"", err)
+    }
+
+    // Add validation to ensure points are non-negative
+    if addPoints < 0 {
+        return fmt.Errorf(""cannot add negative points: %d"", addPoints)
+    }
+
+    account.Points += addPoints
+    // ... rest of the function ...
+    ```
+
+---
+
+### Other Observations (Not Vulnerabilities)
+
+The code includes comments like `[SAFE PATTERN]` and explanations for why certain functions (like `crypto/sha256`, `strconv.Atoi`, `fmt.Sprintf`) are considered deterministic and safe for use in chaincode. This is a good practice for documenting security considerations.
+
+*   **Access Control**: There are no explicit access control mechanisms implemented within this chaincode. Any client that can invoke the chaincode functions can call them. In a real-world scenario, access control would typically be managed by an external application or by leveraging Fabric's identity and attribute-based access control features, potentially through middleware or by checking client identity within the chaincode. However, based solely on the provided code, this is not a vulnerability *within the chaincode itself* but rather a design choice that might require external solutions.
+*   **Read-after-write conflicts (phantom reads)**: The chaincode uses `GetState` and `PutState` within single transactions. Fabric's MVCC (Multi-Version Concurrency Control) mechanism, combined with the transaction validation process, generally prevents read-after-write conflicts and phantom reads within a single transaction's execution. The `AccountExists` function is used to check for existence before creating an account, which is a standard pattern to avoid overwriting existing data.
+*   **Private Data Leakage**: This chaincode does not utilize Fabric's private data collections. Therefore, there is no risk of private data leakage through this mechanism.
+*   **Non-deterministic Operations**: As noted in the code's comments, the core operations (`computeChecksum`, `determineTier`, `strconv.Atoi`, arithmetic operations) are all deterministic. The use of `crypto/sha256` and `strconv` is correctly identified as deterministic. There are no calls to external services, random number generators, or system time that would introduce non-determinism.
+*   **Insecure Key Management**: The chaincode does not handle any cryptographic keys directly for encryption/decryption or signing. It relies on Fabric's underlying security mechanisms for transaction signing and identity. The `Checksum` is used for data integrity verification within the ledger state, not for securing sensitive data.
+
+---
+
+**Summary of Findings:**
+
+The primary vulnerability identified is an **Input Validation Flaw** in the `AddPoints` function, allowing negative point additions which can be used to decrease a user's balance, contrary to the function's intent. All other aspects appear to be handled securely and deterministically."
+2026-02-09T16:04:53.798276,google/gemini-2.5-flash-lite,zero_shot,vuln_01_b_interprocedural.go,5157,7.356,"Here's an analysis of the provided Hyperledger Fabric chaincode for security vulnerabilities:
+
+---
+
+### Vulnerability Analysis Report
+
+**File:** `vuln_01_b_interprocedural.go`
+
+---
+
+1.  **Vulnerability Type:** Non-deterministic Operations
+    **Severity:** Critical
+    **Affected Code Location:**
+    *   `getCurrentTimestamp()` function (lines 18-22)
+    *   `formatTimestampNano()` function (lines 25-30)
+    *   `buildTimestampedNote()` function (lines 33-37)
+    *   `CreateRecord()` function, `RecordedAt` field assignment (line 56)
+    *   `CreateRecord()` function, `LastChecked` field assignment (line 57)
+    *   `UpdateDiagnosis()` function, `record.Diagnosis` assignment (line 79)
+    *   `UpdateDiagnosis()` function, `record.LastChecked` assignment (line 80)
+    *   `AddCheckupNote()` function, `compositeNote` variable assignment (line 100)
+    *   `AddCheckupNote()` function, `noteKey` variable assignment (line 101)
+
+    **Description of the issue:**
+    The chaincode uses `time.Now()` to generate timestamps, which are inherently non-deterministic. Different endorsing peers executing the same transaction at slightly different times will produce different timestamp values. This violates the determinism requirement for smart contracts in Hyperledger Fabric. When `PutState` operations involve these non-deterministic values, it can lead to differing ledger states across peers, causing transaction validation failures and consensus issues. The vulnerability is exacerbated by the interprocedural nature, where `time.Now()` is called within helper functions (`getCurrentTimestamp`, `formatTimestampNano`, `buildTimestampedNote`) that are then called by the chaincode functions. This makes it harder for static analysis tools to detect the direct use of `time.Now()` at the call site.
+
+    **Recommended fix:**
+    Replace `time.Now()` with a deterministic source of time. In Hyperledger Fabric, the transaction timestamp is available via `ctx.GetStub().GetTxTimestamp()`. This timestamp is guaranteed to be the same for all endorsing peers for a given transaction.
+
+    *   Modify `getCurrentTimestamp` and `formatTimestampNano` to accept `ctx.GetStub().GetTxTimestamp()` as an argument and format it.
+    *   Alternatively, pass the transaction timestamp directly to the functions that need it.
+    *   Ensure all timestamp generation logic uses this deterministic source.
+
+    **Example of fix for `getCurrentTimestamp`:**
+
+    ```go
+    import ""google.golang.org/protobuf/types/known/timestamppb"" // Add this import
+
+    // getCurrentTimestamp is a helper that returns a formatted transaction timestamp.
+    func getCurrentTimestamp(txTimestamp *timestamppb.Timestamp) string {
+        if txTimestamp == nil {
+            return """" // Or handle error appropriately
+        }
+        t := txTimestamp.AsTime()
+        return t.Format(time.RFC3339)
+    }
+
+    // In CreateRecord:
+    txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+    if err != nil {
+        return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+    }
+    record := MedicalRecord{
+        // ... other fields
+        RecordedAt: getCurrentTimestamp(txTimestamp),
+        LastChecked: formatTimestampNano(txTimestamp), // Modify formatTimestampNano similarly
+    }
+
+    // Modify buildTimestampedNote to accept timestamp
+    func buildTimestampedNote(prefix string, txTimestamp *timestamppb.Timestamp) string {
+        return fmt.Sprintf(""%s (recorded at %s)"", prefix, getCurrentTimestamp(txTimestamp))
+    }
+
+    // In UpdateDiagnosis:
+    txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+    if err != nil {
+        return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+    }
+    record.Diagnosis = buildTimestampedNote(newDiagnosis, txTimestamp)
+    record.LastChecked = getCurrentTimestamp(txTimestamp)
+
+    // In AddCheckupNote:
+    txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+    if err != nil {
+        return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+    }
+    compositeNote := buildTimestampedNote(note, txTimestamp)
+    noteKey := ""NOTE_"" + recordID + ""_"" + getCurrentTimestamp(txTimestamp) // Use deterministic timestamp for key
+    ```
+
+---
+
+2.  **Vulnerability Type:** Non-deterministic Operations (Key Generation)
+    **Severity:** High
+    **Affected Code Location:** `AddCheckupNote()` function, `noteKey` variable assignment (line 101)
+
+    **Description of the issue:**
+    The `AddCheckupNote` function generates a composite key for storing notes using `noteKey := ""NOTE_"" + recordID + ""_"" + getCurrentTimestamp()`. As `getCurrentTimestamp()` uses `time.Now()`, the generated `noteKey` will be non-deterministic. This means that for the same `recordID` and `note`, different endorsing peers might generate different keys. If the keys differ, the `PutState` operation will write to different locations on different peers, leading to ledger divergence and transaction failure.
+
+    **Recommended fix:**
+    Use a deterministic source for generating the `noteKey`. The transaction timestamp (`ctx.GetStub().GetTxTimestamp()`) is the most appropriate choice here.
+
+    **Example of fix:**
+
+    ```go
+    // In AddCheckupNote:
+    txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+    if err != nil {
+        return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+    }
+    // Use the deterministic timestamp for the key
+    noteKey := ""NOTE_"" + recordID + ""_"" + txTimestamp.AsTime().Format(time.RFC3339Nano) // Or any other deterministic format
+    compositeNote := buildTimestampedNote(note, txTimestamp) // Ensure buildTimestampedNote uses deterministic time
+    return ctx.GetStub().PutState(noteKey, []byte(compositeNote))
+    ```
+    *(Note: This fix assumes `buildTimestampedNote` is also updated to use a deterministic timestamp as per the first vulnerability's recommendation.)*
+
+---
+
+3.  **Vulnerability Type:** Access Control Issues (Implicit)
+    **Severity:** Medium
+    **Affected Code Location:** All functions (`CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`)
+
+    **Description of the issue:**
+    The current implementation does not enforce any access control. Any client that can invoke these chaincode functions can create, update, or add notes to any medical record. In a real-world scenario, this would be a critical security flaw, as only authorized doctors or administrators should be able to perform these actions, and potentially only on records they are authorized for (e.g., their own patients).
+
+    **Recommended fix:**
+    Implement role-based access control (RBAC) or attribute-based access control (ABAC). This typically involves:
+    *   Retrieving the identity of the invoking client from the transaction context (`ctx.GetClientIdentity().GetID()`, `ctx.GetClientIdentity().GetAttribute()`, etc.).
+    *   Defining roles (e.g., ""doctor"", ""patient"", ""admin"").
+    *   Implementing logic within each function to check if the invoking client has the necessary permissions to perform the requested operation. For example, a doctor might only be allowed to update records of patients assigned to them.
+
+    **Example snippet for checking identity (conceptual):**
+
+    ```go
+    // At the beginning of each function:
+    // Assuming a function to get the role of the caller
+    callerID, err := ctx.GetClientIdentity().GetID()
+    if err != nil {
+        return fmt.Errorf(""failed to get caller ID: %v"", err)
+    }
+
+    // Example: Check if caller is a doctor for UpdateDiagnosis
+    // This requires a mechanism to map callerID to their role and assigned patients
+    isAuthorized, err := m.IsDoctorAuthorizedForRecord(ctx, callerID, recordID)
+    if err != nil {
+        return fmt.Errorf(""failed to check authorization: %v"", err)
+    }
+    if !isAuthorized {
+        return fmt.Errorf(""caller %s is not authorized to update record %s"", callerID, recordID)
+    }
+    ```
+    *(Note: The `IsDoctorAuthorizedForRecord` function would need to be implemented, potentially by querying an identity/role registry on the ledger.)*
+
+---
+
+4.  **Vulnerability Type:** Input Validation Flaws (Potential)
+    **Severity:** Low
+    **Affected Code Location:**
+    *   `CreateRecord()` function (parameters: `recordID`, `patientID`, `diagnosis`, `doctor`)
+    *   `UpdateDiagnosis()` function (parameters: `recordID`, `newDiagnosis`)
+    *   `AddCheckupNote()` function (parameters: `recordID`, `note`)
+
+    **Description of the issue:**
+    The chaincode does not perform any validation on the input parameters like `recordID`, `patientID`,"
+2026-02-09T16:05:01.840214,google/gemini-2.5-flash-lite,zero_shot,vuln_01_time.go,4291,8.042,"Here's an analysis of the provided Go chaincode file `vuln_01_time.go` for security vulnerabilities:
+
+---
+
+### Vulnerability Analysis Report for `vuln_01_time.go`
+
+**1. Vulnerability Type:** Non-deterministic Operations
+   **Severity:** Critical
+   **Affected Code Location:**
+   - `CreateShipment` function, line 27: `now := time.Now()`
+   - `CreateShipment` function, line 31: `CreatedAt: now.Format(time.RFC3339)`
+   - `CreateShipment` function, line 32: `UpdatedAt: now.Format(time.RFC3339Nano)`
+   - `UpdateShipmentStatus` function, line 56: `shipment.UpdatedAt = time.Now().Format(time.RFC3339)`
+   - `RecordTemperature` function, line 77: `shipment.Temperature = fmt.Sprintf(""%s°C at %s"", tempCelsius, time.Now().Format(""15:04:05.000""))`
+   - `RecordTemperature` function, line 78: `shipment.UpdatedAt = time.Now().Format(time.RFC3339)`
+
+   **Description of the issue:**
+   The chaincode uses `time.Now()` to generate timestamps for `CreatedAt` and `UpdatedAt` fields, and also within the `RecordTemperature` function to embed a timestamp in the `Temperature` string. `time.Now()` returns the current local time of the system executing the code. In a distributed ledger environment like Hyperledger Fabric, chaincode is executed by multiple endorsing peers. Each peer might have slightly different system clocks, or the execution time might vary across peers. This non-determinism in `time.Now()` will cause each endorsing peer to produce a different timestamp value. When these different values are marshalled into JSON and compared, they will not match, leading to endorsement failures and transactions being rejected. This is a fundamental issue for maintaining ledger consistency.
+
+   **Recommended fix:**
+   Timestamps should be generated deterministically. The recommended approach is to use the transaction timestamp provided by the Fabric transaction context. The transaction timestamp is guaranteed to be the same across all endorsing peers for a given transaction.
+
+   Modify the affected functions as follows:
+
+   In `CreateShipment`:
+   ```go
+   // Get the transaction timestamp
+   txTimestamp := ctx.GetStub().GetTxTimestamp()
+
+   // Format the timestamp deterministically
+   createdAt := txTimestamp.AsTime().Format(time.RFC3339)
+   updatedAt := txTimestamp.AsTime().Format(time.RFC3339Nano) // Or RFC3339 if nanosecond precision isn't strictly needed
+
+   shipment := Shipment{
+       ID:          id,
+       Origin:      origin,
+       Destination: destination,
+       Status:      ""CREATED"",
+       CreatedAt:   createdAt,
+       UpdatedAt:   updatedAt,
+   }
+   ```
+
+   In `UpdateShipmentStatus`:
+   ```go
+   // Get the transaction timestamp
+   txTimestamp := ctx.GetStub().GetTxTimestamp()
+
+   shipment.Status = newStatus
+   shipment.UpdatedAt = txTimestamp.AsTime().Format(time.RFC3339)
+   ```
+
+   In `RecordTemperature`:
+   ```go
+   // Get the transaction timestamp
+   txTimestamp := ctx.GetStub().GetTxTimestamp()
+
+   // Use the transaction timestamp for logging the time of reading
+   readingTime := txTimestamp.AsTime().Format(""15:04:05.000"") // Example format, adjust as needed
+   shipment.Temperature = fmt.Sprintf(""%s°C at %s"", tempCelsius, readingTime)
+   shipment.UpdatedAt = txTimestamp.AsTime().Format(time.RFC3339)
+   ```
+
+   **Note:** The `time.RFC3339Nano` format in `CreateShipment` for `UpdatedAt` might be too precise and could still lead to subtle differences if not handled carefully. Using `time.RFC3339` is generally safer for deterministic timestamps. If nanosecond precision is absolutely required, ensure consistent formatting and parsing across all peers. However, relying on `GetTxTimestamp()` is the primary solution.
+
+---
+
+**2. Vulnerability Type:** Input Validation Flaws (Implicit)
+   **Severity:** Low
+   **Affected Code Location:**
+   - `CreateShipment` function, parameters: `id string`, `origin string`, `destination string`
+   - `UpdateShipmentStatus` function, parameters: `id string`, `newStatus string`
+   - `RecordTemperature` function, parameters: `id string`, `tempCelsius string`
+
+   **Description of the issue:**
+   The chaincode does not perform explicit validation on the input parameters such as `id`, `origin`, `destination`, `newStatus`, and `tempCelsius`. While the `id` is checked for existence in `CreateShipment`, other fields are directly used. For example, `tempCelsius` is directly formatted into a string without checking if it's a valid numerical representation or within a reasonable range. Similarly, `newStatus` is assigned without checking if it's a valid status from a predefined set. This could lead to storing malformed or unexpected data in the ledger, potentially causing issues for applications that consume this data or for future contract logic.
+
+   **Recommended fix:**
+   Implement input validation for all parameters.
+
+   - For `id`, `origin`, `destination`: Ensure they are not empty strings. Consider length limits or character set restrictions if applicable.
+   - For `newStatus`: Define an enum or a list of valid statuses and check if `newStatus` is one of them.
+   - For `tempCelsius`: Attempt to parse it as a float or integer and check if it's within an expected range (e.g., -273.15 to a reasonable upper bound).
+
+   Example for `CreateShipment`:
+   ```go
+   // ... inside CreateShipment function ...
+   if id == """" || origin == """" || destination == """" {
+       return fmt.Errorf(""id, origin, and destination cannot be empty"")
+   }
+   // ... rest of the function ...
+   ```
+
+   Example for `UpdateShipmentStatus`:
+   ```go
+   // ... inside UpdateShipmentStatus function ...
+   validStatuses := map[string]bool{""CREATED"": true, ""IN_TRANSIT"": true, ""DELIVERED"": true, ""LOST"": true, ""DAMAGED"": true} // Example valid statuses
+   if !validStatuses[newStatus] {
+       return fmt.Errorf(""invalid status '%s'. Valid statuses are: CREATED, IN_TRANSIT, DELIVERED, LOST, DAMAGED"", newStatus)
+   }
+   // ... rest of the function ...
+   ```
+
+   Example for `RecordTemperature`:
+   ```go
+   // ... inside RecordTemperature function ...
+   var tempFloat float64
+   _, err := fmt.Sscan(tempCelsius, &tempFloat)
+   if err != nil {
+       return fmt.Errorf(""invalid temperature format: %s. Expected a number."", tempCelsius)
+   }
+   // Optional: Add range check, e.g., if tempFloat < -273.15 { return fmt.Errorf(""temperature is below absolute zero"") }
+   // ... rest of the function ...
+   ```
+
+---
+
+**3. Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   **Severity:** Medium
+   **Affected Code Location:**
+   - `CreateShipment` function: It calls `s.ShipmentExists(ctx, id)` before performing `ctx.GetStub().PutState(id, shipmentJSON)`.
+
+   **Description of the issue:**
+   While `ShipmentExists` uses `GetState`, which is generally safe for simple reads, the combination of `GetState` and `PutState` within a single transaction can lead to race conditions if not managed carefully, especially in more complex scenarios or with range queries. In this specific case, `CreateShipment` first checks if a shipment exists. If it doesn't, it proceeds to create it. However, if multiple transactions for the *same ID* are submitted concurrently and reach the endorsement phase, one transaction might read that the ID doesn't exist, while another transaction (also for the same ID) might have already written it to the ledger *after* the first transaction's read but *before* the first transaction commits. This is a form of phantom read or a race condition. The `ShipmentExists` check is intended to prevent duplicate creation, but the Fabric endorsement mechanism handles this by ensuring all endorsing peers agree on the state. The primary issue here is the non-determinism of timestamps, which is far more critical. However, for completeness, it's worth noting that if the `ShipmentExists` check were more complex (e.g., a range query), phantom reads would be a more significant concern. In this specific code, the `GetState` followed by `PutState` for the *same key* is generally handled correctly by Fabric's MVCC (Multi-Version Concurrency Control) mechanism, as the `PutState` will fail if the key has been modified by another committed transaction since the read. The `ShipmentExists` check here is more of a logical"
+2026-02-09T16:05:07.742991,google/gemini-2.5-flash-lite,zero_shot,vuln_02_global.go,4833,5.903,"Here's an analysis of the provided Go chaincode file `vuln_02_global.go` for security vulnerabilities:
+
+---
+
+### Vulnerability Analysis Report for `vuln_02_global.go`
+
+**1. Vulnerability Type:** Non-deterministic Operations (Global Variable Misuse)
+   **Severity:** Critical
+   **Affected Code Location:**
+   - `IssueToken` function (lines 28, 38, 45)
+   - `TransferToken` function (lines 77, 80)
+   - `BurnToken` function (lines 119, 125, 131, 137)
+   - `GetGlobalStats` function (line 94)
+   **Description of the issue:**
+   The chaincode uses global variables (`transactionCounter` and `lastProcessedID`) that are not synchronized across peers via the ledger. Each peer maintains its own in-memory copy of these variables. When these global variables are read or mutated within transaction functions, different peers will likely have different values at the time of execution. This leads to non-deterministic results:
+   - `transactionCounter` is incremented and used to set `TxCount` in `Token` structs and to generate `receiptKey` in `BurnToken`. This means the `TxCount` and the `receiptKey` will differ across peers.
+   - `lastProcessedID` is assigned in `IssueToken` and read in `GetGlobalStats`. Its value will also diverge.
+   These divergences will cause endorsement mismatches, as the proposed transaction results (state writes) will not be identical across all endorsing peers, leading to transaction failures.
+   **Recommended fix:**
+   Remove all uses of global variables for state management or for generating deterministic values. Instead, use the ledger to store and retrieve any state that needs to be consistent across peers. For example, `transactionCounter` could be stored as a state variable (e.g., a dedicated ""counter"" key) and read/updated atomically within transactions. `lastProcessedID` should also be managed via ledger state if its value needs to be consistent.
+
+---
+
+**2. Vulnerability Type:** Input Validation Flaw (Implicit Trust in Caller)
+   **Severity:** Medium
+   **Affected Code Location:**
+   - `IssueToken` function (line 23)
+   - `TransferToken` function (lines 57, 61)
+   - `BurnToken` function (line 107)
+   **Description of the issue:**
+   The chaincode does not explicitly validate the `owner`, `from`, or `to` string parameters to ensure they are not empty or contain invalid characters that could lead to unexpected behavior or security issues when used as ledger keys. While Fabric's `PutState` and `GetState` handle most string inputs, it's good practice to validate inputs to prevent potential issues like creating keys with leading/trailing spaces or other characters that might be problematic in certain contexts or for downstream applications. For instance, an empty string as an owner could lead to an empty key, which might be undesirable.
+   **Recommended fix:**
+   Add input validation at the beginning of each function that accepts string identifiers. For example, check if `owner`, `from`, or `to` are empty strings. You might also want to define a set of allowed characters or a format for these identifiers.
+
+---
+
+**3. Vulnerability Type:** Input Validation Flaw (Amount Validation)
+   **Severity:** Medium
+   **Affected Code Location:**
+   - `IssueToken` function (line 23)
+   - `TransferToken` function (line 57)
+   - `BurnToken` function (line 107)
+   **Description of the issue:**
+   The chaincode does not validate the `amount` parameter to ensure it's a positive value.
+   - In `IssueToken`, a negative or zero amount could be issued, which might not be the intended behavior.
+   - In `TransferToken`, a negative or zero amount could effectively transfer tokens in the wrong direction or do nothing, potentially masking malicious activity or causing confusion.
+   - In `BurnToken`, a negative or zero amount could lead to tokens being added to the balance instead of being burned, or no change occurring, which is contrary to the function's purpose.
+   **Recommended fix:**
+   Add checks at the beginning of `IssueToken`, `TransferToken`, and `BurnToken` to ensure that the `amount` is strictly greater than zero.
+
+---
+
+**4. Vulnerability Type:** Private Data Leakage (Potential, if used with Private Data Collections)
+   **Severity:** Low (in this specific implementation, but critical if adapted for private data)
+   **Affected Code Location:**
+   - `IssueToken` function (line 45)
+   - `GetGlobalStats` function (line 94)
+   **Description of the issue:**
+   The global variable `lastProcessedID` is exposed via the `GetGlobalStats` function. If this chaincode were to be deployed using Private Data Collections (PDCs), and `lastProcessedID` were intended to store sensitive information related to private data transactions, exposing it directly through a public query function would lead to a private data leakage. In this specific code, `lastProcessedID` is just an owner's ID, which is already public on the ledger. However, the pattern of exposing global variables is risky if the chaincode evolves to handle sensitive data.
+   **Recommended fix:**
+   As mentioned in the first vulnerability, global variables should not be used for state. If `lastProcessedID` were to hold sensitive information, it should be managed within a private data collection and only queried through authorized functions that respect the privacy rules. For this specific code, since `lastProcessedID` is derived from public data and its exposure doesn't reveal new sensitive information, the primary fix is to remove its reliance on global state.
+
+---
+
+**5. Vulnerability Type:** Read-After-Write Conflict (Phantom Reads) - *Not directly exploitable in this code, but a conceptual risk with state management*
+   **Severity:** Low (in this specific code, due to how state is managed)
+   **Affected Code Location:**
+   - `TransferToken` function (lines 65-66)
+   **Description of the issue:**
+   While Fabric's MVCC (Multi-Version Concurrency Control) mechanism helps prevent many read-after-write conflicts, the way `TransferToken` reads `from` and `to` states, unmarshals them, modifies them in memory, and then writes them back *could* theoretically be susceptible to phantom reads if intermediate states were modified by another transaction that committed between the `GetState` calls and the `PutState` calls *within the same block*. However, Fabric's transaction execution model (endorsement, ordering, validation) generally ensures that a transaction sees a consistent snapshot of the ledger. The primary issue here is the non-determinism from global variables, not a true phantom read in the traditional sense of concurrent execution on a single peer. The code *does* read both `from` and `to` states before writing, which is the correct pattern to avoid issues.
+   **Recommended fix:**
+   The current pattern of reading both states before writing is generally sound for preventing race conditions within a single transaction's execution. The critical fix needed is to eliminate the non-deterministic global variables.
+
+---
+
+**6. Vulnerability Type:** Insecure Key Management - *Not applicable in this code*
+   **Severity:** Not Applicable
+   **Affected Code Location:** N/A
+   **Description of the issue:**
+   This chaincode does not involve any explicit key management operations (e.g., generating, storing, or using cryptographic keys for encryption/decryption). Therefore, there are no vulnerabilities related to insecure key management in this specific code.
+   **Recommended fix:** N/A
+
+---
+
+### Summary of Critical Vulnerabilities:
+
+The most critical vulnerability is the **non-deterministic operation due to the misuse of global variables**. This will prevent transactions from committing successfully in a distributed Fabric network. The other identified vulnerabilities (input validation, potential private data leakage pattern) are also important to address for robustness and security.
+
+---"
+2026-02-09T16:05:14.146148,google/gemini-2.5-flash-lite,zero_shot,vuln_03_goroutine.go,5336,6.402,"The provided Go chaincode file `vuln_03_goroutine.go` contains several security vulnerabilities related to the use of goroutines within the Hyperledger Fabric chaincode execution environment.
+
+Here's a detailed analysis:
+
+---
+
+### Vulnerability Analysis
+
+1.  **Vulnerability Type**: Non-deterministic Operations (Goroutine Scheduling)
+    *   **Severity**: Critical
+    *   **Affected Code Location**: `TallyVotes` function, specifically the `go func(id string) { ... }(pid)` block.
+    *   **Description**: Hyperledger Fabric chaincode execution is designed to be deterministic and single-threaded per transaction. Spawning goroutines within a transaction leads to non-deterministic execution order. Different peers might schedule and execute these goroutines in different orders. This can result in varying intermediate states of shared data (like the `results` map) even with a mutex, and more importantly, different read sets being generated across peers. During endorsement, if peers observe different read sets for the same transaction, the transaction will fail validation. The `GetState` calls within these goroutines are particularly problematic as their order can vary.
+    *   **Recommended Fix**: Remove the use of goroutines for operations that involve reading from or writing to the ledger state within a single transaction. The `TallyVotes` function should process proposals sequentially within the main transaction thread.
+
+2.  **Vulnerability Type**: Non-deterministic Operations (Goroutine Scheduling) & Insecure Stub Usage
+    *   **Severity**: Critical
+    *   **Affected Code Location**: `BatchUpdateStatus` function, specifically the `go func(id string) { ... }(pid)` block and the `ctx.GetStub().PutState(id, updatedJSON)` call within it.
+    *   **Description**: Similar to `TallyVotes`, `BatchUpdateStatus` uses goroutines to concurrently update multiple proposal statuses. The `ctx.GetStub().PutState` method is not designed for concurrent access from multiple goroutines within a single transaction. The order in which `PutState` is invoked across different peers can vary due to goroutine scheduling, leading to different write sets and endorsement mismatches. Furthermore, the Fabric stub's internal state management might not be thread-safe for concurrent calls, potentially leading to unpredictable behavior or data corruption.
+    *   **Recommended Fix**: Remove the use of goroutines. Process the updates sequentially within the main transaction thread. If batching is a performance requirement, consider alternative patterns like off-chain processing or designing the chaincode to handle larger batches in a single, sequential transaction.
+
+3.  **Vulnerability Type**: Non-deterministic Operations (Goroutine Scheduling) & Insecure Stub Usage
+    *   **Severity**: Critical
+    *   **Affected Code Location**: `AsyncNotify` function, specifically the `go func() { ... }()` block and the `ctx.GetStub().SetEvent(""NOTIFY"", eventData)` call within it.
+    *   **Description**: The `AsyncNotify` function launches a goroutine that attempts to emit an event using `ctx.GetStub().SetEvent`. This is a ""fire-and-forget"" approach. The goroutine might not complete before the main transaction function returns. The Fabric stub's lifecycle is tied to the transaction execution. If `SetEvent` is called after the stub's context has been finalized or if the goroutine's execution is not guaranteed within the transaction's scope, it can lead to undefined behavior, potential errors, or events not being emitted consistently across peers. Events are critical for off-chain applications to react to ledger changes, and their non-deterministic emission is a severe issue.
+    *   **Recommended Fix**: Event emission should happen within the main transaction thread, after all state modifications are committed. Remove the goroutine and call `ctx.GetStub().SetEvent` directly at the end of the transaction function, or after the relevant state changes have been made.
+
+4.  **Vulnerability Type**: Read-after-write Conflicts (Phantom Reads) / Non-deterministic Operations
+    *   **Severity**: Medium
+    *   **Affected Code Location**: `TallyVotes` function, specifically the `GetState` calls within the goroutines.
+    *   **Description**: While the primary issue here is non-determinism due to goroutines, the interaction of `GetState` calls within concurrent goroutines can also lead to issues related to read-after-write conflicts or phantom reads in a broader sense, especially if the transaction were to involve multiple reads and writes to potentially overlapping keys. The order of `GetState` calls can vary, and if a write to a key happens between two `GetState` calls for the same key (in a different transaction context, or if the transaction were structured differently), it could lead to inconsistent reads. In this specific implementation, the mutex protects the `results` map, but the `GetState` calls themselves are not synchronized and their order is non-deterministic.
+    *   **Recommended Fix**: Process all ledger interactions sequentially within the main transaction thread to ensure a consistent read set and avoid potential race conditions or phantom reads.
+
+5.  **Vulnerability Type**: Input Validation (Missing)
+    *   **Severity**: Low
+    *   **Affected Code Location**: `CastVote` function, `proposal.Voters = append(proposal.Voters, voterID)` line.
+    *   **Description**: The `CastVote` function appends the `voterID` to the `Voters` list without checking if this voter has already voted for the proposal. This allows a single `voterID` to cast multiple votes for the same proposal.
+    *   **Recommended Fix**: Before appending the `voterID`, iterate through the `proposal.Voters` slice to check if the `voterID` already exists. If it does, return an error indicating that the voter has already voted.
+
+6.  **Vulnerability Type**: Input Validation (Missing)
+    *   **Severity**: Low
+    *   **Affected Code Location**: `CreateProposal` function, `id string` parameter.
+    *   **Description**: The `id` parameter for `CreateProposal` is not validated. An empty string or a string that could conflict with system keys (e.g., ""TALLY_RESULT"") could be passed, potentially causing issues or overwriting important data.
+    *   **Recommended Fix**: Add validation for the `id` parameter to ensure it's not empty and doesn't conflict with reserved keys.
+
+7.  **Vulnerability Type**: Input Validation (Missing)
+    *   **Severity**: Low
+    *   **Affected Code Location**: `BatchUpdateStatus` function, `newStatus string` parameter.
+    *   **Description**: The `newStatus` parameter is not validated. Any string can be passed, which might lead to inconsistent or invalid states for proposals if not handled by the client application.
+    *   **Recommended Fix**: Define an enum or a set of allowed status strings and validate `newStatus` against this set.
+
+---
+
+### Summary of Vulnerabilities
+
+The most critical vulnerabilities stem from the misuse of goroutines within the chaincode. Hyperledger Fabric's endorsement mechanism relies on deterministic execution and consistent read/write sets across all endorsing peers. Spawning goroutines breaks this determinism by introducing non-deterministic execution order and potentially inconsistent interactions with the Fabric stub.
+
+The other identified vulnerabilities are related to input validation, which are less severe but important for data integrity and preventing unexpected behavior.
+
+---
+
+### No vulnerabilities detected.
+
+This statement is **incorrect** based on the analysis above. The file `vuln_03_goroutine.go` contains several critical and low-severity vulnerabilities."
+2026-02-09T16:05:21.912153,google/gemini-2.5-flash-lite,zero_shot,vuln_04_b_nested_map.go,5711,7.765,"The provided Go chaincode file `vuln_04_b_nested_map.go` contains several security vulnerabilities related to non-deterministic operations due to map iteration order.
+
+Here's a detailed analysis:
+
+---
+
+### Vulnerability Analysis
+
+1.  **Vulnerability Type**: Non-deterministic Operations (Map Iteration Order)
+    *   **Severity**: Critical
+    *   **Affected Code Location**: `BatchUpdateInventory` function, lines 27-49 (outer loop), lines 52-58 (inner loop), and line 62.
+    *   **Description**: The `BatchUpdateInventory` function iterates over nested maps (`updates` which is `map[string]map[string]int`). Go's map iteration order is intentionally randomized. This means that the order in which zones are processed (outer loop) and the order in which items within a zone are processed (inner loop) will differ across endorsing peers. This leads to different sequences of `PutState` calls for individual items and the zone itself. Specifically, the `itemRecord` is created and written for each item, and the `zoneKey` is updated at the end of the zone processing. The order of these writes to the ledger will be inconsistent, causing endorsement failures when peers cannot agree on the transaction's outcome.
+    *   **Recommended Fix**: To ensure determinism, the maps should be converted to sorted slices before iteration.
+        *   For the outer loop (zones): Extract zone IDs into a slice, sort the slice, and then iterate over the sorted slice.
+        *   For the inner loop (items): Extract item IDs into a slice, sort the slice, and then iterate over the sorted slice.
+        *   This ensures that `PutState` calls are always made in the same order for all peers.
+
+        ```go
+        // Inside BatchUpdateInventory function:
+
+        // Sort zone IDs before iterating
+        var sortedZoneIDs []string
+        for zoneID := range updates {
+            sortedZoneIDs = append(sortedZoneIDs, zoneID)
+        }
+        sort.Strings(sortedZoneIDs) // Import ""sort"" package
+
+        for _, zoneID := range sortedZoneIDs { // Iterate over sorted zone IDs
+            itemUpdates := updates[zoneID]
+            zoneKey := ""ZONE_"" + zoneID
+            zoneJSON, err := ctx.GetStub().GetState(zoneKey)
+            // ... (rest of zone reading logic)
+
+            // Sort item IDs before iterating
+            var sortedItemIDs []string
+            for itemID := range itemUpdates {
+                sortedItemIDs = append(sortedItemIDs, itemID)
+            }
+            sort.Strings(sortedItemIDs) // Import ""sort"" package
+
+            for _, itemID := range sortedItemIDs { // Iterate over sorted item IDs
+                qtyDelta := itemUpdates[itemID]
+                zone.Items[itemID] += qtyDelta
+                zone.ItemCount += qtyDelta
+
+                // This write is now deterministic in its order relative to other item writes within the same zone
+                itemKey := zoneID + ""_ITEM_"" + itemID
+                itemRecord := fmt.Sprintf(`{""zone"":""%s"",""item"":""%s"",""qty"":%d}`, zoneID, itemID, zone.Items[itemID])
+                ctx.GetStub().PutState(itemKey, []byte(itemRecord))
+            }
+
+            updatedZoneJSON, _ := json.Marshal(zone)
+            ctx.GetStub().PutState(zoneKey, updatedZoneJSON) // This zone write is now deterministic in its order relative to other zone writes
+        }
+        ```
+
+2.  **Vulnerability Type**: Non-deterministic Operations (Map Iteration Order)
+    *   **Severity**: Critical
+    *   **Affected Code Location**: `GenerateZoneReport` function, lines 76-91 (outer and inner loops, and string joining).
+    *   **Description**: This function also iterates over nested maps (`zoneData`). The order of zones processed in the outer loop and the order of items within each zone processed in the inner loop are randomized. The `strings.Join` operations for both items within a zone and zones within the report will produce different output strings on different peers. This leads to a non-deterministic report, causing endorsement failures.
+    *   **Recommended Fix**: Similar to `BatchUpdateInventory`, sort the keys before iterating over the maps.
+        *   Sort zone IDs before iterating.
+        *   Sort item IDs within each zone before iterating.
+        *   Ensure consistent string formatting.
+
+        ```go
+        // Inside GenerateZoneReport function:
+
+        // Sort zone IDs before iterating
+        var sortedZoneIDs []string
+        for zoneID := range zoneData {
+            sortedZoneIDs = append(sortedZoneIDs, zoneID)
+        }
+        sort.Strings(sortedZoneIDs) // Import ""sort"" package
+
+        for _, zoneID := range sortedZoneIDs { // Iterate over sorted zone IDs
+            items := zoneData[zoneID]
+            var itemParts []string
+
+            // Sort item IDs before iterating
+            var sortedItemIDs []string
+            for itemID := range items {
+                sortedItemIDs = append(sortedItemIDs, itemID)
+            }
+            sort.Strings(sortedItemIDs) // Import ""sort"" package
+
+            for _, itemID := range sortedItemIDs { // Iterate over sorted item IDs
+                qty := items[itemID]
+                itemParts = append(itemParts, fmt.Sprintf(""%s=%d"", itemID, qty))
+            }
+
+            zoneSummary := fmt.Sprintf(""[%s: %s]"", zoneID, strings.Join(itemParts, "",""))
+            reportParts = append(reportParts, zoneSummary)
+        }
+
+        report := strings.Join(reportParts, "" | "")
+        return ctx.GetStub().PutState(""WAREHOUSE_REPORT"", []byte(report))
+        ```
+
+3.  **Vulnerability Type**: Non-deterministic Operations (Map Iteration Order)
+    *   **Severity**: High
+    *   **Affected Code Location**: `MergeZones` function, lines 115-120 (inner loop for accumulating counts) and lines 123-127 (loop for writing merged items).
+    *   **Description**: The `MergeZones` function iterates over `zone.Items` (a map) to accumulate item counts into the `merged` map. While the accumulation itself is commutative and thus deterministic, the subsequent loop that iterates over the `merged` map to write individual item records (`ctx.GetStub().PutState(mergedKey, []byte(record))`) is non-deterministic. The order of these `PutState` calls for individual items will vary across peers, leading to endorsement failures.
+    *   **Recommended Fix**: Sort the keys of the `merged` map before iterating to write the individual item records.
+
+        ```go
+        // Inside MergeZones function:
+
+        // ... (after accumulating counts into 'merged' map)
+
+        // Sort item IDs from the merged map before writing
+        var sortedMergedItemIDs []string
+        for itemID := range merged {
+            sortedMergedItemIDs = append(sortedMergedItemIDs, itemID)
+        }
+        sort.Strings(sortedMergedItemIDs) // Import ""sort"" package
+
+        for _, itemID := range sortedMergedItemIDs { // Iterate over sorted item IDs
+            totalQty := merged[itemID]
+            mergedKey := targetZoneID + ""_ITEM_"" + itemID
+            record := fmt.Sprintf(`{""zone"":""%s"",""item"":""%s"",""qty"":%d}`, targetZoneID, itemID, totalQty)
+            ctx.GetStub().PutState(mergedKey, []byte(record)) // This write is now deterministic in its order
+        }
+
+        // ... (rest of the function)
+        ```
+
+---
+
+### Other Potential Considerations (Not strictly vulnerabilities in this code, but good practice)
+
+*   **Input Validation**: While `json.Unmarshal` handles basic JSON parsing errors, more robust validation could be added. For example, checking for negative `qtyDelta` in `BatchUpdateInventory` or ensuring `targetZoneID` and `sourceZoneIDs` are not empty or invalid in `MergeZones`.
+*   **Access Control**: There is no explicit access control implemented. Any participant with permission to invoke these chaincode functions can perform updates or generate reports. In a real-world scenario, you would likely want to add checks based on the caller's identity (`ctx.GetStub().GetCreator()`) to restrict who can perform certain operations.
+*   **Read-After-Write Conflicts (Phantom Reads)**: In `BatchUpdateInventory`, the code reads the zone state, then iterates through item updates, and finally writes the updated zone state. If multiple transactions were to concurrently update the *same* zone, a read-after-write conflict could occur if a transaction reads a zone, another transaction updates it, and then the first transaction attempts to write its (now stale) version. However, Fabric's MVCC handles this by rejecting conflicting transactions. The primary issue here is determinism, not necessarily phantom reads in the typical sense, as the non-determinism will likely cause endorsement failures before MVCC conflicts become the primary problem.
+*   **Private Data Leakage**: This chaincode does not use private data collections, so there is no risk of private data leakage through this mechanism.
+*   **Insecure Key Management**: No explicit key management is performed within this chaincode. Keys are derived"
+2026-02-09T16:05:28.069318,google/gemini-2.5-flash-lite,zero_shot,vuln_04_map_iter.go,4688,6.157,"Here's an analysis of the provided Go chaincode file for security vulnerabilities:
+
+---
+
+### Vulnerability Analysis Report for `vuln_04_map_iter.go`
+
+**1. Vulnerability Type:** Non-deterministic Operations (Map Iteration Order)
+   **Severity:** Critical
+   **Affected Code Location:** `BatchRestock` function, lines 35-58
+   **Description of the Issue:** The `BatchRestock` function iterates over a Go map (`restockMap`) and performs `GetState` and `PutState` operations within the loop. Go's map iteration order is intentionally randomized by the runtime. This means that different peers executing the same transaction might iterate over the `restockMap` in a different order. Each `PutState` operation contributes to the transaction's write set. If the order of these writes differs between peers, the resulting write sets will be different, leading to endorsement mismatches and transaction failures. This is a fundamental cause of non-determinism in chaincode.
+   **Recommended Fix:** To ensure determinism, avoid iterating over maps when performing state writes. Instead, use a deterministic data structure like a sorted slice of keys. For example, extract the keys from the map, sort them, and then iterate over the sorted keys to perform state operations.
+
+   ```go
+   // Inside BatchRestock function
+   var restockMap map[string]int
+   err := json.Unmarshal([]byte(restockJSON), &restockMap)
+   if err != nil {
+       return fmt.Errorf(""invalid restock JSON: %v"", err)
+   }
+
+   // Extract keys and sort them for deterministic iteration
+   var productIDs []string
+   for productID := range restockMap {
+       productIDs = append(productIDs, productID)
+   }
+   sort.Strings(productIDs) // Requires importing ""sort""
+
+   for _, productID := range productIDs {
+       addQty := restockMap[productID] // Get quantity from the map
+       // ... rest of the logic for GetState, Unmarshal, update, Marshal, PutState ...
+   }
+   ```
+
+---
+
+**2. Vulnerability Type:** Non-deterministic Operations (Map Iteration Order)
+   **Severity:** Critical
+   **Affected Code Location:** `GenerateReport` function, lines 70-89
+   **Description of the Issue:** The `GenerateReport` function first calculates totals based on product data and stores them in a map (`totals`). Subsequently, it iterates over this `totals` map to construct a report string. The order of iteration over the `totals` map is non-deterministic. This means the `parts` slice will be populated in a different order on different peers, and consequently, the final `report` string generated by `strings.Join` will also differ. Writing this non-deterministic report to the ledger (`INVENTORY_REPORT`) will cause endorsement mismatches.
+   **Recommended Fix:** Similar to `BatchRestock`, ensure deterministic iteration when constructing the report. Extract the keys (product names) from the `totals` map, sort them, and then iterate over the sorted keys to build the report string.
+
+   ```go
+   // Inside GenerateReport function, after calculating totals
+   var reportParts []string
+   var productNames []string
+   for name := range totals {
+       productNames = append(productNames, name)
+   }
+   sort.Strings(productNames) // Requires importing ""sort""
+
+   for _, name := range productNames {
+       total := totals[name]
+       reportParts = append(reportParts, fmt.Sprintf(""%s:%.2f"", name, total))
+   }
+   report := strings.Join(reportParts, ""|"")
+
+   return ctx.GetStub().PutState(""INVENTORY_REPORT"", []byte(report))
+   ```
+
+---
+
+**3. Vulnerability Type:** Non-deterministic Operations (Map Iteration Order)
+   **Severity:** Critical
+   **Affected Code Location:** `ApplyDiscounts` function, lines 97-117
+   **Description of the Issue:** The `ApplyDiscounts` function iterates over a map (`discounts`) and performs `GetState` and `PutState` operations for each product. As with `BatchRestock`, the non-deterministic iteration order of the `discounts` map will lead to different write-set orderings across peers, causing endorsement failures.
+   **Recommended Fix:** Apply the same deterministic iteration strategy as recommended for `BatchRestock`. Extract keys from the `discounts` map, sort them, and then iterate over the sorted keys to perform state updates.
+
+   ```go
+   // Inside ApplyDiscounts function
+   var discounts map[string]float64
+   err := json.Unmarshal([]byte(discountsJSON), &discounts)
+   if err != nil {
+       return fmt.Errorf(""invalid discounts JSON: %v"", err)
+   }
+
+   // Extract keys and sort them for deterministic iteration
+   var productIDs []string
+   for productID := range discounts {
+       productIDs = append(productIDs, productID)
+   }
+   sort.Strings(productIDs) // Requires importing ""sort""
+
+   for _, productID := range productIDs {
+       discountPct := discounts[productID] // Get discount percentage from the map
+       // ... rest of the logic for GetState, Unmarshal, update, Marshal, PutState ...
+   }
+   ```
+
+---
+
+**4. Vulnerability Type:** Input Validation Flaw (Missing `nil` check for `productJSON`)
+   **Severity:** Medium
+   **Affected Code Location:** `BatchRestock` function, line 45
+   **Description of the Issue:** In the `BatchRestock` function, after checking if `productJSON` is `nil` (line 43), the code proceeds to `json.Unmarshal(productJSON, &product)` (line 46) without re-checking if `productJSON` is still `nil`. While the `if productJSON == nil { continue }` check *should* prevent this, it's good practice to be explicit. If `GetState` returned an error that was somehow suppressed or handled in a way that `productJSON` became `nil` *after* the initial check (though unlikely in this specific code), `json.Unmarshal` would panic. More importantly, the `json.Unmarshal` call itself doesn't check for errors.
+   **Recommended Fix:** Add an explicit check for `productJSON == nil` before unmarshalling, and always check the error returned by `json.Unmarshal`.
+
+   ```go
+   // Inside BatchRestock function, after line 43
+   if productJSON == nil {
+       continue // Product not found, skip
+   }
+
+   var product Product
+   err = json.Unmarshal(productJSON, &product) // Check error here
+   if err != nil {
+       return fmt.Errorf(""failed to unmarshal product %s: %v"", productID, err)
+   }
+   // ... rest of the logic ...
+   ```
+
+---
+
+**5. Vulnerability Type:** Input Validation Flaw (Missing `nil` check for `productJSON`)
+   **Severity:** Medium
+   **Affected Code Location:** `GenerateReport` function, line 76
+   **Description of the Issue:** Similar to the `BatchRestock` function, `GenerateReport` checks if `productJSON` is `nil` (line 75) and then proceeds to `json.Unmarshal(productJSON, &product)` (line 77) without an explicit re-check. It also doesn't check the error from `json.Unmarshal`.
+   **Recommended Fix:** Add an explicit check for `productJSON == nil` before unmarshalling and check the error returned by `json.Unmarshal`.
+
+   ```go
+   // Inside GenerateReport function, after line 75
+   if productJSON == nil {
+       continue // Product not found, skip
+   }
+
+   var product Product
+   err = json.Unmarshal(productJSON, &product) // Check error here
+   if err != nil {
+       // Decide how to handle: skip, return error, log, etc.
+       // For a report, skipping might be acceptable if the goal is to report on what's available.
+       // However, returning an error might be safer to indicate data corruption.
+       // Let's assume skipping for now, but logging would be good.
+       fmt.Printf(""Warning: failed to unmarshal product %s: %v\n"", id, err)
+       continue
+   }
+   // ... rest of the logic ...
+   ```
+
+---
+
+**6. Vulnerability Type:** Input Validation Flaw (Missing `nil` check for `productJSON`)
+   **Severity:** Medium
+   **Affected Code Location:** `ApplyDiscounts` function, line 105
+   **Description of the Issue:** The `ApplyDiscounts` function checks if `productJSON` is `nil` (line 104) and then proceeds to `json.Unmarshal(productJSON, &product)` (line 106) without an explicit re-check. It also doesn't check the error from `json.Unmarshal`.
+   **Recommended Fix:** Add an explicit check for `productJSON == nil` before unmarshalling and check the error returned by `json.Unmarshal`.
+
+   ```go
+   // Inside ApplyDiscounts function, after line 104
+   if product"
+2026-02-09T16:05:37.037244,google/gemini-2.5-flash-lite,zero_shot,vuln_05_phantom.go,5565,8.968,"The provided Go chaincode file `vuln_05_phantom.go` contains several vulnerabilities related to read-after-write conflicts (phantom reads) and the check-then-act pattern, which are common issues in distributed ledger technology.
+
+Here's a detailed analysis:
+
+---
+
+### Vulnerability 1: Phantom Read in `CloseAuction`
+
+1.  **Vulnerability Type**: Read-after-write conflict (Phantom Read)
+2.  **Severity**: Critical
+3.  **Affected Code Location**:
+    *   `CloseAuction` function, line 45: `resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Bid"", []string{auctionID})`
+    *   `CloseAuction` function, line 66: `return ctx.GetStub().PutState(""AUCTION_RESULT_""+auctionID, summaryJSON)`
+4.  **Description of the Issue**:
+    The `CloseAuction` function first reads all existing bids for a given `auctionID` using `GetStateByPartialCompositeKey`. This operation adds all the keys of the retrieved bids to the transaction's read set. Subsequently, it calculates an `AuctionSummary` based on these bids and then writes this summary to the ledger using `PutState`.
+    The critical issue arises if another transaction concurrently calls `PlaceBid` for the same `auctionID` *after* `CloseAuction` has read the bids but *before* `CloseAuction` commits. The `PlaceBid` transaction would insert a new bid, modifying the state that `CloseAuction` has already read. When `CloseAuction` attempts to commit, the Hyperledger Fabric MVCC (Multi-Version Concurrency Control) mechanism will detect that the state it read has changed (a ""phantom read"" scenario because a new key was added to the range it queried). This will cause the `CloseAuction` transaction to be invalidated and rejected. This is a race condition that can lead to the auction closing process failing unpredictably.
+5.  **Recommended Fix**:
+    To mitigate this, the `CloseAuction` function needs to be designed to avoid this read-write conflict. One common approach is to use a **transactional read-modify-write pattern** or to ensure that the operations are atomic.
+    *   **Option 1: Pessimistic Locking (if supported by the Fabric version/configuration or simulated)**: While Fabric doesn't have explicit pessimistic locking, you could simulate it by writing a lock key before reading and deleting it after committing. However, this adds complexity and potential deadlocks.
+    *   **Option 2: Re-read and Re-evaluate (more practical)**: A more robust approach is to re-read the relevant data *after* all writes are completed or to structure the transaction such that the read and write operations are more tightly coupled.
+        *   A better pattern for aggregation and writing a summary is to perform the aggregation *within* a single transaction that also performs the writes. If the aggregation itself is too slow, consider alternative designs.
+        *   For this specific case, if `PlaceBid` is the only operation that can add bids, and `CloseAuction` is intended to be the finalizer, you might need to ensure that no `PlaceBid` operations can occur once `CloseAuction` is initiated. This often involves application-level logic or state flags.
+        *   A more direct fix within the current framework: If the number of bids is manageable, you could potentially read all bids, then *immediately* write a ""closing"" state for the auction (e.g., `AUCTION_STATUS_CLOSING`), then perform the aggregation, and finally write the result. This might prevent new bids from being placed if `PlaceBid` also checks this status. However, the core phantom read issue remains if `PlaceBid` doesn't check the auction status.
+        *   **The most idiomatic Fabric solution for this pattern is often to avoid operations that read a range and then write a summary that depends on that range if concurrent writes to that range are possible.** If the goal is to get a final summary, and `PlaceBid` can still happen, the `CloseAuction` function should ideally not be a simple read-aggregate-write. It might need to be part of a larger, more complex transaction or use a different approach to guarantee consistency.
+        *   **Consider using `GetStateByRange` with a specific range for bids if the composite key structure allows for it, and ensure that `PlaceBid` also uses a composite key that is consistent.** The current `GetStateByPartialCompositeKey` is correct for retrieving all bids for an auction. The problem is the subsequent `PutState` that can conflict with concurrent `PutState` in `PlaceBid`.
+        *   **A common pattern to avoid phantom reads when aggregating is to ensure that the aggregation logic is performed in a way that doesn't rely on a stale read-set.** If `CloseAuction` is the *only* transaction that can write the `AUCTION_RESULT_` key, and `PlaceBid` can *only* write `Bid` keys, then the conflict is specifically between `CloseAuction`'s read-set and `PlaceBid`'s write-set.
+        *   **Revised Strategy**: The `CloseAuction` function should ideally be the *last* operation for an auction. If `PlaceBid` can still occur, `CloseAuction` will fail. The application logic should prevent `PlaceBid` from being called after `CloseAuction` is initiated. If this is not possible, then `CloseAuction` needs to be re-designed. A potential, albeit complex, solution could involve:
+            1.  Read all bids.
+            2.  Create a temporary summary.
+            3.  Attempt to write a ""finalizing"" state for the auction (e.g., `AUCTION_FINALIZING`).
+            4.  If writing the ""finalizing"" state fails (due to a concurrent `CloseAuction` or `PlaceBid` that also tries to finalize), abort.
+            5.  If successful, re-read the bids (to catch any that might have been added *just* before the lock was acquired) and recalculate the summary.
+            6.  Write the final `AUCTION_RESULT_`.
+            7.  Remove the ""finalizing"" state.
+            This is overly complex. A simpler approach is to enforce application-level constraints: once `CloseAuction` is called, no more `PlaceBid` calls are allowed for that auction.
+
+---
+
+### Vulnerability 2: Phantom Read in `IncrementCounter`
+
+1.  **Vulnerability Type**: Read-after-write conflict (Phantom Read / Lost Update)
+2.  **Severity**: Critical
+3.  **Affected Code Location**:
+    *   `IncrementCounter` function, line 79: `counterBytes, err := ctx.GetStub().GetState(counterKey)`
+    *   `IncrementCounter` function, line 97: `return ctx.GetStub().PutState(counterKey, []byte(strconv.Itoa(counter)))`
+4.  **Description of the Issue**:
+    This function implements a classic read-modify-write pattern. It reads the current value of a counter, increments it, and then writes the new value back to the same key.
+    If two transactions concurrently call `IncrementCounter` with the same `counterKey`:
+    *   Transaction A reads `counter = 5`.
+    *   Transaction B reads `counter = 5`.
+    *   Transaction A increments to `6` and writes `6`.
+    *   Transaction B increments to `6` and writes `6`.
+    In this scenario, the second transaction to commit will overwrite the first one's update, leading to a ""lost update"" and the counter only being incremented once instead of twice. This is a direct consequence of the read-modify-write pattern without proper concurrency control. The read operation adds `counterKey` to the read set. The write operation also targets `counterKey`. If another transaction modifies `counterKey` between the read and write, MVCC validation will fail for the transaction that read the stale value.
+5.  **Recommended Fix**:
+    To correctly implement an atomic increment operation in Hyperledger Fabric, you should use the `InvokeChaincode` function to call a dedicated, atomic increment function, or implement a more robust pattern.
+    *   **Option 1: Use `InvokeChaincode` (Recommended for atomic operations)**: Create a separate chaincode function (or use an existing one if available) that performs an atomic increment. For example, a function `AtomicIncrement(key string, value int)` that reads, increments, and writes within a single, atomic operation. Then, `IncrementCounter` would call this atomic function via `InvokeChaincode`. However, the current chaincode is self-contained, so this implies creating a new function within *this* contract.
+    *   **Option 2: Re-read and Re-evaluate within the same transaction**: The most common pattern to avoid lost updates in Fabric is to ensure that the read and write operations are tightly coupled.
+        ```go
+        func (a *AuctionContract) IncrementCounter(ctx contractapi.TransactionContextInterface, counterKey string) error {
+            // Read current value — enters the read-set.
+            counterBytes, err := ctx.GetStub().GetState(counterKey)
+            if err != nil {
+                return fmt.Errorf(""failed to read counter: %v"", err)
+            }
+
+            counter := 0
+            if counterBytes != nil {"
+2026-02-09T16:05:43.620994,google/gemini-2.5-flash-lite,zero_shot,vuln_06_b_conditional_leak.go,5739,6.583,"Here's an analysis of the provided Go chaincode for security vulnerabilities:
+
+---
+
+### Vulnerability Analysis of `vuln_06_b_conditional_leak.go`
+
+**1. Vulnerability Type:** Resource Leak (Iterator/gRPC Stream)
+   **Severity:** Critical
+   **Affected Code Location:** `ProcessClaimsByRange` function, lines 27-33.
+   **Description:** The `GetStateByRange` function returns an iterator. This iterator holds an underlying gRPC stream that must be closed to prevent resource leaks. In `ProcessClaimsByRange`, the iterator is obtained, and then a loop is executed to count claims. If `claimCount` is 0, the function returns early with an error. Crucially, the `defer resultsIterator.Close()` statement appears *after* this early return path. Therefore, if `GetStateByRange` succeeds but no claims are found, the `defer` statement is never reached, and the iterator's gRPC stream remains open, leading to a resource leak.
+   **Recommended Fix:** Ensure that `resultsIterator.Close()` is called in all exit paths, preferably using `defer` immediately after the iterator is successfully obtained.
+
+   ```go
+   // ProcessClaimsByRange retrieves claims in a key range and processes them.
+   func (ic *InsuranceContract) ProcessClaimsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string, approver string) error {
+       if approver == """" {
+           return fmt.Errorf(""approver cannot be empty"")
+       }
+
+       resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+       if err != nil {
+           return fmt.Errorf(""failed to get state by range: %v"", err)
+       }
+       // Ensure iterator is closed in all exit paths
+       defer resultsIterator.Close()
+
+       claimCount := 0
+       for resultsIterator.HasNext() {
+           claimCount++
+           // Consume the iterator to check for existence, but don't process yet
+           _, err := resultsIterator.Next()
+           if err != nil {
+               return fmt.Errorf(""error iterating claims: %v"", err)
+           }
+       }
+
+       if claimCount == 0 {
+           // No claims found, return early. defer will handle closing.
+           return fmt.Errorf(""no claims found in range %s to %s"", startKey, endKey)
+       }
+
+       // Re-query to actually process (iterator already exhausted above)
+       // This is a design choice to re-iterate, but the first iterator is now closed by defer.
+       resultsIterator2, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+       if err != nil {
+           return err
+       }
+       defer resultsIterator2.Close() // Ensure the second iterator is also closed
+
+       for resultsIterator2.HasNext() {
+           queryResult, err := resultsIterator2.Next()
+           if err != nil {
+               return err
+           }
+
+           var claim Claim
+           err = json.Unmarshal(queryResult.Value, &claim)
+           if err != nil {
+               return err
+           }
+
+           if claim.Status == ""PENDING"" {
+               claim.Status = ""APPROVED""
+               claim.Approver = approver
+               updatedJSON, _ := json.Marshal(claim) // Error ignored, assuming valid struct
+               ctx.GetStub().PutState(claim.ClaimID, updatedJSON)
+           }
+       }
+
+       return nil
+   }
+   ```
+
+**2. Vulnerability Type:** Resource Leak (Iterator/gRPC Stream)
+   **Severity:** Critical
+   **Affected Code Location:** `GetHighValueClaims` function, lines 54-74.
+   **Description:** Similar to the previous vulnerability, the `GetHighValueClaims` function fails to consistently close the iterator returned by `GetStateByRange`. The `resultsIterator.Close()` call is placed *only* within the `else` block, which is executed when `threshold <= 0`. In the normal execution path where `threshold > 0`, the loop iterates through the claims, but there is no `resultsIterator.Close()` call before the function returns. This leads to a resource leak. Additionally, if an error occurs during iteration (`resultsIterator.Next()`), the function returns immediately, leaking the iterator.
+   **Recommended Fix:** Use `defer resultsIterator.Close()` immediately after successfully obtaining the iterator. Handle the error case for `threshold` separately, ensuring the deferred close still executes.
+
+   ```go
+   // GetHighValueClaims retrieves claims above a threshold
+   func (ic *InsuranceContract) GetHighValueClaims(ctx contractapi.TransactionContextInterface, startKey string, endKey string, threshold int) ([]*Claim, error) {
+       resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+       if err != nil {
+           return nil, fmt.Errorf(""failed to query range: %v"", err)
+       }
+       // Ensure iterator is closed in all exit paths
+       defer resultsIterator.Close()
+
+       var highValue []*Claim
+
+       if threshold <= 0 {
+           // Handle invalid threshold case. The deferred Close() will execute.
+           return nil, fmt.Errorf(""threshold must be positive, got %d"", threshold)
+       }
+
+       // Normal processing path
+       for resultsIterator.HasNext() {
+           queryResult, err := resultsIterator.Next()
+           if err != nil {
+               // Error during iteration. The deferred Close() will execute.
+               return nil, fmt.Errorf(""error iterating claims: %v"", err)
+           }
+
+           var claim Claim
+           err = json.Unmarshal(queryResult.Value, &claim)
+           if err != nil {
+               // Error unmarshalling. The deferred Close() will execute.
+               return nil, fmt.Errorf(""error unmarshalling claim: %v"", err)
+           }
+
+           if claim.Amount >= threshold {
+               highValue = append(highValue, &claim)
+           }
+       }
+
+       // Loop completed successfully. The deferred Close() will execute.
+       return highValue, nil
+   }
+   ```
+
+**3. Vulnerability Type:** Resource Leak (Iterator/gRPC Stream)
+   **Severity:** Critical
+   **Affected Code Location:** `ArchiveOldClaims` function, lines 81-105.
+   **Description:** The `ArchiveOldClaims` function relies on a manual `resultsIterator.Close()` call at the end of the function. However, there are multiple exit points from the loop that do not reach this `Close()` call:
+   * If an error occurs during `resultsIterator.Next()`, the function returns `archived, err`, leaking the iterator.
+   * If the batch limit (`archived >= 100`) is reached, the function returns `archived, nil` early, leaking the iterator.
+   **Recommended Fix:** Use `defer resultsIterator.Close()` immediately after successfully obtaining the iterator.
+
+   ```go
+   // ArchiveOldClaims moves old claims to an archive key prefix
+   func (ic *InsuranceContract) ArchiveOldClaims(ctx contractapi.TransactionContextInterface, prefix string) (int, error) {
+       resultsIterator, err := ctx.GetStub().GetStateByRange(prefix+""_0000"", prefix+""_9999"")
+       if err != nil {
+           return 0, err
+       }
+       // Ensure iterator is closed in all exit paths
+       defer resultsIterator.Close()
+
+       archived := 0
+       for resultsIterator.HasNext() {
+           queryResult, err := resultsIterator.Next()
+           if err != nil {
+               // Error during iteration. The deferred Close() will execute.
+               return archived, fmt.Errorf(""error iterating claims: %v"", err)
+           }
+
+           var claim Claim
+           err = json.Unmarshal(queryResult.Value, &claim)
+           if err != nil {
+               // Error unmarshalling. The deferred Close() will execute.
+               return archived, fmt.Errorf(""error unmarshalling claim: %v"", err)
+           }
+
+           if claim.Status == ""CLOSED"" {
+               archiveKey := ""ARCHIVE_"" + claim.ClaimID
+               // Assuming PutState and DelState are idempotent or handle errors appropriately
+               err = ctx.GetStub().PutState(archiveKey, queryResult.Value)
+               if err != nil {
+                   return archived, fmt.Errorf(""failed to put archived state: %v"", err)
+               }
+               err = ctx.GetStub().DelState(claim.ClaimID)
+               if err != nil {
+                   return archived, fmt.Errorf(""failed to delete original state: %v"", err)
+               }
+               archived++
+
+               if archived >= 100 {
+                   // Batch limit reached. The deferred Close() will execute.
+                   return archived, nil
+               }
+           }
+       }
+
+       // Loop completed successfully. The deferred Close() will execute.
+       return archived, nil
+   }
+   ```
+
+**4. Vulnerability Type:** Input Validation (Approver Empty)
+   **Severity:** Medium
+   **Affected Code Location:** `ProcessClaimsByRange` function, line 17.
+   "
+2026-02-09T16:05:50.788928,google/gemini-2.5-flash-lite,zero_shot,vuln_06_iterator_leak.go,5460,7.168,"The provided Go chaincode file `vuln_06_iterator_leak.go` contains several security vulnerabilities related to resource management, specifically the failure to close iterators returned by state database queries.
+
+Here's a detailed analysis:
+
+### Vulnerability Analysis
+
+1.  **Vulnerability Type**: Resource Leak (Iterator Not Closed)
+    *   **Severity**: Critical
+    *   **Affected Code Location**:
+        *   `GetAssetsByRange` function (multiple instances)
+        *   `SumAssetValues` function (multiple instances)
+        *   `TransferAssetsByOwner` function (multiple instances)
+        *   `DeactivateRange` function (multiple instances)
+    *   **Description**: In all functions that use `ctx.GetStub().GetStateByRange()` or `ctx.GetStub().GetStateByPartialCompositeKey()`, the returned `resultsIterator` is never explicitly closed using `defer resultsIterator.Close()`. This is a critical flaw because these iterators hold open gRPC streams and database cursors. If not closed, they will exhaust the available file descriptors or gRPC connections on the peer node over time, leading to performance degradation and eventual service failure. This is particularly problematic in `GetAssetsByRange`, `SumAssetValues`, and `DeactivateRange` where the iterator is used in a loop, and also in `TransferAssetsByOwner` which uses `GetStateByPartialCompositeKey`. Furthermore, several error return paths within these loops also fail to close the iterator before returning, exacerbating the leak.
+    *   **Recommended Fix**: For every call to `ctx.GetStub().GetStateByRange()` or `ctx.GetStub().GetStateByPartialCompositeKey()`, immediately follow it with `defer resultsIterator.Close()`. This ensures the iterator is closed regardless of whether the function completes successfully or returns an error.
+
+    **Example Fix for `GetAssetsByRange`**:
+    ```go
+    func (ar *AssetRegistryContract) GetAssetsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) ([]*RegistryAsset, error) {
+        resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+        if err != nil {
+            return nil, fmt.Errorf(""failed to get state by range: %v"", err)
+        }
+        defer resultsIterator.Close() // <-- Add this line
+
+        var assets []*RegistryAsset
+        for resultsIterator.HasNext() {
+            queryResult, err := resultsIterator.Next()
+            if err != nil {
+                return nil, err // Iterator is closed by defer
+            }
+
+            var asset RegistryAsset
+            err = json.Unmarshal(queryResult.Value, &asset)
+            if err != nil {
+                return nil, err // Iterator is closed by defer
+            }
+
+            assets = append(assets, &asset)
+        }
+
+        return assets, nil
+    }
+    ```
+    Apply this pattern to all functions using iterators.
+
+2.  **Vulnerability Type**: Input Validation (Implicit)
+    *   **Severity**: Medium
+    *   **Affected Code Location**:
+        *   `RegisterAsset` function
+        *   `GetAssetsByRange` function
+        *   `SumAssetValues` function
+        *   `TransferAssetsByOwner` function
+        *   `DeactivateRange` function
+    *   **Description**: While not a direct security exploit, the chaincode lacks explicit input validation for parameters like `id`, `assetType`, `owner`, `value`, `startKey`, and `endKey`. For instance, `id` could be an empty string, `value` could be negative (though `int` type might prevent some issues, it's good practice to validate business logic constraints), or keys could be malformed, potentially leading to unexpected behavior or errors during state operations or queries. In `TransferAssetsByOwner`, `fromOwner` and `toOwner` are not validated, which could lead to unintended transfers if they are empty or identical.
+    *   **Recommended Fix**: Add validation checks at the beginning of each function to ensure input parameters are valid according to business logic and data constraints. For example:
+        *   Check for empty strings for IDs, owners, and keys.
+        *   Validate that `value` is non-negative if that's a business requirement.
+        *   Ensure `startKey` is less than or equal to `endKey` in range queries if that's a requirement.
+        *   In `TransferAssetsByOwner`, check if `fromOwner` and `toOwner` are different and not empty.
+
+    **Example Fix for `RegisterAsset`**:
+    ```go
+    func (ar *AssetRegistryContract) RegisterAsset(ctx contractapi.TransactionContextInterface, id string, assetType string, owner string, value int) error {
+        if id == """" {
+            return fmt.Errorf(""asset ID cannot be empty"")
+        }
+        if owner == """" {
+            return fmt.Errorf(""asset owner cannot be empty"")
+        }
+        if value < 0 { // Assuming value should be non-negative
+            return fmt.Errorf(""asset value cannot be negative"")
+        }
+        // ... rest of the function
+    }
+    ```
+
+3.  **Vulnerability Type**: Non-Deterministic Operations (Potential)
+    *   **Severity**: Low
+    *   **Affected Code Location**:
+        *   `SumAssetValues` function
+        *   `DeactivateRange` function
+    *   **Description**: The `json.Unmarshal(queryResult.Value, &asset)` call within the loops of `SumAssetValues` and `DeactivateRange` does not handle potential unmarshalling errors. If `json.Unmarshal` fails for any asset, the error is not returned, and the loop continues. This can lead to silent data corruption or incorrect calculations if some assets are not processed correctly. While the `json.Unmarshal` itself is deterministic, the *handling* of its potential error is not robust.
+    *   **Recommended Fix**: Ensure that errors from `json.Unmarshal` are checked and handled appropriately, typically by returning an error to halt the transaction.
+
+    **Example Fix for `SumAssetValues`**:
+    ```go
+    func (ar *AssetRegistryContract) SumAssetValues(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+        resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+        if err != nil {
+            return 0, fmt.Errorf(""failed to query range: %v"", err)
+        }
+        defer resultsIterator.Close()
+
+        totalValue := 0
+        for resultsIterator.HasNext() {
+            queryResult, err := resultsIterator.Next()
+            if err != nil {
+                return 0, err
+            }
+
+            var asset RegistryAsset
+            err = json.Unmarshal(queryResult.Value, &asset) // <-- Check error here
+            if err != nil {
+                return 0, fmt.Errorf(""failed to unmarshal asset %s: %v"", queryResult.Key, err)
+            }
+
+            if asset.IsActive {
+                totalValue += asset.Value
+            }
+        }
+
+        return totalValue, nil
+    }
+    ```
+
+### Summary of Findings
+
+The most critical vulnerability is the **resource leak due to unclosed iterators**. This is present in all functions that perform range queries or partial composite key queries. This must be addressed immediately.
+
+Input validation is also a concern, as it can lead to unexpected behavior or errors. While not directly exploitable in this code, it's a good practice to implement robust validation.
+
+The handling of `json.Unmarshal` errors is also suboptimal, potentially leading to silent failures.
+
+### No vulnerabilities detected in the following categories:
+
+*   **Access Control Issues**: The provided code does not implement any explicit access control mechanisms. In Hyperledger Fabric, access control is typically handled by client-side applications or by implementing authorization logic within chaincode functions (e.g., checking `ctx.GetClientIdentity().GetID()`). Since no such logic is present, there are no *vulnerabilities* in access control *within this code*, but it implies that access control is either not implemented or handled externally.
+*   **Private Data Leakage**: The code does not utilize Fabric's private data collections. Therefore, there is no risk of private data leakage through this chaincode.
+*   **Insecure Key Management**: The code does not directly manage cryptographic keys. It relies on the Fabric network's underlying security mechanisms for identity and key management.
+
+---
+
+**Overall Recommendation**: Prioritize fixing the iterator resource leaks. Then, implement input validation and robust error handling for JSON unmarshalling."

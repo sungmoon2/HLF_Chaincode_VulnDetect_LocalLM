@@ -1,0 +1,17 @@
+{
+  "script": "17_cloud_single_model_repeat.py",
+  "model": "google/gemini-2.5-flash",
+  "backend": "gemini",
+  "n_runs": 5,
+  "total_records": 225,
+  "error_count": 0,
+  "run_start": "2026-02-10T21:10:32.614610",
+  "run_end": "2026-02-10T21:50:54.821711",
+  "run_duration_s": 2422.2,
+  "output_csv": "repeat_gemini-2_5-flash_260210_2110.csv",
+  "inference_params": {
+    "temperature": 0.1,
+    "max_tokens": 2048
+  },
+  "run_id": "ba59df9a"
+}

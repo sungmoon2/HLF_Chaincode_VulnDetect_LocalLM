@@ -1,0 +1,194 @@
+[
+  {
+    "name": ".gitattributes",
+    "path": "go-lisa/.gitattributes",
+    "sha": "00a51aff5e5a83d6313f3bd15fadc601a205b66f",
+    "size": 154,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/.gitattributes?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/.gitattributes",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/00a51aff5e5a83d6313f3bd15fadc601a205b66f",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/.gitattributes",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/.gitattributes?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/00a51aff5e5a83d6313f3bd15fadc601a205b66f",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/.gitattributes"
+    }
+  },
+  {
+    "name": ".gitignore",
+    "path": "go-lisa/.gitignore",
+    "sha": "bf8a7c8893579bdc2082c2911acbd2676c3d4fbd",
+    "size": 720,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/.gitignore?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/.gitignore",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/bf8a7c8893579bdc2082c2911acbd2676c3d4fbd",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/.gitignore",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/.gitignore?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/bf8a7c8893579bdc2082c2911acbd2676c3d4fbd",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/.gitignore"
+    }
+  },
+  {
+    "name": "build.gradle",
+    "path": "go-lisa/build.gradle",
+    "sha": "afda34316fcbafcf0b6c9ee54b588148b407709d",
+    "size": 4221,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/build.gradle?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/build.gradle",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/afda34316fcbafcf0b6c9ee54b588148b407709d",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/build.gradle",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/build.gradle?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/afda34316fcbafcf0b6c9ee54b588148b407709d",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/build.gradle"
+    }
+  },
+  {
+    "name": "checkstyle-config.xml",
+    "path": "go-lisa/checkstyle-config.xml",
+    "sha": "97813faabccea9ba7b72601106eb0b07f3df4279",
+    "size": 1348,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/checkstyle-config.xml?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/checkstyle-config.xml",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/97813faabccea9ba7b72601106eb0b07f3df4279",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/checkstyle-config.xml",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/checkstyle-config.xml?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/97813faabccea9ba7b72601106eb0b07f3df4279",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/checkstyle-config.xml"
+    }
+  },
+  {
+    "name": "go-testcases",
+    "path": "go-lisa/go-testcases",
+    "sha": "556adf4a76f1a5dedafd43d5cd92b11623b21d30",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/556adf4a76f1a5dedafd43d5cd92b11623b21d30",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/go-testcases?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/556adf4a76f1a5dedafd43d5cd92b11623b21d30",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/go-testcases"
+    }
+  },
+  {
+    "name": "gradle",
+    "path": "go-lisa/gradle",
+    "sha": "2004a7dade1395ac2282b8d7fa59c34db0e495e4",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/gradle?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/gradle",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/2004a7dade1395ac2282b8d7fa59c34db0e495e4",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/gradle?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/2004a7dade1395ac2282b8d7fa59c34db0e495e4",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/gradle"
+    }
+  },
+  {
+    "name": "gradlew",
+    "path": "go-lisa/gradlew",
+    "sha": "1b6c787337ffb79f0e3cf8b1e9f00f680a959de1",
+    "size": 8070,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/gradlew?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/gradlew",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/1b6c787337ffb79f0e3cf8b1e9f00f680a959de1",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/gradlew",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/gradlew?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/1b6c787337ffb79f0e3cf8b1e9f00f680a959de1",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/gradlew"
+    }
+  },
+  {
+    "name": "gradlew.bat",
+    "path": "go-lisa/gradlew.bat",
+    "sha": "107acd32c4e687021ef32db511e8a206129b88ec",
+    "size": 2674,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/gradlew.bat?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/gradlew.bat",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/107acd32c4e687021ef32db511e8a206129b88ec",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/gradlew.bat",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/gradlew.bat?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/107acd32c4e687021ef32db511e8a206129b88ec",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/gradlew.bat"
+    }
+  },
+  {
+    "name": "settings.gradle",
+    "path": "go-lisa/settings.gradle",
+    "sha": "1a70e09250b54785f97e37d5e017f67df37db0cc",
+    "size": 28,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/settings.gradle?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/settings.gradle",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/1a70e09250b54785f97e37d5e017f67df37db0cc",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/settings.gradle",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/settings.gradle?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/1a70e09250b54785f97e37d5e017f67df37db0cc",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/settings.gradle"
+    }
+  },
+  {
+    "name": "sources-sinks.md",
+    "path": "go-lisa/sources-sinks.md",
+    "sha": "f82c819936899994e853e62df1123254b7f0e32a",
+    "size": 88407,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/sources-sinks.md?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/sources-sinks.md",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/f82c819936899994e853e62df1123254b7f0e32a",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/sources-sinks.md",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/sources-sinks.md?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/f82c819936899994e853e62df1123254b7f0e32a",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/sources-sinks.md"
+    }
+  },
+  {
+    "name": "spotless-formatting.xml",
+    "path": "go-lisa/spotless-formatting.xml",
+    "sha": "68a421bb575059aff2acb283d5b2d53a60ca3262",
+    "size": 44113,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/spotless-formatting.xml?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/spotless-formatting.xml",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/68a421bb575059aff2acb283d5b2d53a60ca3262",
+    "download_url": "https://raw.githubusercontent.com/lisa-analyzer/go-lisa/master/go-lisa/spotless-formatting.xml",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/spotless-formatting.xml?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/blobs/68a421bb575059aff2acb283d5b2d53a60ca3262",
+      "html": "https://github.com/lisa-analyzer/go-lisa/blob/master/go-lisa/spotless-formatting.xml"
+    }
+  },
+  {
+    "name": "src",
+    "path": "go-lisa/src",
+    "sha": "c55e8f474bfbe84805ed05b1e02c0bb073606a79",
+    "size": 0,
+    "url": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/src?ref=master",
+    "html_url": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/src",
+    "git_url": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/c55e8f474bfbe84805ed05b1e02c0bb073606a79",
+    "download_url": null,
+    "type": "dir",
+    "_links": {
+      "self": "https://api.github.com/repos/lisa-analyzer/go-lisa/contents/go-lisa/src?ref=master",
+      "git": "https://api.github.com/repos/lisa-analyzer/go-lisa/git/trees/c55e8f474bfbe84805ed05b1e02c0bb073606a79",
+      "html": "https://github.com/lisa-analyzer/go-lisa/tree/master/go-lisa/src"
+    }
+  }
+]

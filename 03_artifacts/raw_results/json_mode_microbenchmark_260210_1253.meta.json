@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-02-10 12:54:13",
+  "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+  "prompt": "json_mode",
+  "dataset": "micro-benchmark (15 files)",
+  "n_ctx": 4096,
+  "temperature": 0.1,
+  "tpr": "9/9",
+  "tnr": "6/6",
+  "total_time_s": 23.5,
+  "avg_time_s": 1.568
+}

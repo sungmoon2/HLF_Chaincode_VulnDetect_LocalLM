@@ -1,0 +1,292 @@
+file,expected,classification,match,elapsed_s,response
+safe_01_logging.go,safe,safe,True,0.573,"```json
+{
+  ""is_vulnerable"": false,
+  ""vulnerabilities"": []
+}
+```"
+safe_02_local_var.go,safe,safe,True,0.505,"```json
+{
+  ""is_vulnerable"": false,
+  ""vulnerabilities"": []
+}
+```"
+safe_03_map_read.go,safe,safe,True,0.523,"```json
+{
+  ""is_vulnerable"": false,
+  ""vulnerabilities"": []
+}
+```"
+safe_04_math_rand.go,safe,safe,True,0.447,"```json
+{
+  ""is_vulnerable"": false,
+  ""vulnerabilities"": []
+}
+```"
+safe_05_deterministic_time.go,safe,safe,True,0.488,"```json
+{
+  ""is_vulnerable"": false,
+  ""vulnerabilities"": []
+}
+```"
+safe_06_external_lib.go,safe,safe,True,0.481,"```json
+{
+  ""is_vulnerable"": false,
+  ""vulnerabilities"": []
+}
+```"
+vuln_01_b_interprocedural.go,vulnerable,vulnerable,True,3.115,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""getCurrentTimestamp"",
+      ""description"": ""The function uses time.Now() which is non-deterministic.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""formatTimestampNano"",
+      ""description"": ""The function uses time.Now() which is non-deterministic.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""buildTimestampedNote"",
+      ""description"": ""The function uses time.Now() which is non-deterministic.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""CreateRecord"",
+      ""description"": ""The function uses getCurrentTimestamp() which is non-deterministic.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""UpdateDiagnosis"",
+      ""description"": ""The function uses buildTimestampedNote() which internally calls getCurrentTimestamp() which is non-deterministic.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""AddCheckupNote"",
+      ""description"": ""The function uses buildTimestampedNote() which internally calls getCurrentTimestamp() which is non-deterministic.""
+    }
+  ]
+}
+```"
+vuln_01_time.go,vulnerable,vulnerable,True,1.658,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""CreateShipment"",
+      ""description"": ""time.Now() produces different values on each peer, causing endorsement mismatch.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""UpdateShipmentStatus"",
+      ""description"": ""time.Now() produces different values on each peer, causing endorsement mismatch.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""RecordTemperature"",
+      ""description"": ""time.Now() produces different values on each peer, causing endorsement mismatch.""
+    }
+  ]
+}
+```"
+vuln_02_global.go,vulnerable,vulnerable,True,2.541,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Global/shared mutable state across invocations"",
+      ""severity"": ""High"",
+      ""location"": ""transactionCounter"",
+      ""description"": ""The global variable `transactionCounter` is modified by multiple transactions and is not synchronized across peers, leading to endorsement mismatch.""
+    },
+    {
+      ""type"": ""Global/shared mutable state across invocations"",
+      ""severity"": ""High"",
+      ""location"": ""lastProcessedID"",
+      ""description"": ""The global variable `lastProcessedID` is modified by multiple transactions and is not synchronized across peers, leading to endorsement mismatch.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""TransferToken"",
+      ""description"": ""The `transactionCounter` is incremented in a non-deterministic manner, differing across peers, which can lead to endorsement mismatch.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""BurnToken"",
+      ""description"": ""The `transactionCounter` is used to generate a non-deterministic key, differing across peers, which can lead to endorsement mismatch.""
+    }
+  ]
+}
+```"
+vuln_03_goroutine.go,vulnerable,vulnerable,True,2.485,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Goroutines introduce non-deterministic execution order."",
+      ""severity"": ""High"",
+      ""location"": ""TallyVotes"",
+      ""description"": ""Goroutines introduce non-deterministic execution order. The fabric chaincode runtime is single-threaded per transaction; spawning goroutines causes race conditions whose outcome varies per peer.""
+    },
+    {
+      ""type"": ""Concurrent goroutines issuing PutState calls."",
+      ""severity"": ""High"",
+      ""location"": ""BatchUpdateStatus"",
+      ""description"": ""Concurrent goroutines issuing PutState calls. The order in which PutState is invoked affects the read-write set ordering. Different goroutine scheduling on different peers means different PutState sequences, causing endorsement mismatch.""
+    },
+    {
+      ""type"": ""Fire-and-forget goroutine."",
+      ""severity"": ""High"",
+      ""location"": ""AsyncNotify"",
+      ""description"": ""Fire-and-forget goroutine. The goroutine may or may not complete before the transaction endorsement finishes. If it calls SetEvent after the stub has been closed, behaviour is undefined and differs per peer.""
+    }
+  ]
+}
+```"
+vuln_04_b_nested_map.go,vulnerable,vulnerable,True,2.037,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""BatchUpdateInventory"",
+      ""description"": ""The outer and inner map iterations are nondeterministic, leading to different sequences of PutState calls across endorsing peers.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""GenerateZoneReport"",
+      ""description"": ""The outer and inner map iterations are nondeterministic, leading to different report strings across endorsing peers.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""MergeZones"",
+      ""description"": ""The iteration over the `merged` map is nondeterministic, leading to different sequences of PutState calls across endorsing peers.""
+    }
+  ]
+}
+```"
+vuln_04_map_iter.go,vulnerable,vulnerable,True,1.872,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""BatchRestock"",
+      ""description"": ""Map iteration order is non-deterministic, causing different peers to produce different write-set orderings and endorsement mismatch.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""GenerateReport"",
+      ""description"": ""Map iteration order affects the output string, leading to different reports being written to the ledger across peers.""
+    },
+    {
+      ""type"": ""Non-deterministic operations"",
+      ""severity"": ""High"",
+      ""location"": ""ApplyDiscounts"",
+      ""description"": ""Map iteration order differs per peer, resulting in a different write-set order and endorsement mismatch.""
+    }
+  ]
+}
+```"
+vuln_05_phantom.go,vulnerable,vulnerable,True,2.363,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Phantom Read"",
+      ""severity"": ""High"",
+      ""location"": ""CloseAuction"",
+      ""description"": ""The function reads all bids for an auction and then writes back aggregated results. If another transaction inserts a new bid concurrently, the read-set becomes stale and MVCC validation will fail.""
+    },
+    {
+      ""type"": ""Phantom Read"",
+      ""severity"": ""High"",
+      ""location"": ""IncrementCounter"",
+      ""description"": ""The function reads the current value of a counter, increments it, and writes it back. Two concurrent transactions both read the same counter value, both write the same incremented value, and one gets rejected by MVCC validation.""
+    },
+    {
+      ""type"": ""Phantom Read"",
+      ""severity"": ""High"",
+      ""location"": ""TransferWithBalanceCheck"",
+      ""description"": ""The function reads the balance of a sender, checks if the sender has sufficient funds, and then updates the balances. If another transaction modifies the sender's balance between the read and the commit, MVCC validation will reject.""
+    }
+  ]
+}
+```"
+vuln_06_b_conditional_leak.go,vulnerable,vulnerable,True,2.39,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""ProcessClaimsByRange"",
+      ""description"": ""The iterator is closed with defer, but a return statement appears before the defer statement on an error path. If GetStateByRange succeeds but the subsequent validation fails, the function returns early and the defer never executes — leaking the iterator's gRPC stream.""
+    },
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""GetHighValueClaims"",
+      ""description"": ""The iterator Close() is inside a conditional block. If the threshold is negative (unexpected input), the function takes the else branch and closes the iterator — but on the normal path where threshold > 0, the function completes the loop and falls through WITHOUT closing, because Close() is only in the else branch.""
+    },
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""ArchiveOldClaims"",
+      ""description"": ""Close() is called, but only if the loop completes without error. Any early return inside the loop skips the Close().""
+    }
+  ]
+}
+```"
+vuln_06_iterator_leak.go,vulnerable,vulnerable,True,2.026,"```json
+{
+  ""is_vulnerable"": true,
+  ""vulnerabilities"": [
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""GetAssetsByRange"",
+      ""description"": ""Iterator from GetStateByRange is never closed, leading to resource exhaustion.""
+    },
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""SumAssetValues"",
+      ""description"": ""Iterator from GetStateByRange is never closed, leading to resource exhaustion.""
+    },
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""TransferAssetsByOwner"",
+      ""description"": ""Iterator from GetStateByPartialCompositeKey is never closed, leading to resource exhaustion.""
+    },
+    {
+      ""type"": ""Critical"",
+      ""severity"": ""High"",
+      ""location"": ""DeactivateRange"",
+      ""description"": ""Iterator from GetStateByRange is never closed, leading to resource exhaustion.""
+    }
+  ]
+}
+```"

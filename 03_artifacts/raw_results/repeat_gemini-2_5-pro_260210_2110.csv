@@ -1,0 +1,2159 @@
+timestamp,run_number,model,prompt_strategy,file,code_chars,elapsed_s,result
+2026-02-10T21:10:53.956880,1,google/gemini-2.5-pro,zero_shot,safe_01_logging.go,5177,20.631,"Based on my analysis of the provided Hyperledger Fabric chaincode `safe_01_logging.go`, I have identified the following security vulnerabilities. The chaincode correctly handles non-determinism related to timestamps, which is a common pitfall, but it lacks critical access control and input validation.
+
+---
+
+### Vulnerability 1: Missing Access Control on State-Changing Functions
+
+*   "
+2026-02-10T21:11:14.771397,1,google/gemini-2.5-pro,zero_shot,safe_02_local_var.go,6316,20.813,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_02_local_var.go`). While the code demonstrates good practices for ensuring deterministic execution by avoiding mutable global state, it contains significant security vulnerabilities in other areas.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:**"
+2026-02-10T21:11:35.166370,1,google/gemini-2.5-pro,zero_shot,safe_03_map_read.go,6388,20.394,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_03_map_read.go`). While the code correctly implements patterns to avoid non-determinism when using Go maps, it contains several significant security vulnerabilities in other areas, particularly concerning access control and data privacy.
+
+Here is a summary of the findings:
+
+---
+
+### 1. Missing Caller"
+2026-02-10T21:11:56.074570,1,google/gemini-2.5-pro,zero_shot,safe_04_math_rand.go,5307,20.907,"Based on the security analysis of the provided Hyperledger Fabric chaincode `safe_04_math_rand.go`, the following vulnerabilities have been identified.
+
+While the chaincode correctly demonstrates a safe pattern for using `math/rand` for non-ledger purposes (logging), it suffers from significant access control and input validation flaws.
+
+---
+
+### 1. Missing Access Control on Critical"
+2026-02-10T21:12:15.908325,1,google/gemini-2.5-pro,zero_shot,safe_05_deterministic_time.go,5861,19.834,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode `safe_05_deterministic_time.go`.
+
+The chaincode correctly implements deterministic time handling by using the transaction timestamp (`GetTxTimestamp`) for all ledger state modifications, thus avoiding non-determinism vulnerabilities. However, several other security issues were identified.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `IssueCertificate` (line 26)
+    *   `RenewCertificate` (line 78)
+    *   `RevokeCertificate` (line 113)
+*   **Description of the Issue:** The chaincode lacks any authorization checks to verify the identity or permissions of the client submitting the transaction. As a result, any authenticated user on the channel can invoke the `IssueCertificate"
+2026-02-10T21:12:36.725273,1,google/gemini-2.5-pro,zero_shot,safe_06_external_lib.go,6189,20.816,"Based on my analysis of the provided Hyperledger Fabric chaincode `safe_06_external_lib.go`, I have identified several security vulnerabilities. The code correctly uses deterministic functions, avoiding non-determinism issues, but it has significant flaws in access control and input validation.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### 1. Missing Access Control on Point"
+2026-02-10T21:12:57.604415,1,google/gemini-2.5-pro,zero_shot,vuln_01_b_interprocedural.go,5157,20.879,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my report on the security vulnerabilities found.
+
+### Summary
+
+The chaincode contains several significant security vulnerabilities. The most prominent issue, as highlighted in the source code comments, is the pervasive use of non-deterministic functions (`time.Now()`) via helper methods, which will cause transaction failures. Additionally, there are critical issues related to private data leakage and a complete lack of access control, allowing any channel member to view and modify sensitive medical records. Finally, the chaincode suffers from poor input validation and insecure key generation practices.
+
+---
+
+### Vulnerability Analysis
+
+#### 1. Non-deterministic Operation
+
+*   **Severity:** High
+*   **Affected Code Locations:**
+    *   `CreateRecord` function, lines 78 & 79
+    *   `UpdateDiagnosis` function, lines 109 & 110
+    *   `AddCheckupNote` function, line 123
+*   **Description:** The chaincode uses `time.Now()` wrapped in helper functions (`getCurrentTimestamp`, `formatTimestampNano`, `buildTimestampedNote`) to generate timestamps for record creation and updates. In Hyperledger Fabric's execute-order-validate architecture, chaincode is executed on multiple endorsing peers. The `time.Now()` function returns the local wall-clock time of the peer's machine. Since this time will differ slightly across peers, each peer will generate a different transaction proposal (with a different timestamp in the read-write set). When the client submits these differing endorsements to the ordering service, the transaction will fail validation at commit time because the proposals do not match.
+*   **Recommended Fix:** Replace all calls to `time.Now()` or its wrappers with the deterministic transaction timestamp provided by the Fabric API. This timestamp is agreed upon by the network and is consistent for a given transaction across all peers.
+
+    ```go
+    // Get the transaction timestamp
+    txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+    if err != nil {
+        return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+    }
+    // Convert to a readable format
+    formattedTime := txTimestamp.AsTime().Format(time.RFC3339)
+
+    // In CreateRecord:
+    record := MedicalRecord{
+        // ...
+        RecordedAt:  formattedTime,
+        LastChecked: formattedTime,
+    }
+
+    // In UpdateDiagnosis:
+    record.Diagnosis = fmt.Sprintf(""%s (updated at %s)"", newDiagnosis, formattedTime)
+    record.LastChecked = formattedTime
+    ```
+
+#### 2. Private Data Leakage
+
+*   **Severity:** Critical
+*   **Affected Code Locations:**
+    *   `CreateRecord` function, line 86
+    *   `UpdateDiagnosis` function, line 117
+*"
+2026-02-10T21:13:18.380704,1,google/gemini-2.5-pro,zero_shot,vuln_01_time.go,4291,20.776,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the vulnerabilities found.
+
+### Summary of Findings
+
+The chaincode contains several significant vulnerabilities that would prevent it from functioning correctly and securely in a real-world Hyperledger Fabric network. The most critical issue is the use of non-deterministic functions, which will cause transaction endorsement"
+2026-02-10T21:13:38.688306,1,google/gemini-2.5-pro,zero_shot,vuln_02_global.go,4833,20.307,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is the detailed vulnerability report.
+
+### Summary of Findings
+
+The chaincode contains several critical vulnerabilities, all stemming from a single root cause: the use of global variables. In Hyperledger Fabric, chaincode is executed in parallel on multiple endorsing peers, each in its own isolated container. Global variables are"
+2026-02-10T21:13:59.498377,1,google/gemini-2.5-pro,zero_shot,vuln_03_goroutine.go,5336,20.81,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my report.
+
+### Executive Summary
+
+The provided chaincode, `vuln_03_goroutine.go`, contains multiple **Critical** and **High** severity vulnerabilities. The primary and most severe issue is the pervasive use of goroutines for concurrent operations involving the chaincode stub (`"
+2026-02-10T21:14:20.177753,1,google/gemini-2.5-pro,zero_shot,vuln_04_b_nested_map.go,5711,20.678,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical vulnerabilities related to non-determinism, which is a fatal flaw in a blockchain environment that relies on consensus.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Vulnerability Analysis Summary
+
+| ID | Vulnerability Type | Severity | Function |
+| :"
+2026-02-10T21:14:40.203645,1,google/gemini-2.5-pro,zero_shot,vuln_04_map_iter.go,4688,20.025,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report.
+
+### Summary of Findings
+
+The chaincode contains multiple vulnerabilities, the most severe of which are related to non-deterministic operations that will cause transaction failures during the endorsement phase. Additionally, there are significant gaps in access control and input validation that could lead to unauthorized actions and data corruption"
+2026-02-10T21:15:00.864508,1,google/gemini-2.5-pro,zero_shot,vuln_05_phantom.go,5565,20.66,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_05_phantom.go`). The code contains several significant security vulnerabilities and design flaws that would make it unsuitable for a production environment.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+"
+2026-02-10T21:15:20.193937,1,google/gemini-2.5-pro,zero_shot,vuln_06_b_conditional_leak.go,5739,19.329,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several instances of a critical resource leak vulnerability and lacks proper access control.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Vulnerability Analysis Summary
+
+| ID | Vulnerability Type | Severity | Function |
+|----|------------------------------------|----------|--------------------------|
+|"
+2026-02-10T21:15:39.979659,1,google/gemini-2.5-pro,zero_shot,vuln_06_iterator_leak.go,5460,19.785,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report.
+
+### Summary of Findings
+
+The chaincode contains several significant security vulnerabilities, primarily related to resource management and broken access control. The most critical issue allows any user to steal assets from any other user. Another high-severity vulnerability can lead to a denial-of-service attack against"
+2026-02-10T21:15:57.736909,1,google/gemini-2.5-pro,few_shot,safe_01_logging.go,5177,17.756,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my analysis:
+
+---
+
+### Vulnerability Analysis Summary
+
+I have identified two security vulnerabilities in the provided chaincode. The code correctly handles non-determinism by using `ctx.GetStub().GetTxTimestamp()` for on-chain data and `time.Now()` only for off-chain logging,"
+2026-02-10T21:16:17.743181,1,google/gemini-2.5-pro,few_shot,safe_02_local_var.go,6316,20.006,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my analysis:
+
+The chaincode is well-written and demonstrates several secure coding patterns for Hyperledger Fabric. However, there are two notable security concerns that would be critical in a production environment.
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control"
+2026-02-10T21:16:37.761454,1,google/gemini-2.5-pro,few_shot,safe_03_map_read.go,6388,20.018,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode.
+
+The analysis is as follows:
+
+### Vulnerability Analysis Summary
+
+I have identified one low-severity vulnerability and one medium-severity design consideration. The code is generally well-written and demonstrates a good understanding of deterministic execution, particularly regarding Go map handling.
+
+---
+
+### Detailed Findings
+
+#### Finding 1: Potential"
+2026-02-10T21:16:59.159346,1,google/gemini-2.5-pro,few_shot,safe_04_math_rand.go,5307,21.398,"Based on my analysis of the provided Go chaincode `safe_04_math_rand.go`, the code contains several security vulnerabilities, despite its safe handling of non-deterministic logging.
+
+Here is a summary of the findings:
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** All transaction"
+2026-02-10T21:17:20.333710,1,google/gemini-2.5-pro,few_shot,safe_05_deterministic_time.go,5861,21.173,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The analysis is as follows.
+
+---
+
+### Vulnerability Analysis Summary
+
+The chaincode contains several security vulnerabilities, primarily related to missing access control and insufficient input validation. While it correctly handles non-deterministic operations related to time, the other issues are significant enough to compromise the integrity and security of the application.
+
+"
+2026-02-10T21:17:40.640168,1,google/gemini-2.5-pro,few_shot,safe_06_external_lib.go,6189,20.305,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** `CreateAccount`, `AddPoints`, `RedeemPoints` functions (entire bodies).
+*   **Description"
+2026-02-10T21:18:00.336913,1,google/gemini-2.5-pro,few_shot,vuln_01_b_interprocedural.go,5157,19.696,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Non-Deterministic Ledger Updates
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `CreateRecord` function, lines 77-78
+    *   `UpdateDiagnosis` function, lines 106-107
+    *   `AddCheckupNote` function, line 119
+    *   Helper functions: `getCurrentTimestamp` (line 30), `formatTimestampNano` (line 37), `buildTimestampedNote` (line 43)
+
+*   **Description:** The chaincode uses `time.Now()` via multiple helper functions (`getCurrentTimestamp`, `formatTimestampNano`, `buildTimestampedNote`) to generate timestamps that are included in the data written to the ledger. Since `time.Now()` returns the wall-clock time of the specific peer executing the code, its value will differ slightly across different endorsing peers. This causes each peer to generate a different write-set for the same transaction proposal. When the client collects these differing endorsements, they will not match, and the transaction will fail to be committed to the ledger. This vulnerability exists at multiple"
+2026-02-10T21:18:19.605635,1,google/gemini-2.5-pro,few_shot,vuln_01_time.go,4291,19.268,"Based on my analysis, the provided chaincode is **vulnerable**.
+
+Here are the identified security vulnerabilities:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability type:** Non-deterministic Operation
+*   **Severity:** High
+*   **Affected code location:** `CreateShipment` function, lines 36, 43, and 44.
+"
+2026-02-10T21:18:39.596826,1,google/gemini-2.5-pro,few_shot,vuln_02_global.go,4833,19.991,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, the code contains multiple security vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   Global variable"
+2026-02-10T21:18:59.331680,1,google/gemini-2.5-pro,few_shot,vuln_03_goroutine.go,5336,19.735,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my analysis:
+
+The chaincode is vulnerable to several critical security flaws related to non-deterministic execution caused by the misuse of goroutines.
+
+---
+
+### Vulnerability 1: Non-Deterministic Read Set Generation
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   "
+2026-02-10T21:19:18.528031,1,google/gemini-2.5-pro,few_shot,vuln_04_b_nested_map.go,5711,19.195,"Based on my analysis of the provided Go chaincode, the code contains multiple security vulnerabilities.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability type**: Non-deterministic Operations
+*   **Severity**: Critical
+*   **Affected code location**: `BatchUpdateInventory` function, lines 35-65
+*   "
+2026-02-10T21:19:36.641504,1,google/gemini-2.5-pro,few_shot,vuln_04_map_iter.go,4688,18.112,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities.
+
+Here is a detailed analysis of the findings:
+
+---
+
+### Vulnerability 1: Non-Deterministic Write-Set Order from Map Iteration
+
+*   **Vulnerability Type:** Non-Deterministic Operations
+*   **Severity:** Critical
+*   **Affected"
+2026-02-10T21:19:56.141817,1,google/gemini-2.5-pro,few_shot,vuln_05_phantom.go,5565,19.5,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_05_phantom.go`). The code contains several significant security vulnerabilities and design flaws that would lead to failed transactions and unauthorized actions in a production environment.
+
+Here is a detailed analysis of each vulnerability:
+
+---
+
+### Vulnerability 1: Critical Access Control Flaw in Fund Transfer
+
+"
+2026-02-10T21:20:16.257322,1,google/gemini-2.5-pro,few_shot,vuln_06_b_conditional_leak.go,5739,20.116,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several vulnerabilities related to resource management.
+
+Here is a detailed breakdown of each finding:
+
+---
+
+### Vulnerability 1: Resource Leak via Early Return Before Defer
+
+*   **Vulnerability Type:** Resource Leak (Unclosed State Iterator)
+*   **Severity:** Medium"
+2026-02-10T21:20:36.164220,1,google/gemini-2.5-pro,few_shot,vuln_06_iterator_leak.go,5460,19.907,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+---
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Management Error (Denial of Service)
+*   **Severity:** High
+*   **Affected Code Location"
+2026-02-10T21:20:54.490310,1,google/gemini-2.5-pro,cot,safe_01_logging.go,5177,18.325,"No vulnerabilities detected.
+
+### Security Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+- `CreateDocument` at line 61: `ctx.GetStub().PutState(id, docJSON)`
+- `ApproveDocument` at line 104: `ctx.GetStub().Put"
+2026-02-10T21:21:11.977472,1,google/gemini-2.5-pro,cot,safe_02_local_var.go,6316,17.487,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+The following state-modifying operations were identified:
+1.  `CreatePayment` function, line 91: `ctx.GetStub().PutState(id, paymentJSON)`
+2.  `RefundPayment`"
+2026-02-10T21:21:30.289836,1,google/gemini-2.5-pro,cot,safe_03_map_read.go,6388,18.312,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Chaincode File:** `safe_03_map_read.go`
+**Overall Assessment:** The provided chaincode is well-written and does not contain any of the common Hyperledger Fabric security vulnerabilities related to nondeterminism, resource leaks, or phantom reads. The use of Go maps, a potential source of nondeterminism, is handled"
+2026-02-10T21:21:47.229177,1,google/gemini-2.5-pro,cot,safe_04_math_rand.go,5307,16.938,"No vulnerabilities detected.
+
+### Analysis Breakdown
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+The following state-modifying `PutState` calls were identified in the chaincode:
+1.  `RegisterPackage` function, line 53: `ctx.GetStub().PutState(trackingID, pkgJSON)`
+2"
+2026-02-10T21:22:05.256341,1,google/gemini-2.5-pro,cot,safe_05_deterministic_time.go,5861,18.026,"No vulnerabilities detected.
+
+### Security Analysis Steps:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+State-modifying operations are present in the following functions:
+1.  `IssueCertificate`: `ctx.GetStub().PutState(certID, certJSON)` at line 70.
+2.  `Renew"
+2026-02-10T21:22:21.915612,1,google/gemini-2.5-pro,cot,safe_06_external_lib.go,6189,16.659,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+State-modifying operations were found in the following functions:
+*   `CreateAccount`: `ctx.GetStub().PutState(accountID, accountJSON)` at line 91.
+*   `Add"
+2026-02-10T21:22:39.604527,1,google/gemini-2.5-pro,cot,vuln_01_b_interprocedural.go,5157,17.688,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+I have identified the following `PutState` calls which modify the ledger's state:
+1.  In `CreateRecord` at line "
+2026-02-10T21:22:57.248554,1,google/gemini-2.5-pro,cot,vuln_01_time.go,4291,17.644,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode for security vulnerabilities. Here is my step-by-step analysis and findings.
+
+### Step-by-Step Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+I have identified `PutState` calls in the following functions. No `DelState` calls were"
+2026-02-10T21:23:14.657455,1,google/gemini-2.5-pro,cot,vuln_02_global.go,4833,17.409,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, I have identified the following security vulnerabilities.
+
+### Step-by-Step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+I have identified the following `PutState` calls in the chaincode. No `DelState` calls are"
+2026-02-10T21:23:33.009462,1,google/gemini-2.5-pro,cot,vuln_03_goroutine.go,5336,18.352,"An analysis of the provided Go chaincode `vuln_03_goroutine.go` reveals multiple critical security vulnerabilities related to nondeterministic behavior introduced by goroutines.
+
+### Vulnerability Analysis
+
+---
+
+### 1. Nondeterministic Read Set due to Goroutines
+
+*   **Vulnerability Type:** Nondeterministic Execution (Race Condition)
+*   **Severity:**"
+2026-02-10T21:23:51.164844,1,google/gemini-2.5-pro,cot,vuln_04_b_nested_map.go,5711,18.155,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Nondeterministic Write-Set from Nested Map Iteration
+
+*   **Vulnerability Type**: Nondeterminism
+*   **Severity**: Critical
+*   **Affected Code Location**: `BatchUpdateInventory` function, lines 55-75.
+"
+2026-02-10T21:24:08.884732,1,google/gemini-2.5-pro,cot,vuln_04_map_iter.go,4688,17.72,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Nondeterministic Write-Set Order from Map Iteration
+
+*   **Vulnerability Type**: Nondeterminism
+*   **Severity**: Critical
+*   **Affected Code Location**: `BatchRestock` function, lines 55-66
+"
+2026-02-10T21:24:25.544426,1,google/gemini-2.5-pro,cot,vuln_05_phantom.go,5565,16.658,"An analysis of the provided Go chaincode file `vuln_05_phantom.go` reveals several vulnerabilities related to MVCC (Multi-Version Concurrency Control) read conflicts, commonly known as phantom reads. These are not data corruption vulnerabilities but are critical application logic flaws that cause transactions to fail under concurrent execution, undermining the chaincode's reliability and intended functionality.
+
+Here is the detailed breakdown"
+2026-02-10T21:24:43.986367,1,google/gemini-2.5-pro,cot,vuln_06_b_conditional_leak.go,5739,18.441,"Based on my analysis of the provided Go chaincode, here are the identified security vulnerabilities.
+
+### Vulnerability 1
+
+*   **Vulnerability Type**: Resource Leak (Unclosed Iterator)
+*   **Severity**: Medium
+*   **Affected Code Location**: `ProcessClaimsByRange` function, lines 41-59
+*   **Description of the issue**:
+    The function"
+2026-02-10T21:25:01.482563,1,google/gemini-2.5-pro,cot,vuln_06_iterator_leak.go,5460,17.495,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak (Denial of Service)
+*   **Severity:** High
+*   **Affected Code Location:** `GetAssetsByRange` function, line 50
+*   **"
+2026-02-10T21:25:21.189780,2,google/gemini-2.5-pro,zero_shot,safe_01_logging.go,5177,19.706,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_01_logging.go`). The code implements a basic document approval workflow. While it correctly handles deterministic operations, it contains significant access control vulnerabilities and lacks proper input validation.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Critical Missing Access Control in Approval Function
+
+"
+2026-02-10T21:25:39.889331,2,google/gemini-2.5-pro,zero_shot,safe_02_local_var.go,6316,18.699,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode file `safe_02_local_var.go`.
+
+The chaincode demonstrates several good security practices, particularly regarding the avoidance of non-deterministic operations by correctly using compile-time constants and read-only package-level variables. However, several significant vulnerabilities are present.
+
+Here is a summary of the findings:"
+2026-02-10T21:25:59.297372,2,google/gemini-2.5-pro,zero_shot,safe_03_map_read.go,6388,19.407,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_03_map_read.go`). The code demonstrates safe patterns for handling Go maps to avoid non-determinism, but it contains several other significant security vulnerabilities.
+
+Here is a summary of the findings:
+
+---
+
+### 1. Vulnerability: Missing Caller-Based Access Control
+
+*"
+2026-02-10T21:26:18.190665,2,google/gemini-2.5-pro,zero_shot,safe_04_math_rand.go,5307,18.892,"Based on my analysis of the provided Hyperledger Fabric chaincode `safe_04_math_rand.go`, here are the identified security vulnerabilities.
+
+### Vulnerability 1: Lack of Access Control
+
+*   **Vulnerability Type**: Access Control
+*   **Severity**: Critical
+*   **Affected Code Location**:
+    *   `RegisterPackage` (line 26)"
+2026-02-10T21:26:37.287346,2,google/gemini-2.5-pro,zero_shot,safe_05_deterministic_time.go,5861,19.096,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_05_deterministic_time.go`).
+
+The chaincode correctly implements deterministic time handling, which is a common source of errors. However, it contains several other significant security vulnerabilities.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `IssueCertificate` (line 30)
+    *   `RenewCertificate` (line 78)
+    *   `RevokeCertificate` (line 111)
+*   **Description of the Issue:** The chaincode functions that modify the ledger state (`IssueCertificate`, `RenewCertificate`, `RevokeCertificate`) do not perform any authorization checks. Any identity that can successfully submit a transaction proposal to the chaincode can issue, renew, or revoke any certificate. This allows any channel member to create fraudulent certificates or invalidate legitimate ones, completely compromising the integrity of the certificate system.
+*   **Recommended Fix:** Implement attribute-based access control (ABAC) or role-based access control (RBAC) at the beginning of each state-modifying function. Use the Client Identity (CID) library to verify the identity and attributes of the transaction submitter.
+
+    **Example Fix (using ABAC):**
+    ```go
+    // In IssueCertificate, before any other logic:
+    hasOU, err := cid.HasOUValue(ctx.GetStub(), ""cert-issuer.department1"")
+    if err != nil {
+        return fmt.Errorf(""failed to check OU: %v"", err)
+    }
+    if !hasOU {
+        return fmt.Errorf(""caller is not authorized to issue certificates"")
+    }
+
+    // In RenewCertificate and RevokeCertificate, you might check for an admin role
+    // or that the caller is the owner of the certificate.
+    isAdmin, err := cid.HasOUValue(ctx.GetStub(), ""admin.department"
+2026-02-10T21:26:56.863543,2,google/gemini-2.5-pro,zero_shot,safe_06_external_lib.go,6189,19.576,"Based on my analysis of the provided Hyperledger Fabric chaincode `safe_06_external_lib.go`, I have identified several security vulnerabilities. The chaincode is well-written with respect to determinism, correctly using standard library functions like `crypto/sha256` and `strconv`, but it has significant flaws in access control and input validation.
+
+Here is a summary of the"
+2026-02-10T21:27:16.091623,2,google/gemini-2.5-pro,zero_shot,vuln_01_b_interprocedural.go,5157,19.227,"Based on my analysis of the provided Hyperledger Fabric chaincode `vuln_01_b_interprocedural.go`, I have identified several security vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+***
+
+### Vulnerability 1: Non-deterministic Operations in Ledger Updates
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*"
+2026-02-10T21:27:35.739751,2,google/gemini-2.5-pro,zero_shot,vuln_01_time.go,4291,19.647,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities that would prevent it from functioning correctly and securely in a real-world Hyperledger Fabric network.
+
+Here is a detailed breakdown of the findings:
+
+***
+
+### Vulnerability 1: Non-Deterministic Operations
+
+*   **Vulnerability Type:** Non-deterministic Operations
+"
+2026-02-10T21:27:58.900747,2,google/gemini-2.5-pro,zero_shot,vuln_02_global.go,4833,23.161,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_02_global.go`). The chaincode contains a critical and fundamental vulnerability related to non-determinism.
+
+Here is the detailed analysis:
+
+### Summary of Findings
+
+The chaincode is critically flawed due to its reliance on package-level global variables (`transactionCounter`,"
+2026-02-10T21:28:19.459405,2,google/gemini-2.5-pro,zero_shot,vuln_03_goroutine.go,5336,20.559,"Excellent. I will analyze the provided Hyperledger Fabric chaincode for security vulnerabilities.
+
+Here is a detailed security analysis of `vuln_03_goroutine.go`:
+
+***
+
+### Security Vulnerability Analysis Report
+
+Based on the analysis of the `vuln_03_goroutine.go` chaincode, several critical and high-severity vulnerabilities have been identified. The primary theme"
+2026-02-10T21:28:38.510414,2,google/gemini-2.5-pro,zero_shot,vuln_04_b_nested_map.go,5711,19.05,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_04_b_nested_map.go`). The analysis reveals several critical vulnerabilities related to non-determinism, which is a foundational security and stability concern in deterministic systems like Hyperledger Fabric. Additionally, there are medium-severity issues regarding access control and input validation.
+
+Here is a detailed breakdown of"
+2026-02-10T21:28:57.727474,2,google/gemini-2.5-pro,zero_shot,vuln_04_map_iter.go,4688,19.217,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the vulnerabilities found.
+
+The chaincode contains several critical vulnerabilities related to non-deterministic operations, which will cause transaction endorsement failures and prevent the chaincode from functioning correctly. It also lacks proper access control and input validation.
+
+---
+
+### Vulnerability 1: Non-deterministic Write-Set in `BatchRestock`
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected Code Location:** `BatchRestock` function, lines 53-69
+*   **Description of the Issue:**
+    The function iterates over `restockMap` using a `for ... range` loop. In Go, the iteration order for maps is intentionally randomized and"
+2026-02-10T21:29:17.250626,2,google/gemini-2.5-pro,zero_shot,vuln_05_phantom.go,5565,19.522,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_05_phantom.go`). The code contains several significant security and design vulnerabilities.
+
+Here is a detailed breakdown of my findings.
+
+---
+
+### **Vulnerability Analysis Summary**
+
+The chaincode implements a basic auction and token transfer system. While the code comments correctly identify the potential for MV"
+2026-02-10T21:29:37.586631,2,google/gemini-2.5-pro,zero_shot,vuln_06_b_conditional_leak.go,5739,20.335,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical vulnerabilities related to resource management.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Analysis Summary
+
+The chaincode contains multiple instances of a critical resource leak vulnerability. In Hyperledger Fabric, functions like `GetStateByRange` return an iterator that is backed by a g"
+2026-02-10T21:29:56.743962,2,google/gemini-2.5-pro,zero_shot,vuln_06_iterator_leak.go,5460,19.156,"Based on my analysis of the provided Hyperledger Fabric chaincode `vuln_06_iterator_leak.go`, I have identified several security vulnerabilities. The findings are detailed below in order of severity.
+
+---
+
+### 1. Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** All transaction functions:"
+2026-02-10T21:30:15.213829,2,google/gemini-2.5-pro,few_shot,safe_01_logging.go,5177,18.47,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The analysis follows.
+
+---
+
+### Analysis Summary
+
+The chaincode is vulnerable. While it correctly avoids non-deterministic operations by using `time.Now()` only for logging, it suffers from critical access control and input validation vulnerabilities. Any user on the channel can create or approve documents on behalf of any other user, as"
+2026-02-10T21:30:35.340232,2,google/gemini-2.5-pro,few_shot,safe_02_local_var.go,6316,20.125,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my analysis:
+
+---
+
+### Vulnerability 1: Lack of Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** High
+*   **Affected Code Location:** `CreatePayment`, `QueryPayment`, `RefundPayment` functions (entire functions).
+*"
+2026-02-10T21:30:53.856242,2,google/gemini-2.5-pro,few_shot,safe_03_map_read.go,6388,18.515,"Based on my analysis of the provided Go chaincode `safe_03_map_read.go`, I have identified the following security vulnerabilities.
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** High
+*   **Affected Code Location:** `CastVote` (line 42), `TallyVotes` (line "
+2026-02-10T21:31:10.586808,2,google/gemini-2.5-pro,few_shot,safe_04_math_rand.go,5307,16.731,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Missing Access Control on State-Changing Functions
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** High
+*   **Affected Code Location:**
+    *   `RegisterPackage` (line 22)
+    *   `TransferPackage`"
+2026-02-10T21:31:31.898424,2,google/gemini-2.5-pro,few_shot,safe_05_deterministic_time.go,5861,21.311,"Based on my analysis of the provided Go chaincode, the following vulnerabilities have been identified. While the chaincode correctly handles non-deterministic operations related to timestamps, it has significant flaws in other security domains.
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** `IssueCertificate` (line 40), `RenewCertificate` (line 81), `RevokeCertificate` (line 115)
+*   **Description:** The chaincode lacks any authorization checks to verify the identity or permissions of the transaction submitter. Consequently, any identity that can connect to the peer and invoke the chaincode can perform any of"
+2026-02-10T21:31:51.369465,2,google/gemini-2.5-pro,few_shot,safe_06_external_lib.go,6189,19.47,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The analysis is as follows:
+
+### Vulnerability Analysis Summary
+
+The chaincode is vulnerable. I have identified three vulnerabilities related to access control, input validation, and potential private data leakage. The code is well-written to avoid non-determinism, but it lacks critical security controls required for a production environment."
+2026-02-10T21:32:10.653309,2,google/gemini-2.5-pro,few_shot,vuln_01_b_interprocedural.go,5157,19.284,"Excellent analysis. Here is a summary of the security vulnerabilities found in the provided Hyperledger Fabric chaincode.
+
+### Vulnerability Analysis Summary
+
+**Vulnerable.** The chaincode contains multiple critical and high-severity vulnerabilities.
+
+---
+
+### 1. Non-deterministic Operations
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected Code Location"
+2026-02-10T21:32:29.638882,2,google/gemini-2.5-pro,few_shot,vuln_01_time.go,4291,18.986,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode contains several security vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+---
+
+### Vulnerability 1: Non-Deterministic Operations
+
+*   **Vulnerability Type:** Non-Deterministic Operations
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `CreateShipment` function"
+2026-02-10T21:32:48.316619,2,google/gemini-2.5-pro,few_shot,vuln_02_global.go,4833,18.678,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, the code contains multiple security vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Non-Deterministic Operations from Global Variables
+
+*   **Vulnerability Type:** Non-Deterministic Operations
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   Global variable declarations (lines 12-13): `var transactionCounter int`, `var lastProcessedID string`
+    *   `IssueToken` function (lines 28, 33, 44)
+    *   `TransferToken` function (lines 90, 91)
+    *   `BurnToken` function (lines 126, 127, 133, 136)
+*   **Description:** The chaincode uses global variables (`transactionCounter`, `lastProcessedID`) to maintain state across transaction invocations. In Hyperledger Fabric, each endorsing peer runs a separate instance of the chaincode in its own container. Global variables are not synchronized across these instances. When a transaction is endorsed, each peer will have a different value for `transactionCounter`, leading to different write-sets being generated. For example, in `IssueToken`, the `TxCount` field will differ across peers. In `BurnToken`, the key for the burn receipt (`receiptKey`) will be different on each peer. This causes the transaction proposal to fail validation at commit time due to endorsement mismatches.
+*   **Recommended Fix:** Remove all global variables. If a shared counter is needed, it must be stored on the ledger itself. The chaincode should read the counter's value from the world state, increment it, and write it back to the world state as part of the transaction's read-write set.
+
+    **Example Fix for a Ledger-Based Counter:**
+    ```go
+    // In a function like IssueToken:
+    
+    // 1. Read the counter from the ledger
+    counterBytes, err := ctx.GetStub().GetState(""transactionCounter"")
+    if err != nil {
+        return fmt.Errorf(""failed to read transaction counter: %v"", err)
+    }
+    
+    var counter int
+    if counterBytes != nil {
+        counter, _ = strconv.Atoi(string(counterBytes))
+    }
+    
+    // 2. Increment the counter
+    counter++
+    
+    // 3. Use the new value in the transaction
+    token := Token{
+        Owner:   owner,
+        Balance: amount,
+        TxCount: counter, // Use the deterministic, ledger-based value
+        LastTx:  ""ISSUE"",
+    }
+    
+    // ... (marshal token) ...
+    "
+2026-02-10T21:33:07.122455,2,google/gemini-2.5-pro,few_shot,vuln_03_goroutine.go,5336,18.805,"Analysis complete. Multiple critical vulnerabilities were detected.
+
+The primary issue across multiple functions is the misuse of goroutines, which violates the deterministic execution requirement of Hyperledger Fabric chaincode.
+
+---
+
+### Vulnerability 1: Non-deterministic Read Operations
+
+*   **Vulnerability type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected code location:** `T"
+2026-02-10T21:33:27.277074,2,google/gemini-2.5-pro,few_shot,vuln_04_b_nested_map.go,5711,20.154,"Analysis of the provided Hyperledger Fabric chaincode reveals multiple critical vulnerabilities related to non-deterministic operations. The use of `range` over maps to determine the order of ledger write operations or to construct data for writing will cause transaction proposals to differ between endorsing peers, leading to endorsement failures.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability type"
+2026-02-10T21:33:46.647194,2,google/gemini-2.5-pro,few_shot,vuln_04_map_iter.go,4688,19.369,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical vulnerabilities.
+
+Here is a detailed analysis of the findings:
+
+---
+
+### Vulnerability 1: Non-Deterministic Write-Set Order from Map Iteration
+
+*   **Vulnerability Type:** Non-Deterministic Operation
+*   **Severity:** Critical
+*   **Affected"
+2026-02-10T21:34:06.863240,2,google/gemini-2.5-pro,few_shot,vuln_05_phantom.go,5565,20.216,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant security vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Missing Access Control on Transfer
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** `TransferWith"
+2026-02-10T21:34:28.312215,2,google/gemini-2.5-pro,few_shot,vuln_06_b_conditional_leak.go,5739,21.448,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several vulnerabilities, primarily related to resource management and a critical lack of access control.
+
+Here is the detailed analysis:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **"
+2026-02-10T21:34:47.493186,2,google/gemini-2.5-pro,few_shot,vuln_06_iterator_leak.go,5460,19.18,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode contains multiple significant vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** High
+*   **Affected Code Location:**
+    *   `GetAssets"
+2026-02-10T21:35:05.981059,2,google/gemini-2.5-pro,cot,safe_01_logging.go,5177,18.487,"Based on my analysis of the provided Go chaincode, here is a step-by-step security assessment followed by the final conclusion.
+
+### Step-by-Step Security Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `CreateDocument` function: `ctx.GetStub().PutState(id, docJSON)` on line 73.
+2.  `ApproveDocument` function: `ctx.GetStub().PutState(id, updatedJSON)` on line 117.
+
+There are no `DelState` calls in this chaincode.
+
+**Step 2: For each PutState/DelState call, trace the data backward to its source. Determine whether each value written to the ledger is deterministic or nondeterministic.**
+
+*   **In `CreateDocument` at line 73:**
+"
+2026-02-10T21:35:23.746457,2,google/gemini-2.5-pro,cot,safe_02_local_var.go,6316,17.765,"Based on my analysis of the provided Go chaincode, here are my findings.
+
+No vulnerabilities detected.
+
+### **Reasoning**
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `CreatePayment` function: `ctx"
+2026-02-10T21:35:41.569157,2,google/gemini-2.5-pro,cot,safe_03_map_read.go,6388,17.822,"No vulnerabilities detected.
+
+---
+### Step-by-step Analysis:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `CastVote` function: `ctx.GetStub().PutState(ballotKey, ballotJSON)` at line 71"
+2026-02-10T21:35:58.381221,2,google/gemini-2.5-pro,cot,safe_04_math_rand.go,5307,16.811,"No vulnerabilities detected.
+
+### Analysis Breakdown:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+The following state-modifying `PutState` calls were identified in the chaincode:
+1.  `RegisterPackage` function, line 51: `ctx.GetStub().PutState(trackingID, pkgJSON)`
+2.  "
+2026-02-10T21:36:16.089250,2,google/gemini-2.5-pro,cot,safe_05_deterministic_time.go,5861,17.707,"No vulnerabilities detected.
+
+### Security Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+State-modifying operations were found in the following functions:
+*   `IssueCertificate`: `ctx.GetStub().PutState(certID, certJSON)` on line 70.
+*   `RenewCertificate`: `ctx"
+2026-02-10T21:36:32.810916,2,google/gemini-2.5-pro,cot,safe_06_external_lib.go,6189,16.722,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Chaincode File:** `safe_06_external_lib.go`
+**Contract:** `LoyaltyPointContract`
+
+---
+
+### Step-by-Step Reasoning
+
+**Step 1: Identify State-Modifying Operations**
+
+The following functions contain state-modifying operations (`PutState`):
+1.  `CreateAccount"
+2026-02-10T21:36:51.112830,2,google/gemini-2.5-pro,cot,vuln_01_b_interprocedural.go,5157,18.302,"Excellent. I have analyzed the provided Go chaincode file `vuln_01_b_interprocedural.go` following the specified step-by-step methodology. Here are my findings.
+
+### Step-by-Step Reasoning
+
+**Step 1: Identify ALL state-modifying operations**
+
+I have identified the following `PutState` calls which modify the world state:"
+2026-02-10T21:37:09.969849,2,google/gemini-2.5-pro,cot,vuln_01_time.go,4291,18.856,"Here is the security analysis of the provided Hyperledger Fabric chaincode.
+
+### Executive Summary
+
+The analysis identified three instances of a **Critical** vulnerability related to nondeterministic data being written to the ledger. All three transaction functions (`CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`) use `time.Now()` to generate timestamps. Since this function produces different values on each"
+2026-02-10T21:37:28.683371,2,google/gemini-2.5-pro,cot,vuln_02_global.go,4833,18.713,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following `PutState` calls which modify the world state. There"
+2026-02-10T21:37:47.352937,2,google/gemini-2.5-pro,cot,vuln_03_goroutine.go,5336,18.67,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode for security vulnerabilities. Here are my findings based on a step-by-step analysis.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following `PutState` calls. No"
+2026-02-10T21:38:05.165104,2,google/gemini-2.5-pro,cot,vuln_04_b_nested_map.go,5711,17.812,"Here is the security analysis of the provided Hyperledger Fabric chaincode.
+
+### Vulnerability Analysis Summary
+
+Three critical vulnerabilities related to nondeterministic behavior were identified. The use of `for...range` loops over Go maps, whose iteration order is randomized, results in transaction proposals that differ across endorsing peers. This causes transactions to fail endorsement policy checks and be invalidated at commit time.
+
+---
+
+"
+2026-02-10T21:38:22.651820,2,google/gemini-2.5-pro,cot,vuln_04_map_iter.go,4688,17.485,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following `PutState` calls. No `DelState` calls are present.
+1.  `RegisterProduct"
+2026-02-10T21:38:41.126362,2,google/gemini-2.5-pro,cot,vuln_05_phantom.go,5565,18.475,"An analysis of the provided Go chaincode `vuln_05_phantom.go` reveals several instances of read-write set conflicts, commonly known as Phantom Read vulnerabilities. These are not data corruption vulnerabilities, as Hyperledger Fabric's Multi-Version Concurrency Control (MVCC) will prevent inconsistent state updates. However, they represent a significant availability and application logic issue, as transactions will"
+2026-02-10T21:38:59.183412,2,google/gemini-2.5-pro,cot,vuln_06_b_conditional_leak.go,5739,18.057,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability Analysis Summary
+
+I have found three distinct resource leak vulnerabilities related to the improper handling of state query iterators. In all cases, iterators are not closed on all possible execution paths, leading to the leakage of underlying gRPC streams and database resources on the peer. This can degrade peer performance"
+2026-02-10T21:39:16.023309,2,google/gemini-2.5-pro,cot,vuln_06_iterator_leak.go,5460,16.839,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** High
+*   **Affected Code Location:**
+    *   `GetAssetsByRange` (Line 50)
+    *   "
+2026-02-10T21:39:35.146340,3,google/gemini-2.5-pro,zero_shot,safe_01_logging.go,5177,19.122,"Based on my analysis of the provided Go chaincode file `safe_01_logging.go`, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Improper Access Control (Identity Spoofing)
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:** `ApproveDocument` function, line 98"
+2026-02-10T21:39:54.339030,3,google/gemini-2.5-pro,zero_shot,safe_02_local_var.go,6316,19.193,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_02_local_var.go`). While the code demonstrates good practices regarding deterministic operations and avoiding mutable global state, it contains significant security vulnerabilities.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control"
+2026-02-10T21:40:15.009935,3,google/gemini-2.5-pro,zero_shot,safe_03_map_read.go,6388,20.671,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_03_map_read.go`). The code demonstrates safe patterns for handling Go maps to avoid non-determinism, but it contains several other significant security vulnerabilities.
+
+Here is a summary of the findings:
+
+---
+
+### 1. Vulnerability: Missing Access Control in `CastVote"
+2026-02-10T21:40:35.598393,3,google/gemini-2.5-pro,zero_shot,safe_04_math_rand.go,5307,20.587,"An analysis of the provided Hyperledger Fabric chaincode `safe_04_math_rand.go` reveals several security vulnerabilities. While the chaincode correctly isolates the use of `math/rand` to prevent non-determinism, it lacks critical access control and input validation checks.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### 1. Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `RegisterPackage` (line 26)
+    *   `TransferPackage` (line 60)
+    *   `DeliverPackage` (line 91)
+*   **Description of the Issue:** The chaincode functions `RegisterPackage`, `TransferPackage`, and `DeliverPackage` do not perform any authorization checks. This means that any identity that can successfully submit a transaction proposal to the peer (e.g., any member of the channel) can register a new package, transfer any existing package to a new warehouse, or mark any package as delivered. There is no mechanism to verify if the transaction submitter is the legitimate sender, receiver, or a designated logistics provider. This allows unauthorized state changes and can compromise the integrity of the ledger.
+*   **Recommended Fix:** Implement attribute-based access control (ABAC) or role-based access control (RBAC) using the client's identity. Before performing any state changes, verify the submitter's identity and/or organizational affiliation (MSPID).
+
+    **Example Fix for `TransferPackage`:**
+    Check if the caller belongs to an authorized organization (e.g., a logistics provider).
+
+    ```go
+    // In TransferPackage, before modifying the package
+    mspID, err := ctx.GetClientIdentity().GetMSPID()
+    if err != nil {
+        return fmt.Errorf(""failed to get client MSP ID: %v"", err)
+    }
+    // Assuming only 'LogisticsOrgMSP' can transfer packages
+    if mspID != ""LogisticsOrgMSP"" {
+        return fmt.Errorf(""unauthorized: client from MSP %s cannot transfer packages"", mspID)
+    }
+
+    // ... proceed with the transfer logic
+    pkg.WarehouseID = newWarehouseID
+    ```
+
+### 2. Insufficient Input Validation
+
+*   **Vulnerability Type:** Input Validation
+*   **Severity:** Medium
+*   **Affected Code Location:**
+    *   `RegisterPackage` (line 26)
+    *   `TransferPackage` (line 60)
+*   **Description of the Issue:** The chaincode functions do not adequately validate their input arguments.
+    1.  In `RegisterPackage`, the `sender`, `receiver`, and `weight` arguments are not validated. An attacker could provide empty strings for `sender` and `receiver` or a non-positive value (e.g., `0` or `-10`) for `weight`. This can lead to the creation of invalid or nonsensical package records on the ledger.
+    2.  In `TransferPackage`,"
+2026-02-10T21:40:57.576428,3,google/gemini-2.5-pro,zero_shot,safe_05_deterministic_time.go,5861,21.977,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_05_deterministic_time.go`).
+
+The analysis reveals several security vulnerabilities, primarily related to access control and input validation. The chaincode correctly implements deterministic time handling, which is a common challenge in Fabric development.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1:"
+2026-02-10T21:41:18.431200,3,google/gemini-2.5-pro,zero_shot,safe_06_external_lib.go,6189,20.854,"Based on my analysis of the provided Hyperledger Fabric chaincode `safe_06_external_lib.go`, here are the security vulnerabilities I have identified.
+
+***
+
+### Vulnerability 1: Missing Access Control on State-Changing Functions
+
+*   **Vulnerability Type:** Access Control Issues
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *"
+2026-02-10T21:41:37.861643,3,google/gemini-2.5-pro,zero_shot,vuln_01_b_interprocedural.go,5157,19.429,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the security vulnerabilities found.
+
+### Summary of Findings
+
+The chaincode contains several significant security vulnerabilities. The most critical issues relate to the use of non-deterministic functions, which will cause transaction failures and render the chaincode non-functional in a multi-peer environment. Additionally, there"
+2026-02-10T21:41:58.122647,3,google/gemini-2.5-pro,zero_shot,vuln_01_time.go,4291,20.26,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my report.
+
+### Summary of Findings
+
+The chaincode contains several significant vulnerabilities. The most critical issue is the use of non-deterministic functions, which will cause transaction failures and render the chaincode unusable. Additionally, there are high-severity access control omissions and medium-severity flaws related to"
+2026-02-10T21:42:17.326477,3,google/gemini-2.5-pro,zero_shot,vuln_02_global.go,4833,19.203,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report.
+
+### Summary of Findings
+
+The chaincode contains several critical and high-severity vulnerabilities that render it non-functional and insecure in a multi-peer Hyperledger Fabric environment. The most severe issue is the use of global variables, which leads to non-deterministic behavior and will"
+2026-02-10T21:42:36.791816,3,google/gemini-2.5-pro,zero_shot,vuln_03_goroutine.go,5336,19.465,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is a detailed report of the vulnerabilities found.
+
+### Summary of Findings
+
+The chaincode contains multiple critical and high-severity vulnerabilities, primarily related to non-deterministic operations due to the improper use of goroutines. The Hyperledger Fabric chaincode execution model is single-threaded per transaction proposal and requires"
+2026-02-10T21:42:55.363650,3,google/gemini-2.5-pro,zero_shot,vuln_04_b_nested_map.go,5711,18.572,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report.
+
+### Summary of Findings
+
+The chaincode contains multiple instances of a critical vulnerability related to non-deterministic operations, which will cause transaction failures during the validation phase. Additionally, it lacks any form of access control, which is a high-severity issue in any production environment"
+2026-02-10T21:43:13.972097,3,google/gemini-2.5-pro,zero_shot,vuln_04_map_iter.go,4688,18.608,"Based on my analysis of the provided Go chaincode file `vuln_04_map_iter.go`, here are the security vulnerabilities I have identified.
+
+***
+
+### Vulnerability 1: Non-deterministic Write-Set Generation
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *"
+2026-02-10T21:43:34.119901,3,google/gemini-2.5-pro,zero_shot,vuln_05_phantom.go,5565,20.148,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the vulnerabilities found.
+
+### Summary of Findings
+
+The chaincode contains several significant security and design flaws. The most prominent issue, as highlighted in the source code comments, is the pattern of **Read-After-Write Conflicts (Phantom Reads)**, which will lead to transaction"
+2026-02-10T21:43:54.787151,3,google/gemini-2.5-pro,zero_shot,vuln_06_b_conditional_leak.go,5739,20.666,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several instances of the same critical vulnerability class related to resource management.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Summary of Findings
+
+The chaincode contains multiple resource leak vulnerabilities due to the improper handling of state database iterators (`StateQueryIteratorInterface`). In Go, the `"
+2026-02-10T21:44:15.664887,3,google/gemini-2.5-pro,zero_shot,vuln_06_iterator_leak.go,5460,20.878,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my report on the security vulnerabilities found.
+
+### Summary
+
+The chaincode contains several vulnerabilities, with the most severe being a critical lack of access control and a high-severity resource leak that could render a peer unresponsive. Additionally, it is susceptible to phantom reads and contains minor bugs related to unhandled errors and missing input validation.
+
+---
+
+### Vulnerability 1: Resource Leak via Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** High
+*   **Affected Code Locations:**
+    *   `GetAssetsByRange` (Line 45)
+    *   `SumAssetValues` (Line 71)
+    *   `TransferAssetsByOwner` (Line 91)
+    *   `DeactivateRange` (Line 116)
+*   **Description of the Issue:**
+    The functions `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, and `DeactivateRange` all use iterators returned by `GetStateByRange` or `GetStateByPartialCompositeKey`. These iterators maintain an open gRPC stream and a database cursor on the peer. The code fails to call the `Close()` method on these iterators.
+
+    This leak occurs on every successful execution and also in every error path after the iterator has been created. Repeatedly calling these functions will exhaust the peer's available resources (such as file descriptors or gRPC connection limits), leading to performance degradation and eventually causing the peer to become unresponsive or crash.
+*   **Recommended Fix:**
+    Immediately after successfully creating an iterator, defer its `Close()` method. This ensures that the resources are released regardless of whether the function returns normally or encounters an error.
+
+    **Example fix for `GetAssetsByRange`:**
+    ```go
+    func (ar *AssetRegistryContract) GetAssetsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) ([]*RegistryAsset, error) {
+        resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+        if err != nil {
+            return nil, fmt.Errorf(""failed to get state by range: %v"", err)
+        }
+        defer resultsIterator.Close() // <-- ADD THIS LINE
+
+        var assets []*RegistryAsset
+        for resultsIterator.HasNext() {
+            queryResult, err := resultsIterator.Next()
+            if err != nil {
+                return nil, err
+            }
+
+            var asset RegistryAsset
+            err = json.Unmarshal(queryResult.Value, &asset)
+            if err != nil {
+                return nil, err
+            }
+
+            assets = append(assets, &asset)
+        }
+
+        return assets, nil
+    }
+    ```
+    This `defer resultsIterator.Close()` pattern should be applied in all four affected functions.
+
+---
+
+### Vulnerability 2: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Locations:**
+    *   `RegisterAsset` (Line 26)
+    *   `TransferAssetsByOwner` (Line 88)
+    *   `DeactivateRange` (Line 114)
+*   **Description of the Issue"
+2026-02-10T21:44:35.494789,3,google/gemini-2.5-pro,few_shot,safe_01_logging.go,5177,19.83,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is the detailed analysis of the security vulnerabilities found.
+
+---
+
+### Vulnerability 1: Missing Access Control on Document Creation
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Medium
+*   **Affected Code Location:** `CreateDocument` function, line 40
+*   "
+2026-02-10T21:44:55.952196,3,google/gemini-2.5-pro,few_shot,safe_02_local_var.go,6316,20.456,"Based on the security analysis of the provided Go chaincode `safe_02_local_var.go`, the following vulnerabilities have been identified.
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Low
+*   **Affected Code Location:** `GetFeeSchedule` function, line 178
+*   **Description of the"
+2026-02-10T21:45:16.631169,3,google/gemini-2.5-pro,few_shot,safe_03_map_read.go,6388,20.679,"Based on my analysis of the provided Go chaincode `safe_03_map_read.go`, here are the identified security vulnerabilities and issues.
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** `CastVote(ctx contractapi.TransactionContextInterface, electionID string"
+2026-02-10T21:45:34.439047,3,google/gemini-2.5-pro,few_shot,safe_04_math_rand.go,5307,17.808,"Based on my analysis of the provided Go chaincode file `safe_04_math_rand.go`, here are the findings:
+
+**No vulnerabilities detected.**
+
+### Analysis Summary
+
+The chaincode demonstrates a correct and safe pattern for using non-deterministic functions like `math/rand` within a Hyperledger Fabric smart contract.
+
+1.  **Non-Deterministic Operations**: The primary"
+2026-02-10T21:45:54.260445,3,google/gemini-2.5-pro,few_shot,safe_05_deterministic_time.go,5861,19.82,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+***
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `IssueCertificate` (line 31)
+    *   `RenewCertificate` (line"
+2026-02-10T21:46:13.517406,3,google/gemini-2.5-pro,few_shot,safe_06_external_lib.go,6189,19.257,"Analysis of the chaincode file `safe_06_external_lib.go` has identified several security vulnerabilities.
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** `CreateAccount` (line 81), `AddPoints` (line 105"
+2026-02-10T21:46:32.699827,3,google/gemini-2.5-pro,few_shot,vuln_01_b_interprocedural.go,5157,19.182,"Based on my analysis of the provided Go chaincode `vuln_01_b_interprocedural.go`, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Non-deterministic Operations
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `CreateRecord` function"
+2026-02-10T21:46:52.609704,3,google/gemini-2.5-pro,few_shot,vuln_01_time.go,4291,19.91,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode is **vulnerable**.
+
+Here is a detailed breakdown of the vulnerabilities found:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** High
+*   **Affected Code Location:** `CreateShipment` function, lines 36,"
+2026-02-10T21:47:11.030165,3,google/gemini-2.5-pro,few_shot,vuln_02_global.go,4833,18.419,"Based on my analysis, the provided chaincode is **vulnerable**.
+
+Here is a detailed breakdown of the security vulnerabilities found:
+
+### Vulnerability 1: Non-Deterministic Operations from Global Variables
+
+*   **Vulnerability Type**: Non-Deterministic Operations
+*   **Severity**: Critical
+*   **Affected Code Location**:
+    *   `var transactionCounter int` (Line 11)
+    *   `var lastProcessedID string` (Line 12)
+    *   `IssueToken` function (Lines 30, 34, 44)
+    *   `TransferToken` function (Lines 90, 91)
+    *   `BurnToken` function (Lines 128, 136, 140)
+*   **Description of the issue**: The chaincode uses global variables (`transactionCounter`, `lastProcessedID`) to maintain state across transaction invocations. In Hyperledger Fabric, each endorsing peer runs the chaincode in a separate, isolated container. This means each peer has its own independent, in-memory copy of these global variables. Since transactions can be endorsed by different peers at different times, the values of these variables will diverge across the peer network. When a transaction function modifies and then writes a value based on these globals to the ledger"
+2026-02-10T21:47:31.848617,3,google/gemini-2.5-pro,few_shot,vuln_03_goroutine.go,5336,20.817,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains multiple critical vulnerabilities related to non-deterministic operations, as well as other medium-severity flaws.
+
+Here is the detailed analysis:
+
+---
+
+### Vulnerability 1: Non-deterministic Read-Set Generation
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity"
+2026-02-10T21:47:52.465453,3,google/gemini-2.5-pro,few_shot,vuln_04_b_nested_map.go,5711,20.617,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** High
+*   **Affected Code Location:** `BatchUpdateInventory` function, lines 35-66
+*   **Description of the issue:** The function receives a JSON object"
+2026-02-10T21:48:11.777142,3,google/gemini-2.5-pro,few_shot,vuln_04_map_iter.go,4688,19.312,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode contains several security vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Non-Deterministic Map Iteration in `BatchRestock`
+
+*   **Vulnerability Type:** Non-Deterministic Operation
+*   **Severity:** High
+*   **Affected Code Location:** `"
+2026-02-10T21:48:31.903334,3,google/gemini-2.5-pro,few_shot,vuln_05_phantom.go,5565,20.125,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant security and application-level vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    "
+2026-02-10T21:48:52.579187,3,google/gemini-2.5-pro,few_shot,vuln_06_b_conditional_leak.go,5739,20.676,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Resource Leak (Iterator Not Closed)
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** High
+*   **Affected Code"
+2026-02-10T21:49:12.138176,3,google/gemini-2.5-pro,few_shot,vuln_06_iterator_leak.go,5460,19.558,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code is vulnerable to several security issues.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### **Vulnerability 1: Resource Leak from Unclosed Iterator**
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** Critical
+*   **"
+2026-02-10T21:49:29.853792,3,google/gemini-2.5-pro,cot,safe_01_logging.go,5177,17.715,"Based on my analysis of the provided Go chaincode, here are my findings.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations:
+1.  `CreateDocument` function: `ctx.GetStub().PutState(id, docJSON)`
+2.  `ApproveDocument` function: `ctx.GetStub().PutState(id, updatedJSON)`
+
+There are no `DelState` calls in this chaincode.
+
+**Step 2: For each PutState/DelState call, trace the data backward to its source"
+2026-02-10T21:49:48.200300,3,google/gemini-2.5-pro,cot,safe_02_local_var.go,6316,18.346,"No vulnerabilities detected.
+
+### Step-by-step Analysis:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `ctx.GetStub().PutState(id, paymentJSON)` in the `CreatePayment` function (line 9"
+2026-02-10T21:50:07.215093,3,google/gemini-2.5-pro,cot,safe_03_map_read.go,6388,19.015,"No vulnerabilities detected.
+
+### Step-by-step Analysis:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `CastVote` function: `ctx.GetStub().PutState(ballotKey, ballotJSON)` at line"
+2026-02-10T21:50:24.212639,3,google/gemini-2.5-pro,cot,safe_04_math_rand.go,5307,16.998,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+The following state-modifying operations were identified:
+1.  `RegisterPackage` function: `ctx.GetStub().PutState(trackingID, pkgJSON)` on line 51.
+2.  `TransferPackage"
+2026-02-10T21:50:42.812439,3,google/gemini-2.5-pro,cot,safe_05_deterministic_time.go,5861,18.599,"No vulnerabilities detected.
+
+### Step-by-step Reasoning:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+State-modifying operations are present in the following functions:
+1.  `IssueCertificate`: `ctx.GetStub().PutState(certID, certJSON)` at line 70.
+2."
+2026-02-10T21:51:00.916445,3,google/gemini-2.5-pro,cot,safe_06_external_lib.go,6189,18.103,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+The following functions contain state-modifying operations:
+1.  `CreateAccount`: Calls `ctx.GetStub().PutState(accountID, accountJSON)` on line 91.
+2.  `AddPoints`: Calls `ctx"
+2026-02-10T21:51:18.549691,3,google/gemini-2.5-pro,cot,vuln_01_b_interprocedural.go,5157,17.632,"Based on my analysis of the provided Go chaincode, the following security vulnerabilities have been identified.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+I have identified three `PutState` calls in the chaincode:
+1.  In `CreateRecord` at line 80: `"
+2026-02-10T21:51:36.352487,3,google/gemini-2.5-pro,cot,vuln_01_time.go,4291,17.803,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Non-deterministic Execution due to `time.Now()`
+
+*   **Vulnerability Type:** Non-deterministic Execution
+*   **Severity:** Critical
+*   **Affected Code Locations:**
+    *   `CreateShipment` function, lines 42, "
+2026-02-10T21:51:54.092920,3,google/gemini-2.5-pro,cot,vuln_02_global.go,4833,17.739,"An analysis of the provided Go chaincode `vuln_02_global.go` reveals several security vulnerabilities related to nondeterminism caused by the use of global variables.
+
+### Step-by-Step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+The following `PutState` calls, which modify the world state, were"
+2026-02-10T21:52:12.226955,3,google/gemini-2.5-pro,cot,vuln_03_goroutine.go,5336,18.134,"Based on my analysis of the provided Go chaincode `vuln_03_goroutine.go`, here are the identified security vulnerabilities.
+
+### Vulnerability 1: Nondeterministic State Modification due to Goroutine Usage in `TallyVotes`
+
+*   **Vulnerability Type**: Nondeterministic State Modification
+*   **Severity**: Critical
+*   **Affected Code"
+2026-02-10T21:52:31.762259,3,google/gemini-2.5-pro,cot,vuln_04_b_nested_map.go,5711,19.535,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Nondeterministic Write-Set due to Map Iteration in Report Generation
+
+*   **Vulnerability Type:** Nondeterministic Write-Set
+*   **Severity:** Critical
+*   **Affected Code Location:** `GenerateZoneReport` function, line 10"
+2026-02-10T21:52:49.994577,3,google/gemini-2.5-pro,cot,vuln_04_map_iter.go,4688,18.232,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities related to nondeterminism.
+
+### Vulnerability 1: Nondeterministic Write-Set Order from Map Iteration
+
+*   **Vulnerability Type**: Nondeterminism leading to Endorsement Mismatch
+*   **Severity**: Critical
+*   **Affected Code Location**: `BatchRest"
+2026-02-10T21:53:08.637633,3,google/gemini-2.5-pro,cot,vuln_05_phantom.go,5565,18.642,"Based on my analysis of the provided Go chaincode `vuln_05_phantom.go`, here are the identified security and design vulnerabilities.
+
+### Vulnerability 1: Phantom Read in `CloseAuction`
+
+*   **Vulnerability Type:** Phantom Read / MVCC Conflict
+*   **Severity:** High
+*   **Affected Code Location:** `CloseAuction` function, lines 5"
+2026-02-10T21:53:27.477445,3,google/gemini-2.5-pro,cot,vuln_06_b_conditional_leak.go,5739,18.84,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Resource Leak via Early Return Before Defer
+
+*   **Vulnerability Type**: Resource Leak
+*   **Severity**: Medium
+*   **Affected Code Location**: `ProcessClaimsByRange` function, lines 30-49
+*   **Description"
+2026-02-10T21:53:46.804820,3,google/gemini-2.5-pro,cot,vuln_06_iterator_leak.go,5460,19.327,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+- `RegisterAsset`: `ctx.GetStub().PutState(id, assetJSON)` at line 33.
+- `TransferAssets"
+2026-02-10T21:54:07.160354,4,google/gemini-2.5-pro,zero_shot,safe_01_logging.go,5177,20.355,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode file `safe_01_logging.go`. The analysis reveals several security vulnerabilities, primarily related to access control and input validation, despite the code's correct handling of non-deterministic operations.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control on Document"
+2026-02-10T21:54:28.533306,4,google/gemini-2.5-pro,zero_shot,safe_02_local_var.go,6316,21.372,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_02_local_var.go`). The code is well-commented and follows several good practices, particularly regarding the use of constants and read-only variables to prevent non-determinism. However, I have identified several security vulnerabilities and areas for improvement.
+
+Here is a detailed breakdown of the"
+2026-02-10T21:54:48.254925,4,google/gemini-2.5-pro,zero_shot,safe_03_map_read.go,6388,19.721,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_03_map_read.go`). While the code correctly demonstrates safe patterns for handling Go maps to avoid non-determinism, it contains several other significant security vulnerabilities.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability 1: Missing Caller Identity Verification
+
+*   **V"
+2026-02-10T21:55:07.348836,4,google/gemini-2.5-pro,zero_shot,safe_04_math_rand.go,5307,19.094,"Based on my analysis of the provided Go chaincode `safe_04_math_rand.go`, I have identified several security vulnerabilities. The chaincode correctly demonstrates how to use non-deterministic functions like `math/rand` safely for logging purposes without affecting the world state. However, it lacks other critical security controls.
+
+Here is a summary of the findings:
+
+***
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `RegisterPackage` (line 30)
+    *   `TransferPackage` (line 68)
+    *   `DeliverPackage` (line 99)
+*   **Description of the Issue:** The chaincode functions that modify the ledger state (`RegisterPackage`, `TransferPackage`, `DeliverPackage`) do not perform any authorization checks. Any client that can connect to the peer and invoke the chaincode can execute these functions on any package. This allows unauthorized or malicious actors to:
+    *   Register fraudulent packages.
+    *   Hijack the delivery process by transferring any package to an arbitrary warehouse (`TransferPackage`).
+    *   Prematurely or falsely mark any package as delivered (`DeliverPackage`).
+    This completely undermines the integrity and business logic of the package tracking application.
+*   **Recommended Fix:** Implement attribute-based or role-based access control. Before executing the core logic, each function should verify the"
+2026-02-10T21:55:27.072370,4,google/gemini-2.5-pro,zero_shot,safe_05_deterministic_time.go,5861,19.724,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_05_deterministic_time.go`).
+
+The chaincode correctly implements deterministic time handling by using the transaction timestamp (`GetTxTimestamp`) for all ledger state modifications, thus avoiding non-determinism vulnerabilities that would arise from using local wall-clock time (`time.Now()`).
+
+However, I"
+2026-02-10T21:55:46.751028,4,google/gemini-2.5-pro,zero_shot,safe_06_external_lib.go,6189,19.679,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_06_external_lib.go`). The analysis reveals several security vulnerabilities.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code"
+2026-02-10T21:56:05.906659,4,google/gemini-2.5-pro,zero_shot,vuln_01_b_interprocedural.go,5157,19.155,"Based on my analysis of the provided Hyperledger Fabric chaincode in `vuln_01_b_interprocedural.go`, I have identified several security vulnerabilities. Here is a detailed report.
+
+---
+
+### Vulnerability Analysis Report
+
+#### 1. Non-deterministic Operations
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*   **"
+2026-02-10T21:56:25.251622,4,google/gemini-2.5-pro,zero_shot,vuln_01_time.go,4291,19.345,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+***
+
+### Vulnerability 1: Non-deterministic Operations
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   "
+2026-02-10T21:56:46.439174,4,google/gemini-2.5-pro,zero_shot,vuln_02_global.go,4833,21.187,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is the detailed security vulnerability report.
+
+### Summary of Findings
+
+The chaincode contains multiple critical and high-severity vulnerabilities. The most severe issue is the use of global variables, which introduces non-determinism and will cause all transactions that modify the ledger to fail during the validation phase. Additionally, the"
+2026-02-10T21:57:08.756821,4,google/gemini-2.5-pro,zero_shot,vuln_03_goroutine.go,5336,22.318,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the security vulnerabilities found.
+
+The chaincode contains several critical and high-severity vulnerabilities, primarily related to non-deterministic operations due to the misuse of goroutines. Additionally, there are significant access control and input validation flaws.
+
+---
+
+### Vulnerability Analysis Summary
+
+|"
+2026-02-10T21:57:29.068122,4,google/gemini-2.5-pro,zero_shot,vuln_04_b_nested_map.go,5711,20.31,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical vulnerabilities related to non-determinism, which will prevent the chaincode from functioning correctly on a multi-peer network. It also lacks fundamental access control.
+
+Here is a detailed breakdown of the findings.
+
+***
+
+### Vulnerability 1: Non-Deterministic Write Set in"
+2026-02-10T21:57:49.024425,4,google/gemini-2.5-pro,zero_shot,vuln_04_map_iter.go,4688,19.956,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_04_map_iter.go`). The code contains several significant vulnerabilities that would prevent it from functioning correctly in a multi-peer Hyperledger Fabric environment, along with other common security oversights.
+
+Here is a detailed breakdown of the findings:
+
+---
+
+### Vulnerability "
+2026-02-10T21:58:09.435050,4,google/gemini-2.5-pro,zero_shot,vuln_05_phantom.go,5565,20.411,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report.
+
+### Summary of Findings
+
+The chaincode contains several significant security and design vulnerabilities. The most prominent issues are related to **Read-After-Write Conflicts (Phantom Reads)**, which severely impact the chaincode's ability to handle concurrent transactions, leading to transaction failures and poor"
+2026-02-10T21:58:28.894391,4,google/gemini-2.5-pro,zero_shot,vuln_06_b_conditional_leak.go,5739,19.459,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several instances of the same critical vulnerability class related to resource management.
+
+Here is the detailed analysis of the vulnerabilities found:
+
+***
+
+### Vulnerability 1: Resource Leak via Early Return
+
+*   **Vulnerability Type:** Resource Leak (Unclosed Iterator)
+*   **Severity:**"
+2026-02-10T21:58:48.390167,4,google/gemini-2.5-pro,zero_shot,vuln_06_iterator_leak.go,5460,19.494,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several security vulnerabilities, ranging from critical to low severity.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### Vulnerability 1: Missing or Improper Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:** All transaction functions (`RegisterAsset`, `TransferAssetsByOwner`, `DeactivateRange`,"
+2026-02-10T21:59:08.456788,4,google/gemini-2.5-pro,few_shot,safe_01_logging.go,5177,20.066,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my analysis:
+
+---
+
+### Vulnerability 1: Identity Spoofing in Approval Workflow
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:** `ApproveDocument` function, line 100
+*   **"
+2026-02-10T21:59:29.179821,4,google/gemini-2.5-pro,few_shot,safe_02_local_var.go,6316,20.723,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode contains several vulnerabilities.
+
+---
+
+### Vulnerability 1: Lack of Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** High
+*   **Affected Code Location:** `CreatePayment` (line 60), `RefundPayment` (line 123)
+*"
+2026-02-10T21:59:50.119668,4,google/gemini-2.5-pro,few_shot,safe_03_map_read.go,6388,20.939,"Based on my analysis of the provided Go chaincode file `safe_03_map_read.go`, here are the findings:
+
+No vulnerabilities were detected in the provided code.
+
+### Analysis Summary
+
+The chaincode demonstrates a solid understanding of Hyperledger Fabric's deterministic execution requirements, particularly concerning the use of Go maps. The code correctly identifies and mitigates potential non-determinism issues"
+2026-02-10T22:00:08.158839,4,google/gemini-2.5-pro,few_shot,safe_04_math_rand.go,5307,18.038,"Based on my analysis of the provided Go chaincode `safe_04_math_rand.go`, I have identified the following vulnerabilities.
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Medium
+*   **Affected Code Location:**
+    *   `RegisterPackage` (line 23)"
+2026-02-10T22:00:28.664452,4,google/gemini-2.5-pro,few_shot,safe_05_deterministic_time.go,5861,20.506,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### **Vulnerability 1: Missing Access Control**
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:** `IssueCertificate`, `RenewCertificate`, `RevokeCertificate` functions.
+*   **Description:** The functions that modify the ledger state (`IssueCertificate`, `RenewCertificate`, `RevokeCertificate`) lack any authorization checks. This means any identity that is a member of the channel can invoke these functions. For example, any user could issue a new certificate in their own name"
+2026-02-10T22:00:48.615200,4,google/gemini-2.5-pro,few_shot,safe_06_external_lib.go,6189,19.95,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is the detailed analysis of my findings.
+
+### Summary
+The chaincode is generally well-written and avoids common pitfalls like non-determinism. However, it contains significant vulnerabilities related to input validation and lacks any form of access control, which would be critical in a production environment.
+
+---
+
+### Vulner"
+2026-02-10T22:01:08.926658,4,google/gemini-2.5-pro,few_shot,vuln_01_b_interprocedural.go,5157,20.311,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The chaincode is vulnerable to several security issues.
+
+Here is a detailed analysis of each vulnerability:
+
+---
+
+### Vulnerability 1: Non-Deterministic Operation in `CreateRecord`
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** High
+*   **Affected Code Location:**"
+2026-02-10T22:01:28.926890,4,google/gemini-2.5-pro,few_shot,vuln_01_time.go,4291,20.0,"Based on my analysis, the provided chaincode is **vulnerable**.
+
+Here is a detailed breakdown of the security issues found:
+
+### Vulnerability 1
+
+*   **Vulnerability type:** Non-deterministic Operation
+*   **Severity:** High
+*   **Affected code location:** `CreateShipment` function, lines 36, 42, and 43."
+2026-02-10T22:01:47.916661,4,google/gemini-2.5-pro,few_shot,vuln_02_global.go,4833,18.99,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, the code contains multiple critical security vulnerabilities related to non-determinism.
+
+Here is a detailed breakdown of each vulnerability:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*   **Affected Code Location:** `"
+2026-02-10T22:02:07.637773,4,google/gemini-2.5-pro,few_shot,vuln_03_goroutine.go,5336,19.72,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains multiple critical vulnerabilities related to non-deterministic operations stemming from the misuse of goroutines.
+
+Here is the detailed analysis:
+
+---
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   **Affected Code Location"
+2026-02-10T22:02:26.586531,4,google/gemini-2.5-pro,few_shot,vuln_04_b_nested_map.go,5711,18.948,"Analysis of the provided Hyperledger Fabric chaincode reveals multiple critical security vulnerabilities.
+
+### Vulnerability 1: Non-Deterministic Write Set in `BatchUpdateInventory`
+
+*   **Vulnerability Type**: Non-Deterministic Operations
+*   **Severity**: Critical
+*   **Affected Code Location**: `BatchUpdateInventory` function, lines 38-66
+*   **Description of the issue"
+2026-02-10T22:02:45.297862,4,google/gemini-2.5-pro,few_shot,vuln_04_map_iter.go,4688,18.71,"Based on my analysis of the provided Go chaincode, `vuln_04_map_iter.go`, the code is vulnerable. Here are the detailed findings:
+
+### Vulnerability 1
+
+1.  **Vulnerability Type:** Non-deterministic Operation
+2.  **Severity:** High
+3.  **Affected Code Location:** `BatchRestock` function, lines "
+2026-02-10T22:03:04.606450,4,google/gemini-2.5-pro,few_shot,vuln_05_phantom.go,5565,19.308,"-107
+        *   Description: Explain the range query, the concurrent `PlaceBid`, and why MVCC fails.
+        *   Fix: This is the tricky part. How do you fix it? The best practice is to avoid this pattern. Instead of calculating the summary on-chain in a single transaction, you could:
+            1.  Have a separate ""closing"" transaction"
+2026-02-10T22:03:24.144955,4,google/gemini-2.5-pro,few_shot,vuln_06_b_conditional_leak.go,5739,19.538,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my report.
+
+The chaincode is **vulnerable**. It contains multiple instances of the same critical resource leak vulnerability due to improper handling of state query iterators.
+
+---
+
+### Vulnerability 1: Resource Leak via Early Return Before Defer
+
+*   **Vulnerability Type:**"
+2026-02-10T22:03:43.582383,4,google/gemini-2.5-pro,few_shot,vuln_06_iterator_leak.go,5460,19.437,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities.
+
+Here is the detailed analysis:
+
+---
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *"
+2026-02-10T22:04:03.122173,4,google/gemini-2.5-pro,cot,safe_01_logging.go,5177,19.539,"Based on my analysis of the provided Go chaincode, here are my findings.
+
+### Security Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following functions that modify the world state:
+1.  `CreateDocument`: Calls `ctx.GetStub().PutState(id, docJSON)` on line 70.
+2.  `ApproveDocument`: Calls `ctx.GetStub().PutState(id, updatedJSON)` on line 113.
+
+No `DelState` calls are present in the chaincode.
+
+**Step 2: For each PutState/DelState call, trace the data backward to its source.**
+
+*   **`CreateDocument` (line 70):**
+    *   **Key:** The key is `id`, which is a function argument passed into the transaction. This"
+2026-02-10T22:04:22.782897,4,google/gemini-2.5-pro,cot,safe_02_local_var.go,6316,19.661,"No vulnerabilities detected.
+
+### Analysis Breakdown:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+The following state-modifying operations were identified:
+1.  `CreatePayment` function, line 95: `ctx.GetStub().PutState(id, paymentJSON)`
+2.  `RefundPayment` function, line "
+2026-02-10T22:04:42.386798,4,google/gemini-2.5-pro,cot,safe_03_map_read.go,6388,19.604,"No vulnerabilities detected.
+
+### Step-by-step Analysis:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `CastVote` function: `ctx.GetStub().PutState(ballotKey, ballotJSON)` at"
+2026-02-10T22:04:59.685909,4,google/gemini-2.5-pro,cot,safe_04_math_rand.go,5307,17.299,"No vulnerabilities detected.
+
+### Security Analysis Report
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+The following state-modifying operations were identified in the chaincode:
+1.  `RegisterPackage` function, line 51: `ctx.GetStub().PutState(trackingID, pkgJSON)`
+2.  `Transfer"
+2026-02-10T22:05:17.775658,4,google/gemini-2.5-pro,cot,safe_05_deterministic_time.go,5861,18.089,"No vulnerabilities detected.
+
+### Security Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+State-modifying operations are present in the following functions:
+1.  `IssueCertificate`: `ctx.GetStub().PutState(certID, certJSON)` at line 70.
+2.  `Renew"
+2026-02-10T22:05:35.884214,4,google/gemini-2.5-pro,cot,safe_06_external_lib.go,6189,18.108,"No vulnerabilities detected.
+
+### Security Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState)**
+
+State-modifying operations are present in the following functions:
+1.  `CreateAccount`: `ctx.GetStub().PutState(accountID, accountJSON)` on line 91.
+2.  `AddPoints`: `ctx.Get"
+2026-02-10T22:05:52.784024,4,google/gemini-2.5-pro,cot,vuln_01_b_interprocedural.go,5157,16.9,"Based on my analysis of the provided Go chaincode, the following security vulnerabilities have been identified.
+
+### Vulnerability 1: Nondeterministic Ledger Update in `CreateRecord`
+
+*   **Vulnerability Type**: Nondeterministic Data in Ledger State
+*   **Severity**: Critical
+*   **Affected Code Location**: `CreateRecord` function, lines 73-7"
+2026-02-10T22:06:10.013653,4,google/gemini-2.5-pro,cot,vuln_01_time.go,4291,17.23,"Based on my analysis of the provided Go chaincode `vuln_01_time.go`, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+I have identified three `PutState` calls in the chaincode:
+1.  `Create"
+2026-02-10T22:06:25.945775,4,google/gemini-2.5-pro,cot,vuln_02_global.go,4833,15.931,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following `PutState` calls which modify the world state:
+1"
+2026-02-10T22:06:45.046990,4,google/gemini-2.5-pro,cot,vuln_03_goroutine.go,5336,19.101,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_03_goroutine.go`) for security vulnerabilities. Here are my findings based on a step-by-step analysis.
+
+### Vulnerability Analysis
+
+---
+
+### 1. Nondeterministic Write Set from Concurrent State Updates
+
+*   **Vulnerability Type**: Nondeterminism due to"
+2026-02-10T22:07:03.247254,4,google/gemini-2.5-pro,cot,vuln_04_b_nested_map.go,5711,18.2,"Here is a security analysis of the provided Hyperledger Fabric chaincode.
+
+### Vulnerability Analysis Summary
+
+Three vulnerabilities related to nondeterministic behavior were identified. The use of `for...range` loops over maps, especially when nested, results in operations whose order and output vary between endorsing peers. This leads to different transaction proposals, causing endorsement policy failures and preventing transactions from being committed to the ledger"
+2026-02-10T22:07:22.349862,4,google/gemini-2.5-pro,cot,vuln_04_map_iter.go,4688,19.103,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability Analysis Summary
+
+| Vulnerability Type | Severity | Affected Function |
+| :--- | :--- | :--- |
+| Nondeterministic Write-Set | Critical | `BatchRestock` |
+| Nondeterministic Ledger State | Critical | `GenerateReport` |
+"
+2026-02-10T22:07:41.214567,4,google/gemini-2.5-pro,cot,vuln_05_phantom.go,5565,18.865,"Based on my analysis of the provided Go chaincode, I have identified the following issues. While these are not traditional security vulnerabilities like data leakage or unauthorized access, they represent critical design flaws that will lead to transaction failures under concurrent load due to Hyperledger Fabric's MVCC architecture. These are commonly classified as availability and correctness vulnerabilities in the context of smart contracts.
+
+### Vulnerability 1: Phantom Read"
+2026-02-10T22:08:01.186887,4,google/gemini-2.5-pro,cot,vuln_06_b_conditional_leak.go,5739,19.972,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability Analysis Summary
+
+I have found three distinct resource leak vulnerabilities related to the improper handling of state query iterators. In all identified cases, there are execution paths where a function can return without closing an iterator obtained from `GetStateByRange`. This leaks the underlying gRPC stream and can lead"
+2026-02-10T22:08:19.149511,4,google/gemini-2.5-pro,cot,vuln_06_iterator_leak.go,5460,17.963,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** High
+*   **Affected Code Location:**
+    *   `GetAssetsByRange` function (line 50)
+"
+2026-02-10T22:08:39.179699,5,google/gemini-2.5-pro,zero_shot,safe_01_logging.go,5177,20.03,"Based on my analysis of the provided Go chaincode file `safe_01_logging.go`, here are the identified security vulnerabilities.
+
+### Vulnerability 1: Missing Access Control on State-Changing Functions
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `CreateDocument` function (line 3"
+2026-02-10T22:08:58.825235,5,google/gemini-2.5-pro,zero_shot,safe_02_local_var.go,6316,19.646,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_02_local_var.go`). The code is well-structured and correctly avoids common non-determinism pitfalls by using compile-time constants and read-only package variables. However, it contains significant vulnerabilities in other areas, primarily related to access control and input validation.
+
+Here is a detailed breakdown of"
+2026-02-10T22:09:20.111621,5,google/gemini-2.5-pro,zero_shot,safe_03_map_read.go,6388,21.285,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_03_map_read.go`). The analysis reveals several security vulnerabilities and design flaws, even though the code correctly handles the specific risk of non-determinism from Go map iteration.
+
+Here is a summary of the findings:
+
+---
+
+### 1. Missing Caller-Based Access Control
+
+*   "
+2026-02-10T22:09:39.527006,5,google/gemini-2.5-pro,zero_shot,safe_04_math_rand.go,5307,19.414,"Based on my analysis of the Hyperledger Fabric chaincode file `safe_04_math_rand.go`, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type**: Access Control Issue
+*   **Severity**: Critical
+*   **Affected Code Location**:
+    *   `RegisterPackage` (line 3"
+2026-02-10T22:09:59.403432,5,google/gemini-2.5-pro,zero_shot,safe_05_deterministic_time.go,5861,19.876,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`safe_05_deterministic_time.go`).
+
+The analysis reveals several security vulnerabilities. While the chaincode correctly implements deterministic time handling, it suffers from critical access control flaws and other weaknesses.
+
+Here is a summary of the findings:
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*   **Affected Code Location:**
+    *   `IssueCertificate` (line 30)
+    *   `RenewCertificate` (line 80)
+    *   `RevokeCertificate` (line 115)
+*   **Description:** The chaincode lacks any authorization checks to verify the identity or permissions of the client submitting the transaction. As a result, any authenticated member of the channel can invoke these functions. This allows any user to"
+2026-02-10T22:10:18.702086,5,google/gemini-2.5-pro,zero_shot,safe_06_external_lib.go,6189,19.299,"Based on my analysis of the provided Hyperledger Fabric chaincode `safe_06_external_lib.go`, I have identified several security vulnerabilities.
+
+### Summary of Findings:
+
+*   **Critical:** Missing Access Control allows any user to add or redeem points from any account.
+*   **High:** Sensitive customer data (`CustomerID`) is stored in plaintext on the public ledger.
+*"
+2026-02-10T22:10:38.640953,5,google/gemini-2.5-pro,zero_shot,vuln_01_b_interprocedural.go,5157,19.939,"Based on my analysis of the provided Hyperledger Fabric chaincode in `vuln_01_b_interprocedural.go`, I have identified several security vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+***
+
+### Vulnerability 1: Interprocedural Non-deterministic Operations
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:**"
+2026-02-10T22:11:00.890143,5,google/gemini-2.5-pro,zero_shot,vuln_01_time.go,4291,22.248,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the vulnerabilities found.
+
+### Vulnerability Analysis Report: `vuln_01_time.go`
+
+---
+
+### 1. Non-Deterministic Operations
+
+*   **Vulnerability Type:** Non-Deterministic Operation
+*   **Severity:** Critical
+*   **"
+2026-02-10T22:11:21.566526,5,google/gemini-2.5-pro,zero_shot,vuln_02_global.go,4833,20.675,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode file `vuln_02_global.go`. The chaincode contains several critical security vulnerabilities.
+
+Here is a detailed breakdown of each finding:
+
+---
+
+### Vulnerability 1: Non-Deterministic Operations due to Global Variables
+
+*   **Vulnerability Type:** Non-Deterministic Operations
+"
+2026-02-10T22:11:42.660914,5,google/gemini-2.5-pro,zero_shot,vuln_03_goroutine.go,5336,21.093,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my detailed report on the security vulnerabilities found.
+
+The chaincode contains multiple critical vulnerabilities, primarily related to non-deterministic operations through the misuse of goroutines, as well as significant access control and input validation flaws.
+
+---
+
+### Vulnerability 1: Non-deterministic State Reads"
+2026-02-10T22:12:03.959747,5,google/gemini-2.5-pro,zero_shot,vuln_04_b_nested_map.go,5711,21.299,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant security and design vulnerabilities.
+
+Here is a detailed breakdown of my findings:
+
+***
+
+### Vulnerability 1: Non-deterministic Ledger Updates due to Map Iteration
+
+*   **Vulnerability Type:** Non-deterministic Operations
+*   **Severity:** Critical
+*"
+2026-02-10T22:12:24.291953,5,google/gemini-2.5-pro,zero_shot,vuln_04_map_iter.go,4688,20.332,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical vulnerabilities, primarily related to non-deterministic operations, as well as other medium-severity issues.
+
+Here is a detailed breakdown of each vulnerability found.
+
+***
+
+### Vulnerability 1: Non-Deterministic Write-Set in BatchRestock
+
+*   **Vulnerability"
+2026-02-10T22:12:44.329978,5,google/gemini-2.5-pro,zero_shot,vuln_05_phantom.go,5565,20.037,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode (`vuln_05_phantom.go`). The code contains several significant security and design vulnerabilities.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### Vulnerability 1: Improper Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*"
+2026-02-10T22:13:03.459977,5,google/gemini-2.5-pro,zero_shot,vuln_06_b_conditional_leak.go,5739,19.13,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several instances of a critical resource leak vulnerability. Here is a detailed breakdown of each finding.
+
+### Summary of Findings
+
+The primary vulnerability present in this chaincode is a **Resource Leak** caused by the failure to properly close state query iterators (`StateQueryIteratorInterface`). In Hyperledger Fabric,"
+2026-02-10T22:13:23.009240,5,google/gemini-2.5-pro,zero_shot,vuln_06_iterator_leak.go,5460,19.549,"Based on my analysis of the provided Hyperledger Fabric chaincode `vuln_06_iterator_leak.go`, I have identified the following security vulnerabilities.
+
+***
+
+### Vulnerability 1: Resource Leak via Unclosed State Iterator
+
+*   **Vulnerability Type:** Resource Leak / Denial of Service
+*   **Severity:** High
+*   **Affected Code Locations:**
+    *   `GetAssetsByRange` (Line 51)
+    *   `SumAssetValues` (Line 76)
+    *   `TransferAssetsByOwner` (Line 97)
+    *   `DeactivateRange` (Line 122)
+*   **Description of the issue:**
+    The functions `Get"
+2026-02-10T22:13:42.749208,5,google/gemini-2.5-pro,few_shot,safe_01_logging.go,5177,19.74,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The analysis reveals several security vulnerabilities, primarily related to access control.
+
+---
+
+### Vulnerability 1: Insecure Direct Object Reference in Approval Logic
+
+*   **Vulnerability Type**: Access Control Issue
+*   **Severity**: Critical
+*   **Affected Code Location**: `ApproveDocument` function,"
+2026-02-10T22:14:02.412675,5,google/gemini-2.5-pro,few_shot,safe_02_local_var.go,6316,19.662,"As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code is well-structured and follows several good practices for deterministic execution. However, I have identified a few potential vulnerabilities and areas for improvement.
+
+---
+
+### Analysis Summary: **Vulnerable**
+
+The chaincode contains a non-deterministic operation, lacks explicit access control, and uses floating-point numbers for financial calculations"
+2026-02-10T22:14:22.731652,5,google/gemini-2.5-pro,few_shot,safe_03_map_read.go,6388,20.318,"Based on my analysis of the provided Go chaincode file `safe_03_map_read.go`, I have identified the following vulnerabilities. While the code correctly handles non-determinism related to map iteration, it has significant flaws in other security domains.
+
+---
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity"
+2026-02-10T22:14:42.630340,5,google/gemini-2.5-pro,few_shot,safe_04_math_rand.go,5307,19.898,"Based on my analysis of the provided Go chaincode `safe_04_math_rand.go`, here are the security vulnerabilities I have identified.
+
+***
+
+### Vulnerability 1
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** High
+*   **Affected Code Location:** `RegisterPackage` (line 31), `TransferPackage` (line 61), `DeliverPackage` (line 88)
+*   **Description:** The chaincode functions lack authorization checks. Any client identity that is permitted to invoke the chaincode on the channel can call any of these functions for any package. For instance, a malicious actor could call `TransferPackage` to divert a package to an unauthorized warehouse or call `DeliverPackage` to prematurely mark a package"
+2026-02-10T22:15:02.883733,5,google/gemini-2.5-pro,few_shot,safe_05_deterministic_time.go,5861,20.253,"Based on my analysis of the provided Go chaincode `safe_05_deterministic_time.go`, the code contains vulnerabilities.
+
+Here is a detailed breakdown of the findings:
+
+### Vulnerability 1: Missing Access Control
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** High
+*   **Affected Code Location:** `IssueCertificate` (line 4"
+2026-02-10T22:15:22.762173,5,google/gemini-2.5-pro,few_shot,safe_06_external_lib.go,6189,19.877,"Based on my analysis of the provided Go chaincode, I have identified several security vulnerabilities.
+
+---
+
+### Vulnerability Analysis Report for `safe_06_external_lib.go`
+
+### 1. Missing Authorization Checks
+
+*   **Vulnerability Type:** Access Control
+*   **Severity:** Critical
+*   **Affected Code Location:** `CreateAccount` (line "
+2026-02-10T22:15:41.800229,5,google/gemini-2.5-pro,few_shot,vuln_01_b_interprocedural.go,5157,19.037,"Based on my analysis of the provided Go chaincode, here are the security vulnerabilities I have identified.
+
+### Vulnerability 1: Non-deterministic State Value in `CreateRecord`
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** High
+*   **Affected Code Location:**
+    *   Function: `CreateRecord`
+    *   Lines: 77-"
+2026-02-10T22:16:01.370275,5,google/gemini-2.5-pro,few_shot,vuln_01_time.go,4291,19.57,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode contains several vulnerabilities.
+
+### Vulnerability Analysis Summary
+
+The chaincode is vulnerable to non-deterministic operations which will cause transaction failures, and it completely lacks access control and proper input validation, posing significant security and data integrity risks.
+
+---
+
+### Vulnerability 1: Non-Deterministic Timestamp in `CreateShip"
+2026-02-10T22:16:23.643775,5,google/gemini-2.5-pro,few_shot,vuln_02_global.go,4833,22.274,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical security vulnerabilities related to non-deterministic operations.
+
+Here is a detailed analysis of the findings:
+
+---
+
+### Vulnerability 1: Use of Global Variables for State Management
+
+*   **Vulnerability type:** Non-deterministic Operation
+*   **Severity"
+2026-02-10T22:16:43.819342,5,google/gemini-2.5-pro,few_shot,vuln_03_goroutine.go,5336,20.174,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several critical vulnerabilities related to non-deterministic operations due to the misuse of goroutines.
+
+Here is my detailed analysis:
+
+---
+
+### Vulnerability 1: Non-Deterministic Map Serialization
+
+*   **Vulnerability Type:** Non-deterministic Operation
+*   **Severity:** Critical
+*   "
+2026-02-10T22:17:02.773295,5,google/gemini-2.5-pro,few_shot,vuln_04_b_nested_map.go,5711,18.953,"Of course. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. Here is my analysis:
+
+The chaincode is vulnerable to non-deterministic operations in all three of its transaction functions. The root cause is iterating over Go maps, whose iteration order is randomized, and using that non-deterministic order to generate the transaction's write set. This will cause endorsing peers to produce"
+2026-02-10T22:17:21.950851,5,google/gemini-2.5-pro,few_shot,vuln_04_map_iter.go,4688,19.177,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant vulnerabilities.
+
+Here is a detailed analysis of the findings:
+
+---
+
+### Vulnerability 1: Non-Deterministic Write-Set Order from Map Iteration
+
+*   **Vulnerability Type:** Non-Deterministic Operation
+*   **Severity:** Critical
+*   **Affected"
+2026-02-10T22:17:41.830877,5,google/gemini-2.5-pro,few_shot,vuln_05_phantom.go,5565,19.879,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several significant security vulnerabilities and problematic design patterns.
+
+Here is a detailed breakdown of each issue:
+
+---
+
+### **Vulnerability 1: Critical Access Control Flaw in Fund Transfer**
+
+*   **Vulnerability Type:** Access Control Issue
+*   **Severity:** Critical
+*"
+2026-02-10T22:18:02.520257,5,google/gemini-2.5-pro,few_shot,vuln_06_b_conditional_leak.go,5739,20.689,"Excellent. As a Hyperledger Fabric Security Expert, I have analyzed the provided Go chaincode. The code contains several vulnerabilities related to resource management.
+
+Here is the detailed analysis:
+
+---
+
+### Vulnerability 1: Resource Leak due to Early Return Before Defer
+
+*   **Vulnerability Type:** Resource Leak (Unclosed Iterator)
+*   **Severity:** High
+*   **Affected Code"
+2026-02-10T22:18:22.541340,5,google/gemini-2.5-pro,few_shot,vuln_06_iterator_leak.go,5460,20.02,"Based on my analysis as a Hyperledger Fabric Security Expert, the provided chaincode contains significant vulnerabilities.
+
+Here is the detailed breakdown:
+
+### Vulnerability 1: Resource Leak / Unclosed Iterator
+
+This vulnerability is present in multiple functions, leading to resource exhaustion on the peer and potential Denial of Service (DoS). The core issue is the failure to close state query iterators.
+
+---
+
+#### Instance"
+2026-02-10T22:18:41.283048,5,google/gemini-2.5-pro,cot,safe_01_logging.go,5177,18.742,"Based on the security analysis of the provided Go chaincode, here are the findings:
+
+### Security Analysis Summary
+
+No vulnerabilities detected.
+
+***
+
+### Detailed Step-by-Step Analysis
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+- `CreateDocument` function: `ctx.GetStub().PutState(id, docJSON)` on line 73.
+- `ApproveDocument` function: `ctx.GetStub().PutState(id, updatedJSON)` on line 116.
+- No `DelState` operations are present in the code.
+
+**Step 2: For each PutState/DelState call, trace the data backward to its source. Determine whether each value written to the ledger is deterministic or nondeterministic.**
+
+*   **`CreateDocument` -> `PutState(id, docJSON)`:**
+    *   **Key (`id`):** This is a function argument passed by the client. It is deterministic across all endorsing peers for a given transaction proposal.
+    *   **Value (`docJSON`):** This is the JSON marshaled `Document` struct.
+        *   `ID`, `Title`, `Author`: These fields are populated directly from function arguments, which are deterministic.
+        *   `Status`: This is a hardcoded string `""PENDING""`, which is deterministic.
+        *   `CreatedAt"
+2026-02-10T22:18:59.535812,5,google/gemini-2.5-pro,cot,safe_02_local_var.go,6316,18.253,"No vulnerabilities detected.
+
+### Step-by-step Reasoning:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following state-modifying operations in the chaincode:
+1.  `CreatePayment` function, line 91: `ctx.GetStub().PutState(id, paymentJSON)`"
+2026-02-10T22:19:17.914401,5,google/gemini-2.5-pro,cot,safe_03_map_read.go,6388,18.378,"No vulnerabilities detected.
+
+### Step-by-step Analysis:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+State-modifying operations are present in the following functions:
+1.  `CastVote`: `ctx.GetStub().PutState(ballotKey, ballotJSON)` on line 71.
+2"
+2026-02-10T22:19:34.744416,5,google/gemini-2.5-pro,cot,safe_04_math_rand.go,5307,16.829,"No vulnerabilities detected.
+
+### Analysis Summary
+
+**Step 1: Identify State-Modifying Operations**
+The following state-modifying operations (`PutState`) were identified:
+1.  `RegisterPackage` function, line 51: `ctx.GetStub().PutState(trackingID, pkgJSON)`
+2.  `TransferPackage` function, line 8"
+2026-02-10T22:19:52.209142,5,google/gemini-2.5-pro,cot,safe_05_deterministic_time.go,5861,17.464,"Based on my analysis of the provided Go chaincode, here are my findings.
+
+***
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+I have identified the following state-modifying operations:
+1.  `IssueCertificate` function: `ctx.GetStub().PutState(certID, certJSON)` at line 70.
+2.  `RenewCertificate` function: `ctx.GetStub().PutState(certID, updatedJSON)` at line 116.
+3.  `RevokeCertificate` function"
+2026-02-10T22:20:09.695044,5,google/gemini-2.5-pro,cot,safe_06_external_lib.go,6189,17.485,"No vulnerabilities detected.
+
+### Step-by-step Analysis:
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+State-modifying operations are present in the following functions:
+1.  `CreateAccount`: `ctx.GetStub().PutState(accountID, accountJSON)` on line 90.
+"
+2026-02-10T22:20:27.359856,5,google/gemini-2.5-pro,cot,vuln_01_b_interprocedural.go,5157,17.665,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1
+
+*   **Vulnerability Type**: Nondeterministic Ledger Write
+*   **Severity**: Critical
+*   **Affected Code Location**: `CreateRecord` function, lines 74-75
+*   **Description**: The `CreateRecord` function constructs"
+2026-02-10T22:20:45.296946,5,google/gemini-2.5-pro,cot,vuln_01_time.go,4291,17.936,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+I have identified the following `PutState` calls which modify the ledger's state:
+1.  `CreateShipment` function: `"
+2026-02-10T22:21:03.141844,5,google/gemini-2.5-pro,cot,vuln_02_global.go,4833,17.845,"Based on my analysis of the provided Go chaincode `vuln_02_global.go`, I have identified the following security vulnerabilities.
+
+### Step-by-Step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following `PutState` calls which modify the world state:
+1.  "
+2026-02-10T22:21:22.177252,5,google/gemini-2.5-pro,cot,vuln_03_goroutine.go,5336,19.035,"Here is the security analysis of the provided Hyperledger Fabric chaincode.
+
+### Vulnerability Analysis Summary
+
+Three critical vulnerabilities were identified, all related to the misuse of goroutines within the chaincode's transaction context. The Hyperledger Fabric chaincode execution model is single-threaded per transaction to ensure deterministic outcomes across all endorsing peers. Spawning goroutines to interact with the chaincode stub (`GetState"
+2026-02-10T22:21:40.571665,5,google/gemini-2.5-pro,cot,vuln_04_b_nested_map.go,5711,18.393,"Based on my analysis of the Hyperledger Fabric chaincode file `vuln_04_b_nested_map.go`, I have identified the following security vulnerabilities related to nondeterminism.
+
+### Vulnerability 1: Nondeterministic Write Order in `BatchUpdateInventory`
+
+*   **Vulnerability Type**: Nondeterministic Write-Set (Endorsement Mismatch)
+*"
+2026-02-10T22:21:58.194413,5,google/gemini-2.5-pro,cot,vuln_04_map_iter.go,4688,17.622,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities related to nondeterminism.
+
+### Vulnerability 1: Nondeterministic Write-Set from Map Iteration in `BatchRestock`
+
+*   **Vulnerability Type**: Nondeterministic Write-Set
+*   **Severity**: Critical
+*   **Affected Code Location**: `BatchRest"
+2026-02-10T22:22:16.526990,5,google/gemini-2.5-pro,cot,vuln_05_phantom.go,5565,18.332,"Based on my analysis of the provided Go chaincode, I have identified the following vulnerabilities.
+
+### Step-by-step Reasoning
+
+**Step 1: Identify ALL state-modifying operations (PutState, DelState) in the code.**
+
+I have identified the following `PutState` calls in the chaincode. No `DelState` calls were found.
+1.  `PlaceBid"
+2026-02-10T22:22:33.860680,5,google/gemini-2.5-pro,cot,vuln_06_b_conditional_leak.go,5739,17.332,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Summary of Findings
+
+| Vulnerability Type | Severity | Function |
+| :--- | :--- | :--- |
+| Resource Leak (Iterator) | High | `ProcessClaimsByRange` |
+| Resource Leak (Iterator) | High | `GetHighValueClaims` |
+|"
+2026-02-10T22:22:50.675405,5,google/gemini-2.5-pro,cot,vuln_06_iterator_leak.go,5460,16.815,"Based on my analysis of the provided Go chaincode, I have identified the following security vulnerabilities.
+
+### Vulnerability 1: Resource Leak from Unclosed Iterator
+
+*   **Vulnerability Type:** Resource Leak (Denial of Service)
+*   **Severity:** High
+*   **Affected Code Location:**
+    *   `GetAssetsByRange` function (line 48)
+    "

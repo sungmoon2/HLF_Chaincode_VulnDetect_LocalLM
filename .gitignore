@@ -1,0 +1,58 @@
+# ============================================================
+# HLF_Chaincode_VulnDetect_LocalLM .gitignore
+# ============================================================
+
+# ---- Large Model Files (9GB+) ----
+02_resources/models/*.gguf
+02_resources/models/.cache/
+
+# ---- GoLiSA VM/Disk Images (22GB+) ----
+02_resources/golisa_artifact/*.ova
+02_resources/golisa_artifact/*.raw
+02_resources/golisa_artifact/
+
+# ---- Claude Code Session Data (internal) ----
+01_contexts/exports/*.jsonl
+01_contexts/snapshots/
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# ---- Virtual Environment ----
+venv/
+env/
+.venv/
+.env
+
+# ---- OS ----
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*.swo
+*~
+
+# ---- IDE ----
+.vscode/
+.idea/
+*.code-workspace
+
+# ---- LaTeX Build Artifacts ----
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.toc
+*.lof
+*.lot
