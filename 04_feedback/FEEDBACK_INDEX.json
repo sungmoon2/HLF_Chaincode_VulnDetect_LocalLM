@@ -1,7 +1,7 @@
 {
   "version": "1.4",
   "created": "2026-02-09T15:00:00",
-  "last_updated": "2026-02-11T00:00:00",
+  "last_updated": "2026-02-22T19:31:00",
   "description": "피드백 저장, 연결성 추적, 안건 추적 마스터 인덱스",
 
   "naming_conventions": {
@@ -274,7 +274,7 @@
       "created": "2026-02-09",
       "blocked_by": [],
       "blocks": [],
-      "note": "GoLiSA OVA 재다운로드 진행 중. 완료 후 VBoxManage import → .go 추출 → Qwen/Semgrep 실행 필요."
+      "note": "GoLiSA 획득 완료 (657개 .go 추출). Qwen 657/657 + Semgrep 657/657 x 2 실행 완료. per-file ground truth 부재로 구조적 open 유지."
     },
     {
       "id": "ISS_014",
@@ -406,22 +406,22 @@
       "id": "ISS_023",
       "file": "issues/ISS_023_reproducibility_information.md",
       "subject": "재현성 정보 보강 (구조적 보완 권고)",
-      "status": "open",
+      "status": "in_progress",
       "priority": "high",
       "source_feedback": "FB_260211_advisor_gpt52",
       "target_sections": ["III", "IV", "V"],
       "created": "2026-02-11",
       "blocked_by": [],
       "blocks": [],
-      "note": "프롬프트 P1~P3 전문 공개, 베이스라인 강화(GoLiSA/VulFinder), 라벨링 기준 명문화, 용어 통일. 교정본 대기."
+      "note": "3/4 완료: PROMPTS.md(P1~P4 전문), CLASSIFIER.md(v1/v2/JSON), LABELING_CRITERIA.md(ground truth+키워드) GitHub 공개 (커밋 864e7de). 잔여: 베이스라인 강화 + 용어 통일 (리뷰어 피드백 후)."
     }
   ],
 
   "statistics": {
     "total_feedback": 6,
     "total_issues": 23,
-    "open_issues": 2,
-    "in_progress_issues": 2,
+    "open_issues": 1,
+    "in_progress_issues": 3,
     "resolved_issues": 19,
     "wontfix_issues": 0,
     "by_priority": {
