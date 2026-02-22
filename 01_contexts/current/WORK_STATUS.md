@@ -139,8 +139,8 @@
 - [x] GitHub Public 레포 생성 + 초기 커밋 (sungmoon2/HLF_Chaincode_VulnDetect_LocalLM, 828 files)
 - [x] ISS_023 재현성 보강 3/4: PROMPTS.md + CLASSIFIER.md + LABELING_CRITERIA.md (교차검증 완료)
 - [x] README.md 작성 (영문+한글 병기)
+- [x] CPR/할루시네이션 수동 검증 (Run 04) — Qwen+Llama 15파일 전수 교차 대조 완료 (CPR_VERIFICATION.md)
 - [ ] 손상 OVA + RAW 이미지 정리 (~18GB)
-- [ ] CPR/할루시네이션 수동 검증 (Run 04) — 제출 후 보완 가능
 - [ ] 카메라레디 리뷰어 피드백 대응
 - [ ] 오랄 발표 슬라이드 + 대본 작성 (카메라레디 확정 후)
 
@@ -262,7 +262,6 @@
 - [ ] 오랄 발표 슬라이드 + 대본 작성 (카메라레디 확정 후)
 - [ ] 제출 사이트 Abstract/Keywords v31 기준 갱신 (AMLDS2026_SUBMISSION_FORM.md에 준비 완료)
 - [ ] ISS_023 잔여 2건: 베이스라인 강화 + 용어 통일 (리뷰어 피드백 후)
-- [ ] CPR/할루시네이션 수동 검증 (Run 04) — 제출 후 보완 가능
 
 ## Connectivity Reference
 - **Previous Session:** S260214-1917 (Chain Hash: i1k31917)
