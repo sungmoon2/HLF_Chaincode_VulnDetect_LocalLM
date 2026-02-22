@@ -51,7 +51,9 @@
 | AMLDS2026_SUBMISSION_FORM.md | 제출 양식 데이터 (4저자, 제목, 초록, 키워드 8개), 2,520 bytes |
 | MiKTeX 25.12 | winget 설치 완료, pdflatex 컴파일 가능 |
 | AMLDS Paper ID | S2700 (제출 확인 메일 수신 2026-02-12, 저자정보 양식 제출 2026-02-14) |
-| Active Issues | 2 open (ISS_013 GoLiSA 외부검증, ISS_023 재현성보강), 2 in_progress (ISS_006 N=15일반화, ISS_007 100%역설), 19 resolved |
+| GitHub Repository | https://github.com/sungmoon2/HLF_Chaincode_VulnDetect_LocalLM (Public, 828+3 files) |
+| Reproducibility Docs | PROMPTS.md + CLASSIFIER.md + LABELING_CRITERIA.md (교차검증 완료, 불일치 0건) |
+| Active Issues | 1 open (ISS_013 GoLiSA 외부검증), 3 in_progress (ISS_006 N=15일반화, ISS_007 100%역설, ISS_023 재현성보강 3/4완료), 19 resolved |
 
 ## Verified Environment
 | Component | Value |
@@ -133,6 +135,10 @@
 - [x] 논문 전체 풀이 AtoZ 작성 (260211_v31_논문전체풀이_AtoZ.md)
 - [x] 오랄 발표 슬라이드 비판적 분석 (12~14장 구조, Q&A 방어전략)
 - [x] AMLDS 2026 저자정보 양식(Author Information Form) 작성 및 이메일 제출 (Paper ID: S2700)
+- [x] 바탕화면 산재 파일 7개 프로젝트 디렉토리 구조화 이동 (api_research/)
+- [x] GitHub Public 레포 생성 + 초기 커밋 (sungmoon2/HLF_Chaincode_VulnDetect_LocalLM, 828 files)
+- [x] ISS_023 재현성 보강 3/4: PROMPTS.md + CLASSIFIER.md + LABELING_CRITERIA.md (교차검증 완료)
+- [x] README.md 작성 (영문+한글 병기)
 - [ ] 손상 OVA + RAW 이미지 정리 (~18GB)
 - [ ] CPR/할루시네이션 수동 검증 (Run 04) — 제출 후 보완 가능
 - [ ] 카메라레디 리뷰어 피드백 대응
@@ -147,7 +153,18 @@
 4. 디렉토리 구조 생성: 02_resources/golisa_benchmark/api_research/{github/, zenodo/}
 5. 7개 파일 이동 완료 (바탕화면 → 프로젝트 디렉토리)
 6. INDEX.json 생성: 각 파일별 API endpoint, 설명, 크기, 비고 기록
-7. WORK_STATUS.md, CHAIN_INDEX.json 업데이트 (S260222-1931)
+7. GitHub CLI 설치 (winget, gh 2.87.2) + 인증 (sungmoon2)
+8. .gitignore 작성 (모델 9GB, OVA/RAW 22GB, 세션 JSONL, snapshots, __pycache__ 제외)
+9. git init + GitHub Public 레포 생성: sungmoon2/HLF_Chaincode_VulnDetect_LocalLM
+10. 초기 커밋 (828 files, 462,626 lines) + push (커밋 d834a74)
+11. ISS_023 재현성 보강: 원본 스크립트 실측 읽기 → 3개 문서 작성
+    - PROMPTS.md: P1~P4 프롬프트 전문 (소스 파일/행번호 참조)
+    - CLASSIFIER.md: v1/v2/JSON classifier 전체 코드 + 키워드 리스트 4종
+    - LABELING_CRITERIA.md: consensus-relevant 정의 + 15개 ground truth + 5개 Running_Examples
+12. 교차 검증: 30+ 항목 소스 코드 전수 대조, 불일치 0건
+13. 재현성 문서 커밋 + push (커밋 864e7de)
+14. ISS_023 상태 open → in_progress 변경 (3/4 완료, 잔여: 베이스라인 강화 + 용어 통일)
+15. README.md 작성 (영문+한글), WORK_STATUS.md + CHAIN_INDEX.json 최신화, 커밋 + push
 
 ## 이전 세션 작업 내용 (시간순, 사실 기반) — S260214-1917
 1~8. (CHAIN_INDEX.json 참조 — AMLDS 저자정보 양식 작성 및 이메일 제출)
@@ -244,8 +261,7 @@
 - [ ] Fig2.png CoT 반영 이미지 업데이트 (사용자 작업중)
 - [ ] 오랄 발표 슬라이드 + 대본 작성 (카메라레디 확정 후)
 - [ ] 제출 사이트 Abstract/Keywords v31 기준 갱신 (AMLDS2026_SUBMISSION_FORM.md에 준비 완료)
-- [ ] ISS_023 재현성 정보 보강 (프롬프트 공개, 라벨링 기준 명문화 — 구조적 보완)
-- [ ] 손상 OVA + RAW 이미지 정리 (~18GB)
+- [ ] ISS_023 잔여 2건: 베이스라인 강화 + 용어 통일 (리뷰어 피드백 후)
 - [ ] CPR/할루시네이션 수동 검증 (Run 04) — 제출 후 보완 가능
 
 ## Connectivity Reference

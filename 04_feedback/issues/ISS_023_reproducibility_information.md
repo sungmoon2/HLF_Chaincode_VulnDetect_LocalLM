@@ -2,7 +2,7 @@
 
 ## 메타데이터
 - **안건 ID**: ISS_023
-- **상태**: open
+- **상태**: in_progress
 - **우선순위**: high
 - **출처 피드백**: FB_260211_advisor_gpt52
 - **대상 섹션**: III, IV, V
@@ -20,10 +20,16 @@ GPT 5.2 리뷰 Section 3 "추가로 수정 권고(문장 치환 외)"에서 제�
 4. **용어 통일**: 논문 전체에서 "consensus-layer"를 유지할지, "endorsement/validation nondeterminism"로 전환할지 결정 후 일관 적용
 
 ## 조치 사항
-- [ ] 교정본 수령 후 부록/레포지토리 공개 범위 결정
-- [ ] 교정본 수령 후 베이스라인 강화 방안 검토
-- [ ] 교정본 수령 후 라벨링 기준 명문화 방안 검토
-- [ ] 교정본 수령 후 용어 통일 방향 결정 (ISS_019 연동)
+- [x] 프롬프트 전문 공개 (PROMPTS.md — P1~P4 verbatim, 소스 파일/행번호 참조, 교차검증 완료)
+- [ ] 베이스라인 강화 — 리뷰어 피드백 후 대응 범위 결정
+- [x] 라벨링 기준 명문화 (LABELING_CRITERIA.md — 12개 키워드, 15개 ground truth, 5개 Running_Examples, 예시 포함)
+- [x] Classifier 판정 규칙 공개 (CLASSIFIER.md — v1/v2/JSON 전체 로직, 키워드 리스트, 재분류 통계)
+- [ ] 용어 통일 방향 결정 (ISS_019 연동) — 리뷰어 피드백 후
+
+### 공개 위치
+- GitHub Public Repository: https://github.com/sungmoon2/HLF_Chaincode_VulnDetect_LocalLM
+- 커밋: 864e7de (2026-02-22)
+- 교차검증: 30+ 항목 전수 대조, 불일치 0건
 
 ## 연결성
 - **선행 안건**: ISS_019 (용어 정합성 — 용어 통일 방향 결정과 연동)

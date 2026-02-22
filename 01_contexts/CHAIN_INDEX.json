@@ -255,18 +255,31 @@
 
   "blocked_issues": [],
 
-  "open_issues": [],
+  "open_issues": [
+    "ISS_013 (GoLiSA 외부검증)"
+  ],
 
   "in_progress_issues": [
-    "ISS_006 (N=15 일반화 -- GoLiSA 657개 + B1/B2 Running_Examples 모델간 비교로 부분 대응)"
+    "ISS_006 (N=15 일반화 -- GoLiSA 657개 + B1/B2 Running_Examples 모델간 비교로 부분 대응)",
+    "ISS_023 (재현성 보강 -- 3/4 완료: PROMPTS.md + CLASSIFIER.md + LABELING_CRITERIA.md 공개, 잔여: 베이스라인 강화 + 용어 통일)"
   ],
+
+  "github_repository": {
+    "url": "https://github.com/sungmoon2/HLF_Chaincode_VulnDetect_LocalLM",
+    "visibility": "public",
+    "initial_commit": "d834a74",
+    "reproducibility_commit": "864e7de",
+    "initial_files": 828,
+    "reproducibility_docs": ["PROMPTS.md", "CLASSIFIER.md", "LABELING_CRITERIA.md"],
+    "gitignore_excludes": ["*.gguf (9GB)", "*.ova/*.raw (22GB)", "*.jsonl (sessions)", "snapshots/", "__pycache__/"]
+  },
 
   "next_actions": [
     "리뷰 결과 대기 (Paper ID: S2700)",
     "카메라레디 리뷰어 피드백 대응",
     "Fig2.png CoT 반영 이미지 업데이트 (사용자 작업중)",
     "오랄 발표 슬라이드 + 대본 작성 (카메라레디 확정 후)",
-    "디스크 정리: golisa_ecoop2023_corrupted.ova + golisa_disk.raw (~18GB)",
+    "ISS_023 잔여: 베이스라인 강화 + 용어 통일 (리뷰어 피드백 후)",
     "CPR/할루시네이션 수동 검증 (제출 후 보완 가능)"
   ]
 }
