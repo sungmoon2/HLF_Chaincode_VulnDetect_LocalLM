@@ -1,5 +1,23 @@
-llama-cpp-python
-huggingface_hub
-pandas
-tqdm
-colorama
+# HLF Chaincode Vulnerability Detection - Pinned Dependencies
+# Tested on Python 3.11.9, Windows 11, CUDA 13.0
+
+# Local LLM inference (requires CUDA source build on Windows)
+llama-cpp-python==0.3.16
+
+# Cloud LLM APIs
+anthropic==0.75.0
+openai==2.11.0
+google-auth==2.48.0
+
+# Model download
+huggingface_hub==0.35.3
+
+# Data processing
+pandas==2.3.3
+
+# CLI utilities
+tqdm==4.67.1
+colorama==0.4.6
+
+# Static analysis baseline (install separately: pip install semgrep)
+# semgrep==1.151.0

@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use this software or dataset, please cite the paper below."
+title: "Local Small Language Models for Consensus-Layer Vulnerability Detection in Hyperledger Fabric Chaincode: A Qualitative Feasibility Study"
+type: software
+authors:
+  - family-names: Park
+    given-names: Sungmoon
+    affiliation: "Department of Healthcare IT, Inje University"
+    email: qkrtjdans55@oasis.inje.ac.kr
+  - family-names: Jeong
+    given-names: Misook
+    affiliation: "Department of Computer Engineering, Kyungnam University"
+    email: msjeong@kyungnam.ac.kr
+  - family-names: Choi
+    given-names: Hoansuk
+    affiliation: "Gyeongnam Intelligence Innovation Center, Kyungnam University"
+    email: chs2024@kyungnam.ac.kr
+  - family-names: Yang
+    given-names: Jinhong
+    affiliation: "Department of Healthcare IT, Inje University"
+    email: jinhong@inje.ac.kr
+preferred-citation:
+  type: conference-paper
+  title: "Local Small Language Models for Consensus-Layer Vulnerability Detection in Hyperledger Fabric Chaincode: A Qualitative Feasibility Study"
+  authors:
+    - family-names: Park
+      given-names: Sungmoon
+    - family-names: Jeong
+      given-names: Misook
+    - family-names: Choi
+      given-names: Hoansuk
+    - family-names: Yang
+      given-names: Jinhong
+  collection-title: "Proceedings of the 2nd International Conference on Advanced Machine Learning and Data Science (AMLDS 2026)"
+  conference:
+    name: "AMLDS 2026"
+    city: Osaka
+    country: JP
+    date-start: "2026-07-21"
+    date-end: "2026-07-23"
+  year: 2026
+  publisher:
+    name: IEEE
+keywords:
+  - hyperledger-fabric
+  - chaincode
+  - smart-contract-security
+  - small-language-model
+  - vulnerability-detection
+  - endorsement-nondeterminism
+  - local-inference
+  - privacy-preserving
+repository-code: "https://github.com/sungmoon2/HLF_Chaincode_VulnDetect_LocalLM"
+license: MIT

@@ -2,7 +2,10 @@
 
 **Local Small Language Model-based Security Vulnerability Detection for Hyperledger Fabric Chaincode (Go)**
 
-Paper submitted to **AMLDS 2026** (International Conference on Applied Machine Learning and Data Science, Osaka, Japan, July 21-23, 2026) | Paper ID: S2700
+**Accepted** at **AMLDS 2026** (2nd International Conference on Advanced Machine Learning and Data Science, Osaka, Japan, July 21-23, 2026) | Paper ID: S2700
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Conference](https://img.shields.io/badge/AMLDS%202026-Accepted-brightgreen.svg)](https://amlds.site)
 
 ---
 
@@ -59,7 +62,10 @@ This repository contains the experiment artifacts for detecting **consensus-laye
 ├── CLASSIFIER.md                   # Classifier v1/v2/JSON logic + keyword lists
 ├── LABELING_CRITERIA.md            # Ground truth labels + consensus-relevant definition
 ├── PIPELINE_WORKFLOW.md            # Experiment pipeline description
-├── requirements.txt                # Python dependencies
+├── requirements.txt                # Python dependencies (version-pinned)
+├── REPRODUCTION.md                 # Step-by-step reproduction guide
+├── CITATION.cff                    # Citation metadata
+├── LICENSE                         # MIT License
 └── .gitignore                      # Excludes models (9GB), VM images (22GB)
 ```
 
@@ -112,9 +118,28 @@ Labeling criteria are documented in [`LABELING_CRITERIA.md`](LABELING_CRITERIA.m
 
 Download via `scripts/01_download_models.py`.
 
+## Reproduction
+
+See [`REPRODUCTION.md`](REPRODUCTION.md) for a step-by-step guide to reproduce all experiments.
+
+## Citation
+
+If you use this code or dataset, please cite:
+
+```bibtex
+@inproceedings{park2026local,
+  title={Local Small Language Models for Consensus-Layer Vulnerability Detection in Hyperledger Fabric Chaincode: A Qualitative Feasibility Study},
+  author={Park, Sungmoon and Jeong, Misook and Choi, Hoansuk and Yang, Jinhong},
+  booktitle={Proceedings of the 2nd International Conference on Advanced Machine Learning and Data Science (AMLDS 2026)},
+  year={2026},
+  publisher={IEEE},
+  address={Osaka, Japan}
+}
+```
+
 ## License
 
-This repository contains experiment artifacts for academic research. The GoLiSA benchmark files in `02_resources/golisa_benchmark/` are sourced from the GoLiSA project (Olivieri et al., ECOOP 2023) and retain their original licensing.
+This project is licensed under the [MIT License](LICENSE). The GoLiSA benchmark files in `02_resources/golisa_benchmark/` are sourced from the GoLiSA project (Olivieri et al., ECOOP 2023) and retain their original licensing.
 
 ## Acknowledgments
 
@@ -126,7 +151,7 @@ This work was supported by the Institute of Information & Communications Technol
 
 **로컬 소형 언어모델(sLM) 기반 Hyperledger Fabric 체인코드(Go) 보안 취약점 자동 탐지**
 
-**AMLDS 2026** (국제 응용 머신러닝 및 데이터 사이언스 학회, 일본 오사카, 2026년 7월 21-23일) 논문 제출 | Paper ID: S2700
+**AMLDS 2026** (국제 응용 머신러닝 및 데이터 사이언스 학회, 일본 오사카, 2026년 7월 21-23일) **채택(Accepted)** | Paper ID: S2700
 
 ---
 
@@ -183,7 +208,10 @@ This work was supported by the Institute of Information & Communications Technol
 ├── CLASSIFIER.md                   # Classifier v1/v2/JSON 로직 + 키워드 리스트
 ├── LABELING_CRITERIA.md            # Ground truth 라벨 + consensus-relevant 정의
 ├── PIPELINE_WORKFLOW.md            # 실험 파이프라인 설명
-├── requirements.txt                # Python 의존성
+├── requirements.txt                # Python 의존성 (버전 고정)
+├── REPRODUCTION.md                 # 단계별 재현 가이드
+├── CITATION.cff                    # 인용 메타데이터
+├── LICENSE                         # MIT 라이선스
 └── .gitignore                      # 모델(9GB), VM 이미지(22GB) 제외
 ```
 
@@ -236,9 +264,17 @@ This work was supported by the Institute of Information & Communications Technol
 
 `scripts/01_download_models.py`로 다운로드 가능합니다.
 
+## 재현
+
+모든 실험의 단계별 재현 가이드는 [`REPRODUCTION.md`](REPRODUCTION.md)를 참조하세요.
+
+## 인용
+
+본 코드 또는 데이터셋을 사용하시는 경우, 위 영문 섹션의 BibTeX를 인용해 주세요.
+
 ## 라이선스
 
-본 저장소는 학술 연구를 위한 실험 산출물을 포함합니다. `02_resources/golisa_benchmark/`의 GoLiSA 벤치마크 파일은 GoLiSA 프로젝트(Olivieri et al., ECOOP 2023)에서 가져온 것이며, 원본 라이선스를 따릅니다.
+본 프로젝트는 [MIT 라이선스](LICENSE)로 공개됩니다. `02_resources/golisa_benchmark/`의 GoLiSA 벤치마크 파일은 GoLiSA 프로젝트(Olivieri et al., ECOOP 2023)에서 가져온 것이며, 원본 라이선스를 따릅니다.
 
 ## 감사의 글
 
