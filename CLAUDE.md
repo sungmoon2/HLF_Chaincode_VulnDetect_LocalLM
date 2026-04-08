@@ -2,12 +2,12 @@
 
 ## Project Overview
 Local sLM(Small Language Model)을 활용한 Hyperledger Fabric 체인코드(Go) 보안 취약점 자동 탐지 시스템.
-AMLDS 2026 (Japan, Osaka) 논문 실험 환경.
+AANN 2026 (China, Qingdao) 논문 실험 환경. (원래 AMLDS 2026 투고 → 철회 후 AANN 전환)
 
 ## Working Directory
-- **Claude Code 실행 위치**: `[AMLDS_2026]Japan_Osaka/`
+- **Claude Code 실행 위치**: `[AANN_2026]-China_Qingdao/`
 - **프로젝트 서브디렉토리**: `Exp_HLF_Chaincode_VulnDetect_LocalLM/`
-- **`.claude/` 위치**: `[AMLDS_2026]Japan_Osaka/.claude/` (상위 디렉토리)
+- **`.claude/` 위치**: `[AANN_2026]-China_Qingdao/.claude/` (상위 디렉토리)
 
 ## Hardware (실측)
 - GPU: NVIDIA GeForce RTX 3090 Ti (24564 MiB VRAM, Compute 8.6)
@@ -33,7 +33,7 @@ AMLDS 2026 (Japan, Osaka) 논문 실험 환경.
 
 ## Directory Structure
 ```
-[AMLDS_2026]Japan_Osaka/                      <-- Claude Code 작업 디렉토리
+[AANN_2026]-China_Qingdao/                    <-- Claude Code 작업 디렉토리
 ├── .claude/                                   <-- 슬래시 명령 및 스크립트
 │   ├── commands/
 │   │   ├── export-main.md

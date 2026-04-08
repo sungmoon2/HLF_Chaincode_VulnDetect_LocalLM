@@ -1,0 +1,18 @@
+[
+  {
+    "model": "Qwen2.5-Coder-7B",
+    "total_s": 129.8,
+    "avg_s_per_file": 8.65,
+    "peak_vram_mib": 13407,
+    "n_samples": 557,
+    "files": 15
+  },
+  {
+    "model": "Llama-3.1-8B",
+    "total_s": 141.9,
+    "avg_s_per_file": 9.46,
+    "peak_vram_mib": 14000,
+    "n_samples": 663,
+    "files": 15
+  }
+]

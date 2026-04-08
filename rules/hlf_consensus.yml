@@ -1,0 +1,99 @@
+rules:
+
+  # Rule 1: time.Now() usage in chaincode functions
+  # Targets: vuln_01_time.go (direct), vuln_01_b_interprocedural.go (partial - helper-wrapped)
+  - id: hlf-time-now-in-chaincode
+    patterns:
+      - pattern: time.Now()
+    message: >
+      time.Now() produces non-deterministic values across endorsing peers,
+      causing endorsement mismatch if the value reaches PutState().
+    languages: [go]
+    severity: WARNING
+    metadata:
+      category: hlf-consensus-layer
+      vulnerability_class: nondeterministic-timestamp
+
+  # Rule 2: Global variable mutation in chaincode
+  # Note: Semgrep pattern matching cannot distinguish package-scope var
+  # from function-scope var, so a simple `var $X $TYPE` pattern produces
+  # excessive false positives. This rule is therefore omitted.
+  # vuln_02_global.go requires interprocedural scope analysis to detect,
+  # which is beyond Semgrep's pattern-based capabilities.
+
+  # Rule 3: Goroutine spawned inside chaincode
+  # Targets: vuln_03_goroutine.go
+  - id: hlf-goroutine-in-chaincode
+    patterns:
+      - pattern: |
+          go func(...) { ... }(...)
+    message: >
+      Goroutines introduce non-deterministic execution ordering. The Fabric
+      stub is not thread-safe; concurrent GetState/PutState calls produce
+      unpredictable read-write sets.
+    languages: [go]
+    severity: WARNING
+    metadata:
+      category: hlf-consensus-layer
+      vulnerability_class: goroutine-concurrency
+
+  # Rule 4: Map iteration with PutState inside loop
+  # Targets: vuln_04_map_iter.go, vuln_04_b_nested_map.go
+  - id: hlf-map-iteration-putstate
+    patterns:
+      - pattern: |
+          for $KEY, $VAL := range $MAP {
+            ...
+            $CTX.GetStub().PutState(...)
+            ...
+          }
+    message: >
+      Go map iteration order is randomized. PutState() inside a map range
+      loop produces different write-set orderings across endorsing peers.
+    languages: [go]
+    severity: WARNING
+    metadata:
+      category: hlf-consensus-layer
+      vulnerability_class: map-iteration-nondeterminism
+
+  # Rule 5: Iterator created without immediate defer Close()
+  # Targets: vuln_06_iterator_leak.go, vuln_06_b_conditional_leak.go
+  - id: hlf-iterator-missing-defer-close
+    patterns:
+      - pattern: |
+          $ITER, $ERR := $CTX.GetStub().GetStateByRange(...)
+          ...
+      - pattern-not: |
+          $ITER, $ERR := $CTX.GetStub().GetStateByRange(...)
+          ...
+          defer $ITER.Close()
+          ...
+    message: >
+      State iterator opened without defer Close(). If any code path returns
+      before manual Close(), the gRPC stream leaks, eventually exhausting
+      peer resources.
+    languages: [go]
+    severity: WARNING
+    metadata:
+      category: hlf-consensus-layer
+      vulnerability_class: iterator-resource-leak
+
+  # Rule 5b: GetStateByPartialCompositeKey without defer Close()
+  - id: hlf-composite-iterator-missing-defer-close
+    patterns:
+      - pattern: |
+          $ITER, $ERR := $CTX.GetStub().GetStateByPartialCompositeKey(...)
+          ...
+      - pattern-not: |
+          $ITER, $ERR := $CTX.GetStub().GetStateByPartialCompositeKey(...)
+          ...
+          defer $ITER.Close()
+          ...
+    message: >
+      Composite key iterator opened without defer Close(). gRPC stream
+      may leak if function returns before manual Close().
+    languages: [go]
+    severity: WARNING
+    metadata:
+      category: hlf-consensus-layer
+      vulnerability_class: iterator-resource-leak

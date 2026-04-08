@@ -2,19 +2,19 @@
   "version": "3.0",
   "project": "Exp_HLF_Chaincode_VulnDetect_LocalLM",
   "created": "2026-02-09T01:50:00",
-  "last_updated": "2026-02-22T20:30:00",
+  "last_updated": "2026-04-07",
   "genesis_hash": "00000000",
 
   "chain": {
-    "latest_session": "S260222-2030",
-    "total_sessions": 22
+    "latest_session": "S260407-2330",
+    "total_sessions": 27
   },
 
   "works": {
     "WORK-001": {
       "status": "In Progress",
       "goal": "Local sLM HLF Vulnerability Detection",
-      "sessions": ["S260209-0433", "S260209-2008", "S260209-0530", "S260209-1220", "S260209-1400", "S260209-1555", "S260209-1730", "S260209-1850", "S260209-1940", "S260209-2105", "S260209-2237", "S260210-0941", "S260210-1308", "S260210-1610", "S260210-2006", "S260210-2115", "S260211-0030", "S260211-0508", "S260211-1347", "S260214-1917", "S260222-1931"]
+      "sessions": ["S260209-0433", "S260209-2008", "S260209-0530", "S260209-1220", "S260209-1400", "S260209-1555", "S260209-1730", "S260209-1850", "S260209-1940", "S260209-2105", "S260209-2237", "S260210-0941", "S260210-1308", "S260210-1610", "S260210-2006", "S260210-2115", "S260211-0030", "S260211-0508", "S260211-1347", "S260214-1917", "S260222-1931", "S260330-1430", "S260331-2100", "S260407-2308", "S260407-1845", "S260407-2330"]
     }
   },
 
@@ -207,19 +207,45 @@
       "remaining": ["카메라레디 리뷰어 피드백 대응", "Fig2 CoT 이미지 업데이트", "오랄 발표 슬라이드+대본 (카메라레디 후)"]
     },
     "amlds_submission": {
-      "status": "under_review",
+      "status": "withdrawn",
+      "review_score": 2,
+      "review_received": "2026-03-30",
+      "camera_ready_deadline": "2026-04-12",
+      "camera_ready_version": "v37",
+      "camera_ready_status": "철회 확정 (2026-04-07). 카메라레디 미제출.",
+      "overleaf_pdf": "AMLDS_2026_Japan_Osaka.pdf (v37 tex와 완전 일치 확인, archive_AMLDS_2026/)",
       "paper_id": "S2700",
       "confirmation_received": "2026-02-12",
       "author_info_submitted": "2026-02-14",
       "contact": "Dr. Lily Van <amlds_conf@163.com>",
-      "conference": "AMLDS 2026, Osaka, Japan, July 21-23, 2026 (Hybrid)"
+      "conference": "AMLDS 2026, Osaka, Japan, July 21-23, 2026 (Hybrid)",
+      "withdrawal_date": "2026-04-07",
+      "withdrawal_mail_sent": false
+    },
+    "aann_2026": {
+      "status": "confirmed",
+      "conference": "AANN 2026, Qingdao, China, August 7-9, 2026",
+      "full_name": "6th International Conference on Advanced Algorithms and Neural Networks",
+      "co_sponsor": "IEEE + IEEE CIS",
+      "host": "China University of Petroleum (East China)",
+      "full_paper_deadline": "2026-05-22",
+      "final_paper_deadline": "2026-07-05",
+      "registration_deadline": "2026-07-22",
+      "registration_fee": "$550 (4-6p), +$60/page (7p~)",
+      "page_limit": "4-6 pages (basic), 7+ pages with surcharge",
+      "template": "IEEEtran.cls conference mode (identical to v37)",
+      "v37_compatible": true,
+      "contact": "iicaann@163.com (Ms. Li)",
+      "funding_source": "ACK: SOCFAI (한-EU, KIAT P0026190)",
+      "info_doc": "AANN_2026_INFO.md",
+      "template_dir": "논문_템플릿_AANN/"
     }
   },
 
   "statistics": {
-    "total_sessions": 22,
+    "total_sessions": 27,
     "total_snapshots": 18,
-    "total_exports": 16,
+    "total_exports": 17,
     "models_downloaded": 2,
     "chaincodes_current": 15,
     "chaincodes_obfuscated": 15,
@@ -229,14 +255,16 @@
     "golisa_qwen_records": 657,
     "golisa_semgrep_records": 1314,
     "reference_files": 15,
-    "paper_references": 13,
-    "paper_versions": 31,
+    "paper_references": 17,
+    "paper_versions": 43,
+    "amlds_status": "withdrawn",
+    "aann_status": "confirmed",
     "feedback_entries": 6,
     "feedback_issues": 23,
     "feedback_issues_open": 2,
     "feedback_issues_in_progress": 2,
     "feedback_issues_resolved": 19,
-    "scripts": 18
+    "scripts": 20
   },
 
   "directory_status": {
@@ -249,8 +277,12 @@
     "dataset": "15개 .go (82,151 bytes)",
     "dataset_obfuscated": "15개 .go (44,658 bytes, 459 identifiers)",
     "golisa_benchmark": "657개 .go (326 repos, 5,438,685 bytes) + api_research/ (7 JSON, 99,240 bytes)",
-    "초안": "45개+ .tex (v1~v22 영문+한글 + AUTHOR_ACK_INFO) + IEEEtran.cls",
-    "04_feedback": "FEEDBACK_INDEX.json v1.3 + 4 FB + 18 ISS + RESPONSE_STRATEGY.md"
+    "논문_초안_AANN": "v37~v43 tex/pdf + IEEEtran.cls + reference/ (raw 2개 + analysis 3개 + prompts/) (논문_초안/)",
+    "논문_초안_AMLDS_archive": "v1~v31 tex/pdf 95개+ (archive_AMLDS_2026/논문_초안_v1-v31/)",
+    "04_feedback": "FEEDBACK_INDEX.json v1.3 + 4 FB + 18 ISS + RESPONSE_STRATEGY.md",
+    "archive_AMLDS_2026": "AMLDS 관련 전체 아카이브 (템플릿, 마스터가이드, 출장, 카메라레디, 저자양식, PDF)",
+    "AANN_2026_INFO": "AANN 2026 학회 정보 문서 (양식/형식/일정/등록비/토픽/호환성/비용출처)",
+    "논문_템플릿_AANN": "AANN 템플릿 (LaTeX + Word + Checking list + 투고 안내)"
   },
 
   "blocked_issues": [],
@@ -275,11 +307,12 @@
   },
 
   "next_actions": [
-    "리뷰 결과 대기 (Paper ID: S2700)",
-    "카메라레디 리뷰어 피드백 대응",
-    "Fig2.png CoT 반영 이미지 업데이트 (사용자 작업중)",
-    "오랄 발표 슬라이드 + 대본 작성 (카메라레디 확정 후)",
-    "ISS_023 잔여: 베이스라인 강화 + 용어 통일 (리뷰어 피드백 후)",
-    "CPR/할루시네이션 수동 검증 (제출 후 보완 가능)"
+    "AMLDS 철회 회신 확인",
+    "오버리프 tex 최종 교체 (v43)",
+    "교수님 v43 최종 확인 → 제출 결정",
+    "git commit + push (v35~v43, 논문_초안/reference/)",
+    "와처 JSONL 파싱 실패 원인 조사",
+    "오랄 발표 슬라이드 + 대본 (Accept 후)",
+    "손상 OVA + RAW 정리 (~18GB)"
   ]
 }
