@@ -1,0 +1,19 @@
+{
+  "file_id": "0041_ryu-sato_chaincode_sample",
+  "repo": "ryu-sato",
+  "filename": "chaincode_sample.go",
+  "elapsed_s": 2.67,
+  "input_tokens": 1343,
+  "output_tokens": 185,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: (1) no time.Now() or time-dependent operations influencing writes/responses; (2) no goroutines; (3) the map iteration at L32 (reflect.ValueOf(cmdMap).MapKeys()) only influences an error message, not a ledger write or critical response; (4) no non-revalidated queries; (5) the logger global is read-only and safe. The HelloChaincode function returns a static success response with no nondeterministic behavior.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains a valid HLF transaction entrypoint (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: (1) no time.Now() or time-dependent operations influencing writes/responses; (2) no goroutines; (3) the map iteration at L32 (reflect.ValueOf(cmdMap).MapKeys()) only influences an error message, not a ledger write or critical response; (4) no non-revalidated queries; (5) the logger global is read-only and safe. The HelloChaincode function returns a static success response with no nondeterministic behavior.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:06.725797",
+  "annotator": "2nd"
+}

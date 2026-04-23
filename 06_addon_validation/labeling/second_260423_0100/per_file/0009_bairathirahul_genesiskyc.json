@@ -1,0 +1,19 @@
+{
+  "file_id": "0009_bairathirahul_genesiskyc",
+  "repo": "bairathirahul",
+  "filename": "genesiskyc.go",
+  "elapsed_s": 18.98,
+  "input_tokens": 6148,
+  "output_tokens": 828,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L388-L395",
+  "rationale": "The `updateCustomerStatus` function uses `time.Now().UnixNano()` to set `comment.Created`, which is then marshaled and written to the ledger via `PutState`. This causes nondeterministic state across endorsing peers since each peer's local time differs.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW:**\n- Line 388-389 in `updateCustomerStatus`: `comment.Created = time.Now().UnixNano() / int64(time.Millisecond)` - This uses `time.Now()` and the result is stored in `customer.Comments`, which is then marshaled and written via `PutState` at line 395. This is a clear C1 violation.\n\n**C3 MAP_ITERATION:**\n- The `Customer` struct contains multiple maps: `Addresses`, `Employments`, `Documents`, `BankAccounts`, `Accesses`, `Options`.\n- In `updateCustomer` (line 275), `requestCustomerAccess` (line 298), `approveCustomerAccess` (line 320), `updateCustomerStatus` (line 395), these Customer objects with maps are marshaled via `json.Marshal(customer)` and written to state.\n- However, Go's `encoding/json.Marshal` for maps sorts keys deterministically (alphabetically for string keys, numerically for int keys), so this is SAFE per the taxonomy.\n\n**C4 NON_REVALIDATED_QUERY:**\n- `getQueryResultForQueryString` (line 481) uses `GetQueryResult` but it only returns data, doesn't influence writes.\n- `queryCustomerTransactionHistory` (line 441) uses `GetHistoryForKey` but only returns data via `shim.Success`, no write decisions.\n- `searchCustomer` and `searchPendingCustomer` use `GetStateByRange` which is explicitly NOT a C4 source per taxonomy.\n\n**C2 GOROUTINE:** No goroutines found.\n\n**C6 GLOBAL_MUTABLE_STATE:** No package-level mutable variables affecting transaction logic.\n\n**C5 ITERATOR_LEAK:**\n- All iterators have `defer resultsIterator.Close()` - properly handled.\n\n### Step 3: Concrete Evidence of Sink Reach\n\nFor C1 in `updateCustomerStatus`:\n- Line 388: `comment.Created = time.Now().UnixNano() / int64(time.Millisecond)`\n- Line 389: `comment.Text = args[2]`\n- Line 390: `customer.Comments = append(customer.Comments, comment)`\n- Line 393: `jsonAsBytes, _ := json.Marshal(customer)`\n- Line 394: `err = stub.PutState(customer.ID, jsonAsBytes)`\n\nThe `time.Now()` value directly influences the data written to the ledger via `PutState`. Different peers executing at slightly different times will produce different `comment.Created` values, causing endorsement divergence.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L388-L395\nRATIONALE: The `updateCustomerStatus` function uses `time.Now().UnixNano()` to set `comment.Created`, which is then marshaled and written to the ledger via `PutState`. This causes nondeterministic state across endorsing peers since each peer's local time differs.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:37.770363",
+  "annotator": "2nd"
+}

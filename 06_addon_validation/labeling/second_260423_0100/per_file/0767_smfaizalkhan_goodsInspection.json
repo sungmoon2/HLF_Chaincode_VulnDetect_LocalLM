@@ -1,0 +1,19 @@
+{
+  "file_id": "0767_smfaizalkhan_goodsInspection",
+  "repo": "smfaizalkhan",
+  "filename": "goodsInspection.go",
+  "elapsed_s": 3.72,
+  "input_tokens": 1279,
+  "output_tokens": 140,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard Init/Invoke entrypoints with a createAsset function. The code does not use time.Now() (C1), goroutines (C2), map iteration (C3), rich queries (C4), or mutable global state (C6). The for...range on L36 iterates over a slice (args []string), not a map, so it has deterministic order. All operations are deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard Init/Invoke entrypoints with a createAsset function. The code does not use time.Now() (C1), goroutines (C2), map iteration (C3), rich queries (C4), or mutable global state (C6). The for...range on L36 iterates over a slice (args []string), not a map, so it has deterministic order. All operations are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:58:17.095655",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0425_isheejong_m2o",
+  "repo": "isheejong",
+  "filename": "m2o.go",
+  "elapsed_s": 16.42,
+  "input_tokens": 3909,
+  "output_tokens": 692,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L186-L227",
+  "rationale": "The GetHistoryForKey usage in queryUserTransactionsForAll is read-only (returns data via shim.Success without influencing any writes). The time.Unix() call converts ledger-provided timestamps, not time.Now(). No map iteration, goroutines, or mutable global state affect transaction outcomes.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with several transaction functions: `updateExchangeRate`, `convertToM2OToken`, `queryUserTotal`, `queryUserTransactionsForAll`, `queryUserTransactionsForPartner`.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 207: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts the ledger-provided timestamp to a string.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iteration found. The structs are marshaled with `json.Marshal()` but they are structs, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 186: `stub.GetHistoryForKey(M2OUID)` - This is used in `queryUserTransactionsForAll`. The results are iterated and returned via `shim.Success(buffer.Bytes())` at line 227. This is a **read-only query** - the history data is formatted and returned to the client, but no write decisions (PutState/DelState) are made based on the query results. Read-only queries returned via shim.Success are explicitly NOT C4 per the taxonomy.\n\n**C5 ITERATOR_LEAK**: \n- Line 186-189: `resultsIterator` is created and `defer resultsIterator.Close()` is called at line 189. Properly closed.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### Key Observations\n\n1. The `queryUserTransactionsForAll` function uses `GetHistoryForKey` but only for reading and returning data - no writes are influenced by the query results.\n\n2. The `convertToM2OToken` function uses `GetState` (not a rich query) to read exchange rates and account data, then writes. `GetState` is not a C4 source.\n\n3. The `time.Unix()` usage converts a deterministic timestamp from the ledger history, not the current time.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L186-L227\nRATIONALE: The GetHistoryForKey usage in queryUserTransactionsForAll is read-only (returns data via shim.Success without influencing any writes). The time.Unix() call converts ledger-provided timestamps, not time.Now(). No map iteration, goroutines, or mutable global state affect transaction outcomes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:33:50.012435",
+  "annotator": "2nd"
+}

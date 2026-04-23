@@ -2,19 +2,19 @@
   "version": "3.0",
   "project": "Exp_HLF_Chaincode_VulnDetect_LocalLM",
   "created": "2026-02-09T01:50:00",
-  "last_updated": "2026-04-07",
+  "last_updated": "2026-04-23T09:43:00",
   "genesis_hash": "00000000",
 
   "chain": {
-    "latest_session": "S260407-2330",
-    "total_sessions": 27
+    "latest_session": "S260423-phase7-8-v54",
+    "total_sessions": 46
   },
 
   "works": {
     "WORK-001": {
       "status": "In Progress",
       "goal": "Local sLM HLF Vulnerability Detection",
-      "sessions": ["S260209-0433", "S260209-2008", "S260209-0530", "S260209-1220", "S260209-1400", "S260209-1555", "S260209-1730", "S260209-1850", "S260209-1940", "S260209-2105", "S260209-2237", "S260210-0941", "S260210-1308", "S260210-1610", "S260210-2006", "S260210-2115", "S260211-0030", "S260211-0508", "S260211-1347", "S260214-1917", "S260222-1931", "S260330-1430", "S260331-2100", "S260407-2308", "S260407-1845", "S260407-2330"]
+      "sessions": ["S260209-0433", "S260209-2008", "S260209-0530", "S260209-1220", "S260209-1400", "S260209-1555", "S260209-1730", "S260209-1850", "S260209-1940", "S260209-2105", "S260209-2237", "S260210-0941", "S260210-1308", "S260210-1610", "S260210-2006", "S260210-2115", "S260211-0030", "S260211-0508", "S260211-1347", "S260214-1917", "S260222-1931", "S260330-1430", "S260331-2100", "S260407-2308", "S260407-1845", "S260407-2330", "S260408-2000", "S260408-2200", "S260409-0030", "S260409-cont", "S260410-main", "S260410-v51", "S260414-docx", "S260414-v51-2", "S260414-v51-3", "S260414-v51-4", "S260418-submit", "S260419-prereview", "S260421-review-response", "S260422-annotation-ablation", "S260422-controlled-ablation", "S260422-protocol-freeze", "S260422-critical-review", "S260422-rubric-labeling", "S260423-full-corpus-experiment", "S260423-phase7-8-v54"]
     }
   },
 
@@ -132,9 +132,9 @@
       "terminology_fix": "TNR Precision->Specificity (Fig 2, Fig 3)"
     },
     "paper_drafting": {
-      "status": "submitted",
-      "last_modified": "2026-02-11",
-      "latest_version": "v31",
+      "status": "revision",
+      "last_modified": "2026-04-23",
+      "latest_version": "v54",
       "submitted_version": "v30",
       "submitted_file": "260210_v30_서브섹션병합.tex",
       "latest_files": {
@@ -223,7 +223,11 @@
       "withdrawal_mail_sent": false
     },
     "aann_2026": {
-      "status": "confirmed",
+      "status": "major revision — Phase 0-8 완료, v54 작성, GPT 최종 자문 대기",
+      "submission_date": "2026-04-18",
+      "pre_review_passed": "2026-04-18T09:07",
+      "order_no": "226041801092265613",
+      "paper_no": "M7VNBFDSWP",
       "conference": "AANN 2026, Qingdao, China, August 7-9, 2026",
       "full_name": "6th International Conference on Advanced Algorithms and Neural Networks",
       "co_sponsor": "IEEE + IEEE CIS",
@@ -235,36 +239,94 @@
       "page_limit": "4-6 pages (basic), 7+ pages with surcharge",
       "template": "IEEEtran.cls conference mode (identical to v37)",
       "v37_compatible": true,
+      "submitted_version": "v51",
+      "submitted_format": "LaTeX(ZIP) + PDF",
+      "submitted_files": ["AANN_2026_SungmoonPark.pdf", "AANN_2026_SungmoonPark.zip"],
+      "paper_title": "Privacy-Preserving Anomaly Detection in Hyperledger Fabric Chaincode Using Compact Local Transformer Models",
+      "submitter_account": "qkrtjdans55@oasis.inje.ac.kr",
+      "corresponding_author_account": "jinhong@inje.ac.kr",
+      "ais_author_account_note": "AIS 'Author's account' 필드는 교신저자 이메일 자동 표시, 제출자 로그인 계정과 별개",
+      "review_timeline": [
+        {"time": "2026-04-18T02:09", "status": "Pending Review", "detail": "논문 접수 완료"},
+        {"time": "2026-04-18T09:06", "status": "Under Review", "detail": "심사 프로세스 진입"},
+        {"time": "2026-04-18T09:07", "status": "Under Review", "detail": "Pre-review 통과, Pending Review by Experts"},
+        {"time": "2026-04-21", "status": "Expert Review Received", "detail": "리뷰어 코멘트 5건 수신. 수정 요청 (not reject). C1 아키텍처혁신부재, C2 파일수준한계, C3 N=15규모, C4 Gemini명칭통일, C5 Go+LLM참고문헌추가"}
+      ],
+      "submission_platform": "AIS (ais.cn/attendees/paperSubmit/M7VNBF)",
+      "latex_submission_confirmed": "2026-04-14 Ms. Li 메일",
       "contact": "iicaann@163.com (Ms. Li)",
-      "funding_source": "ACK: SOCFAI (한-EU, KIAT P0026190)",
+      "funding_source": "ACK: KIAT (P0026190)",
       "info_doc": "AANN_2026_INFO.md",
       "template_dir": "논문_템플릿_AANN/"
     }
   },
 
   "statistics": {
-    "total_sessions": 27,
+    "total_sessions": 46,
     "total_snapshots": 18,
-    "total_exports": 17,
+    "total_exports": 21,
     "models_downloaded": 2,
     "chaincodes_current": 15,
     "chaincodes_obfuscated": 15,
     "chaincodes_golisa_benchmark": 657,
-    "golisa_repos": 326,
+    "chaincodes_golisa_repos": 330,
+    "chaincodes_golisa_eligible": 461,
+    "chaincodes_golisa_positive_candidates_one_per_repo": 146,
+    "chaincodes_golisa_positive_candidates_content_dedup": 117,
+    "chaincodes_golisa_positive_candidates_similarity_dedup_final": 101,
+    "chaincodes_golisa_safe_candidates_one_per_repo": 184,
+    "chaincodes_golisa_safe_candidates_similarity_dedup_final": 112,
+    "chaincodes_golisa_hard_negatives_final": 13,
+    "chaincodes_golisa_content_dupes_removed": 29,
+    "chaincodes_golisa_similarity_dup_groups": 6,
+    "chaincodes_golisa_similarity_dupes_removed": 16,
+    "chaincodes_golisa_near_duplicate_groups_exact": 59,
+    "chaincodes_golisa_parsability": "657/657 (100%)",
+    "chaincodes_golisa_context_budget_exceeded": 0,
+    "chaincodes_addon_candidates": 24,
+    "chaincodes_addon_keep": 17,
+    "chaincodes_addon_flag": 4,
+    "chaincodes_addon_drop": 3,
     "audit_records_run_04": 380,
     "golisa_qwen_records": 657,
     "golisa_semgrep_records": 1314,
     "reference_files": 15,
-    "paper_references": 17,
-    "paper_versions": 43,
+    "paper_references": 20,
+    "paper_versions": 57,
     "amlds_status": "withdrawn",
-    "aann_status": "confirmed",
-    "feedback_entries": 6,
-    "feedback_issues": 23,
-    "feedback_issues_open": 2,
-    "feedback_issues_in_progress": 2,
+    "aann_status": "major revision — Phase 0-8 완료, v54 작성 (5p, 103건 수치 검증 PASS). GPT 최종 자문 대기.",
+    "feedback_entries": 7,
+    "feedback_issues": 28,
+    "feedback_issues_open": 4,
+    "feedback_issues_in_progress": 5,
     "feedback_issues_resolved": 19,
-    "scripts": 20
+    "scripts": 22,
+    "addon_d2_qwen_records": 85,
+    "addon_d2_llama_records": 85,
+    "addon_d2_semgrep_records": 51,
+    "addon_d1clean_qwen_records": 75,
+    "addon_d1clean_llama_records": 75,
+    "p0_ann_qwen_records": 75,
+    "p0_abl_qwen_records": 75,
+    "p0_ann_llama_records": 75,
+    "p0_abl_llama_records": 75,
+    "p0_total_inferences": 300,
+    "p0_duration_s": 2172.3,
+    "d1_annotation_tags_removed": 15,
+    "gpt_advisory_sessions": 12,
+    "gpt_advisory_sessions_pending": 0,
+    "gpt_advisory_prompts": 7,
+    "scripts": 29,
+    "prompt_status": "FROZEN (3-line: LABEL/CLASSES/EVIDENCE)",
+    "taxonomy_status": "FROZEN (6-class)",
+    "prompt_format_stability": "20/20 (100%)",
+    "prompt_determinism": "10/10 (100%)",
+    "golisa_family_TIME_NOW": 33,
+    "golisa_family_GOROUTINE": 3,
+    "golisa_family_MAP_ITERATION": 10,
+    "golisa_family_PHANTOM_READ": 111,
+    "golisa_family_ITERATOR_LEAK": 218,
+    "golisa_family_GLOBAL_MUTABLE_STATE": 34
   },
 
   "directory_status": {
@@ -272,28 +334,30 @@
     "snapshots": "18개",
     "references": "15개 파일",
     "archive": "run_01_generic/ + run_02_vuln_only/",
-    "figures": "figure/ (fig1~fig4 디렉토리, Fig[n].png + v1/v2.py)",
+    "figures": "figure/ (Fig1/ TNR heatmap + Fig2/ obfuscation bar + old_fig/ 기존 아카이브)",
     "raw_results": "Run 04 CSV 9개 + GoLiSA CSV 2개 + supplementary JSON 1개 + meta.json 10개 + ANALYSIS_REPORT.md + GOLISA_VALIDATION_REPORT.md",
     "dataset": "15개 .go (82,151 bytes)",
     "dataset_obfuscated": "15개 .go (44,658 bytes, 459 identifiers)",
     "golisa_benchmark": "657개 .go (326 repos, 5,438,685 bytes) + api_research/ (7 JSON, 99,240 bytes)",
-    "논문_초안_AANN": "v37~v43 tex/pdf + IEEEtran.cls + reference/ (raw 2개 + analysis 3개 + prompts/) (논문_초안/)",
+    "논문_초안_AANN": "v37~v51 tex 15개 + pdf 20개 + v51~v51-4 docx 7개 + generate스크립트 5개 + WORD_PASTE 2개 (논문_초안/). v52~v54 tex+pdf는 논문_리뷰대응/에 위치.",
+    "AANN_2026_reference": "raw/ (24개) + analysis/ (19개) + prompts/ (11개) + addon_experiment/ (ORCH+CSV2+golisa2+candidates24go+dirs3)",
     "논문_초안_AMLDS_archive": "v1~v31 tex/pdf 95개+ (archive_AMLDS_2026/논문_초안_v1-v31/)",
     "04_feedback": "FEEDBACK_INDEX.json v1.3 + 4 FB + 18 ISS + RESPONSE_STRATEGY.md",
     "archive_AMLDS_2026": "AMLDS 관련 전체 아카이브 (템플릿, 마스터가이드, 출장, 카메라레디, 저자양식, PDF)",
     "AANN_2026_INFO": "AANN 2026 학회 정보 문서 (양식/형식/일정/등록비/토픽/호환성/비용출처)",
-    "논문_템플릿_AANN": "AANN 템플릿 (LaTeX + Word + Checking list + 투고 안내)"
+    "논문_템플릿_AANN": "AANN 템플릿 (LaTeX + Word + Checking list + 투고 안내)",
+    "AANN_2026_submission": "제출용 LaTeX ZIP 패키징 소스 디렉토리 (AANN_2026_v51.tex + figures/Fig1.png + figures/Fig2.png) — 잔존",
+    "AANN_2026_submitted_pdf": "AANN_2026_SungmoonPark.pdf (Downloads/) — 제출 완료 (2026-04-18)",
+    "논문_리뷰대응": "reference/ (prompts 10개 + raw 15개 + analysis 16개 + papers/ 3편 PDF) — 상위 디렉토리. 신규 프롬프트: GPT54_rubric_validation.md, GPT54_experiment_design_review.md",
+    "06_addon_validation": "EXPERIMENT_PROTOCOL.md + dataset/ (17 KEEP .go) + dataset_d1_clean/ (15 annotation-stripped .go) + dataset_ablation_ann/ (15 neutral P01~P15 주석유지) + dataset_ablation_abl/ (15 neutral P01~P15 주석제거) + labeling/ (ADDON_17_FILES.md + TEMPLATE + LABELS_FINAL.md) + results/ (D2: qwen/llama/semgrep CSV + D1-clean: qwen/llama CSV + P0: ann/abl × qwen/llama CSV 4개 + meta 2개 + report) + ablation_filename_mapping.json"
   },
 
   "blocked_issues": [],
 
-  "open_issues": [
-    "ISS_013 (GoLiSA 외부검증)"
-  ],
+  "open_issues": [],
 
   "in_progress_issues": [
-    "ISS_006 (N=15 일반화 -- GoLiSA 657개 + B1/B2 Running_Examples 모델간 비교로 부분 대응)",
-    "ISS_023 (재현성 보강 -- 3/4 완료: PROMPTS.md + CLASSIFIER.md + LABELING_CRITERIA.md 공개, 잔여: 베이스라인 강화 + 용어 통일)"
+    "ISS_023 (재현성 보강 -- 3/4 완료. 잔여: GitHub 레포 업데이트)"
   ],
 
   "github_repository": {
@@ -307,12 +371,9 @@
   },
 
   "next_actions": [
-    "AMLDS 철회 회신 확인",
-    "오버리프 tex 최종 교체 (v43)",
-    "교수님 v43 최종 확인 → 제출 결정",
-    "git commit + push (v35~v43, 논문_초안/reference/)",
-    "와처 JSONL 파싱 실패 원인 조사",
-    "오랄 발표 슬라이드 + 대본 (Accept 후)",
-    "손상 OVA + RAW 정리 (~18GB)"
+    "GPT 최종 자문 (v54): 2세션 원문 저장 + 분석 요약 + 교차 분석",
+    "v54 보강: GPT 피드백 반영 + C5 참고문헌 추가 (현재 5p, 1p 여유)",
+    "ISS_023 잔여: GitHub 레포 업데이트 (benchmark 메타데이터 + 신규 스크립트)",
+    "최종 제출: AIS 플랫폼 업로드 (마감 2026-05-22)"
   ]
 }

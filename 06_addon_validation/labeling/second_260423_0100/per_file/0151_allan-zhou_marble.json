@@ -1,0 +1,19 @@
+{
+  "file_id": "0151_allan-zhou_marble",
+  "repo": "allan-zhou",
+  "filename": "marble.go",
+  "elapsed_s": 14.93,
+  "input_tokens": 4090,
+  "output_tokens": 638,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses only deterministic operations. The `time.Unix()` call on line 267 converts existing timestamp data from query results, not current time. All queries (`GetStateByRange`, `GetStateByPartialCompositeKey`, `GetHistoryForKey`) either return data directly or use explicitly safe query types per the taxonomy. No map iteration, goroutines, or mutable globals are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 267: `time.Unix(queryResult.Timestamp.Seconds, int64(queryResult.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the query result, NOT `time.Now()`. This is deterministic as it converts existing data.\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- No `for...range` over maps found. The code uses iterators from stub methods.\n\n**C4 NON_REVALIDATED_QUERY**:\n- Line 261-282: `getHistoryForMarble` uses `GetHistoryForKey` but only returns data via `shim.Success()` - this is read-only, NOT C4.\n- `GetStateByRange` and `GetStateByPartialCompositeKey` are explicitly NOT C4 sources per the taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**:\n- `MarbleTypeName` is a `const`, not a mutable var - SAFE.\n\n**C5 ITERATOR_LEAK**:\n- All iterators have `defer iterator.Close()` calls (lines 62, 188, 224, 258).\n\n### Code Issue Found (but not nondeterminism)\nLine 140 references `marble.Color` and `marble.Id` but `marble` is not defined in that scope - this is a compilation error, not a nondeterminism issue.\n\n### Verdict\nThe code does not contain any of the consensus-critical nondeterminism patterns:\n- No `time.Now()` usage\n- No goroutines\n- No map iteration\n- No rich queries (GetQueryResult) that influence writes\n- No mutable global state\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses only deterministic operations. The `time.Unix()` call on line 267 converts existing timestamp data from query results, not current time. All queries (`GetStateByRange`, `GetStateByPartialCompositeKey`, `GetHistoryForKey`) either return data directly or use explicitly safe query types per the taxonomy. No map iteration, goroutines, or mutable globals are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:13:46.438055",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0771_soodakshay_mycc",
+  "repo": "soodakshay",
+  "filename": "mycc.go",
+  "elapsed_s": 5.55,
+  "input_tokens": 2624,
+  "output_tokens": 161,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L137-L145, L159-L167",
+  "rationale": "The `CheckEmail` function uses `GetQueryResult` (L159) and its result (`queryIterator.HasNext()`) determines whether `registerUser` proceeds to `PutState` (L89). This is a classic C4 non-revalidated query pattern where a rich query result influences a write decision. The `login` function also uses `GetQueryResult` (L137) but only returns data without writes. Both iterators lack `Close()` calls (C5 auxiliary).",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C4\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L137-L145, L159-L167\nRATIONALE: The `CheckEmail` function uses `GetQueryResult` (L159) and its result (`queryIterator.HasNext()`) determines whether `registerUser` proceeds to `PutState` (L89). This is a classic C4 non-revalidated query pattern where a rich query result influences a write decision. The `login` function also uses `GetQueryResult` (L137) but only returns data without writes. Both iterators lack `Close()` calls (C5 auxiliary).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:58:38.002299",
+  "annotator": "2nd"
+}

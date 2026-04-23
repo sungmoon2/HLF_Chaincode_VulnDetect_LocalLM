@@ -1,0 +1,19 @@
+{
+  "file_id": "0257_ChaiwatSumrit_users_and_orgs",
+  "repo": "ChaiwatSumrit",
+  "filename": "users_and_orgs.go",
+  "elapsed_s": 1.89,
+  "input_tokens": 959,
+  "output_tokens": 134,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains a recognizable HLF transaction entrypoint (Init method on line 28), but the implementation is empty—it only returns shim.Success(nil) with no state mutations, queries, or response logic that could be influenced by nondeterministic sources. No C1–C6 vulnerability patterns are present. The file consists solely of type definitions and a stub Init function with no consensus-critical operations.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains a recognizable HLF transaction entrypoint (Init method on line 28), but the implementation is empty—it only returns shim.Success(nil) with no state mutations, queries, or response logic that could be influenced by nondeterministic sources. No C1–C6 vulnerability patterns are present. The file consists solely of type definitions and a stub Init function with no consensus-critical operations.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:44:51.890091",
+  "annotator": "2nd"
+}

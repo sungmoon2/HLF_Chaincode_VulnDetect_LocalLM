@@ -1,0 +1,19 @@
+{
+  "file_id": "0417_idowuakinde_diamonds",
+  "repo": "idowuakinde",
+  "filename": "diamonds.go",
+  "elapsed_s": 16.46,
+  "input_tokens": 3997,
+  "output_tokens": 714,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L232-L275",
+  "rationale": "The GetHistoryForKey usage in getHistoryFordiamond is read-only (returns data via shim.Success without influencing any writes). The time.Unix() call converts existing ledger timestamps deterministically, not time.Now(). GetStateByPartialCompositeKey is explicitly excluded from C4 sources.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode file.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 261: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts existing ledger data.\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- No `for...range` over maps. The `diamond` struct is marshaled with `json.Marshal()`, which is deterministic for structs.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 232-235: `stub.GetHistoryForKey(diamondName)` is used in `getHistoryFordiamond`. However, examining the function (lines 222-275), the results are only used to build a response buffer that is returned via `shim.Success(buffer.Bytes())`. There are NO writes (PutState/DelState) based on this query result. This is a read-only query function, so it's NOT C4.\n- `GetStateByPartialCompositeKey` on line 199 is explicitly excluded from C4 per the taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level variables that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK (Auxiliary)**:\n- Line 203: `defer originateddiamondResultsIterator.Close()` - properly closed\n- Line 236: `defer resultsIterator.Close()` - properly closed\n- No iterator leaks detected.\n\n### Key Observations\n\n1. The `getHistoryFordiamond` function uses `GetHistoryForKey` but only for reading and returning data - no write decisions are made based on it.\n\n2. The `transferdiamondsBasedOnOrigin` function uses `GetStateByPartialCompositeKey`, which is explicitly NOT a C4 source per the taxonomy.\n\n3. The `time.Unix()` call converts an existing timestamp from ledger history, not generating a new timestamp - this is deterministic.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L232-L275\nRATIONALE: The GetHistoryForKey usage in getHistoryFordiamond is read-only (returns data via shim.Success without influencing any writes). The time.Unix() call converts existing ledger timestamps deterministically, not time.Now(). GetStateByPartialCompositeKey is explicitly excluded from C4 sources.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:32:46.949494",
+  "annotator": "2nd"
+}

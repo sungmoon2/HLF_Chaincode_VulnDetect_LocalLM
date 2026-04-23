@@ -1,0 +1,19 @@
+{
+  "file_id": "0233_bugfrog1024_charity_contract",
+  "repo": "bugfrog1024",
+  "filename": "charity_contract.go",
+  "elapsed_s": 17.53,
+  "input_tokens": 4209,
+  "output_tokens": 753,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L248-L255, L283-L287",
+  "rationale": "The `modelRandom` function uses `rand.Intn(3)` which relies on the global default random source (unseeded/differently-seeded across peers). The random result determines the `Direction` field written to ledger state via `PutState`, causing endorsement divergence when `donationRules` is called with \"random\" argument.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, routing to: `donation`, `queryDealOnce`, `queryDealALL`, `queryUserInfo`, `donationRules`.\n\n### Critical Finding: Random Number Generation (C2-adjacent but more fundamentally a determinism issue)\n\n**Lines 247-262 (`modelRandom` function):**\n```go\nrandomList := []string{\"xiwanggongcheng\", \"zaiqu\", \"guojijiuyuan\", \"kunnanjiating\"}\nt := rand.Intn(3)\ncNote := &CharityNote{\n    Direction:    randomList[t],\n    CostMoney:    cost,\n    DonationName: name,\n}\n```\n\nThe `rand.Intn(3)` call uses the default `math/rand` source, which is **not seeded deterministically across peers**. This random value directly determines:\n1. The `Direction` field of `cNote` (line 251)\n2. This `cNote` is then marshaled and written to state via `s.set(api, cNoteKey, cNoteBytes)` (lines 254-255)\n\nThis is called from `donationRules` when `args[1] == \"random\"` (lines 283-287), which is a transaction entrypoint.\n\n**This causes endorsement divergence**: Different peers will generate different random numbers, resulting in different `Direction` values being written to the ledger, causing endorsement mismatches.\n\n### Classification\nWhile `rand.Intn()` isn't explicitly in the C1-C6 taxonomy, it represents **nondeterministic computation affecting ledger writes** - the fundamental issue the taxonomy addresses. The closest match is treating it as a source of nondeterminism similar to C1 (time-based) or C6 (global mutable state - the default rand source is global mutable state).\n\n### Other Checks\n- **C1 TIME_NOW**: No `time.Now()` usage found\n- **C2 GOROUTINE**: No goroutines found\n- **C3 MAP_ITERATION**: No map iteration found\n- **C4 NON_REVALIDATED_QUERY**: `GetStateByRange` is used but explicitly excluded per rules\n- **C5 ITERATOR_LEAK**: `resultsIter.Close()` is properly deferred (line 193)\n- **C6 GLOBAL_MUTABLE_STATE**: `math/rand` default source is implicitly global mutable state\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L248-L255, L283-L287\nRATIONALE: The `modelRandom` function uses `rand.Intn(3)` which relies on the global default random source (unseeded/differently-seeded across peers). The random result determines the `Direction` field written to ledger state via `PutState`, causing endorsement divergence when `donationRules` is called with \"random\" argument.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:19:16.955915",
+  "annotator": "2nd"
+}

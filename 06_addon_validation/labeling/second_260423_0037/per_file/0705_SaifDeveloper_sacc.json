@@ -1,0 +1,19 @@
+{
+  "file_id": "0705_SaifDeveloper_sacc",
+  "repo": "SaifDeveloper",
+  "filename": "sacc.go",
+  "elapsed_s": 2.24,
+  "input_tokens": 1497,
+  "output_tokens": 152,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState at L18 and L52) are driven by deterministic inputs (stub.GetStringArgs(), stub.GetFunctionAndParameters(), strconv operations). No time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state patterns influence the write decisions. The encrypt/decrypt function calls are deterministic given fixed inputs and passwords.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState at L18 and L52) are driven by deterministic inputs (stub.GetStringArgs(), stub.GetFunctionAndParameters(), strconv operations). No time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state patterns influence the write decisions. The encrypt/decrypt function calls are deterministic given fixed inputs and passwords.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:14.712959",
+  "annotator": "2nd"
+}

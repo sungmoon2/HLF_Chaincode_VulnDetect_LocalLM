@@ -1,0 +1,19 @@
+{
+  "file_id": "0447_jiameng15_hkzgcc",
+  "repo": "jiameng15",
+  "filename": "hkzgcc.go",
+  "elapsed_s": 14.49,
+  "input_tokens": 1949,
+  "output_tokens": 632,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid chaincode entrypoints (Init/Invoke) but no nondeterministic patterns. The Init function uses hardcoded static values for all writes. Functions referenced in Invoke that might contain issues are not defined in this file, and cross-file analysis is out of scope.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods on `HKCoinChaincode` implementing the shim interface - this is a valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. The `CreateTime` field is set to a hardcoded string `\"2018-08-20 18:00:00\"`, not a dynamic time call.\n\n**C2 GOROUTINE**: No `go` statements or goroutine spawning.\n\n**C3 MAP_ITERATION**: No map iteration with `for...range`. The `json.Marshal(admin)` call marshals a struct, not a map.\n\n**C4 NON_REVALIDATED_QUERY**: The `Invoke` function references `read_everything`, `getHistory`, and `getMarblesByRange` which might use rich queries, but these functions are not defined in this file. Within this file, there are no calls to `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations. The only package-level declaration is the `HKCoinChaincode` struct type.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Observations\n- The `Init` function writes deterministic data to the ledger (hardcoded version string and admin user with static values)\n- The `Invoke` function dispatches to various handlers, but the handlers that might have issues (`read_everything`, `getHistory`, `getMarblesByRange`) are not defined in this file\n- Functions like `read`, `write`, `delete_marble`, `init_user`, `disable_owner` are called but not defined in this file - they must be in other files\n\nSince I can only analyze intra-file evidence, and this file contains no C1-C4 or C6 patterns within its defined code, the file is SAFE.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid chaincode entrypoints (Init/Invoke) but no nondeterministic patterns. The Init function uses hardcoded static values for all writes. Functions referenced in Invoke that might contain issues are not defined in this file, and cross-file analysis is out of scope.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:35:03.533019",
+  "annotator": "2nd"
+}

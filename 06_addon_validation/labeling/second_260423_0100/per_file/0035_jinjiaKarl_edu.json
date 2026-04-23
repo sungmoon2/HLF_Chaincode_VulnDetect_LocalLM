@@ -1,0 +1,19 @@
+{
+  "file_id": "0035_jinjiaKarl_edu",
+  "repo": "jinjiaKarl",
+  "filename": "edu.go",
+  "elapsed_s": 15.6,
+  "input_tokens": 4806,
+  "output_tokens": 759,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "C6",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L143, L227, L241, L21-L22, L141, L155, L240, L253",
+  "rationale": "The chaincode uses `time.Now().Unix()` for ModifyTime and ExitTime fields that are written to the ledger via PutState. Additionally, package-level mutable variables `BackGroundNo` and `RecordNo` are used as record IDs in ledger writes, and `GetAddress()` uses crypto/rand for generating ledger keys - all causing endorsement divergence across peers.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is valid HLF chaincode.\n\n### C1 TIME_NOW Analysis\n- **Line 143**: `ModifyTime: time.Now().Unix()` in `enrollStudent` - this value is written to ledger via `writeRecord` (line 145)\n- **Line 227**: `ModifyTime: time.Now().Unix()` in `updateDiploma` - written to ledger via `writeRecord` (line 229)\n- **Line 241**: `ExitTime: time.Now().Unix()` in `updateDiploma` - written to ledger via `writeBackground` (line 243)\n\nAll three instances use `time.Now()` to generate values that are directly stored in the ledger. Different endorsing peers will have different timestamps, causing endorsement divergence.\n\n### C6 GLOBAL_MUTABLE_STATE Analysis\n- **Lines 21-22**: `var BackGroundNo int = 0` and `var RecordNo int = 0` are package-level mutable variables\n- `RecordNo` is read at line 141 (`Record{Id: RecordNo, ...}`) and incremented at line 155 in `enrollStudent`\n- `BackGroundNo` is read at line 240 and incremented at line 253 in `updateDiploma`\n- These values determine record IDs that are written to the ledger\n\nThese global counters will have different values across different peer processes, causing nondeterministic record IDs.\n\n### Additional Nondeterminism (also C1-related randomness)\n- **Lines 361-372**: `GetAddress()` uses `crypto/rand.Reader` to generate random addresses\n- Called in `createSchool` (line 82), `createStudent` (line 100), and `getSchoolSignByAddress` (line 275)\n- In `createSchool` and `createStudent`, the random address becomes the key for `PutState`\n\n### C5 Iterator Analysis\nNo iterators are created in this file.\n\n### C3 MAP_ITERATION Analysis\nNo map iteration patterns found.\n\n## Verdict\n\nMultiple severe nondeterminism issues:\n1. `time.Now()` values written to ledger (C1)\n2. Global mutable counters affecting ledger writes (C6)\n3. Random address generation affecting ledger keys (effectively C1 - nondeterministic source)\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: C6\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L143, L227, L241, L21-L22, L141, L155, L240, L253\nRATIONALE: The chaincode uses `time.Now().Unix()` for ModifyTime and ExitTime fields that are written to the ledger via PutState. Additionally, package-level mutable variables `BackGroundNo` and `RecordNo` are used as record IDs in ledger writes, and `GetAddress()` uses crypto/rand for generating ledger keys - all causing endorsement divergence across peers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:01.021969",
+  "annotator": "2nd"
+}

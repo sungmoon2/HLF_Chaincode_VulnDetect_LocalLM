@@ -1,0 +1,13 @@
+{
+  "repo": "code2understand",
+  "filename": "04_history_of_keys.go",
+  "ground_truth": "SAFE",
+  "ground_truth_class": "NONE",
+  "qwen_prediction": "safe",
+  "qwen_elapsed_s": 0.39,
+  "qwen_raw_response": "No vulnerabilities detected.",
+  "semgrep_prediction": "safe",
+  "semgrep_rules_hit": "",
+  "semgrep_findings_count": 0,
+  "timestamp": "2026-04-23T01:13:50.645376"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0481_koakh_chaincode",
+  "repo": "koakh",
+  "filename": "chaincode.go",
+  "elapsed_s": 1.91,
+  "input_tokens": 949,
+  "output_tokens": 154,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods on TestChaincode), but both methods immediately return shim.Success(nil) without performing any ledger operations, queries, or state modifications. No C1 (time-based), C2 (goroutine), C3 (map iteration), C4 (non-revalidated query), or C6 (global mutable state) patterns exist that could influence consensus-critical behavior. The code is deterministic.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods on TestChaincode), but both methods immediately return shim.Success(nil) without performing any ledger operations, queries, or state modifications. No C1 (time-based), C2 (goroutine), C3 (map iteration), C4 (non-revalidated query), or C6 (global mutable state) patterns exist that could influence consensus-critical behavior. The code is deterministic.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:51:30.948584",
+  "annotator": "2nd"
+}

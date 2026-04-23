@@ -1,0 +1,19 @@
+{
+  "file_id": "0087_2016Nishi_sleeper",
+  "repo": "2016Nishi",
+  "filename": "sleeper.go",
+  "elapsed_s": 15.24,
+  "input_tokens": 1478,
+  "output_tokens": 676,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L17-L21",
+  "rationale": "The chaincode uses time.Sleep which causes delays but does not capture or use time values in any computation affecting ledger writes or proposal responses. The taxonomy's C1 specifically covers time.Now(), time.Since(), and time.Until() - not time.Sleep. All PutState calls and return values are deterministic based on input arguments.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing the shim.ChaincodeStubInterface - these are valid HLF transaction entrypoints.\n\n### Pattern Detection\n\n**time.Sleep usage (lines 17-21):**\nThe `sleep` method uses `time.Sleep(time.Duration(st) * time.Millisecond)`. This is called from:\n- `Init` (line 30)\n- `invoke` (line 57) - after `PutState`\n- `query` (line 70) - after `GetState`\n\n**Critical Question: Does time.Sleep cause endorsement divergence?**\n\n`time.Sleep` introduces a delay but does NOT:\n1. Generate a value that gets written to the ledger\n2. Produce different return values across peers\n3. Affect the read-write set\n\nThe actual operations are deterministic:\n- `PutState(key, []byte(val))` uses deterministic inputs from args\n- `shim.Success([]byte(\"OK\"))` and `shim.Success(val)` return deterministic values\n\n**C1 TIME_NOW check:** The code uses `time.Sleep`, not `time.Now()`, `time.Since()`, or `time.Until()`. `time.Sleep` is a blocking operation that doesn't capture or use the current time in any computation that affects state or responses.\n\n**C2 GOROUTINE:** No goroutines present.\n\n**C3 MAP_ITERATION:** No map iterations.\n\n**C4 NON_REVALIDATED_QUERY:** No rich queries (GetQueryResult, etc.).\n\n**C6 GLOBAL_MUTABLE_STATE:** No package-level mutable variables.\n\n**C5 ITERATOR_LEAK:** No iterators created.\n\n### Verdict Reasoning\n\nWhile `time.Sleep` could theoretically cause timeout issues or affect endorsement timing, it does NOT fall under C1 (TIME_NOW) which specifically covers `time.Now()`, `time.Since()`, and `time.Until()` - functions that capture the current time and use it in computations. `time.Sleep` merely pauses execution without producing any time-dependent value that influences writes or responses.\n\nThe chaincode's actual state operations and return values are fully deterministic based on input arguments.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L17-L21\nRATIONALE: The chaincode uses time.Sleep which causes delays but does not capture or use time values in any computation affecting ledger writes or proposal responses. The taxonomy's C1 specifically covers time.Now(), time.Since(), and time.Until() - not time.Sleep. All PutState calls and return values are deterministic based on input arguments.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:08:12.290057",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0693_richardfelkl_main",
+  "repo": "richardfelkl",
+  "filename": "main.go",
+  "elapsed_s": 19.22,
+  "input_tokens": 2693,
+  "output_tokens": 764,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L56-L57, L65",
+  "rationale": "The `put` function uses `uuid.NewV4().String()` to generate a random ID when not provided by the caller. This random UUID becomes the key for `stub.PutState()`, causing each endorsing peer to write to a different key, resulting in endorsement divergence. Additionally, the iterator in `list` is never closed (C5).",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning (`go func()` or `go methodCall()`).\n\n**C3 MAP_ITERATION**: \n- The `list` function builds a `map[string]interface{}` called `ret` and returns `json.Marshal(ret)` at L175.\n- However, `encoding/json.Marshal` in Go's standard library sorts map keys deterministically, so this is SAFE per the taxonomy.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetStateByPartialCompositeKey` is explicitly listed as NOT a C4 source in the taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `ObjectType` is a `const`, not a mutable `var` - SAFE.\n\n**Critical Issue Found - UUID Generation (L56-57)**:\n```go\nid = uuid.NewV4().String()\n```\nThis generates a random UUID when `len(args) == 1` (due to the buggy condition at L49 which is always false, but assuming intended logic). The UUID is then used as the key for `PutState` at L65.\n\n`uuid.NewV4()` generates a random UUID using a random number generator. Different endorsing peers will generate different UUIDs, causing:\n1. Different composite keys to be created\n2. Different `PutState` calls with different keys\n3. Endorsement divergence\n\nThis is a **nondeterministic source influencing a ledger write**. While not explicitly in the C1-C6 taxonomy, this is fundamentally the same class of issue as C1 (external nondeterministic source affecting writes). The closest match is **C6** if we consider the random state, but more accurately this falls under general nondeterminism affecting writes.\n\n**C5 ITERATOR_LEAK**:\n- In `list` function, the iterator `value` from `GetStateByPartialCompositeKey` (L148) is never closed with `value.Close()`.\n\n### Verdict Reasoning\nThe `uuid.NewV4()` call generates a random value that directly determines the key used in `PutState`. Each endorsing peer will generate a different UUID, causing different write sets and endorsement failure. This is consensus-critical nondeterminism.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L56-L57, L65\nRATIONALE: The `put` function uses `uuid.NewV4().String()` to generate a random ID when not provided by the caller. This random UUID becomes the key for `stub.PutState()`, causing each endorsing peer to write to a different key, resulting in endorsement divergence. Additionally, the iterator in `list` is never closed (C5).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:53:12.427289",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0911_yoonjk_account",
+  "repo": "yoonjk",
+  "filename": "account.go",
+  "elapsed_s": 13.98,
+  "input_tokens": 3183,
+  "output_tokens": 514,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L63-L95, L97-L111",
+  "rationale": "The `getSelector` function uses `GetQueryResult` (a rich query) and its results are returned via `shim.Success` in `queryAccount`. While this is read-only and doesn't directly cause a write decision, the iterator created at L63 is never closed (C5). However, the primary vulnerability is the UUID generation at L40-43 used in `initAcc` at L117 - `genUUIDv4()` generates a random UUID that becomes the key for `PutState` at L140, causing different endorsers to write to different keys, leading to endorsement divergence. This is effectively nondeterministic state modification, though it doesn't fit the exact C1-C4/C6 categories. Re-evaluating: The UUID is the critical issue - each peer generates a different vendorID, causing `PutState` with different keys.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C4\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L63-L95, L97-L111\nRATIONALE: The `getSelector` function uses `GetQueryResult` (a rich query) and its results are returned via `shim.Success` in `queryAccount`. While this is read-only and doesn't directly cause a write decision, the iterator created at L63 is never closed (C5). However, the primary vulnerability is the UUID generation at L40-43 used in `initAcc` at L117 - `genUUIDv4()` generates a random UUID that becomes the key for `PutState` at L140, causing different endorsers to write to different keys, leading to endorsement divergence. This is effectively nondeterministic state modification, though it doesn't fit the exact C1-C4/C6 categories. Re-evaluating: The UUID is the critical issue - each peer generates a different vendorID, causing `PutState` with different keys.\n\nWait, let me reconsider the taxonomy. The UUID generation using `uuid.NewV4()` is a source of randomness that directly influences `PutState` - this causes endorsement divergence but isn't explicitly in C1-C6. The closest match would be considering it similar to C1 (external nondeterministic source). Given the strict taxonomy, C4 applies to `GetQueryResult` in `queryAccount` which returns query results that could vary across peers.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C4\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L40-43, L117, L140\nRATIONALE: The `genUUIDv4()` function at L40-43 generates random UUIDs using `uuid.NewV4()`, which is called in `initAcc` at L117 to create `vendorID`. This random ID is then used as the key in `PutState` at L140, causing each endorsing peer to write to a different key, resulting in endorsement divergence. Additionally, the iterator in `getSelector` (L63) is never closed (C5).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:08:50.012767",
+  "annotator": "2nd"
+}

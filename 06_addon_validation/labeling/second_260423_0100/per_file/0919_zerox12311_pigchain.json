@@ -1,0 +1,19 @@
+{
+  "file_id": "0919_zerox12311_pigchain",
+  "repo": "zerox12311",
+  "filename": "pigchain.go",
+  "elapsed_s": 5.16,
+  "input_tokens": 2279,
+  "output_tokens": 139,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L97-L100",
+  "rationale": "The file contains GetHistoryForKey (L77) but it is only used for read-only query returning data via shim.Success, not influencing any write decision. The time.Unix() call at L97-100 converts the deterministic result.Timestamp from the ledger history (not time.Now()), so it does not introduce nondeterminism. The iterator is properly closed with defer at L84.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L97-L100\nRATIONALE: The file contains GetHistoryForKey (L77) but it is only used for read-only query returning data via shim.Success, not influencing any write decision. The time.Unix() call at L97-100 converts the deterministic result.Timestamp from the ledger history (not time.Now()), so it does not introduce nondeterminism. The iterator is properly closed with defer at L84.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:09:19.959137",
+  "annotator": "2nd"
+}

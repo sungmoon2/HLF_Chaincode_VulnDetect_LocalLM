@@ -1,0 +1,19 @@
+{
+  "file_id": "0213_bhagyanik_BR31A1",
+  "repo": "bhagyanik",
+  "filename": "BR31A1.go",
+  "elapsed_s": 3.56,
+  "input_tokens": 1439,
+  "output_tokens": 118,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init/Invoke). It uses json.Marshal on a struct (not a map), GetState for reads, and PutState for writes with deterministic inputs from args. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init/Invoke). It uses json.Marshal on a struct (not a map), GetState for reads, and PutState for writes with deterministic inputs from args. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:17:56.022421",
+  "annotator": "2nd"
+}

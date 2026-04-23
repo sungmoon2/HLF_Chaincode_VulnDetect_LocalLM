@@ -1,0 +1,19 @@
+{
+  "file_id": "0797_swapnilshrivastava_chaincode1",
+  "repo": "swapnilshrivastava",
+  "filename": "chaincode1.go",
+  "elapsed_s": 9.03,
+  "input_tokens": 1097,
+  "output_tokens": 517,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains only deterministic operations. The Init method writes a fixed key-value pair, and Invoke returns a constant response. The only package-level variable is a logger used exclusively for logging, which is explicitly safe per the taxonomy.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify HLF Transaction Entrypoints\n- **Line 15-25**: `Init` method with `shim.ChaincodeStubInterface` parameter - YES, valid entrypoint\n- **Line 27-31**: `Invoke` method with `shim.ChaincodeStubInterface` parameter - YES, valid entrypoint\n\nThis file contains recognizable HLF transaction entrypoints.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 11: `var logger = shim.NewLogger(\"Chaincode_cc0\")` - This is a package-level variable, but it's only used for logging purposes (Lines 16, 28, 35). Logger-only globals are explicitly SAFE per the taxonomy.\n\n### Step 3: Check for C5 (Auxiliary)\nNo iterators are created in this code.\n\n### Summary\nThe chaincode is straightforward:\n- `Init` writes a fixed key-value pair to state\n- `Invoke` returns a fixed success message\n- The only global variable is a logger used exclusively for logging\n- All operations are deterministic\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains only deterministic operations. The Init method writes a fixed key-value pair, and Invoke returns a constant response. The only package-level variable is a logger used exclusively for logging, which is explicitly safe per the taxonomy.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:00:37.165439",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0133_akm4_Shop",
+  "repo": "akm4",
+  "filename": "Shop.go",
+  "elapsed_s": 2.88,
+  "input_tokens": 2181,
+  "output_tokens": 158,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present. The code parses JSON, iterates over an actions array (not a map), constructs responses deterministically, and performs ledger writes (PutState at L95) only with deterministic inputs derived from parsed JSON and function parameters. No time-based operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence the transaction logic.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present. The code parses JSON, iterates over an actions array (not a map), constructs responses deterministically, and performs ledger writes (PutState at L95) only with deterministic inputs derived from parsed JSON and function parameters. No time-based operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence the transaction logic.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:41:38.545568",
+  "annotator": "2nd"
+}

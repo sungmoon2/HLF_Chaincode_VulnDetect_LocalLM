@@ -1,0 +1,138 @@
+{
+  "phase": "Phase 3-3 Adjudication",
+  "date": "2026-04-23",
+  "1st_annotator": "Opus 4.5 (1st prompt) + code-level verification",
+  "2nd_annotator": "Opus 4.5 (2nd prompt, blinded)",
+  "total_files": 461,
+  "agreement": {
+    "raw": 0.965,
+    "kappa": 0.766,
+    "interpretation": "Substantial"
+  },
+  "confusion_matrix": {
+    "1st_V_2nd_V": 29,
+    "1st_V_2nd_S": 2,
+    "1st_S_2nd_V": 14,
+    "1st_S_2nd_S": 416
+  },
+  "disagreements": 16,
+  "adjudication_results": [
+    {
+      "file": "bugfrog1024/solution.go",
+      "1st": "V(C3)",
+      "2nd": "S",
+      "winner": "1st",
+      "reason": "Verified C3 map iteration→write"
+    },
+    {
+      "file": "jasonren0403/operations.go",
+      "1st": "V(C3)",
+      "2nd": "S",
+      "winner": "1st",
+      "reason": "Verified C3 map range kvs→PutState"
+    },
+    {
+      "file": "2016Nishi/chaincode_example01.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "PutState commented out"
+    },
+    {
+      "file": "lcy1317/chaincode.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "time.Local from time package, scope violation"
+    },
+    {
+      "file": "linqd1/chaincode.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "No PutState in invoke()"
+    },
+    {
+      "file": "soodakshay/mycc.go",
+      "1st": "S",
+      "2nd": "V(C4)",
+      "winner": "1st",
+      "reason": "Query gates entry, PutState unconditional"
+    },
+    {
+      "file": "yoonjk/account.go",
+      "1st": "S",
+      "2nd": "V(C4)",
+      "winner": "1st",
+      "reason": "Read-only query"
+    },
+    {
+      "file": "komaldhiman112/material-trace.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "organizationMap is config constant"
+    },
+    {
+      "file": "richardfelkl/main.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "FP confirmed (no map iteration, no mutable global)"
+    },
+    {
+      "file": "DCoT-EL/dcotWorkflow.go",
+      "1st": "S",
+      "2nd": "V(C1)",
+      "winner": "1st",
+      "reason": "No time.Now() in file"
+    },
+    {
+      "file": "FLombardi-PhD/yandex_translator.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "api_key is local var, not package-level"
+    },
+    {
+      "file": "Featasy/ml.go",
+      "1st": "S",
+      "2nd": "V(C2)",
+      "winner": "1st",
+      "reason": "No goroutines in file"
+    },
+    {
+      "file": "bugfrog1024/charity_contract.go",
+      "1st": "S",
+      "2nd": "V(C6)",
+      "winner": "1st",
+      "reason": "No package-level mutable vars"
+    },
+    {
+      "file": "samlinux/nfdt01.go",
+      "1st": "S",
+      "2nd": "V(C2)",
+      "winner": "1st",
+      "reason": "No goroutines; all synchronous"
+    },
+    {
+      "file": "suddutt1/InvokersIdentity.go",
+      "1st": "S",
+      "2nd": "V(C2)",
+      "winner": "1st",
+      "reason": "No goroutines; all synchronous"
+    },
+    {
+      "file": "akm4/Shop.go",
+      "1st": "S",
+      "2nd": "V(C3)",
+      "winner": "1st",
+      "reason": "for...range over slice ([]interface{}), not map. C3 requires map-typed range."
+    }
+  ],
+  "summary": "16/16 resolved (1st wins all)",
+  "supplementary": {
+    "haiku_run": "second_haiku_supplementary/",
+    "haiku_agreement": "Not computed (Haiku over-detected: V=74 vs ground truth V=33)"
+  }
+}

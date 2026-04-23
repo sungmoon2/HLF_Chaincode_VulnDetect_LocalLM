@@ -1,0 +1,19 @@
+{
+  "file_id": "0237_bugfrog1024_main",
+  "repo": "bugfrog1024",
+  "filename": "main.go",
+  "elapsed_s": 2.36,
+  "input_tokens": 1417,
+  "output_tokens": 176,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable global state) patterns exist. All operations are deterministic routing based on function arguments and stub calls (GetFunctionAndParameters, SetEvent) that do not introduce nondeterminism. The actual transaction logic is delegated to helper methods not defined in this file, so intra-file evidence of vulnerability cannot be established.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable global state) patterns exist. All operations are deterministic routing based on function arguments and stub calls (GetFunctionAndParameters, SetEvent) that do not introduce nondeterminism. The actual transaction logic is delegated to helper methods not defined in this file, so intra-file evidence of vulnerability cannot be established.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:44:20.047126",
+  "annotator": "2nd"
+}

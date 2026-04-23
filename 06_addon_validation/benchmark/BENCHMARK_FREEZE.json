@@ -1,0 +1,5126 @@
+{
+  "version": "1.0",
+  "created": "2026-04-23",
+  "source": "GoLiSA full corpus (621 non-dev + 1 Running_Examples)",
+  "labeling_run": "run_260422_2142",
+  "labeling_model": "claude-opus-4-5@20251101",
+  "verification": "code-level review (46 V files + 70 positive->SAFE)",
+  "dedup_method": "SHA-256 content hash",
+  "total_before_dedup": 618,
+  "total_after_dedup": 464,
+  "removed_duplicates": 154,
+  "vulnerable": 32,
+  "safe": 432,
+  "excluded": 4,
+  "family_distribution": {
+    "C1": 22,
+    "C6": 4,
+    "C3": 3,
+    "C4": 2,
+    "C2": 1
+  },
+  "files": [
+    {
+      "repo": "akshay111meher",
+      "filename": "myexample.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C6",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "01f00faf4224b4ba"
+    },
+    {
+      "repo": "alejandrolr",
+      "filename": "lab.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "18c643e8d377e497"
+    },
+    {
+      "repo": "arthurmsouza",
+      "filename": "boleto.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fab556e400e6c6b7"
+    },
+    {
+      "repo": "ashokcin1",
+      "filename": "main.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "C3",
+      "auxiliary_c5": "NO",
+      "content_hash": "e67f51ca75078e41"
+    },
+    {
+      "repo": "bairathirahul",
+      "filename": "genesiskyc.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "C3",
+      "auxiliary_c5": "NO",
+      "content_hash": "00335c9ba6362014"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "solution.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C3",
+      "secondary_class": "C6",
+      "auxiliary_c5": "NO",
+      "content_hash": "b9e019afa0dddfbe"
+    },
+    {
+      "repo": "Co-Verify",
+      "filename": "fabcar.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C4",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e490e199e170cb37"
+    },
+    {
+      "repo": "cristiano-andrade",
+      "filename": "chaincode-test.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e1867bbe9fbb88bf"
+    },
+    {
+      "repo": "eshita53",
+      "filename": "fabcar.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "C4",
+      "auxiliary_c5": "NO",
+      "content_hash": "14f404e6ac0880b4"
+    },
+    {
+      "repo": "farmerrrrr",
+      "filename": "asset management.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C6",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4de98379f357cda8"
+    },
+    {
+      "repo": "gymgle",
+      "filename": "diploma.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "C6",
+      "auxiliary_c5": "NO",
+      "content_hash": "1ac4b2e595bdef8f"
+    },
+    {
+      "repo": "haydencoinprima",
+      "filename": "wallet_chaincode.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f19bc0644ae3184b"
+    },
+    {
+      "repo": "hungryMob",
+      "filename": "sendEvent.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C4",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "d8359a1034e8590e"
+    },
+    {
+      "repo": "imineev",
+      "filename": "carTrace.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b16966cc527f5ee6"
+    },
+    {
+      "repo": "isheejong",
+      "filename": "carTrace.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e5217de785b55cf0"
+    },
+    {
+      "repo": "jasonren0403",
+      "filename": "operations.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C3",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a1a2e88978d92471"
+    },
+    {
+      "repo": "jbibodi",
+      "filename": "Invoice.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "C4",
+      "auxiliary_c5": "NO",
+      "content_hash": "2122f1533ad7baf3"
+    },
+    {
+      "repo": "jinjiaKarl",
+      "filename": "edu.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C6",
+      "secondary_class": "C1",
+      "auxiliary_c5": "NO",
+      "content_hash": "920343643a5ba386"
+    },
+    {
+      "repo": "jinjiaKarl",
+      "filename": "energyCommunity.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C6",
+      "secondary_class": "C1",
+      "auxiliary_c5": "NO",
+      "content_hash": "ba7f0a664f486a5b"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "foodSCM.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f6e4f7ff3dfb2053"
+    },
+    {
+      "repo": "Running_Examples",
+      "filename": "GoRoutines.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C2",
+      "secondary_class": "C6",
+      "auxiliary_c5": "NO",
+      "content_hash": "unknown"
+    },
+    {
+      "repo": "ryu-sato",
+      "filename": "chaincode_sample.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C3",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f9ec1b2e180bc7ad"
+    },
+    {
+      "repo": "sachin-ngpws",
+      "filename": "cpu-use.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "0830b99b0ef46beb"
+    },
+    {
+      "repo": "sriyanshcse",
+      "filename": "fabcar.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "88bad7341b53fc1f"
+    },
+    {
+      "repo": "tkalai25298",
+      "filename": "cpu-use.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "81d1e84192bada39"
+    },
+    {
+      "repo": "Trust-Contract",
+      "filename": "cargo-chaincode.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fc47d013d8618adc"
+    },
+    {
+      "repo": "vivianLL",
+      "filename": "mychaincode.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6f501e3cae1a00d0"
+    },
+    {
+      "repo": "vmorris",
+      "filename": "procon.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5ff7f82c1ea9c8bd"
+    },
+    {
+      "repo": "xuansonha17031991",
+      "filename": "drug_information.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "44c2a6ca83c2d8cd"
+    },
+    {
+      "repo": "xuansonha17031991",
+      "filename": "hospital_fees.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d339f981df067c4f"
+    },
+    {
+      "repo": "xuansonha17031991",
+      "filename": "medical_record.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8aed6c34a6979f42"
+    },
+    {
+      "repo": "xuansonha17031991",
+      "filename": "patient_inormation.go",
+      "verdict": "VULNERABLE",
+      "primary_class": "C1",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b24396024cf864c5"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "chaincode_example01.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "51a55e08117c92a2"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "28d4d3f478825d54"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "chaincode_example03.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c5d28fe1d5fa88df"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "chaincode_example04.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "89d6738f109feddb"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "chaincode_example05.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7a725e71e59a5296"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "configure.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "203febfc32511956"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "endorser_onevalidsignature.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6acf73f5830f928d"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "eventsender.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e768a47385e0e980"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "invokereturnsvalue.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1c00c5cec7d400ff"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fa092765ed67c80a"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "passthru.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "cd2c9e36331a6997"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "samplesyscc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "692c9fb1b7e7e99f"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "sleeper.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "98e0f3a7204f795b"
+    },
+    {
+      "repo": "2016Nishi",
+      "filename": "validator_onevalidsignature.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7f3271afef84c0a2"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8ef278a4762b5ec1"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "chaincode_sample.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c0b8a2ba2ea9377a"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "map.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9f62a07b63006aac"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "map_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f0a813a2878310ba"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "mapkeys.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8f6037e1e5882b5e"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "27c3788ac13bd6f1"
+    },
+    {
+      "repo": "abegpatel",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c186f7c1c980d1c1"
+    },
+    {
+      "repo": "abgulati",
+      "filename": "JSON_CRUD_Chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2a3dbe671b4eccd6"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "calc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4e9f33b2a8283fc4"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "caller.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "273eaccd664cd945"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "241ffa6c74d27500"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "erc20.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "63f731756c9ce435"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "priv.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c3bb258ef06c3e8e"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "qry.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2b4350320f896f16"
+    },
+    {
+      "repo": "acloudfan",
+      "filename": "token.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "256d3c7c08c6655a"
+    },
+    {
+      "repo": "adityachap",
+      "filename": "example_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9aea3523322ce4d9"
+    },
+    {
+      "repo": "adnanjee",
+      "filename": "GoChaincodeTemplate.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c323ca1351610346"
+    },
+    {
+      "repo": "airvin",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3ff9f4df103006bb"
+    },
+    {
+      "repo": "Akachain",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "dcf59d6b043a0bdd"
+    },
+    {
+      "repo": "akkagao",
+      "filename": "citizensChain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "027587beafed0c63"
+    },
+    {
+      "repo": "akm4",
+      "filename": "Person.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4b189e6e81e0355d"
+    },
+    {
+      "repo": "akm4",
+      "filename": "Shop.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8a8dc9fee29cc80d"
+    },
+    {
+      "repo": "akshay111meher",
+      "filename": "ex2.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3b3242e80f854d49"
+    },
+    {
+      "repo": "alejandrolr",
+      "filename": "arm.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "69d8c5fb809ba41d"
+    },
+    {
+      "repo": "alejandrolr",
+      "filename": "supplyChain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ed11def5e8a1b7ed"
+    },
+    {
+      "repo": "alejoacosta74",
+      "filename": "abac.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a7ba3badbbd728ee"
+    },
+    {
+      "repo": "alejoacosta74",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE**",
+      "auxiliary_c5": "NO**",
+      "content_hash": "9f607ecdea57ead9"
+    },
+    {
+      "repo": "alejoacosta74",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "36a1543f34de3ad3"
+    },
+    {
+      "repo": "alext234",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8366d73ddd061328"
+    },
+    {
+      "repo": "allan-zhou",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d2d2a1d44852e9b1"
+    },
+    {
+      "repo": "allan-zhou",
+      "filename": "marble.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d13f911cad887fbb"
+    },
+    {
+      "repo": "allan-zhou",
+      "filename": "mysacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "528ed504bae6727d"
+    },
+    {
+      "repo": "allan-zhou",
+      "filename": "template.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "401e31f6ef94c213"
+    },
+    {
+      "repo": "allan-zhou",
+      "filename": "transfer.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c5c76114648057df"
+    },
+    {
+      "repo": "Amit9887",
+      "filename": "marble.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bfb9f9e3d56d8a75"
+    },
+    {
+      "repo": "amtoaer",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "add1ec9605ec2364"
+    },
+    {
+      "repo": "andres07a",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2349019d6173dc9e"
+    },
+    {
+      "repo": "ankitaunhalkar",
+      "filename": "first_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4426260c861ca85b"
+    },
+    {
+      "repo": "ankitaunhalkar",
+      "filename": "tradefinance_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4ce57fc7e7020fcb"
+    },
+    {
+      "repo": "Anylsite",
+      "filename": "DeviceManager.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "624f5961783c922d"
+    },
+    {
+      "repo": "anzalbeg",
+      "filename": "abac.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "90ef192d77319202"
+    },
+    {
+      "repo": "anzalbeg",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "aed7d7ba98ce73e6"
+    },
+    {
+      "repo": "anzalbeg",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7ef8653bc8df387c"
+    },
+    {
+      "repo": "AProkot",
+      "filename": "mycontract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ce849740c8e3319d"
+    },
+    {
+      "repo": "arsulegai",
+      "filename": "key_value.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a480f12d9da011d6"
+    },
+    {
+      "repo": "asararatnakar",
+      "filename": "newkeyperinvoke.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ae693382c9c03eb2"
+    },
+    {
+      "repo": "aschmidt75",
+      "filename": "pcs.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7b1c8bab3dfcf49b"
+    },
+    {
+      "repo": "ashwanihlf",
+      "filename": "samplecc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "db215f2501a63cb8"
+    },
+    {
+      "repo": "ASomething",
+      "filename": "eventsender.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6dd720564bb71d29"
+    },
+    {
+      "repo": "austinfifield",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d9adfe4660f7eecf"
+    },
+    {
+      "repo": "Avery7Li",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "343eb70be67aa005"
+    },
+    {
+      "repo": "BadBaman",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "667e45f87a1cd434"
+    },
+    {
+      "repo": "BadBaman",
+      "filename": "odschaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6314dacd36ab507c"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "abac.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6ae7b4267e331927"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "641ae3abac9653df"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4a0c09745e4354ec"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "simpleasset.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3513de0ebeca4be8"
+    },
+    {
+      "repo": "bcken001a",
+      "filename": "chaincode2.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9a4b350279429524"
+    },
+    {
+      "repo": "bezant-developers",
+      "filename": "simpleChaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d9f12ef8a01d7471"
+    },
+    {
+      "repo": "bgaughran",
+      "filename": "abac.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f1f14e17d159c597"
+    },
+    {
+      "repo": "bgaughran",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b8619d59c41c597e"
+    },
+    {
+      "repo": "bhagyanik",
+      "filename": "BR31A1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "70819c23b3aa55b8"
+    },
+    {
+      "repo": "bhagyanik",
+      "filename": "DWPB.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "58396970e6d637b5"
+    },
+    {
+      "repo": "BingHongLi",
+      "filename": "chaincode_tutorial.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "731142e1f4eb8785"
+    },
+    {
+      "repo": "BOCno1team",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d4b2206700dfd40f"
+    },
+    {
+      "repo": "boohyung",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9ff07d664724121a"
+    },
+    {
+      "repo": "boohyung",
+      "filename": "ping.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e3a64eec8d1ca0c6"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "abac.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d57708337e270d2f"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "bMRP.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9008e97841d929ae"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "chaincode_AtoreAndAccess.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "423845a4d585e5dc"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "0cce7d54843f8d05"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "charity_contract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "65f05763c8e0cbb1"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2155a4415f7852c5"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "de056075f2be7694"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "marbles.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6f1d55e386e0ba2f"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3401474650eecace"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "99cec4ab16937505"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d550c84faba19c93"
+    },
+    {
+      "repo": "C0rWin",
+      "filename": "bank.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8bee5e98daf03395"
+    },
+    {
+      "repo": "C0rWin",
+      "filename": "person.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c6adae1363e7ed08"
+    },
+    {
+      "repo": "CaelRowley",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9fa56fb313ae9ccd"
+    },
+    {
+      "repo": "chainHero",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e4b9cdd6ab5c79b1"
+    },
+    {
+      "repo": "ChainNova",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "321d33d624567b78"
+    },
+    {
+      "repo": "ChaiwatSumrit",
+      "filename": "users_and_orgs.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fa1c70fd04a3e786"
+    },
+    {
+      "repo": "chilanti",
+      "filename": "asset_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d5d4e9618190092e"
+    },
+    {
+      "repo": "chintanr97",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2f45765714e32750"
+    },
+    {
+      "repo": "chpwssn",
+      "filename": "redvblue.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fad68d39dd57744c"
+    },
+    {
+      "repo": "clydedacruz",
+      "filename": "simplechaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a01b9262787abddc"
+    },
+    {
+      "repo": "code2understand",
+      "filename": "01_simple_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "30fee8e39bb78d1e"
+    },
+    {
+      "repo": "code2understand",
+      "filename": "02_composite_asset_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7755d5c7a8764510"
+    },
+    {
+      "repo": "code2understand",
+      "filename": "03_range_keys_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e960c50ead7b3c5f"
+    },
+    {
+      "repo": "code2understand",
+      "filename": "04_history_of_keys.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "76bd4288f16fda44"
+    },
+    {
+      "repo": "code2understand",
+      "filename": "05_issue_events.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4455bfd2ddb85d52"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "calc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "251a0cd7a31acbe1"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "caller.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2698c25bf5017fe5"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "erc20.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "863b77da9eb7b5b3"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "priv.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f975480aa9f021e8"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "qry.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "224855510d5b2bf7"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "token.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2f4a2906d7af30ae"
+    },
+    {
+      "repo": "ctacampado",
+      "filename": "beacon_cmpgns.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a3825cbdbdb6b24c"
+    },
+    {
+      "repo": "ctacampado",
+      "filename": "beacon_identity.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "84fae8856630a58f"
+    },
+    {
+      "repo": "ctacampado",
+      "filename": "beacon_transact.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8a2da39ecff78b12"
+    },
+    {
+      "repo": "dachrillz",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f5b060b9b6dd968b"
+    },
+    {
+      "repo": "DappCampus",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "5a79b907385deb36"
+    },
+    {
+      "repo": "DappCampus",
+      "filename": "controller.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c9a95656e5b231fa"
+    },
+    {
+      "repo": "daveyMedvedev",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2b93c5569c7d50a6"
+    },
+    {
+      "repo": "dbadoy",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c4ce416709797f8d"
+    },
+    {
+      "repo": "dcbove",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "558f42bc3c081d6d"
+    },
+    {
+      "repo": "DCoT-EL",
+      "filename": "dcotWorkflow.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "50b99d8529322deb"
+    },
+    {
+      "repo": "debutdeveloper",
+      "filename": "debut_asset.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "18f407db18196b3a"
+    },
+    {
+      "repo": "deevotech",
+      "filename": "food_supplychain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "05785cc049472e78"
+    },
+    {
+      "repo": "deevotech",
+      "filename": "supplychain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c0b0d89c8e1fc7c2"
+    },
+    {
+      "repo": "deevotech",
+      "filename": "supplychain_account.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "422853aef9782220"
+    },
+    {
+      "repo": "demonsh",
+      "filename": "example_base.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "53ec844838acc04f"
+    },
+    {
+      "repo": "DID-hyperledger",
+      "filename": "did.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a02922bcd5b73f9b"
+    },
+    {
+      "repo": "elciusferreira",
+      "filename": "accountController.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "881d876253de1b5b"
+    },
+    {
+      "repo": "elciusferreira",
+      "filename": "cardController.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "49c10db1081e5f4d"
+    },
+    {
+      "repo": "elciusferreira",
+      "filename": "transferController.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6ac67d9f5bc6ca43"
+    },
+    {
+      "repo": "EslamHiko",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d6c4dff677581d18"
+    },
+    {
+      "repo": "esumit",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6e53d2e5bdff09e5"
+    },
+    {
+      "repo": "evgenhvost",
+      "filename": "demo_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e7948203aa0bc229"
+    },
+    {
+      "repo": "Featasy",
+      "filename": "ml.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "71223efb160e3bde"
+    },
+    {
+      "repo": "FeiyangTan",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e9577ed82e11fccd"
+    },
+    {
+      "repo": "femiadewumi",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "64487e3f8ab1037b"
+    },
+    {
+      "repo": "ferrygun",
+      "filename": "smartbulb.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d3c7f004e68f2b5d"
+    },
+    {
+      "repo": "Ferwoo",
+      "filename": "EvidenceChaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c26d3d297085f153"
+    },
+    {
+      "repo": "Ferwoo",
+      "filename": "finance.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1ba0d9382acc1dfd"
+    },
+    {
+      "repo": "fishmc",
+      "filename": "certification.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f985aa29eec8bae0"
+    },
+    {
+      "repo": "fishmc",
+      "filename": "contract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9e55a231306fcfdd"
+    },
+    {
+      "repo": "fishmc",
+      "filename": "test.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fc1339341ee6e06a"
+    },
+    {
+      "repo": "fishmc",
+      "filename": "transcation.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "49a72b1f5ed394d5"
+    },
+    {
+      "repo": "FLombardi-PhD",
+      "filename": "governance.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "81ae3ba99dbaff44"
+    },
+    {
+      "repo": "FLombardi-PhD",
+      "filename": "key_value_store.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b394ddb46b435a2c"
+    },
+    {
+      "repo": "FLombardi-PhD",
+      "filename": "yandex_translator.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "72b08570e1a4f36e"
+    },
+    {
+      "repo": "flybirdC",
+      "filename": "contract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "70a8ffee4075a803"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "31bc1ca8a03e36d3"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "chaincode_example04.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6bbbc01bbb5e30a4"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "chaincode_example05.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1c13b7a976000c43"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "map.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "28f3e3755308a516"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bb6dc432d66cc3d8"
+    },
+    {
+      "repo": "freya-zhang",
+      "filename": "example_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1382f170540347ca"
+    },
+    {
+      "repo": "FuradWho",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "55bd3ec3a10949b5"
+    },
+    {
+      "repo": "fushui-Fang",
+      "filename": "lyan.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "927ef75916b41866"
+    },
+    {
+      "repo": "Gela-Gunp",
+      "filename": "nekochain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "14800fceaf2b5f74"
+    },
+    {
+      "repo": "georgkoester",
+      "filename": "blacklist_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9cb006ccfb7a6d66"
+    },
+    {
+      "repo": "ggdranzor",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "800a5c1fbdaf55f9"
+    },
+    {
+      "repo": "giou-k",
+      "filename": "votingAllinOne.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4a942da5eb367148"
+    },
+    {
+      "repo": "global-blockchain",
+      "filename": "simplechaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "784ad61768300f04"
+    },
+    {
+      "repo": "gorbunovperm",
+      "filename": "optimum.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8eeaafe514f1713b"
+    },
+    {
+      "repo": "grishawh",
+      "filename": "new.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1cb63f45d0901504"
+    },
+    {
+      "repo": "harishtreddy",
+      "filename": "wabco.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4145bf50a35df67c"
+    },
+    {
+      "repo": "heixiongTT",
+      "filename": "simple.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e6ed6480ef8e6cae"
+    },
+    {
+      "repo": "hhllii",
+      "filename": "trading.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "68096948cd3bedca"
+    },
+    {
+      "repo": "higyigma",
+      "filename": "hashChainCode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e9b7e25ca43063eb"
+    },
+    {
+      "repo": "hlf-go",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b3886188f3c5851f"
+    },
+    {
+      "repo": "hoke58",
+      "filename": "vendorpdc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "21fbb85f98168d71"
+    },
+    {
+      "repo": "hqiwui",
+      "filename": "demo.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1967495f97eb1fed"
+    },
+    {
+      "repo": "Hulkbero",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2a11a75581a439a6"
+    },
+    {
+      "repo": "hyperledgendary",
+      "filename": "wasm_contract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "374255066e724b90"
+    },
+    {
+      "repo": "hysn19",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c149c1e3633d4fbd"
+    },
+    {
+      "repo": "ianco",
+      "filename": "cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "57e3eb22728cb1a7"
+    },
+    {
+      "repo": "IBM-Blockchain-Edu-Credit",
+      "filename": "opp_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a0dc6ef859d8ace9"
+    },
+    {
+      "repo": "IBM-Blockchain-Edu-Credit",
+      "filename": "voucher_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "794a98c6fb4928d7"
+    },
+    {
+      "repo": "idowuakinde",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "dcd3d8b6455d5d78"
+    },
+    {
+      "repo": "imran-iitp",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "97261f957a0a5e0a"
+    },
+    {
+      "repo": "imran-iitp",
+      "filename": "high-throughput.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "802bb6d1edfad0e2"
+    },
+    {
+      "repo": "inotnako",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1c1f373b007d98df"
+    },
+    {
+      "repo": "isheejong",
+      "filename": "m2o.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4c3f9007336f63da"
+    },
+    {
+      "repo": "islamenshawy",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a919675538717701"
+    },
+    {
+      "repo": "issbgkh",
+      "filename": "store.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "cc1dcbfd87bc778d"
+    },
+    {
+      "repo": "ivaylopivanov",
+      "filename": "storage.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "70eeb0d1ee38bdd6"
+    },
+    {
+      "repo": "ivaylopivanov",
+      "filename": "wallet.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a5c02de490e87053"
+    },
+    {
+      "repo": "jakeeqsb",
+      "filename": "kwo-rec.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d62f69b45f41c633"
+    },
+    {
+      "repo": "james3443112",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "17e2ba43e66a8d9e"
+    },
+    {
+      "repo": "JasonCrash",
+      "filename": "example_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "cca5dd87e22b7c6e"
+    },
+    {
+      "repo": "jastisriradheshyam",
+      "filename": "custom.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e2a9d1f53b03cf38"
+    },
+    {
+      "repo": "JcobCN",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2f7c0a23aabca560"
+    },
+    {
+      "repo": "jganobsik",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "52549df3786f04c4"
+    },
+    {
+      "repo": "jiameng15",
+      "filename": "hkzgcc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fb52396c88cef023"
+    },
+    {
+      "repo": "jinjiaKarl",
+      "filename": "token.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c057a75eb9aec307"
+    },
+    {
+      "repo": "jinjiaKarl",
+      "filename": "vote.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d8ac6bdd60408b36"
+    },
+    {
+      "repo": "JiSeungGu",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "66593b6be0ba4fff"
+    },
+    {
+      "repo": "JohnnyKuo99",
+      "filename": "basic.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3c7262589dbb3d07"
+    },
+    {
+      "repo": "jonyjones96",
+      "filename": "fyp.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f2abc9ec41c5d937"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "abstore.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7c65813c84759130"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "audit.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8af5a9c18685c626"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4abf867d71c98263"
+    },
+    {
+      "repo": "jyotku48",
+      "filename": "PurchaseOrder.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5b6d0fc5b5ea5e26"
+    },
+    {
+      "repo": "karthiksukumaran",
+      "filename": "example_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "344c31fbdbf4be45"
+    },
+    {
+      "repo": "kavixooa",
+      "filename": "GetSetDelCC.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "cf67b87f13da63a9"
+    },
+    {
+      "repo": "Kayaanoosh",
+      "filename": "Proto1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "759e0b1f96306d41"
+    },
+    {
+      "repo": "kirtana01",
+      "filename": "normalchaincode1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "94c370c540ec5d68"
+    },
+    {
+      "repo": "kmazz",
+      "filename": "sample.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c248905f0a50d085"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "abstore.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d978aa2fda6ddc56"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "ledgersafe-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e42634913eb80292"
+    },
+    {
+      "repo": "koakh",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "79d2a985e3a716b6"
+    },
+    {
+      "repo": "koakh",
+      "filename": "configure.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2d51d6beb6adbcb7"
+    },
+    {
+      "repo": "koakh",
+      "filename": "init_private_data.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f1abd49cd9a45dee"
+    },
+    {
+      "repo": "koakh",
+      "filename": "init_public_data.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "48f461b4ff3bc133"
+    },
+    {
+      "repo": "koakh",
+      "filename": "lscc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c38e42df4c73ccca"
+    },
+    {
+      "repo": "koakh",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c1c434ab5e300614"
+    },
+    {
+      "repo": "KolevDarko",
+      "filename": "kyc-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5bfde6a0d6973ee7"
+    },
+    {
+      "repo": "komaldhiman112",
+      "filename": "material-trace.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "12b0cfa6548db964"
+    },
+    {
+      "repo": "krishna-suman",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8b8e915278920d28"
+    },
+    {
+      "repo": "KSR4599",
+      "filename": "erc20.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7e6e26e65520cac8"
+    },
+    {
+      "repo": "KTyrantOnly",
+      "filename": "crowdTest.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e196917eab6f0acf"
+    },
+    {
+      "repo": "lafenicecc",
+      "filename": "map.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1af84f29c24a21f9"
+    },
+    {
+      "repo": "lafenicecc",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7229c2c9a44a9285"
+    },
+    {
+      "repo": "lafenicecc",
+      "filename": "passthru.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2f1ac24aa396c567"
+    },
+    {
+      "repo": "lay-z",
+      "filename": "marbles.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6430d9b9bfceb287"
+    },
+    {
+      "repo": "lcy1317",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "99e3827091a7955a"
+    },
+    {
+      "repo": "LinkaKorea",
+      "filename": "linkatoken.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7e51606cd6513484"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "98abe4640361e131"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "invokereturnsvalue.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b0e4f50d0d49ea55"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "map.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "666d9f85d5625ee2"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8fc174a18aaf085c"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "passthru.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "54fffd1d5063ec89"
+    },
+    {
+      "repo": "linuxone-community-cloud",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f9e623c3c15ea36a"
+    },
+    {
+      "repo": "liuhuanyuxcx",
+      "filename": "e2e.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7b79207225e9a36c"
+    },
+    {
+      "repo": "liuhuanyuxcx",
+      "filename": "marbles02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a3251a2f1aa0b9fd"
+    },
+    {
+      "repo": "liujingkun2017",
+      "filename": "chaincode_example.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a227b704eb4d7049"
+    },
+    {
+      "repo": "lmj101910",
+      "filename": "car.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5bcc48c2c4bdcab6"
+    },
+    {
+      "repo": "lujiean",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1a5b46c70a75edb7"
+    },
+    {
+      "repo": "lujiean",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5aa6cdcce63de8ac"
+    },
+    {
+      "repo": "lzb13612",
+      "filename": "example.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "cc398d58e7832619"
+    },
+    {
+      "repo": "lzb13612",
+      "filename": "user.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "0a9889ea0c04d4ed"
+    },
+    {
+      "repo": "mailtokartik1",
+      "filename": "sampleChainCode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7d26298d27be62b8"
+    },
+    {
+      "repo": "malkani-kamal",
+      "filename": "autonomy_chain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2f26c9248d885a96"
+    },
+    {
+      "repo": "malkani-kamal",
+      "filename": "camera_data.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "53b94bc1ec6b8d0f"
+    },
+    {
+      "repo": "marcelaadan",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "216e425749dd9def"
+    },
+    {
+      "repo": "martingdela",
+      "filename": "halley.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "faa1455eebe020bf"
+    },
+    {
+      "repo": "mattias7295",
+      "filename": "payment.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "70ea3c8ebb151dde"
+    },
+    {
+      "repo": "mdarin",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1336cacba1c0925f"
+    },
+    {
+      "repo": "Medullus",
+      "filename": "main_router.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "87ec90c102ed9bea"
+    },
+    {
+      "repo": "MennaAnees",
+      "filename": "diamonds.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "951830d1b5b190a1"
+    },
+    {
+      "repo": "MetacoinPlatform",
+      "filename": "MetaCoin.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8ec2fbb07832e064"
+    },
+    {
+      "repo": "MisterPineapple",
+      "filename": "chaincode1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "37d1c59594dcd60e"
+    },
+    {
+      "repo": "MohammadGhoneem89",
+      "filename": "testcc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "22aa36335489dad1"
+    },
+    {
+      "repo": "motoreq",
+      "filename": "sc_main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ae3eefea1237fa95"
+    },
+    {
+      "repo": "Mr-lay",
+      "filename": "contract_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a00b2f69641d6216"
+    },
+    {
+      "repo": "mrpuri",
+      "filename": "fashion.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8a045d84c539e093"
+    },
+    {
+      "repo": "msedzins",
+      "filename": "simpleAsset.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "280a75edd82d4412"
+    },
+    {
+      "repo": "mukherjeearnab",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6d3f57153b88de7a"
+    },
+    {
+      "repo": "murlionline",
+      "filename": "product_review.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1356d2e49afd8037"
+    },
+    {
+      "repo": "nagarajmanjunath",
+      "filename": "fileData.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4db78384ddef12e0"
+    },
+    {
+      "repo": "narayanprusty",
+      "filename": "identity_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e1ad0147626281f6"
+    },
+    {
+      "repo": "narayanprusty",
+      "filename": "property_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6a8b89a17f245b5c"
+    },
+    {
+      "repo": "narayanprusty",
+      "filename": "voting-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1d49c3f9645b72a9"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "marbles_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "66aa6b4d1cc9f89f"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "product_chaincode_private.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "cbadb94ebad4c531"
+    },
+    {
+      "repo": "nehaprashantmutke",
+      "filename": "samplechaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e87f3d2375855655"
+    },
+    {
+      "repo": "netkiller",
+      "filename": "gasoline.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b7ea94e5fedfe55a"
+    },
+    {
+      "repo": "netkiller",
+      "filename": "General.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "71a1e15efba06809"
+    },
+    {
+      "repo": "netkiller",
+      "filename": "state.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "958c6366c79b1b29"
+    },
+    {
+      "repo": "netkiller",
+      "filename": "token1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a3ca27011078dbbd"
+    },
+    {
+      "repo": "netkiller",
+      "filename": "token3.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "945ae6e41743c519"
+    },
+    {
+      "repo": "netkiller",
+      "filename": "token4.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5d12697bcf3340d0"
+    },
+    {
+      "repo": "nguyentb",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "89f529178f26838c"
+    },
+    {
+      "repo": "NightShards",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4581c750dabc6589"
+    },
+    {
+      "repo": "nmatsui",
+      "filename": "fabric-payment.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6556dfd5bb8e7cf6"
+    },
+    {
+      "repo": "noatt",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "733e2a7ef2f0adec"
+    },
+    {
+      "repo": "Noonefang",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "441ed0ee17a1da8c"
+    },
+    {
+      "repo": "odrodrig",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4b75307f231b98d0"
+    },
+    {
+      "repo": "off-grid-block",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6d6386114ed4dadf"
+    },
+    {
+      "repo": "off-grid-block",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ca2dee0af2901d06"
+    },
+    {
+      "repo": "OneChainGeek",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7822a04884798309"
+    },
+    {
+      "repo": "oneminutenotes",
+      "filename": "smartcontract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c5bff50ad022c07c"
+    },
+    {
+      "repo": "OpenDataDLT",
+      "filename": "evmcc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c4ce2dfafa45bb8d"
+    },
+    {
+      "repo": "PandaManPMC",
+      "filename": "example1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "90a90349d2ee76b7"
+    },
+    {
+      "repo": "papandas",
+      "filename": "fabric-payment.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "55c6f69851ca53f1"
+    },
+    {
+      "repo": "Parag08",
+      "filename": "wallet.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7884af2d937938f4"
+    },
+    {
+      "repo": "pavva91",
+      "filename": "trustreputationledger.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "fe91a2c9d6bb0adc"
+    },
+    {
+      "repo": "payprotocol",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bf83c181751b264f"
+    },
+    {
+      "repo": "pchaivong",
+      "filename": "hyperledger-cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b05596fd1a65d460"
+    },
+    {
+      "repo": "peteim",
+      "filename": "fabric_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1e41e1457017e552"
+    },
+    {
+      "repo": "Pharmeum",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "40d9002120fc68d3"
+    },
+    {
+      "repo": "phong101665",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3d11b46c9ed0c15f"
+    },
+    {
+      "repo": "piedup",
+      "filename": "pop.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "46d52674439ce04f"
+    },
+    {
+      "repo": "piyushkumar96",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "957a844e161d7306"
+    },
+    {
+      "repo": "prabhu94",
+      "filename": "carTrace_v1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "01cdb9a084cb8d3c"
+    },
+    {
+      "repo": "prabhu94",
+      "filename": "Healthcare.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d5f655e3e9341ff9"
+    },
+    {
+      "repo": "prabhu94",
+      "filename": "healthcare_v1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "84f7ddd87c63e031"
+    },
+    {
+      "repo": "prabhu94",
+      "filename": "visitflow.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9e653ffe92b579b2"
+    },
+    {
+      "repo": "procrypt",
+      "filename": "SmartContract.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9e7b82c568212082"
+    },
+    {
+      "repo": "project-smartlog",
+      "filename": "Keystore.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8bf0e7f96a757b27"
+    },
+    {
+      "repo": "project-smartlog",
+      "filename": "TransportChain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "224a3aba5a8d8f5a"
+    },
+    {
+      "repo": "project-smartlog",
+      "filename": "UBL.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2eda63823c33f035"
+    },
+    {
+      "repo": "qiushaoxi",
+      "filename": "chaincode_union_loan.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1ce4bfe6a5eae7d6"
+    },
+    {
+      "repo": "qubing",
+      "filename": "balance_mgr.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "35fd1ed9a3a5d46b"
+    },
+    {
+      "repo": "qubing",
+      "filename": "chaincode-api-go.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ae18a81074922151"
+    },
+    {
+      "repo": "qubing",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "66bdd067c6c18277"
+    },
+    {
+      "repo": "qubing",
+      "filename": "relay_adapter.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bfbe58c7dd6e2c5d"
+    },
+    {
+      "repo": "radouane-karra",
+      "filename": "example01.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bbc6b853d2364e9e"
+    },
+    {
+      "repo": "radouane-karra",
+      "filename": "example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bfdf142a6c0da6ec"
+    },
+    {
+      "repo": "RaeHowe",
+      "filename": "example_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f4b8d084a106a921"
+    },
+    {
+      "repo": "rahulEth",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9e04c5203d1f8f36"
+    },
+    {
+      "repo": "raidinesh",
+      "filename": "fabsc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ea2f8760e926ab76"
+    },
+    {
+      "repo": "RathikaSnowflake",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7118849972f8bfe5"
+    },
+    {
+      "repo": "ravinayag",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "dcc1cfcd53c70db3"
+    },
+    {
+      "repo": "ReallyBigIndex-JavaApps",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8a990be11e6d0767"
+    },
+    {
+      "repo": "rfrabasile",
+      "filename": "cc_example_footballbet.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "00033d5e242634a4"
+    },
+    {
+      "repo": "richardfelkl",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "d1681a6e773c112d"
+    },
+    {
+      "repo": "RohanShrothrium",
+      "filename": "hackidf.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d1eea0db6361c984"
+    },
+    {
+      "repo": "rolivieri",
+      "filename": "removerCC.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8173e1ec685fc5ba"
+    },
+    {
+      "repo": "s7santosh",
+      "filename": "slachaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e7976961aa61c413"
+    },
+    {
+      "repo": "s7techlab",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "66407d1215c6a9b5"
+    },
+    {
+      "repo": "saan099",
+      "filename": "InsuranceManagement.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "dda67958d94ff8e8"
+    },
+    {
+      "repo": "SaifDeveloper",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8cf873e72dc74daf"
+    },
+    {
+      "repo": "samdwise1367",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9154d26b274275f4"
+    },
+    {
+      "repo": "samlinux",
+      "filename": "nfdt01.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ecb1b2e18f1d7e79"
+    },
+    {
+      "repo": "samlinux",
+      "filename": "sacc2.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b53fc11f73f8fef9"
+    },
+    {
+      "repo": "samlinux",
+      "filename": "sacc3.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4677534ff3d5e17d"
+    },
+    {
+      "repo": "samlinux",
+      "filename": "sacc4.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bf77f9efab2e0936"
+    },
+    {
+      "repo": "sapcis",
+      "filename": "perishable-net.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "37df79f82957e316"
+    },
+    {
+      "repo": "Saurabh1997",
+      "filename": "argument_function.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c29ca9500cbea72a"
+    },
+    {
+      "repo": "Saurabh1997",
+      "filename": "calc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b035ebb0f8cb7633"
+    },
+    {
+      "repo": "Saurabh1997",
+      "filename": "caller_sa.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7c43429208e2f9c5"
+    },
+    {
+      "repo": "Saurabh1997",
+      "filename": "token_endorse.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b2844e6c76dcb105"
+    },
+    {
+      "repo": "Saurabh1997",
+      "filename": "token_rit.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6ff10feddc0dffff"
+    },
+    {
+      "repo": "schmidtp0740",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b2969786dfebd665"
+    },
+    {
+      "repo": "schmidtp0740",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c3e1c51a84176062"
+    },
+    {
+      "repo": "sejongtelecomnet",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3cb153735f9dddbe"
+    },
+    {
+      "repo": "shahazad999",
+      "filename": "medicalrecord.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ec8ae7d4f9705ef6"
+    },
+    {
+      "repo": "shubhamj25",
+      "filename": "fabcar-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6f67e8d722718a0e"
+    },
+    {
+      "repo": "shubhamkumar0",
+      "filename": "knowledgeA.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "19d233d1f163e14d"
+    },
+    {
+      "repo": "Shuo93",
+      "filename": "router.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b9b50eff5dc80dcb"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "hello.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4470b75e919dc0b5"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "da256f24cc49df22"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "payment.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "64e9466141cdf60a"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "test.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "23e95c75fd1d8162"
+    },
+    {
+      "repo": "silvioqueiroz",
+      "filename": "helloworld.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c56316db70d5a395"
+    },
+    {
+      "repo": "SipengXie",
+      "filename": "Identity.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f0a7a7594b0b5fc5"
+    },
+    {
+      "repo": "SipengXie",
+      "filename": "record.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7565f9a2d2e8f37b"
+    },
+    {
+      "repo": "SipengXie",
+      "filename": "traco.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "148860f34f4aaf93"
+    },
+    {
+      "repo": "skazska",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a02d7ecfe6cde393"
+    },
+    {
+      "repo": "skybat007",
+      "filename": "purchase_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "dbcc11fd3fe8b7f4"
+    },
+    {
+      "repo": "skybat007",
+      "filename": "sell_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d213b2a080728443"
+    },
+    {
+      "repo": "skybat007",
+      "filename": "store_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d4845a267d6207d7"
+    },
+    {
+      "repo": "smfaizalkhan",
+      "filename": "goodsInspection.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1f7ed4f433e6d139"
+    },
+    {
+      "repo": "SolveCare",
+      "filename": "scheduleChaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d6058112df9a7824"
+    },
+    {
+      "repo": "soodakshay",
+      "filename": "mycc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "077f23a7a5d16b3c"
+    },
+    {
+      "repo": "souravdhar",
+      "filename": "simplechaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "347746ea066c9a66"
+    },
+    {
+      "repo": "starJsm",
+      "filename": "account.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "98d21ae2959694ad"
+    },
+    {
+      "repo": "suchongming",
+      "filename": "chaincode_ep.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "94c7feb1e1fa16a6"
+    },
+    {
+      "repo": "suddutt1",
+      "filename": "InvokersIdentity.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "966c636384fd1517"
+    },
+    {
+      "repo": "suddutt1",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "89afa1c0d1cfd9da"
+    },
+    {
+      "repo": "suhyeon0911",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "0252439d23a18dc9"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8c594228aa2a1dd2"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "firstcc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "be0e116dade2d750"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "mb.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "22cc06a8b69c9d92"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "sacc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "26bf9ed5660acc64"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "team_project.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "eb5cd35b9d2b4d93"
+    },
+    {
+      "repo": "SurabhiBorgikar",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "b4f9e28f4bf5e384"
+    },
+    {
+      "repo": "swapnilshrivastava",
+      "filename": "chaincode1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "299d48c198f53a60"
+    },
+    {
+      "repo": "szhygulin",
+      "filename": "a-usd.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "92ec0484227e275d"
+    },
+    {
+      "repo": "tarakit",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4e19a0905e6f5984"
+    },
+    {
+      "repo": "tcd93",
+      "filename": "sample_token.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e55b113941a3f31a"
+    },
+    {
+      "repo": "Tectiform",
+      "filename": "spare.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "02a7aa1b3ba31a79"
+    },
+    {
+      "repo": "TigerWit",
+      "filename": "sealtx.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a0aecd1f9f241d9d"
+    },
+    {
+      "repo": "TigerWit",
+      "filename": "sealtxnew.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c06203c3151dc97f"
+    },
+    {
+      "repo": "tinywell",
+      "filename": "databackcc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a0db07ef06aeab4a"
+    },
+    {
+      "repo": "tinywell",
+      "filename": "databackscc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9bea60778df4db3b"
+    },
+    {
+      "repo": "to7485",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e6d1e64009e01565"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "charity.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2e930b16dcb7a689"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "fundRaise.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6998e2f883a8b665"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "moneyTocoin.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "3a36d1ec3e01cf3e"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "project.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "34457ff29ae8e655"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "projectLibrary.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "4fda4e6c97017196"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "publicityList.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5e18564dde43dc87"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "publicityReport.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5a39ff2a2d0c0866"
+    },
+    {
+      "repo": "u-wut-m8",
+      "filename": "fabric.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c6c788eb173e6a6c"
+    },
+    {
+      "repo": "uhuchain",
+      "filename": "car-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "041d022e8f4d4293"
+    },
+    {
+      "repo": "vanchpuck",
+      "filename": "kuzmich-mcc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9a4bd9f83a725302"
+    },
+    {
+      "repo": "varshard",
+      "filename": "simple_asset.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "53c86e71d5fd6a91"
+    },
+    {
+      "repo": "vasile-coste",
+      "filename": "MedChain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d438240557f33b58"
+    },
+    {
+      "repo": "vasile-coste",
+      "filename": "newMed.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "5f04d65003d786ac"
+    },
+    {
+      "repo": "VegeBun-csj",
+      "filename": "chaincode_helloworld.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "259b7de298e41a01"
+    },
+    {
+      "repo": "VegeBun-csj",
+      "filename": "fabcar.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "0026eb5b4e0bf408"
+    },
+    {
+      "repo": "VegeBun-csj",
+      "filename": "keylevel_ep.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "bb6c2528112f2330"
+    },
+    {
+      "repo": "VegeBun-csj",
+      "filename": "privateData.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "524ff43bc41966c7"
+    },
+    {
+      "repo": "viridian-project",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "924daf9b0bfb0999"
+    },
+    {
+      "repo": "vishal3152",
+      "filename": "invoke.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "930be6b42932aae8"
+    },
+    {
+      "repo": "vitorduarte",
+      "filename": "basicChaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8805c5a368d0e57a"
+    },
+    {
+      "repo": "vtwenty3",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e6433b9882381ae5"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "da4be4cdb290e615"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "chaincode_example04.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "12845ebe48aa0c18"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "chaincode_example05.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "6679d7c9477e5497"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "map.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9aae59983cab2b5e"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "map_experimental.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f1a90d80d7d11f25"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "marbles_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9e5631b1ae5ce0fc"
+    },
+    {
+      "repo": "WouldULike",
+      "filename": "blood-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "60bcb3bf90c9b914"
+    },
+    {
+      "repo": "WuEcho",
+      "filename": "hello.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "91bd3109d5535646"
+    },
+    {
+      "repo": "WuEcho",
+      "filename": "main.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c37650e6bb8dc912"
+    },
+    {
+      "repo": "xiaochi0310",
+      "filename": "student.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "1d3da3e6b071573b"
+    },
+    {
+      "repo": "xuansonha17031991",
+      "filename": "COD_chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "7aa1ebc51534d670"
+    },
+    {
+      "repo": "xuchengli",
+      "filename": "test.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "f23ed4cb208b6759"
+    },
+    {
+      "repo": "xwzx100200",
+      "filename": "events_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "452dcc89adafa8b5"
+    },
+    {
+      "repo": "xwzx100200",
+      "filename": "example_cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "40e11b1a3e5a21ee"
+    },
+    {
+      "repo": "xwzx100200",
+      "filename": "example_cc1.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8c46d3420f461826"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "chaincode_example02.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "c6b4402e5fc3e4a4"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "rc-chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "2e44076398f63b17"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "taxrefund.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "d37a3c60a86b002f"
+    },
+    {
+      "repo": "YewPu",
+      "filename": "jsonObjects.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ab679cbdc576793a"
+    },
+    {
+      "repo": "YewPu",
+      "filename": "rowObjects.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "75f1805fc1bd2bed"
+    },
+    {
+      "repo": "yigitpolat",
+      "filename": "cc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ff572c7add5f18a4"
+    },
+    {
+      "repo": "yigitpolat",
+      "filename": "NotaryApp.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "33d0706534054cd6"
+    },
+    {
+      "repo": "yigitpolat",
+      "filename": "voting.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "b55e9adb9004e585"
+    },
+    {
+      "repo": "yiwenlong",
+      "filename": "abac.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "ba64491c58924eb9"
+    },
+    {
+      "repo": "yiwenlong",
+      "filename": "tps.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "74c56ff55c73f58e"
+    },
+    {
+      "repo": "yokeshvs",
+      "filename": "hello_world.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "505f6ce2affc33d9"
+    },
+    {
+      "repo": "yoonjk",
+      "filename": "account.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "YES",
+      "content_hash": "48cd1b6684be42f0"
+    },
+    {
+      "repo": "Z-Voting",
+      "filename": "device.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "8744d6fdbe90a0c6"
+    },
+    {
+      "repo": "Z-Voting",
+      "filename": "rahasak.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "a04b164993609478"
+    },
+    {
+      "repo": "zale144",
+      "filename": "musical_instruments.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "edb840c99c100006"
+    },
+    {
+      "repo": "zerox12311",
+      "filename": "pigchain.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "9760e7f0e7e3f1c6"
+    },
+    {
+      "repo": "zerox12311",
+      "filename": "smart_contract_sample.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "e4e2cf85b4658605"
+    },
+    {
+      "repo": "zhanglt",
+      "filename": "chaincode.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "208a49e2715b0363"
+    },
+    {
+      "repo": "zs-papandas",
+      "filename": "pscc.go",
+      "verdict": "SAFE",
+      "primary_class": "NONE",
+      "secondary_class": "NONE",
+      "auxiliary_c5": "NO",
+      "content_hash": "0fb8d3a818f06f0e"
+    }
+  ],
+  "removed_files": [
+    {
+      "repo": "airvin",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "alejoacosta74",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "anallr",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "anzalbeg",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "anzalbeg",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "arslanali9797",
+      "filename": "firstchaincode.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "arslanali9797",
+      "filename": "secondchaincode.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "asararatnakar",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "BCEvanFang",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "bgaughran",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "bgaughran",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "bgaughran",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "bgaughran",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "bugfrog1024",
+      "filename": "test.go",
+      "content_hash": "0cce7d54843f8d05",
+      "duplicate_of": "bugfrog1024/chaincode_example02.go"
+    },
+    {
+      "repo": "chintanr97",
+      "filename": "abac.go",
+      "content_hash": "f1f14e17d159c597",
+      "duplicate_of": "bgaughran/abac.go"
+    },
+    {
+      "repo": "chintanr97",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "chintanr97",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "chintanr97",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "chintanr97",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "Co-Verify",
+      "filename": "abac.go",
+      "content_hash": "6ae7b4267e331927",
+      "duplicate_of": "BCEvanFang/abac.go"
+    },
+    {
+      "repo": "Co-Verify",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "Co-Verify",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "Co-Verify",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "4a0c09745e4354ec",
+      "duplicate_of": "BCEvanFang/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "Co-Verify",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "cprinyarux",
+      "filename": "chaincode_example02.go",
+      "content_hash": "241ffa6c74d27500",
+      "duplicate_of": "acloudfan/chaincode_example02.go"
+    },
+    {
+      "repo": "dempsey-ycr",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "einai",
+      "filename": "main.go",
+      "content_hash": "e67f51ca75078e41",
+      "duplicate_of": "ashokcin1/main.go"
+    },
+    {
+      "repo": "elite-elf",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "eshita53",
+      "filename": "abac.go",
+      "content_hash": "f1f14e17d159c597",
+      "duplicate_of": "bgaughran/abac.go"
+    },
+    {
+      "repo": "eshita53",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "eshita53",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "eshita53",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "2f45765714e32750",
+      "duplicate_of": "chintanr97/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "eshita53",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "chaincode_example01.go",
+      "content_hash": "51a55e08117c92a2",
+      "duplicate_of": "2016Nishi/chaincode_example01.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "chaincode_example03.go",
+      "content_hash": "c5d28fe1d5fa88df",
+      "duplicate_of": "2016Nishi/chaincode_example03.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "eventsender.go",
+      "content_hash": "e768a47385e0e980",
+      "duplicate_of": "2016Nishi/eventsender.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "invokereturnsvalue.go",
+      "content_hash": "1c00c5cec7d400ff",
+      "duplicate_of": "2016Nishi/invokereturnsvalue.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "passthru.go",
+      "content_hash": "cd2c9e36331a6997",
+      "duplicate_of": "2016Nishi/passthru.go"
+    },
+    {
+      "repo": "fourbroad",
+      "filename": "sleeper.go",
+      "content_hash": "98e0f3a7204f795b",
+      "duplicate_of": "2016Nishi/sleeper.go"
+    },
+    {
+      "repo": "FuradWho",
+      "filename": "spm.go",
+      "content_hash": "55bd3ec3a10949b5",
+      "duplicate_of": "FuradWho/sacc.go"
+    },
+    {
+      "repo": "hisham-sameeh",
+      "filename": "diamonds.go",
+      "content_hash": "64487e3f8ab1037b",
+      "duplicate_of": "femiadewumi/diamonds.go"
+    },
+    {
+      "repo": "hqiwui",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "IBM-Blockchain-Starter-Kit",
+      "filename": "asset_chaincode.go",
+      "content_hash": "d5d4e9618190092e",
+      "duplicate_of": "chilanti/asset_chaincode.go"
+    },
+    {
+      "repo": "idowuakinde",
+      "filename": "diamonds copy.go",
+      "content_hash": "2a11a75581a439a6",
+      "duplicate_of": "Hulkbero/diamonds.go"
+    },
+    {
+      "repo": "imran-iitp",
+      "filename": "abac.go",
+      "content_hash": "a7ba3badbbd728ee",
+      "duplicate_of": "alejoacosta74/abac.go"
+    },
+    {
+      "repo": "imran-iitp",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "9f607ecdea57ead9",
+      "duplicate_of": "alejoacosta74/marbles_chaincode.go"
+    },
+    {
+      "repo": "imran-iitp",
+      "filename": "sacc.go",
+      "content_hash": "36a1543f34de3ad3",
+      "duplicate_of": "alejoacosta74/sacc.go"
+    },
+    {
+      "repo": "jinnyjinnyjinjin-zz",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "JohnnyKuo99",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "JohnnyKuo99",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "bb6dc432d66cc3d8",
+      "duplicate_of": "fourbroad/marbles_chaincode.go"
+    },
+    {
+      "repo": "jonyjones96",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "jonyjones96",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "jonyjones96",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "bb6dc432d66cc3d8",
+      "duplicate_of": "fourbroad/marbles_chaincode.go"
+    },
+    {
+      "repo": "jonyjones96",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "abac.go",
+      "content_hash": "a7ba3badbbd728ee",
+      "duplicate_of": "alejoacosta74/abac.go"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "chaincode.go",
+      "content_hash": "97261f957a0a5e0a",
+      "duplicate_of": "imran-iitp/chaincode.go"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "high-throughput.go",
+      "content_hash": "802bb6d1edfad0e2",
+      "duplicate_of": "imran-iitp/high-throughput.go"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "9f607ecdea57ead9",
+      "duplicate_of": "alejoacosta74/marbles_chaincode.go"
+    },
+    {
+      "repo": "juniorug",
+      "filename": "sacc.go",
+      "content_hash": "36a1543f34de3ad3",
+      "duplicate_of": "alejoacosta74/sacc.go"
+    },
+    {
+      "repo": "KarthikSamaganam550",
+      "filename": "abac.go",
+      "content_hash": "a7ba3badbbd728ee",
+      "duplicate_of": "alejoacosta74/abac.go"
+    },
+    {
+      "repo": "KarthikSamaganam550",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "9f607ecdea57ead9",
+      "duplicate_of": "alejoacosta74/marbles_chaincode.go"
+    },
+    {
+      "repo": "KarthikSamaganam550",
+      "filename": "sacc.go",
+      "content_hash": "36a1543f34de3ad3",
+      "duplicate_of": "alejoacosta74/sacc.go"
+    },
+    {
+      "repo": "Kayaanoosh",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "abac.go",
+      "content_hash": "f1f14e17d159c597",
+      "duplicate_of": "bgaughran/abac.go"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "ledgersafe_cc.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "b8619d59c41c597e",
+      "duplicate_of": "bgaughran/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "kmiyachi",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "lafenicecc",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "eventsender.go",
+      "content_hash": "6dd720564bb71d29",
+      "duplicate_of": "ASomething/eventsender.go"
+    },
+    {
+      "repo": "linqd1",
+      "filename": "sleeper.go",
+      "content_hash": "98e0f3a7204f795b",
+      "duplicate_of": "2016Nishi/sleeper.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "calc.go",
+      "content_hash": "251a0cd7a31acbe1",
+      "duplicate_of": "cprinyarux/calc.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "caller.go",
+      "content_hash": "2698c25bf5017fe5",
+      "duplicate_of": "cprinyarux/caller.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "chaincode_example02.go",
+      "content_hash": "241ffa6c74d27500",
+      "duplicate_of": "acloudfan/chaincode_example02.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "erc20.go",
+      "content_hash": "863b77da9eb7b5b3",
+      "duplicate_of": "cprinyarux/erc20.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "priv.go",
+      "content_hash": "f975480aa9f021e8",
+      "duplicate_of": "cprinyarux/priv.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "qry.go",
+      "content_hash": "224855510d5b2bf7",
+      "duplicate_of": "cprinyarux/qry.go"
+    },
+    {
+      "repo": "loganlomackon",
+      "filename": "token.go",
+      "content_hash": "2f4a2906d7af30ae",
+      "duplicate_of": "cprinyarux/token.go"
+    },
+    {
+      "repo": "lujiean",
+      "filename": "abac.go",
+      "content_hash": "6ae7b4267e331927",
+      "duplicate_of": "BCEvanFang/abac.go"
+    },
+    {
+      "repo": "lujiean",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "lujiean",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "4a0c09745e4354ec",
+      "duplicate_of": "BCEvanFang/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "lujiean",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "mallikarjunasai995",
+      "filename": "marbles.go",
+      "content_hash": "6430d9b9bfceb287",
+      "duplicate_of": "lay-z/marbles.go"
+    },
+    {
+      "repo": "mattheleon-itpeople",
+      "filename": "main.go",
+      "content_hash": "2b93c5569c7d50a6",
+      "duplicate_of": "daveyMedvedev/main.go"
+    },
+    {
+      "repo": "medoamanquer",
+      "filename": "diamonds.go",
+      "content_hash": "2a11a75581a439a6",
+      "duplicate_of": "Hulkbero/diamonds.go"
+    },
+    {
+      "repo": "MSaber9",
+      "filename": "diamonds.go",
+      "content_hash": "64487e3f8ab1037b",
+      "duplicate_of": "femiadewumi/diamonds.go"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "abac.go",
+      "content_hash": "f1f14e17d159c597",
+      "duplicate_of": "bgaughran/abac.go"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "neelbanker",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "neeraj-badhani",
+      "filename": "chaincodeexample01.go",
+      "content_hash": "5aa6cdcce63de8ac",
+      "duplicate_of": "lujiean/marbles_chaincode.go"
+    },
+    {
+      "repo": "pavanirao",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "pavanirao",
+      "filename": "Proto1.go",
+      "content_hash": "759e0b1f96306d41",
+      "duplicate_of": "Kayaanoosh/Proto1.go"
+    },
+    {
+      "repo": "risabhsharma71",
+      "filename": "caller.go",
+      "content_hash": "273eaccd664cd945",
+      "duplicate_of": "acloudfan/caller.go"
+    },
+    {
+      "repo": "risabhsharma71",
+      "filename": "erc20.go",
+      "content_hash": "63f731756c9ce435",
+      "duplicate_of": "acloudfan/erc20.go"
+    },
+    {
+      "repo": "risabhsharma71",
+      "filename": "priv.go",
+      "content_hash": "c3bb258ef06c3e8e",
+      "duplicate_of": "acloudfan/priv.go"
+    },
+    {
+      "repo": "risabhsharma71",
+      "filename": "qry.go",
+      "content_hash": "2b4350320f896f16",
+      "duplicate_of": "acloudfan/qry.go"
+    },
+    {
+      "repo": "risabhsharma71",
+      "filename": "token.go",
+      "content_hash": "256d3c7c08c6655a",
+      "duplicate_of": "acloudfan/token.go"
+    },
+    {
+      "repo": "rupeshtr78",
+      "filename": "abac.go",
+      "content_hash": "f1f14e17d159c597",
+      "duplicate_of": "bgaughran/abac.go"
+    },
+    {
+      "repo": "rupeshtr78",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "rupeshtr78",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "rupeshtr78",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "rupeshtr78",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "b8619d59c41c597e",
+      "duplicate_of": "bgaughran/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "rupeshtr78",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "sac1984pat",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "samlinux",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "Saurabh1997",
+      "filename": "proposal_use.go",
+      "content_hash": "256d3c7c08c6655a",
+      "duplicate_of": "acloudfan/token.go"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "abac.go",
+      "content_hash": "6ae7b4267e331927",
+      "duplicate_of": "BCEvanFang/abac.go"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "5aa6cdcce63de8ac",
+      "duplicate_of": "lujiean/marbles_chaincode.go"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "4a0c09745e4354ec",
+      "duplicate_of": "BCEvanFang/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "sighttviewliu",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "sriyanshcse",
+      "filename": "example_cc.go",
+      "content_hash": "9aea3523322ce4d9",
+      "duplicate_of": "adityachap/example_cc.go"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "abac.go",
+      "content_hash": "f1f14e17d159c597",
+      "duplicate_of": "bgaughran/abac.go"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "sunny4767",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "b8619d59c41c597e",
+      "duplicate_of": "bgaughran/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "SurabhiBorgikar",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "bb6dc432d66cc3d8",
+      "duplicate_of": "fourbroad/marbles_chaincode.go"
+    },
+    {
+      "repo": "surajresearch",
+      "filename": "smartcontract.go",
+      "content_hash": "c5bff50ad022c07c",
+      "duplicate_of": "oneminutenotes/smartcontract.go"
+    },
+    {
+      "repo": "testibmbc",
+      "filename": "diamonds.go",
+      "content_hash": "64487e3f8ab1037b",
+      "duplicate_of": "femiadewumi/diamonds.go"
+    },
+    {
+      "repo": "the-hulk-id",
+      "filename": "poc-cc.go",
+      "content_hash": "a02922bcd5b73f9b",
+      "duplicate_of": "DID-hyperledger/did.go"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "example_cc.go",
+      "content_hash": "9aea3523322ce4d9",
+      "duplicate_of": "adityachap/example_cc.go"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "bb6dc432d66cc3d8",
+      "duplicate_of": "fourbroad/marbles_chaincode.go"
+    },
+    {
+      "repo": "TongjiUniversityStudent1",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "TxTPing",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "TxTPing",
+      "filename": "chaincode_example05.go",
+      "content_hash": "1c13b7a976000c43",
+      "duplicate_of": "fourbroad/chaincode_example05.go"
+    },
+    {
+      "repo": "vanitas92",
+      "filename": "marbles02.go",
+      "content_hash": "a3251a2f1aa0b9fd",
+      "duplicate_of": "liuhuanyuxcx/marbles02.go"
+    },
+    {
+      "repo": "Vijaypunugubati",
+      "filename": "evmcc.go",
+      "content_hash": "c4ce2dfafa45bb8d",
+      "duplicate_of": "OpenDataDLT/evmcc.go"
+    },
+    {
+      "repo": "VoneChain-CS",
+      "filename": "contract_chaincode.go",
+      "content_hash": "a00b2f69641d6216",
+      "duplicate_of": "Mr-lay/contract_chaincode.go"
+    },
+    {
+      "repo": "vu3mmg",
+      "filename": "chaincode_example02.go",
+      "content_hash": "28d4d3f478825d54",
+      "duplicate_of": "2016Nishi/chaincode_example02.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "chaincode.go",
+      "content_hash": "31bc1ca8a03e36d3",
+      "duplicate_of": "fourbroad/chaincode.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "chaincode_example01.go",
+      "content_hash": "51a55e08117c92a2",
+      "duplicate_of": "2016Nishi/chaincode_example01.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "chaincode_example03.go",
+      "content_hash": "c5d28fe1d5fa88df",
+      "duplicate_of": "2016Nishi/chaincode_example03.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "eventsender.go",
+      "content_hash": "6dd720564bb71d29",
+      "duplicate_of": "ASomething/eventsender.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "invokereturnsvalue.go",
+      "content_hash": "b0e4f50d0d49ea55",
+      "duplicate_of": "linqd1/invokereturnsvalue.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "passthru.go",
+      "content_hash": "54fffd1d5063ec89",
+      "duplicate_of": "linqd1/passthru.go"
+    },
+    {
+      "repo": "whatisoop",
+      "filename": "sleeper.go",
+      "content_hash": "98e0f3a7204f795b",
+      "duplicate_of": "2016Nishi/sleeper.go"
+    },
+    {
+      "repo": "XmissterioX",
+      "filename": "diamonds.go",
+      "content_hash": "64487e3f8ab1037b",
+      "duplicate_of": "femiadewumi/diamonds.go"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "fabcar.go",
+      "content_hash": "aed7d7ba98ce73e6",
+      "duplicate_of": "anzalbeg/fabcar.go"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "marbles_chaincode.go",
+      "content_hash": "641ae3abac9653df",
+      "duplicate_of": "BCEvanFang/marbles_chaincode.go"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "marbles_chaincode_private.go",
+      "content_hash": "b8619d59c41c597e",
+      "duplicate_of": "bgaughran/marbles_chaincode_private.go"
+    },
+    {
+      "repo": "yangjaejae",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    },
+    {
+      "repo": "Yuchiss",
+      "filename": "events_cc.go",
+      "content_hash": "452dcc89adafa8b5",
+      "duplicate_of": "xwzx100200/events_cc.go"
+    },
+    {
+      "repo": "Yuchiss",
+      "filename": "example_cc.go",
+      "content_hash": "40e11b1a3e5a21ee",
+      "duplicate_of": "xwzx100200/example_cc.go"
+    },
+    {
+      "repo": "Yuchiss",
+      "filename": "example_cc1.go",
+      "content_hash": "8c46d3420f461826",
+      "duplicate_of": "xwzx100200/example_cc1.go"
+    },
+    {
+      "repo": "zhangmin510",
+      "filename": "sacc.go",
+      "content_hash": "3ff9f4df103006bb",
+      "duplicate_of": "airvin/sacc.go"
+    }
+  ]
+}

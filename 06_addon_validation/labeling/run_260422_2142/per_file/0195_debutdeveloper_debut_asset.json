@@ -1,0 +1,28 @@
+{
+  "file_id": "0195_debutdeveloper_debut_asset",
+  "repo": "debutdeveloper",
+  "filename": "debut_asset.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\debutdeveloper\\debut_asset.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "PHANTOM_READ"
+  ],
+  "code_chars": 5055,
+  "stripped_chars": 4941,
+  "code_hash": "18f407db18196b3a",
+  "stripped_hash": "5c23211e12e6ceb6",
+  "elapsed_s": 18.1,
+  "input_tokens": 2836,
+  "output_tokens": 732,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L97-L100, L107-L122",
+  "rationale": "The `GetQueryResult` calls in `DashboardData` only count records and return statistics via `shim.Success` - they do not influence any ledger write decisions. C4 requires query results to determine write decisions, not merely populate read-only responses. Iterator leak (C5) is present but auxiliary.",
+  "raw_response": "## Analysis\n\n### Step 1: HLF Transaction Entrypoint?\nYes. This file contains `Init` and `Invoke` methods on `SmartContract` implementing the shim chaincode interface.\n\n### Step 2: Source Pattern Detection\n\n**C4 (NON_REVALIDATED_QUERY):** Lines 97-100 contain multiple `GetQueryResult` calls:\n- `stub.GetQueryResult(\"{\\\"selector\\\":{\\\"is_deleted\\\":false,\\\"doc_type\\\":\\\"category\\\",\\\"status\\\":1}}\")`\n- `stub.GetQueryResult(\"{\\\"selector\\\":{\\\"is_deleted\\\":false,\\\"doc_type\\\":\\\"user\\\",\\\"status\\\":1}}\")`\n- `stub.GetQueryResult(\"{\\\"selector\\\":{\\\"is_deleted\\\":false,\\\"doc_type\\\":\\\"assets\\\",\\\"status\\\":1}}\")`\n- `stub.GetQueryResult(\"{\\\"selector\\\":{\\\"is_deleted\\\":false,\\\"doc_type\\\":\\\"request\\\",\\\"status\\\":1}}\")`\n\n**C5 (ITERATOR_LEAK):** The iterators `categoryIterator`, `userIterator`, `assetIterator`, and `requestIterator` are created but `Close()` is never called on any of them.\n\n### Step 3: Source Reaches Sink?\n\nThe `DashboardData` function:\n1. Queries data using `GetQueryResult` (C4 source)\n2. Counts results from iterators\n3. Creates `DashboardCounts` struct with the counts\n4. Returns via `shim.Success(responseByte)` (response sink)\n\nThe query results directly influence the response content. However, examining the sink requirement for C4: \"Query result must determine **write decision**.\"\n\nThe `DashboardData` function only **reads** data and returns counts - it does NOT perform any ledger writes (no PutState, DelState, etc.). The response is a read-only dashboard summary.\n\n### Step 4: Usage Context\nThis is production code in the main chaincode file, not test/logging/dead code.\n\n### Sink Analysis for C4\nC4 requires the query result to \"determine write decision.\" Here, the query results only determine the **response content** (counts), not whether a write occurs. The function is purely a read operation returning statistics.\n\nPer the rubric, C4's sink requirement specifically states \"Query result must determine write decision\" - returning query-derived data in a response without influencing writes does not satisfy this requirement.\n\n### C5 Assessment\nAll four iterators lack `Close()` calls - this is an iterator leak (C5), but C5 is auxiliary and does not determine V/S status.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L97-L100, L107-L122\nRATIONALE: The `GetQueryResult` calls in `DashboardData` only count records and return statistics via `shim.Success` - they do not influence any ledger write decisions. C4 requires query results to determine write decisions, not merely populate read-only responses. Iterator leak (C5) is present but auxiliary.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:13.602184"
+}

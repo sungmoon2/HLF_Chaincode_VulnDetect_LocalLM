@@ -1,0 +1,55 @@
+{
+  "repo": "hyperledgendary",
+  "filename": "wasm_contract.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "374255066e724b90",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'wasm_contract.go'\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access control issues\n**Severity:** Medium\n**Affected Code Location:** `callTransaction` function (line 42)\n**Description:** The `callTransaction` function does not check if the invoking user has the necessary permissions to perform the transaction. This could lead to unauthorized access.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can invoke transactions.\n\n```go\nfunc (wc *WasmContract) callTransaction(APIstub shim.ChaincodeStubInterface) ([]byte, error) {\n\ttxID := APIstub.GetTxID()\n\tchannelID := APIstub.GetChannelID()\n\n\t// Check if the invoking user has the necessary permissions\n\tif !wc.hasPermission(APIstub) {\n\t\treturn nil, shim.Error(\"Access denied\")\n\t}\n\n\terr := wc.contextStore.Put(channelID, txID, APIstub)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error putting stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\treturn nil, err\n\t}\n\tdefer func() {\n\t\terr := wc.contextStore.Remove(channelID, txID)\n\t\tif err != nil {\n\t\t\tlog.Printf(\"[host] error removing stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\t}\n\t}()\n\n\tfunction, params := APIstub.GetFunctionAndParameters()\n\n\ttransientMap, err := APIstub.GetTransient()\n\tif err != nil {\n\t\tlog.Printf(\"[host] error creating invoke transaction request message: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tlog.Printf(\"[host] calling %s with context chid %s txid %s\\n\", function, channelID, txID)\n\n\targs, err := createInvokeTransactionArgs(channelID, txID, function, params, transientMap)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error creating invoke transaction request message: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tresult, err := wc.wasmGuestInvoker.InvokeWasmOperation(\"InvokeTransaction\", args)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error invoking transaction: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tresponse := &contract.InvokeTransactionResponse{}\n\terr = proto.Unmarshal(result, response)\n\tresponsePayload := response.GetPayload()\n\n\tlog.Printf(\"[host] success result=%s\\n\", string(responsePayload))\n\treturn responsePayload, nil\n}\n\nfunc (wc *WasmContract) hasPermission(APIstub shim.ChaincodeStubInterface) bool {\n\t// Implement permission check logic here\n\t// For example, check if the invoking user is in a specific role\n\treturn true\n}\n```\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input validation flaws\n**Severity:** Medium\n**Affected Code Location:** `createInvokeTransactionArgs` function (line 102)\n**Description:** The `createInvokeTransactionArgs` function does not validate the input parameters. This could lead to unexpected behavior or security vulnerabilities.\n**Recommended Fix:** Validate the input parameters to ensure they are valid and within expected ranges.\n\n```go\nfunc createInvokeTransactionArgs(channelID string, txID string, fnname string, params []string, transientMap map[string][]byte) ([]byte, error) {\n\tif channelID == \"\" || txID == \"\" || fnname == \"\" || params == nil {\n\t\treturn nil, shim.Error(\"Invalid input parameters\")\n\t}\n\n\targs := make([][]byte, len(params))\n\tfor i, p := range params {\n\t\tif p == \"\" {\n\t\t\treturn nil, shim.Error(\"Invalid input parameter\")\n\t\t}\n\t\targs[i] = []byte(p)\n\t}\n\n\tcontext := &contract.TransactionContext{\n\t\tChannelId:     channelID,\n\t\tTransactionId: txID,\n\t}\n\tmsg := &contract.InvokeTransactionRequest{\n\t\tContext:         context,\n\t\tTransactionName: fnname,\n\t\tArgs:            args,\n\t\tTransientArgs:   transientMap,\n\t}\n\n\targsBuffer, err := proto.Marshal(msg)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\n\treturn argsBuffer, nil\n}\n```\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-after-write conflicts (phantom reads)\n**Severity:** Low\n**Affected Code Location:** `callTransaction` function (line 42)\n**Description:** The `callTransaction` function does not handle phantom reads, which could lead to unexpected behavior.\n**Recommended Fix:** Ensure that the `callTransaction` function handles phantom reads appropriately.\n\n```go\nfunc (wc *WasmContract) callTransaction(APIstub shim.ChaincodeStubInterface) ([]byte, error) {\n\ttxID := APIstub.GetTxID()\n\tchannelID := APIstub.GetChannelID()\n\n\terr := wc.contextStore.Put(channelID, txID, APIstub)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error putting stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\treturn nil, err\n\t}\n\tdefer func() {\n\t\terr := wc.contextStore.Remove(channelID, txID)\n\t\tif err != nil {\n\t\t\tlog.Printf(\"[host] error removing stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\t}\n\t}()\n\n\tfunction, params := APIstub.GetFunctionAndParameters()\n\n\ttransientMap, err := APIstub.GetTransient()\n\tif err != nil {\n\t\tlog.Printf(\"[host] error creating invoke transaction request message: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tlog.Printf(\"[host] calling %s with context chid %s txid %s\\n\", function, channelID, txID)\n\n\targs, err := createInvokeTransactionArgs(channelID, txID, function, params, transientMap)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error creating invoke transaction request message: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tresult, err := wc.wasmGuestInvoker.InvokeWasmOperation(\"InvokeTransaction\", args)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error invoking transaction: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tresponse := &contract.InvokeTransactionResponse{}\n\terr = proto.Unmarshal(result, response)\n\tresponsePayload := response.GetPayload()\n\n\tlog.Printf(\"[host] success result=%s\\n\", string(responsePayload))\n\treturn responsePayload, nil\n}\n```\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private data leakage\n**Severity:** Low\n**Affected Code Location:** `callTransaction` function (line 42)\n**Description:** The `callTransaction` function does not handle private data leakage, which could lead to unauthorized access to sensitive information.\n**Recommended Fix:** Ensure that the `callTransaction` function handles private data leakage appropriately.\n\n```go\nfunc (wc *WasmContract) callTransaction(APIstub shim.ChaincodeStubInterface) ([]byte, error) {\n\ttxID := APIstub.GetTxID()\n\tchannelID := APIstub.GetChannelID()\n\n\terr := wc.contextStore.Put(channelID, txID, APIstub)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error putting stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\treturn nil, err\n\t}\n\tdefer func() {\n\t\terr := wc.contextStore.Remove(channelID, txID)\n\t\tif err != nil {\n\t\t\tlog.Printf(\"[host] error removing stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\t}\n\t}()\n\n\tfunction, params := APIstub.GetFunctionAndParameters()\n\n\ttransientMap, err := APIstub.GetTransient()\n\tif err != nil {\n\t\tlog.Printf(\"[host] error creating invoke transaction request message: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tlog.Printf(\"[host] calling %s with context chid %s txid %s\\n\", function, channelID, txID)\n\n\targs, err := createInvokeTransactionArgs(channelID, txID, function, params, transientMap)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error creating invoke transaction request message: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tresult, err := wc.wasmGuestInvoker.InvokeWasmOperation(\"InvokeTransaction\", args)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error invoking transaction: %s\\n\", err)\n\t\treturn nil, err\n\t}\n\n\tresponse := &contract.InvokeTransactionResponse{}\n\terr = proto.Unmarshal(result, response)\n\tresponsePayload := response.GetPayload()\n\n\tlog.Printf(\"[host] success result=%s\\n\", string(responsePayload))\n\treturn responsePayload, nil\n}\n```\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-deterministic operations\n**Severity:** Low\n**Affected Code Location:** `callTransaction` function (line 42)\n**Description:** The `callTransaction` function does not handle non-deterministic operations, which could lead to unexpected behavior.\n**Recommended Fix:** Ensure that the `callTransaction` function handles non-deterministic operations appropriately.\n\n```go\nfunc (wc *WasmContract) callTransaction(APIstub shim.ChaincodeStubInterface) ([]byte, error) {\n\ttxID := APIstub.GetTxID()\n\tchannelID := APIstub.GetChannelID()\n\n\terr := wc.contextStore.Put(channelID, txID, APIstub)\n\tif err != nil {\n\t\tlog.Printf(\"[host] error putting stub for context chid %s txid %s: %s\\n\", channelID, txID, err)\n\t\treturn nil, err\n\t}\n\tdefer func() {\n\t\terr := wc.contextStore.Remove(channel",
+      "prediction": "vulnerable",
+      "elapsed_s": 19.97,
+      "finish_reason": "length",
+      "prompt_tokens": 924,
+      "completion_tokens": 2048
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 924,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 924,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 924,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 924,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.8,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 4.04,
+  "total_elapsed_s": 20.19,
+  "any_truncated": true,
+  "timestamp": "2026-04-23T05:43:14.864988"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0537_lujiean_marbles_chaincode",
+  "repo": "lujiean",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 16.6,
+  "input_tokens": 5045,
+  "output_tokens": 760,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L340",
+  "rationale": "The time.Unix() call on line 340 converts blockchain-provided timestamp data (response.Timestamp), not time.Now(). Rich queries (GetQueryResult, GetHistoryForKey) are used only for read-only responses via shim.Success, not for write decisions. GetStateByPartialCompositeKey is explicitly not a C4 source per the taxonomy.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 340: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the response, NOT `time.Now()`. The timestamp comes from `response.Timestamp` which is deterministic blockchain data. This is SAFE.\n\n**C2 GOROUTINE**: No `go` keywords found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `marble` struct is marshaled with `json.Marshal()` but it's a struct, not a map.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (lines 283-316) uses `stub.GetQueryResult()` - this is a rich query. Looking at callers:\n  - `queryMarblesByOwner` (line 268) - returns result via `shim.Success()` - read-only, no writes\n  - `queryMarbles` (line 278) - returns result via `shim.Success()` - read-only, no writes\n  \n  These are read-only queries returned directly, NOT used to make write decisions. Per the rules: \"Read-only queries returned via shim.Success are NOT C4.\"\n\n- `getHistoryForMarble` (lines 318-358) uses `stub.GetHistoryForKey()` - returns via `shim.Success()`, read-only.\n\n- `getMarblesByRange` uses `stub.GetStateByRange()` - explicitly stated as NOT a C4 source.\n\n- `transferMarblesBasedOnColor` uses `stub.GetStateByPartialCompositeKey()` - explicitly stated as NOT a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: All iterators have `defer resultsIterator.Close()` - properly closed.\n\n### Conclusion\n\nThe `time` import is used only for `time.Unix()` which converts existing timestamp data, not for getting current time. All rich queries (`GetQueryResult`, `GetHistoryForKey`) are read-only and returned directly without influencing write decisions. The composite key queries use `GetStateByPartialCompositeKey` which is explicitly not a C4 source.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L340\nRATIONALE: The time.Unix() call on line 340 converts blockchain-provided timestamp data (response.Timestamp), not time.Now(). Rich queries (GetQueryResult, GetHistoryForKey) are used only for read-only responses via shim.Success, not for write decisions. GetStateByPartialCompositeKey is explicitly not a C4 source per the taxonomy.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:42:08.647851",
+  "annotator": "2nd"
+}

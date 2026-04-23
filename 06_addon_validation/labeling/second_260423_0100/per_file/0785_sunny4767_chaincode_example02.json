@@ -1,0 +1,19 @@
+{
+  "file_id": "0785_sunny4767_chaincode_example02",
+  "repo": "sunny4767",
+  "filename": "chaincode_example02.go",
+  "elapsed_s": 18.19,
+  "input_tokens": 5950,
+  "output_tokens": 767,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L289-L315, L349-L366, L378-L430",
+  "rationale": "The rich query APIs (GetQueryResult, GetQueryResultWithPagination, GetHistoryForKey) are used only for read-only operations that return data via shim.Success without influencing any ledger writes. The time.Unix() call converts existing timestamp data deterministically. No C1-C4 or C6 patterns reach write sinks.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: \n- Line 413: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts existing data.\n- The `time` import is used, but I don't see `time.Now()`, `time.Since()`, or `time.Until()` calls.\n\n**C2 GOROUTINE**: No `go` keyword usage found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `marble` struct uses `json.Marshal()` which is safe.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `queryMarblesByOwner` (L289-301) and `queryMarbles` (L303-315) use `GetQueryResult` via `getQueryResultForQueryString`. These are **read-only** - they return results via `shim.Success(queryResults)` without any writes.\n- `queryMarblesWithPagination` (L349-366) uses `GetQueryResultWithPagination` - also **read-only**.\n- `getHistoryForMarble` (L378-430) uses `GetHistoryForKey` - also **read-only**.\n\nThese rich query functions only return data, they don't make write decisions based on the query results.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- All iterators appear to have `defer resultsIterator.Close()` calls (L238, L260, L322, L339, L372, L388).\n\n### Key Observation\nThe `transferMarblesBasedOnColor` function (L244-282) uses `GetStateByPartialCompositeKey` which is explicitly stated as NOT a C4 source in the taxonomy. It iterates over results and calls `transferMarble` for each, but `GetStateByPartialCompositeKey` returns results in deterministic lexicographic order.\n\nThe rich queries (`GetQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`) are all used in read-only contexts - they construct response buffers and return them via `shim.Success()` without influencing any writes.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L289-L315, L349-L366, L378-L430\nRATIONALE: The rich query APIs (GetQueryResult, GetQueryResultWithPagination, GetHistoryForKey) are used only for read-only operations that return data via shim.Success without influencing any ledger writes. The time.Unix() call converts existing timestamp data deterministically. No C1-C4 or C6 patterns reach write sinks.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:59:56.829426",
+  "annotator": "2nd"
+}

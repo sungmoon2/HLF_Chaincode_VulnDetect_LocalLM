@@ -1,0 +1,19 @@
+{
+  "file_id": "0709_samlinux_nfdt01",
+  "repo": "samlinux",
+  "filename": "nfdt01.go",
+  "elapsed_s": 4.01,
+  "input_tokens": 2405,
+  "output_tokens": 255,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L6, L70-71, L18",
+  "rationale": "The `add` function (L70-71) calls `time.Parse()` on user-provided input to populate `DataItem.UpdatedAt`, which is then marshaled and written to ledger via `stub.PutState()` (L88). However, the critical vulnerability is that `time.Parse()` parses a timestamp string into a `time.Time` object that is stored in the ledger state. While the timestamp itself comes from user input (deterministic), the `DataItem` struct contains a `time.Time` field (L18) that could be influenced by non-deterministic time operations if the code were modified. More critically, the use of `guuid.New()` (L77) to generate a UUID key is non-deterministic across endorsers, causing different keys to be written on each invocation, which violates consensus. This makes the ledger write non-deterministic and causes endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L6, L70-71, L18\n\nRATIONALE: The `add` function (L70-71) calls `time.Parse()` on user-provided input to populate `DataItem.UpdatedAt`, which is then marshaled and written to ledger via `stub.PutState()` (L88). However, the critical vulnerability is that `time.Parse()` parses a timestamp string into a `time.Time` object that is stored in the ledger state. While the timestamp itself comes from user input (deterministic), the `DataItem` struct contains a `time.Time` field (L18) that could be influenced by non-deterministic time operations if the code were modified. More critically, the use of `guuid.New()` (L77) to generate a UUID key is non-deterministic across endorsers, causing different keys to be written on each invocation, which violates consensus. This makes the ledger write non-deterministic and causes endorsement divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:21.892317",
+  "annotator": "2nd"
+}

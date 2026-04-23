@@ -1,0 +1,19 @@
+{
+  "file_id": "0285_cprinyarux_qry",
+  "repo": "cprinyarux",
+  "filename": "qry.go",
+  "elapsed_s": 4.49,
+  "input_tokens": 1805,
+  "output_tokens": 311,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L60-L61, L70",
+  "rationale": "The AddData function parses a user-supplied date string (args[1]) into a time.Time object (L60-L61), stores it in the CryptocoinData struct (L69), marshals it to JSON (L70), and writes it to ledger state via stub.PutState (L71). The JSON marshaling of time.Time produces a timestamp string representation that depends on the parsed time value. While the date is user-supplied, the struct field TxnDate is a time.Time type that gets serialized, creating a potential consensus issue if the parsing or serialization behavior differs across endorsers. However, the primary vulnerability is that time.Time fields in JSON marshaling can introduce nondeterminism if the time.Time value itself is influenced by system clock or parsing inconsistencies. More critically, the CryptocoinData struct contains a time.Time field that is written to state, and although the input is deterministic (args[1]), the time.Parse operation at L60 converts a string to a time.Time object whose serialization behavior could vary. This constitutes a C1 vulnerability because a time-derived value influences a ledger write (PutState at L71).",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L60-L61, L70\nRATIONALE: The AddData function parses a user-supplied date string (args[1]) into a time.Time object (L60-L61), stores it in the CryptocoinData struct (L69), marshals it to JSON (L70), and writes it to ledger state via stub.PutState (L71). The JSON marshaling of time.Time produces a timestamp string representation that depends on the parsed time value. While the date is user-supplied, the struct field TxnDate is a time.Time type that gets serialized, creating a potential consensus issue if the parsing or serialization behavior differs across endorsers. However, the primary vulnerability is that time.Time fields in JSON marshaling can introduce nondeterminism if the time.Time value itself is influenced by system clock or parsing inconsistencies. More critically, the CryptocoinData struct contains a time.Time field that is written to state, and although the input is deterministic (args[1]), the time.Parse operation at L60 converts a string to a time.Time object whose serialization behavior could vary. This constitutes a C1 vulnerability because a time-derived value influences a ledger write (PutState at L71).",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:45:42.581491",
+  "annotator": "2nd"
+}

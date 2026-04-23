@@ -1,0 +1,19 @@
+{
+  "file_id": "0807_TigerWit_sealtx",
+  "repo": "TigerWit",
+  "filename": "sealtx.go",
+  "elapsed_s": 15.72,
+  "input_tokens": 2174,
+  "output_tokens": 638,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses `GetHistoryForKey` in two functions, but both are read-only queries that return results via `shim.Success()` without influencing any ledger writes. The global `logger` variable is logger-only and explicitly safe. No time-based, goroutine, or map iteration nondeterminism patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods implementing the shim interface (lines 95-112). This is a valid HLF chaincode. → Continue analysis.\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetHistoryForKey` is used in `history()` (line 46) and `gettxidspec()` (line 73)\n- In `history()`: Results are collected and returned via `shim.Success()` - this is a **read-only query** returned to the client, NOT used to determine a write decision.\n- In `gettxidspec()`: Results are iterated and returned via `shim.Success()` - also a **read-only query**, no writes are performed based on the query results.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `var logger = shim.NewLogger(\"sealtx\")` (line 10) - This is a logger-only global, which is explicitly SAFE per the taxonomy.\n\n### Step 3: Sink Analysis\n- `seal()` performs `PutState()` but only uses deterministic input from `args[]`\n- `history()` and `gettxidspec()` use `GetHistoryForKey` but only return data via `shim.Success()` without any writes\n- No C4 violation because the query results don't influence write decisions\n\n### Step 4: Auxiliary C5 Check\n- `history()` line 48: `defer iter.Close()` - properly closed\n- `gettxidspec()` line 75: `defer iter.Close()` - properly closed\n- Both iterators are properly closed via defer.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses `GetHistoryForKey` in two functions, but both are read-only queries that return results via `shim.Success()` without influencing any ledger writes. The global `logger` variable is logger-only and explicitly safe. No time-based, goroutine, or map iteration nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:01:11.971296",
+  "annotator": "2nd"
+}

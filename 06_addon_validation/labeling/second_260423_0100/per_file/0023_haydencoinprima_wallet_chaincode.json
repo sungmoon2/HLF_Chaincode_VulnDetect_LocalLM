@@ -1,0 +1,19 @@
+{
+  "file_id": "0023_haydencoinprima_wallet_chaincode",
+  "repo": "haydencoinprima",
+  "filename": "wallet_chaincode.go",
+  "elapsed_s": 14.82,
+  "input_tokens": 3443,
+  "output_tokens": 685,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L131-L138, L172-L182",
+  "rationale": "The Deposit and Withdraw functions use time.Now().String() to set tx.Timestamp, which is then marshaled into walletJSON and written to the ledger via PutState. Different endorsing peers will have different local times, causing endorsement divergence.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with `Invoke` routing to `Query`, `Deposit`, `Withdraw`, and `GetHistory`.\n\n### C1 TIME_NOW Analysis\n**Lines 131-132 (Deposit function):**\n```go\ntx.Timestamp = time.Now().String()\n```\nThis timestamp is stored in the `transaction` struct, which is part of `walletJSON`. Then at lines 134-138:\n```go\nwalletJSON.Tx = tx\nwalletBytes, err = json.Marshal(walletJSON)\n...\nerr = stub.PutState(key, walletBytes)\n```\nThe `time.Now()` value is marshaled and written to the ledger via `PutState`. Different endorsing peers will have different local times, causing different values to be written.\n\n**Lines 172-173 (Withdraw function):**\n```go\ntx.Timestamp = time.Now().String()\n```\nSame pattern - the timestamp flows into `walletJSON.Tx`, gets marshaled, and written via `PutState` at lines 175-182.\n\n### C4 NON_REVALIDATED_QUERY Analysis\n**Lines 189-190 (GetHistory function):**\n```go\niter, err := stub.GetHistoryForKey(key)\n```\n`GetHistoryForKey` is listed as a C4 source. However, examining the function, the result is only used to build a response returned via `shim.Success(buffer.Bytes())` at line 206. There are no write decisions (PutState/DelState) based on the query result. This is a **read-only query** returned to the client, which is explicitly stated as NOT C4.\n\n### C5 Iterator Analysis\nThe `GetHistory` function properly calls `defer iter.Close()` at line 193.\n\n### Other Classes\n- **C2 GOROUTINE**: No goroutines spawned.\n- **C3 MAP_ITERATION**: No map iteration.\n- **C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables.\n\n## Conclusion\n\nThe `time.Now()` calls in both `Deposit` and `Withdraw` functions directly influence ledger writes. Each endorsing peer will record a different timestamp, causing endorsement divergence.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L131-L138, L172-L182\nRATIONALE: The Deposit and Withdraw functions use time.Now().String() to set tx.Timestamp, which is then marshaled into walletJSON and written to the ledger via PutState. Different endorsing peers will have different local times, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:13.461267",
+  "annotator": "2nd"
+}

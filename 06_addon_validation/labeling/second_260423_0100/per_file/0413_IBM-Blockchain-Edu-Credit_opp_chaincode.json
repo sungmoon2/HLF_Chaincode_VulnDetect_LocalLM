@@ -1,0 +1,19 @@
+{
+  "file_id": "0413_IBM-Blockchain-Edu-Credit_opp_chaincode",
+  "repo": "IBM-Blockchain-Edu-Credit",
+  "filename": "opp_chaincode.go",
+  "elapsed_s": 5.28,
+  "input_tokens": 4095,
+  "output_tokens": 146,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF transaction entrypoints (Init, Invoke) with three transaction functions (queryRecord, initLedger, createRecord). None of the vulnerability patterns are present: no time.Now(), no goroutines, no map iteration (the slice iteration in initLedger uses a deterministic index-based loop), no rich queries (GetQueryResult, GetHistoryForKey, etc.), and no mutable global state. All operations are deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF transaction entrypoints (Init, Invoke) with three transaction functions (queryRecord, initLedger, createRecord). None of the vulnerability patterns are present: no time.Now(), no goroutines, no map iteration (the slice iteration in initLedger uses a deterministic index-based loop), no rich queries (GetQueryResult, GetHistoryForKey, etc.), and no mutable global state. All operations are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:32:25.728979",
+  "annotator": "2nd"
+}

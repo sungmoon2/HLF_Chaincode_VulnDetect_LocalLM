@@ -1,0 +1,19 @@
+{
+  "file_id": "0015_cristiano-andrade_chaincode-test",
+  "repo": "cristiano-andrade",
+  "filename": "chaincode-test.go",
+  "elapsed_s": 2.59,
+  "input_tokens": 1842,
+  "output_tokens": 158,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95, L96",
+  "rationale": "The MakePayment function (L74–L109) calls time.Now().Format(\"2006-01-02\") at L95 and assigns the result to payment.PaidAt, which is then marshaled and written to ledger state via stub.PutState(accountKey, bytes) at L104. This time.Now() call is consensus-critical nondeterminism: different endorsing peers will generate different timestamps, causing the marshaled Payment object to differ and resulting in endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L95, L96\nRATIONALE: The MakePayment function (L74–L109) calls time.Now().Format(\"2006-01-02\") at L95 and assigns the result to payment.PaidAt, which is then marshaled and written to ledger state via stub.PutState(accountKey, bytes) at L104. This time.Now() call is consensus-critical nondeterminism: different endorsing peers will generate different timestamps, causing the marshaled Payment object to differ and resulting in endorsement divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:10.837229",
+  "annotator": "2nd"
+}

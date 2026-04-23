@@ -1,0 +1,19 @@
+{
+  "file_id": "0403_hqiwui_demo",
+  "repo": "hqiwui",
+  "filename": "demo.go",
+  "elapsed_s": 14.48,
+  "input_tokens": 1904,
+  "output_tokens": 666,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid chaincode entrypoints (Init/Invoke) but no nondeterministic patterns. All PutState operations use deterministic values derived from transaction arguments. Cross-file calls to UserMng methods are out of scope for intra-file analysis.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `DomoChaincode` that implement the `shim.ChaincodeStubInterface` pattern. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Analysis\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` in this file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls in this file. The `Invoke` method delegates to `t.UserMng.QueryUserInfoByStatus` and `t.UserMng.GetHistoryForUserInfo`, but these are cross-file calls to `UserMng` which is out of scope for intra-file analysis.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file. The constants are `const` declarations which are immutable.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Sink Analysis\nThe file has ledger writes in `Init`:\n- `stub.PutState(\"demo_ui\", []byte(\"1.0\"))` - deterministic\n- `stub.PutState(\"selftest\", []byte(strconv.Itoa(Aval)))` - deterministic, based on input args\n\nThe `Read` function only performs `GetState` and returns via `SuccessPbResponse` - read-only operation.\n\n### Step 4: Cross-file Delegation\nThe `Invoke` method delegates several functions to `t.UserMng.*` methods, but per the rules, I must only consider intra-file evidence. The `UserMng` type is declared as a pointer field but its methods are defined elsewhere.\n\n## Conclusion\nWithin this file's scope, there are no C1-C4 or C6 vulnerability patterns. All operations are deterministic based on transaction inputs.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid chaincode entrypoints (Init/Invoke) but no nondeterministic patterns. All PutState operations use deterministic values derived from transaction arguments. Cross-file calls to UserMng methods are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:31:49.448422",
+  "annotator": "2nd"
+}

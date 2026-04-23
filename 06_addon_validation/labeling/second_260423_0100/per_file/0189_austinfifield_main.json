@@ -1,0 +1,19 @@
+{
+  "file_id": "0189_austinfifield_main",
+  "repo": "austinfifield",
+  "filename": "main.go",
+  "elapsed_s": 12.12,
+  "input_tokens": 1511,
+  "output_tokens": 587,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L12",
+  "rationale": "The only package-level variable is a logger used exclusively for logging purposes, which is explicitly SAFE per the taxonomy. No C1-C4 or C6 vulnerability patterns are present in this file. The actual transaction logic is delegated to methods defined in other files, which are out of scope for this intra-file analysis.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains `Init` and `Invoke` methods on the `EnergyTrade` struct that implement the `shim.ChaincodeStubInterface` pattern. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Source Patterns (C1-C4, C6)\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns present.\n\n**C3 MAP_ITERATION**: No `for...range` over maps present.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls present in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 12: `var logger = shim.NewLogger(\"EnergyTradeMain\")` - This is a package-level variable, but it's only used for logging purposes throughout the file. Logger-only globals are explicitly marked as SAFE in the taxonomy.\n\n### Step 3: Auxiliary Check (C5)\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Observations\n- The `Invoke` method dispatches to various methods (`CreateCash`, `CreateEnergy`, `RetrieveToken`, etc.) that are not defined in this file - they must be in other files of the package.\n- The only global variable (`logger`) is used exclusively for logging and does not influence ledger writes or proposal responses.\n- All return statements use `shim.Success(nil)` or `shim.Error()` with deterministic string content, or delegate to other methods.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L12\nRATIONALE: The only package-level variable is a logger used exclusively for logging purposes, which is explicitly SAFE per the taxonomy. No C1-C4 or C6 vulnerability patterns are present in this file. The actual transaction logic is delegated to methods defined in other files, which are out of scope for this intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:16:06.192373",
+  "annotator": "2nd"
+}

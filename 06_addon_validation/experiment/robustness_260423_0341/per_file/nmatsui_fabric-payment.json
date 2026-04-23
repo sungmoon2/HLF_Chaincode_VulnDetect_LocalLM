@@ -1,0 +1,55 @@
+{
+  "repo": "nmatsui",
+  "filename": "fabric-payment.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "6556dfd5bb8e7cf6",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'fabric-payment.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, or insecure key management. The code appears to be a basic structure for a Hyperledger Fabric chaincode, with each function handling a specific operation. However, without further context or implementation details of the `contracts` package, it's impossible to guarantee the absence of all potential vulnerabilities. It's always recommended to review and test chaincode thoroughly in a secure environment.",
+      "prediction": "safe",
+      "elapsed_s": 1.26,
+      "finish_reason": "stop",
+      "prompt_tokens": 550,
+      "completion_tokens": 123
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 550,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 550,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 550,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 550,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.29,
+  "total_elapsed_s": 1.44,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:42:32.687707"
+}

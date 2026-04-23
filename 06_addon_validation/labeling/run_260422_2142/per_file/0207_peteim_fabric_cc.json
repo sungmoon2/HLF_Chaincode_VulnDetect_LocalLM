@@ -1,0 +1,28 @@
+{
+  "file_id": "0207_peteim_fabric_cc",
+  "repo": "peteim",
+  "filename": "fabric_cc.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\peteim\\fabric_cc.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "TIME_NOW"
+  ],
+  "code_chars": 3133,
+  "stripped_chars": 3075,
+  "code_hash": "1e41e1457017e552",
+  "stripped_hash": "9b9dd72aeb7960a1",
+  "elapsed_s": 15.03,
+  "input_tokens": 2312,
+  "output_tokens": 634,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L68, L77, L85",
+  "rationale": "The time.Now() and time.Since() calls are used exclusively for diagnostic logging of request processing duration. The time values do not influence any ledger writes or the content of proposal responses - they are only passed to log.Printf() statements.",
+  "raw_response": "## Analysis\n\n### Step 1: HLF Transaction Entrypoint?\nYes. The file contains `Init(stub shim.ChaincodeStubInterface)` and `Invoke(stub shim.ChaincodeStubInterface)` methods that return `pb.Response`, which are standard Fabric chaincode entrypoints.\n\n### Step 2: Source Pattern Detection\n\n**C1 (TIME_NOW):**\n- Line 68: `startTime := time.Now()`\n- Line 77: `time.Since(startTime)` (in log statement)\n- Line 85: `time.Since(startTime)` (in log statement)\n\n**C2 (GOROUTINE):** None detected.\n\n**C3 (MAP_ITERATION):** None detected.\n\n**C4 (NON_REVALIDATED_QUERY):** None detected in this file.\n\n**C6 (GLOBAL_MUTABLE_STATE):** None detected.\n\n**C5 (ITERATOR_LEAK):** None detected.\n\n### Step 3: Source-to-Sink Analysis for C1\n\nThe `time.Now()` and `time.Since()` calls are used:\n1. `startTime := time.Now()` - captures start time\n2. `time.Since(startTime)` - used only in `log.Printf()` statements for logging duration\n\nTracing the flow:\n- `startTime` is only used to compute elapsed time for logging\n- The elapsed time value is passed to `log.Printf()` which is diagnostic logging\n- The time values do NOT influence:\n  - The return value `ret` from `cc.recoverHandler()`\n  - The decision to call `shim.Success()` or `shim.Error()`\n  - Any ledger writes (no PutState/DelState in this file)\n  - The content of the response payload\n\nThe actual response content is determined by `cc.rpc.Handler(req, stub)` which is external code, and the time values are only used for logging purposes.\n\n### Step 4: Logging/Test/Dead Code?\nYes - the `time.Now()` and `time.Since()` usage is exclusively for logging/diagnostics via `log.Printf()`. This does not influence ledger writes or proposal responses.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L68, L77, L85\nRATIONALE: The time.Now() and time.Since() calls are used exclusively for diagnostic logging of request processing duration. The time values do not influence any ledger writes or the content of proposal responses - they are only passed to log.Printf() statements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:50.544839"
+}

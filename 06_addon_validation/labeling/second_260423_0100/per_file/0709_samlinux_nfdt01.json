@@ -1,0 +1,19 @@
+{
+  "file_id": "0709_samlinux_nfdt01",
+  "repo": "samlinux",
+  "filename": "nfdt01.go",
+  "elapsed_s": 6.28,
+  "input_tokens": 2405,
+  "output_tokens": 191,
+  "verdict": "VULNERABLE",
+  "primary_class": "C2",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67-L68, L74-L77",
+  "rationale": "The `add` function uses `guuid.New()` (L67-68) to generate a UUID which becomes the key for `stub.PutState(key, dataItemJSONasBytes)` (L74-77). The google/uuid library's `New()` function uses random number generation internally, which can produce different values across different endorsing peers, causing endorsement divergence. This is a C2-like nondeterminism issue (external random source affecting ledger writes). The query functions use GetQueryResult but only return results via shim.Success without making write decisions, so they are not C4 violations.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C2\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L67-L68, L74-L77\nRATIONALE: The `add` function uses `guuid.New()` (L67-68) to generate a UUID which becomes the key for `stub.PutState(key, dataItemJSONasBytes)` (L74-77). The google/uuid library's `New()` function uses random number generation internally, which can produce different values across different endorsing peers, causing endorsement divergence. This is a C2-like nondeterminism issue (external random source affecting ledger writes). The query functions use GetQueryResult but only return results via shim.Success without making write decisions, so they are not C4 violations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:54:21.154811",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0643_phong101665_fabcar",
+  "repo": "phong101665",
+  "filename": "fabcar.go",
+  "elapsed_s": 2.89,
+  "input_tokens": 2373,
+  "output_tokens": 168,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95-L120",
+  "rationale": "The `queryAllCars` function uses `APIstub.GetQueryResult(query)` (L95), a non-revalidated query source, whose results directly influence the response returned via `shim.Success(buffer.Bytes())` (L120). CouchDB query results are not deterministic across endorsers due to index state variations and timing differences, making this a consensus-critical C4 vulnerability. Although the function does not write to ledger state, it returns query-dependent data in the proposal response, which can cause endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L95-L120\n\nRATIONALE: The `queryAllCars` function uses `APIstub.GetQueryResult(query)` (L95), a non-revalidated query source, whose results directly influence the response returned via `shim.Success(buffer.Bytes())` (L120). CouchDB query results are not deterministic across endorsers due to index state variations and timing differences, making this a consensus-critical C4 vulnerability. Although the function does not write to ledger state, it returns query-dependent data in the proposal response, which can cause endorsement divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:36.599127",
+  "annotator": "2nd"
+}

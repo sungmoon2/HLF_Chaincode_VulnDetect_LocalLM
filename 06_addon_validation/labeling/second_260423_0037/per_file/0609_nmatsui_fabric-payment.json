@@ -1,0 +1,19 @@
+{
+  "file_id": "0609_nmatsui_fabric-payment",
+  "repo": "nmatsui",
+  "filename": "fabric-payment.go",
+  "elapsed_s": 3.11,
+  "input_tokens": 1323,
+  "output_tokens": 207,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "This file contains a valid HLF transaction entrypoint (Init/Invoke methods on EntryPoint struct). However, all transaction logic is delegated to external contract packages (accountContract, eventContract, historyContract). The file itself contains no C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable global state influencing writes) patterns. The package-level variables (logger, accountContract, eventContract, historyContract) are either logger-only (safe) or deterministic object references initialized once at package load time, not mutable state influencing transaction outcomes. No consensus-critical nondeterminism is present in this file.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: This file contains a valid HLF transaction entrypoint (Init/Invoke methods on EntryPoint struct). However, all transaction logic is delegated to external contract packages (accountContract, eventContract, historyContract). The file itself contains no C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable global state influencing writes) patterns. The package-level variables (logger, accountContract, eventContract, historyContract) are either logger-only (safe) or deterministic object references initialized once at package load time, not mutable state influencing transaction outcomes. No consensus-critical nondeterminism is present in this file.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:55:34.869887",
+  "annotator": "2nd"
+}

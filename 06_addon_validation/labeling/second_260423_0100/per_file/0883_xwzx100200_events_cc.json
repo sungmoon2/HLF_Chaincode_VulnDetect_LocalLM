@@ -1,0 +1,19 @@
+{
+  "file_id": "0883_xwzx100200_events_cc",
+  "repo": "xwzx100200",
+  "filename": "events_cc.go",
+  "elapsed_s": 10.85,
+  "input_tokens": 1539,
+  "output_tokens": 520,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no nondeterministic patterns. All state operations use deterministic inputs from transaction arguments and ledger reads via GetState. No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `EventSender` struct that take `shim.ChaincodeStubInterface` and return `pb.Response`. This is a valid HLF chaincode entrypoint. → Continue analysis.\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. → Not present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns. → Not present.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. → Not present.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used, which is not a C4 source. → Not present.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic. → Not present.\n\n### Step 3: Check for C5 (Auxiliary)\n**C5 ITERATOR_LEAK**: No iterators are created in this code. → Not present.\n\n### Summary\nThe chaincode performs straightforward operations:\n- `Init`: Writes initial state\n- `invoke`: Reads state, increments counter, writes state, sets event\n- `clear`: Resets state\n- `query`: Reads and returns state\n\nAll operations use deterministic inputs (function arguments, ledger state via `GetState`). No nondeterministic sources are present.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no nondeterministic patterns. All state operations use deterministic inputs from transaction arguments and ledger reads via GetState. No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:04.778752",
+  "annotator": "2nd"
+}

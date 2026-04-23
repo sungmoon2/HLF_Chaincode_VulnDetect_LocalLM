@@ -1,0 +1,19 @@
+{
+  "file_id": "0667_qubing_balance_mgr",
+  "repo": "qubing",
+  "filename": "balance_mgr.go",
+  "elapsed_s": 3.13,
+  "input_tokens": 4091,
+  "output_tokens": 187,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "C5",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L313-L337",
+  "rationale": "The `json()` function (L313-L337) calls `stub.GetQueryResult(selector)` at L318, which is a C4 NON_REVALIDATED_QUERY source. The query result is iterated and directly influences the response returned via `shim.Success(buff.Bytes())` at L336 without revalidation. Since `GetQueryResult` may return results in non-deterministic order across endorsers, this creates consensus-critical nondeterminism. Additionally, the iterator is never explicitly closed (C5 auxiliary issue at L318), though this does not independently cause the VULNERABLE verdict.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: C5\n\nAUXILIARY_C5: YES\n\nEVIDENCE_LINES: L313-L337\n\nRATIONALE: The `json()` function (L313-L337) calls `stub.GetQueryResult(selector)` at L318, which is a C4 NON_REVALIDATED_QUERY source. The query result is iterated and directly influences the response returned via `shim.Success(buff.Bytes())` at L336 without revalidation. Since `GetQueryResult` may return results in non-deterministic order across endorsers, this creates consensus-critical nondeterminism. Additionally, the iterator is never explicitly closed (C5 auxiliary issue at L318), though this does not independently cause the VULNERABLE verdict.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:57:13.761122",
+  "annotator": "2nd"
+}

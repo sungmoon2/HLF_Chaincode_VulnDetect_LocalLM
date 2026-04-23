@@ -1,0 +1,19 @@
+{
+  "file_id": "0495_komaldhiman112_material-trace",
+  "repo": "komaldhiman112",
+  "filename": "material-trace.go",
+  "elapsed_s": 21.46,
+  "input_tokens": 7268,
+  "output_tokens": 867,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L18, L73-74, L217-223, L296-302, L395-401",
+  "rationale": "The package-level variable `currentMspId` (L18) is written during Invoke (L73-74) and read in transaction functions to determine private collection names for PutPrivateData calls (L217-223). This mutable global state can cause endorsement divergence in concurrent execution scenarios where different endorsers may have different values in this shared variable.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SmartContract` implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Source Pattern Analysis\n\n**C6 GLOBAL_MUTABLE_STATE:**\n- Line 18: `var currentMspId = \"\"` - This is a package-level mutable variable\n- Line 73-74: `currentMspId = str.ToLower(si.Mspid)` - Written in `Invoke`\n- Lines 217-222, 296-302, 395-401: `currentMspId` is read in `switch` statements to determine `privateCollection` which affects `PutPrivateData` calls\n\nThis is a critical issue. The `currentMspId` global variable is set during `Invoke` and then read in transaction functions. In a multi-threaded endorsement environment or if the chaincode container handles multiple concurrent requests, this could lead to race conditions where one transaction's MSP ID affects another transaction's behavior.\n\n**C3 MAP_ITERATION:**\n- Line 20-26: `organizationMap` is a package-level map, but it's only read (not iterated with range in a way that affects writes)\n- Line 268: `for _, lineItem := range lineItemsToShip` - iterating over a slice, not a map\n- Line 271: `lineitemToShipMap[lineItem.ItemKey] = lineItem` - building a map\n- Lines 295, 340: `lineitemToShipMap[eachItem.ItemKey]` - map lookups, not iteration\n\nThe map `lineitemToShipMap` is built and then accessed by key lookup, not iterated. No C3 issue.\n\n**C1 TIME_NOW:** No `time.Now()` calls found.\n\n**C2 GOROUTINE:** No `go` statements found.\n\n**C4 NON_REVALIDATED_QUERY:** \n- `GetPrivateData` calls are used (lines 283, 285, etc.) but these are key-based lookups, not rich queries.\n\n### Step 3: Sink Analysis for C6\n\nThe `currentMspId` global directly influences:\n1. Line 217-222: Which `privateCollection` is selected in `addMaterialCertificate`\n2. Line 223: `stub.PutPrivateData(privateCollection, materialCert.TrackingId, mtrBytes)` - SINK\n\nThis creates a direct path from the mutable global to a ledger write.\n\n### Step 4: Usage Context\nThis is not logging, test, or dead code. The `currentMspId` is used in production transaction logic to determine which private data collection to write to.\n\n### Auxiliary C5 Check\nLooking for iterator usage - no `GetStateByRange`, `GetQueryResult`, or similar iterator-returning calls that aren't closed.\n\n## Verdict\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L18, L73-74, L217-223, L296-302, L395-401\nRATIONALE: The package-level variable `currentMspId` (L18) is written during Invoke (L73-74) and read in transaction functions to determine private collection names for PutPrivateData calls (L217-223). This mutable global state can cause endorsement divergence in concurrent execution scenarios where different endorsers may have different values in this shared variable.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:38:31.088332",
+  "annotator": "2nd"
+}

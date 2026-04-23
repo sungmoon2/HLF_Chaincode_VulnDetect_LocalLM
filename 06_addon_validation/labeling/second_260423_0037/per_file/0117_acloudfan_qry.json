@@ -1,0 +1,19 @@
+{
+  "file_id": "0117_acloudfan_qry",
+  "repo": "acloudfan",
+  "filename": "qry.go",
+  "elapsed_s": 3.19,
+  "input_tokens": 1802,
+  "output_tokens": 206,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L57-L58, L70",
+  "rationale": "The `AddData` function parses a user-supplied date string (L57) into a `time.Time` object (`txnDateConverted`), which is then embedded in the `CryptocoinData` struct (L69). This struct is marshaled to JSON (L70) and written to the ledger via `stub.PutState(txnDate, jsonData)` (L71). The `time.Time` type includes internal fields (wall clock, monotonic clock) that can vary across endorsers even when parsing the same input string, causing the JSON serialization to differ and leading to endorsement divergence. This is a C1 TIME_NOW variant where time manipulation influences a ledger write.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L57-L58, L70\n\nRATIONALE: The `AddData` function parses a user-supplied date string (L57) into a `time.Time` object (`txnDateConverted`), which is then embedded in the `CryptocoinData` struct (L69). This struct is marshaled to JSON (L70) and written to the ledger via `stub.PutState(txnDate, jsonData)` (L71). The `time.Time` type includes internal fields (wall clock, monotonic clock) that can vary across endorsers even when parsing the same input string, causing the JSON serialization to differ and leading to endorsement divergence. This is a C1 TIME_NOW variant where time manipulation influences a ledger write.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:41:16.094774",
+  "annotator": "2nd"
+}

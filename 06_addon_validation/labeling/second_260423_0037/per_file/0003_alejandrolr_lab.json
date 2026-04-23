@@ -1,0 +1,19 @@
+{
+  "file_id": "0003_alejandrolr_lab",
+  "repo": "alejandrolr",
+  "filename": "lab.go",
+  "elapsed_s": 4.03,
+  "input_tokens": 4280,
+  "output_tokens": 175,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67-L68, L67-L68, L119-L120",
+  "rationale": "The file contains two transaction functions (`addMedicineOrder` and `SendOrder`) that both call `time.Now().Local()` and use the formatted timestamp to populate order date fields that are subsequently written to the ledger via `APIstub.PutState()`. Since `time.Now()` is non-deterministic across endorsers, different peers will produce different timestamps, causing the serialized Laboratory state to diverge and fail consensus. This is a direct C1 TIME_NOW vulnerability where the time source influences a ledger write.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L67-L68, L67-L68, L119-L120\n\nRATIONALE: The file contains two transaction functions (`addMedicineOrder` and `SendOrder`) that both call `time.Now().Local()` and use the formatted timestamp to populate order date fields that are subsequently written to the ledger via `APIstub.PutState()`. Since `time.Now()` is non-deterministic across endorsers, different peers will produce different timestamps, causing the serialized Laboratory state to diverge and fail consensus. This is a direct C1 TIME_NOW vulnerability where the time source influences a ledger write.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:37:27.813545",
+  "annotator": "2nd"
+}

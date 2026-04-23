@@ -1,0 +1,19 @@
+{
+  "file_id": "0027_imineev_carTrace",
+  "repo": "imineev",
+  "filename": "carTrace.go",
+  "elapsed_s": 2.57,
+  "input_tokens": 7681,
+  "output_tokens": 152,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L656-L661",
+  "rationale": "The `setPartRecallState` function uses `time.Now().UTC().Unix()` at line 656 to compute a timestamp that is directly written to the ledger via `stub.PutState()` at line 665. This time-dependent value will differ across endorsing peers, causing consensus divergence. The timestamp is embedded in the vehiclePart struct and persisted as part of the RecallDate field, making it a consensus-critical nondeterminism vulnerability.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L656-L661\nRATIONALE: The `setPartRecallState` function uses `time.Now().UTC().Unix()` at line 656 to compute a timestamp that is directly written to the ledger via `stub.PutState()` at line 665. This time-dependent value will differ across endorsing peers, causing consensus divergence. The timestamp is embedded in the vehiclePart struct and persisted as part of the RecallDate field, making it a consensus-critical nondeterminism vulnerability.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:42.653174",
+  "annotator": "2nd"
+}

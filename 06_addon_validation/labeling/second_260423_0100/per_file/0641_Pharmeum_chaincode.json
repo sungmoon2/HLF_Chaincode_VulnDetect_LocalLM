@@ -1,0 +1,19 @@
+{
+  "file_id": "0641_Pharmeum_chaincode",
+  "repo": "Pharmeum",
+  "filename": "chaincode.go",
+  "elapsed_s": 4.92,
+  "input_tokens": 3183,
+  "output_tokens": 127,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L37-L40",
+  "rationale": "The file contains time.Now() and time.Since() at lines 37-40, but these are used exclusively for logging the duration of the invocation request within a deferred function. The time values do not influence any ledger writes (PutState calls) or the proposal response content. All transaction logic (createWallet, transferPayment) uses deterministic operations only.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L37-L40\nRATIONALE: The file contains time.Now() and time.Since() at lines 37-40, but these are used exclusively for logging the duration of the invocation request within a deferred function. The time values do not influence any ledger writes (PutState calls) or the proposal response content. All transaction logic (createWallet, transferPayment) uses deterministic operations only.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:48:56.297797",
+  "annotator": "2nd"
+}

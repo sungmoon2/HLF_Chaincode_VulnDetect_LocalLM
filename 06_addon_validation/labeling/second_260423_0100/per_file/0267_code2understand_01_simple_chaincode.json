@@ -1,0 +1,19 @@
+{
+  "file_id": "0267_code2understand_01_simple_chaincode",
+  "repo": "code2understand",
+  "filename": "01_simple_chaincode.go",
+  "elapsed_s": 13.5,
+  "input_tokens": 1451,
+  "output_tokens": 633,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This is a simple chaincode with deterministic operations. The only global variable is a logger used exclusively in main(), not in transaction logic. All state operations use deterministic inputs from transaction arguments. No time-based, goroutine, map iteration, or rich query patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify HLF Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface) pb.Response` (L29)\n- `Invoke(stub shim.ChaincodeStubInterface) pb.Response` (L48)\n\nThis is valid chaincode, so I proceed with analysis.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetState` is used at L77, but `GetState` is NOT a C4 source (only `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` are C4 sources).\n- The result is returned via `shim.Success(game)` which is read-only, not used for write decisions.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `var logger = shim.NewLogger(\"SimpleChaincode\")` at L11 is a package-level variable.\n- However, it's only used for logging purposes (`logger.SetLevel`, `logger.Debug`, `logger.Critical`) in the `main()` function.\n- The logger is NOT used in transaction logic (`Init`, `Invoke`, `set`, `get` methods).\n- Logger-only globals are explicitly SAFE per the taxonomy.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Evidence of Source-to-Sink Flow\nNo vulnerability sources (C1-C4, C6) are present that influence ledger writes or proposal responses.\n\n### Step 4: Logging/Test/Dead Code Check\nThe only global variable is used exclusively for logging in `main()`, not in transaction logic.\n\n## Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This is a simple chaincode with deterministic operations. The only global variable is a logger used exclusively in main(), not in transaction logic. All state operations use deterministic inputs from transaction arguments. No time-based, goroutine, map iteration, or rich query patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:21:55.648106",
+  "annotator": "2nd"
+}

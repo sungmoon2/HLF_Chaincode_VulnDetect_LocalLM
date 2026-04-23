@@ -1,0 +1,19 @@
+{
+  "file_id": "0819_TongjiUniversityStudent1_fundRaise",
+  "repo": "TongjiUniversityStudent1",
+  "filename": "fundRaise.go",
+  "elapsed_s": 4.8,
+  "input_tokens": 2427,
+  "output_tokens": 145,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init, Invoke) with add, update, and query functions. No time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and the only package-level var is a logger which is explicitly safe (C6). All operations use deterministic GetState/PutState with fixed keys derived from function arguments.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init, Invoke) with add, update, and query functions. No time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and the only package-level var is a logger which is explicitly safe (C6). All operations use deterministic GetState/PutState with fixed keys derived from function arguments.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:02:03.987349",
+  "annotator": "2nd"
+}

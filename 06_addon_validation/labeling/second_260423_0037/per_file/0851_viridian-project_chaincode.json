@@ -1,0 +1,19 @@
+{
+  "file_id": "0851_viridian-project_chaincode",
+  "repo": "viridian-project",
+  "filename": "chaincode.go",
+  "elapsed_s": 2.06,
+  "input_tokens": 1116,
+  "output_tokens": 148,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only a dispatcher/router that delegates all transaction logic to external types (ProductChaincode and ProducerChaincode). The Init and Invoke methods perform no ledger operations, state mutations, or response generation based on nondeterministic sources—they only route function calls and return results from external methods. Intra-file analysis reveals no C1–C6 vulnerability patterns, and the actual transaction logic resides in other files outside the scope of this audit.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only a dispatcher/router that delegates all transaction logic to external types (ProductChaincode and ProducerChaincode). The Init and Invoke methods perform no ledger operations, state mutations, or response generation based on nondeterministic sources—they only route function calls and return results from external methods. Intra-file analysis reveals no C1–C6 vulnerability patterns, and the actual transaction logic resides in other files outside the scope of this audit.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:19.498005",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0593_netkiller_gasoline",
+  "repo": "netkiller",
+  "filename": "gasoline.go",
+  "elapsed_s": 6.43,
+  "input_tokens": 3457,
+  "output_tokens": 187,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L14-L15, L108-L109",
+  "rationale": "The Gasoline struct contains a map[string]string field (Message) that is serialized via json.Marshal before PutState. However, Go's encoding/json.Marshal produces deterministic output for maps by sorting keys alphabetically (per Go standard library specification). The taxonomy explicitly states \"encoding/json.Marshal(map) is SAFE (deterministic key sorting in Go std lib v1)\". No C1 time.Now(), C2 goroutines, C4 rich queries, or C6 mutable globals are present. The file contains valid HLF transaction entrypoints (Init/Invoke).",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L14-L15, L108-L109\nRATIONALE: The Gasoline struct contains a map[string]string field (Message) that is serialized via json.Marshal before PutState. However, Go's encoding/json.Marshal produces deterministic output for maps by sorting keys alphabetically (per Go standard library specification). The taxonomy explicitly states \"encoding/json.Marshal(map) is SAFE (deterministic key sorting in Go std lib v1)\". No C1 time.Now(), C2 goroutines, C4 rich queries, or C6 mutable globals are present. The file contains valid HLF transaction entrypoints (Init/Invoke).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:45:49.995399",
+  "annotator": "2nd"
+}

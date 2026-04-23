@@ -1,0 +1,19 @@
+{
+  "file_id": "0093_abegpatel_chaincode_sample",
+  "repo": "abegpatel",
+  "filename": "chaincode_sample.go",
+  "elapsed_s": 2.74,
+  "input_tokens": 1903,
+  "output_tokens": 186,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L57-L62, L65-L75, L109-L113",
+  "rationale": "The `encryptAndDecrypt` method (L57-L62) calls `t.GenAESKey()` which invokes `rand.Read()` (L24), generating non-deterministic random bytes. This random key is used to encrypt data that is subsequently written to the ledger via `stub.PutState()` in `writeTransaction` (L109-L113). Since the encryption uses a fresh random key on each invocation, the ciphertext output is non-deterministic, causing different endorsers to produce different state values for the same input, violating consensus.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L57-L62, L65-L75, L109-L113\nRATIONALE: The `encryptAndDecrypt` method (L57-L62) calls `t.GenAESKey()` which invokes `rand.Read()` (L24), generating non-deterministic random bytes. This random key is used to encrypt data that is subsequently written to the ledger via `stub.PutState()` in `writeTransaction` (L109-L113). Since the encryption uses a fresh random key on each invocation, the ciphertext output is non-deterministic, causing different endorsers to produce different state values for the same input, violating consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:40:39.996237",
+  "annotator": "2nd"
+}

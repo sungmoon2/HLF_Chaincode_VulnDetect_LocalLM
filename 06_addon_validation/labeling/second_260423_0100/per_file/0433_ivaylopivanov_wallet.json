@@ -1,0 +1,19 @@
+{
+  "file_id": "0433_ivaylopivanov_wallet",
+  "repo": "ivaylopivanov",
+  "filename": "wallet.go",
+  "elapsed_s": 8.37,
+  "input_tokens": 1010,
+  "output_tokens": 543,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only a deterministic routing stub with Init and Invoke methods. All actual transaction logic is delegated to external functions (deposit, withdrawal, transfer, get, getAllKeys, history) not defined in this file. No C1-C4 or C6 source patterns exist in the visible code.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains a `Wallet` struct with `Init` and `Invoke` methods implementing the `shim.ChaincodeStubInterface` pattern. This is a valid HLF transaction entrypoint.\n\n### Step 2: Source Pattern Analysis\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns present.\n\n**C3 MAP_ITERATION**: No `for...range` over maps present.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls present in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations present.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Code Review\n\nThis file is essentially a routing stub. The `Invoke` method:\n- Extracts function name and arguments\n- Routes to external functions (`deposit`, `withdrawal`, `transfer`, `get`, `getAllKeys`, `history`)\n- These functions are NOT defined in this file\n\nThe actual implementation logic is in external functions that are not visible in this file. Based on intra-file analysis only:\n- No nondeterministic patterns exist in the visible code\n- The `Init` returns `shim.Success(nil)` deterministically\n- The `Invoke` switch statement is deterministic routing\n\n### Step 4: Logging/Test/Dead Code Check\nNot applicable - no source patterns found.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only a deterministic routing stub with Init and Invoke methods. All actual transaction logic is delegated to external functions (deposit, withdrawal, transfer, get, getAllKeys, history) not defined in this file. No C1-C4 or C6 source patterns exist in the visible code.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:34:14.900778",
+  "annotator": "2nd"
+}

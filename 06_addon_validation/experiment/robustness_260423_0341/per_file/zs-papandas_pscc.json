@@ -1,0 +1,55 @@
+{
+  "repo": "zs-papandas",
+  "filename": "pscc.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "0fb8d3a818f06f0e",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'pscc.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The code appears to be a basic structure for a Hyperledger Fabric chaincode, with functions for initializing and invoking the chaincode, and handling various operations like creating and retrieving accounts and products. However, without further context or specific implementations of the `contracts` package methods, it's not possible to identify more detailed vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 1.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 569,
+      "completion_tokens": 116
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 569,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 569,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 569,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 569,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.24,
+  "total_elapsed_s": 1.21,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T08:06:47.664643"
+}

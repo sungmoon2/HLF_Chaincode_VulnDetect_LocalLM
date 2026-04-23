@@ -1,0 +1,19 @@
+{
+  "file_id": "0347_fishmc_contract",
+  "repo": "fishmc",
+  "filename": "contract.go",
+  "elapsed_s": 2.41,
+  "input_tokens": 1227,
+  "output_tokens": 172,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Init/Invoke methods on Contract struct). However, no consensus-critical nondeterminism sources are present. The `get` function performs a deterministic read-only query (GetState) and returns it via shim.Success. The `set` function writes a deterministic key-value pair derived from function parameters with no time-dependent, goroutine-based, map-iteration, or non-revalidated-query logic. No package-level mutable state influences transaction outcomes. All operations are deterministic across endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains a valid HLF transaction entrypoint (Init/Invoke methods on Contract struct). However, no consensus-critical nondeterminism sources are present. The `get` function performs a deterministic read-only query (GetState) and returns it via shim.Success. The `set` function writes a deterministic key-value pair derived from function parameters with no time-dependent, goroutine-based, map-iteration, or non-revalidated-query logic. No package-level mutable state influences transaction outcomes. All operations are deterministic across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:22.349545",
+  "annotator": "2nd"
+}

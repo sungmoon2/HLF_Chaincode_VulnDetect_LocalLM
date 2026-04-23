@@ -1,0 +1,19 @@
+{
+  "file_id": "0437_james3443112_chaincode",
+  "repo": "james3443112",
+  "filename": "chaincode.go",
+  "elapsed_s": 5.16,
+  "input_tokens": 2903,
+  "output_tokens": 160,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF chaincode with Init/Invoke entrypoints. Analysis shows no C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (rich queries like GetQueryResult), or C6 (mutable global state) patterns. All operations use deterministic key-value operations (GetState, PutState, DelState) with deterministic key generation via MD5 hash. The digitalassets struct uses json.Marshal which is deterministic for structs.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF chaincode with Init/Invoke entrypoints. Analysis shows no C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (rich queries like GetQueryResult), or C6 (mutable global state) patterns. All operations use deterministic key-value operations (GetState, PutState, DelState) with deterministic key generation via MD5 hash. The digitalassets struct uses json.Marshal which is deterministic for structs.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:34:23.869832",
+  "annotator": "2nd"
+}

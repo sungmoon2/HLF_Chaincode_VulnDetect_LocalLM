@@ -1,0 +1,19 @@
+{
+  "file_id": "0057_xuansonha17031991_hospital_fees",
+  "repo": "xuansonha17031991",
+  "filename": "hospital_fees.go",
+  "elapsed_s": 5.48,
+  "input_tokens": 2774,
+  "output_tokens": 181,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L75-L76, L85-L88",
+  "rationale": "In the `query` function, `time.Now().String()` is called at L75 and stored in `timeQuery`, which is then embedded in the `Query` struct at L85. This struct is marshaled and written to private data via `PutPrivateData` at L88. Since `time.Now()` returns different values on different endorsing peers, this causes endorsement divergence. The `time.Now()` calls in `createHospitalFees` (L117, L145-L147) are only used for logging and do not influence ledger writes.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L75-L76, L85-L88\nRATIONALE: In the `query` function, `time.Now().String()` is called at L75 and stored in `timeQuery`, which is then embedded in the `Query` struct at L85. This struct is marshaled and written to private data via `PutPrivateData` at L88. Since `time.Now()` returns different values on different endorsing peers, this causes endorsement divergence. The `time.Now()` calls in `createHospitalFees` (L117, L145-L147) are only used for logging and do not influence ledger writes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:06:13.688794",
+  "annotator": "2nd"
+}

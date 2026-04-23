@@ -1,0 +1,19 @@
+{
+  "file_id": "0397_higyigma_hashChainCode",
+  "repo": "higyigma",
+  "filename": "hashChainCode.go",
+  "elapsed_s": 3.08,
+  "input_tokens": 1872,
+  "output_tokens": 183,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init, Invoke) and three transaction functions (initLedger, addHash, getDatabase). All ledger writes use deterministic inputs: initLedger writes fixed hash values in a for-loop with sequential indices; addHash writes based on function arguments; getDatabase only reads and returns data without writing. No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable global state (C6) are present. GetStateByRange is explicitly excluded from C4 scope.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init, Invoke) and three transaction functions (initLedger, addHash, getDatabase). All ledger writes use deterministic inputs: initLedger writes fixed hash values in a for-loop with sequential indices; addHash writes based on function arguments; getDatabase only reads and returns data without writing. No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable global state (C6) are present. GetStateByRange is explicitly excluded from C4 scope.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:49.767028",
+  "annotator": "2nd"
+}

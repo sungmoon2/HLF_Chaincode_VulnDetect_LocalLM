@@ -1,0 +1,28 @@
+{
+  "file_id": "0209_zs-papandas_pscc",
+  "repo": "zs-papandas",
+  "filename": "pscc.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\zs-papandas\\pscc.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "GLOBAL_MUTABLE_STATE"
+  ],
+  "code_chars": 2328,
+  "stripped_chars": 1850,
+  "code_hash": "0fb8d3a818f06f0e",
+  "stripped_hash": "5c7cdac7464a8aa5",
+  "elapsed_s": 4.04,
+  "input_tokens": 1703,
+  "output_tokens": 136,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file is an entry point that delegates all transaction logic to external contract files (contracts.AccountContract, etc.). The package-level logger variable is used only for diagnostic logging, not to influence ledger writes or proposal responses. No C1-C4 or C6 source patterns with intra-file evidence of reaching sinks exist in this file. All actual transaction logic is in other files which are out of scope for this analysis.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file is an entry point that delegates all transaction logic to external contract files (contracts.AccountContract, etc.). The package-level logger variable is used only for diagnostic logging, not to influence ledger writes or proposal responses. No C1-C4 or C6 source patterns with intra-file evidence of reaching sinks exist in this file. All actual transaction logic is in other files which are out of scope for this analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:54.646926"
+}

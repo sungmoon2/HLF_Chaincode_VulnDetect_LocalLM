@@ -1,0 +1,19 @@
+{
+  "file_id": "0697_rolivieri_removerCC",
+  "repo": "rolivieri",
+  "filename": "removerCC.go",
+  "elapsed_s": 2.99,
+  "input_tokens": 2280,
+  "output_tokens": 170,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init, Invoke, Initialize). All ledger writes (PutState at L38, DelState at L107) and responses are driven by deterministic sources: GetState (L82), GetStateByPartialCompositeKey (L127), and iterator traversal (L133–L145). No time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state patterns influence writes or responses. The logger global is read-only and does not affect consensus.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init, Invoke, Initialize). All ledger writes (PutState at L38, DelState at L107) and responses are driven by deterministic sources: GetState (L82), GetStateByPartialCompositeKey (L127), and iterator traversal (L133–L145). No time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state patterns influence writes or responses. The logger global is read-only and does not affect consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:04.242183",
+  "annotator": "2nd"
+}

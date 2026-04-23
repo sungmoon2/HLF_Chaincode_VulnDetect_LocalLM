@@ -1,0 +1,40 @@
+{
+  "seed": 20260422,
+  "created": "2026-04-22T02:58:41.754455",
+  "mapping": {
+    "P01.go": "safe_01_logging.go",
+    "P02.go": "vuln_01_b_interprocedural.go",
+    "P03.go": "safe_05_deterministic_time.go",
+    "P04.go": "safe_03_map_read.go",
+    "P05.go": "vuln_05_phantom.go",
+    "P06.go": "vuln_04_map_iter.go",
+    "P07.go": "vuln_06_iterator_leak.go",
+    "P08.go": "vuln_01_time.go",
+    "P09.go": "safe_06_external_lib.go",
+    "P10.go": "vuln_06_b_conditional_leak.go",
+    "P11.go": "vuln_04_b_nested_map.go",
+    "P12.go": "safe_04_math_rand.go",
+    "P13.go": "vuln_03_goroutine.go",
+    "P14.go": "safe_02_local_var.go",
+    "P15.go": "vuln_02_global.go"
+  },
+  "ground_truth": {
+    "P01.go": "safe",
+    "P02.go": "vulnerable",
+    "P03.go": "safe",
+    "P04.go": "safe",
+    "P05.go": "vulnerable",
+    "P06.go": "vulnerable",
+    "P07.go": "vulnerable",
+    "P08.go": "vulnerable",
+    "P09.go": "safe",
+    "P10.go": "vulnerable",
+    "P11.go": "vulnerable",
+    "P12.go": "safe",
+    "P13.go": "vulnerable",
+    "P14.go": "safe",
+    "P15.go": "vulnerable"
+  },
+  "vuln_count": 9,
+  "safe_count": 6
+}

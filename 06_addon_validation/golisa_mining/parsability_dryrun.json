@@ -1,0 +1,4607 @@
+{
+  "total_files": 657,
+  "success": 657,
+  "failed": 0,
+  "skipped": 0,
+  "files": [
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\chaincode_example01.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3014,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\chaincode_example03.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2808,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\chaincode_example04.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4757,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\chaincode_example05.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5833,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\configure.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5982,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\endorser_onevalidsignature.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5747,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\eventsender.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2753,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\invokereturnsvalue.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3766,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\passthru.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1972,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\samplesyscc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2463,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\sleeper.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3145,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\validator_onevalidsignature.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5220,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\AProkot\\mycontract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8272,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ASomething\\eventsender.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2395,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Akachain\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2599,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Amit9887\\marble.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31341,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Anylsite\\DeviceManager.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2637,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Avery7Li\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26125,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25858,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\simpleasset.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1700,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BOCno1team\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 29261,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BadBaman\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 28423,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BadBaman\\odschaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8516,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\BingHongLi\\chaincode_tutorial.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1534,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\C0rWin\\bank.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1351,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\C0rWin\\person.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2049,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\CaelRowley\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3007,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ChainNova\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2157,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ChaiwatSumrit\\users_and_orgs.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 764,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 19110,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25858,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\DCoT-EL\\dcotWorkflow.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24742,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\DID-hyperledger\\did.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2404,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\DappCampus\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5007,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\DappCampus\\controller.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1355,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\EslamHiko\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7131,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\FLombardi-PhD\\governance.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 16652,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\FLombardi-PhD\\key_value_store.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4699,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\FLombardi-PhD\\yandex_translator.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4137,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Featasy\\ml.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6381,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\FeiyangTan\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13570,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Ferwoo\\EvidenceChaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3200,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Ferwoo\\finance.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1217,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\FuradWho\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2660,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\FuradWho\\spm.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2660,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Gela-Gunp\\nekochain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9054,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Hulkbero\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7166,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\IBM-Blockchain-Edu-Credit\\opp_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11083,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\IBM-Blockchain-Edu-Credit\\voucher_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4419,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\IBM-Blockchain-Starter-Kit\\asset_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7670,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\JasonCrash\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5433,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\JcobCN\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\JiSeungGu\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12035,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\JohnnyKuo99\\basic.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3078,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\JohnnyKuo99\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\JohnnyKuo99\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KSR4599\\Interm.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1646,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KSR4599\\erc20.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6497,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KTyrantOnly\\crowdTest.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10732,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KarthikSamaganam550\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5459,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KarthikSamaganam550\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31205,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KarthikSamaganam550\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2852,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Kayaanoosh\\Proto1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5251,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Kayaanoosh\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\KolevDarko\\kyc-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2171,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\LinkaKorea\\linkatoken.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10826,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\MSaber9\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 21092,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Medullus\\main_router.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3176,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\MennaAnees\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7156,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\MetacoinPlatform\\MetaCoin.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 20031,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\MisterPineapple\\chaincode1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7426,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\MohammadGhoneem89\\testcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8928,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Mr-lay\\contract_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13341,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\NightShards\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1469,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Noonefang\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10953,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\OneChainGeek\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1359,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\OpenDataDLT\\evmcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7121,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\PandaManPMC\\example1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2082,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Parag08\\wallet.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8739,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Pharmeum\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8495,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RAntonio09\\ccConsortium.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 20238,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RaeHowe\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2864,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\fChaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10507,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25731,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RathikaSnowflake\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5451,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ReallyBigIndex-JavaApps\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5432,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\RohanShrothrium\\hackidf.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6161,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\channel\\Channel.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 401,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\global\\GlobalVariable.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 350,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\goroutine\\GoRoutines.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 458,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\map-iter\\MapIteration.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 262,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\method-function\\MethodFunction.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 216,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SaifDeveloper\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3090,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Saurabh1997\\argument_function.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1854,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Saurabh1997\\calc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2574,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Saurabh1997\\caller_sa.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4078,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Saurabh1997\\proposal_use.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1721,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Saurabh1997\\token_endorse.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5022,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Saurabh1997\\token_rit.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4182,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Shuo93\\router.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2447,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SipengXie\\Identity.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3102,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SipengXie\\record.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9095,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SipengXie\\traco.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1703,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SolveCare\\scheduleChaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7167,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SurabhiBorgikar\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5857,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\SurabhiBorgikar\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Tectiform\\spare.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2606,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TigerWit\\sealtx.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3899,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TigerWit\\sealtxnew.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4028,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\charity.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9463,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5321,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\fundRaise.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6155,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\moneyTocoin.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9361,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\project.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10337,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\projectLibrary.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5621,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\publicityList.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4912,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\publicityReport.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3824,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Trust-Contract\\cargo-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6226,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TxTPing\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\TxTPing\\chaincode_example05.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6690,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\VegeBun-csj\\chaincode_helloworld.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1168,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\VegeBun-csj\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7165,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\VegeBun-csj\\keylevel_ep.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 14370,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\VegeBun-csj\\privateData.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11084,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Vijaypunugubati\\evmcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7121,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\VoneChain-CS\\contract_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13341,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\WouldULike\\blood-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4890,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\WuEcho\\hello.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1244,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\WuEcho\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2160,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\XmissterioX\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 21092,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\YewPu\\jsonObjects.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 27303,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\YewPu\\rowObjects.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 32521,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Yuchiss\\events_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2833,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Yuchiss\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7428,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Yuchiss\\example_cc1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5964,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Z-Voting\\device.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3335,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\Z-Voting\\rahasak.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3130,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3846,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\chaincode_sample.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4956,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\map.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5668,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\map_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4714,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\mapkeys.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8802,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 33143,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26359,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\abgulati\\JSON_CRUD_Chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10372,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\calc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2506,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\caller.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1935,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5551,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\erc20.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6502,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\priv.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2165,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\qry.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3621,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\acloudfan\\token.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1721,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\adityachap\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5321,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\adnanjee\\GoChaincodeTemplate.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1500,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\airvin\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\airvin\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\akkagao\\citizensChain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3284,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\akm4\\Person.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4122,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\akm4\\Shop.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4505,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\akshay111meher\\ex2.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7916,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\akshay111meher\\myexample.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2437,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejandrolr\\arm.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5896,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejandrolr\\lab.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11860,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejandrolr\\supplyChain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7356,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejoacosta74\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5459,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejoacosta74\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejoacosta74\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31205,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alejoacosta74\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2852,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\alext234\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2259,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4685,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\marble.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9806,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\mysacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\template.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\transfer.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3730,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\amtoaer\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1758,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\anallr\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\andres07a\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2816,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ankitaunhalkar\\first_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1598,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ankitaunhalkar\\tradefinance_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11370,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\anzalbeg\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\anzalbeg\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\anzalbeg\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\anzalbeg\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25022,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\anzalbeg\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\arslanali9797\\firstchaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\arslanali9797\\secondchaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\arsulegai\\key_value.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3050,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\arthurmsouza\\boleto.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8768,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\asararatnakar\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\asararatnakar\\newkeyperinvoke.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1979,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\aschmidt75\\pcs.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3344,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ashokcin1\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5531,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ashwanihlf\\samplecc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6752,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\austinfifield\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1916,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bairathirahul\\genesiskyc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24900,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bcken001a\\chaincode2.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6695,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bezant-developers\\simpleChaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2409,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25784,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bhagyanik\\BR31A1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2678,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bhagyanik\\DWPB.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3571,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bluezd\\certificate.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12931,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bluezd\\integralTrace.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 23770,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bluezd\\marathon.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 20207,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\boohyung\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8450,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\boohyung\\ping.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1949,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3950,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\bMRP.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3206,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\chaincode_AtoreAndAccess.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3330,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3762,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\charity_contract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8722,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4255,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1905,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\marbles.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3613,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12157,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13184,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1758,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\solution.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13792,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\test.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3762,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\init.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 598,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\invoke.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2198,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26628,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25858,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chainHero\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3134,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chilanti\\asset_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7670,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25844,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\chpwssn\\redvblue.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3752,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\clydedacruz\\simplechaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 20533,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\code2understand\\01_simple_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2161,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\code2understand\\02_composite_asset_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2951,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\code2understand\\03_range_keys_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2696,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\code2understand\\04_history_of_keys.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3037,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\code2understand\\05_issue_events.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3195,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cosmos-sdk-0.43\\authorization_grant.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1536,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\calc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2486,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\caller.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1991,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5551,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\erc20.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6489,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\priv.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4454,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\qry.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3603,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cprinyarux\\token.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1711,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\cristiano-andrade\\chaincode-test.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3752,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ctacampado\\beacon_cmpgns.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1476,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ctacampado\\beacon_identity.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1502,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ctacampado\\beacon_transact.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1439,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\dachrillz\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6905,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\daveyMedvedev\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1812,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\dbadoy\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 842,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\dcbove\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5489,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\debutdeveloper\\debut_asset.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5055,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\deevotech\\food_supplychain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26434,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\deevotech\\supplychain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 42808,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\deevotech\\supplychain_account.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 16006,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\demonsh\\example_base.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\dempsey-ycr\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\einai\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5531,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\elciusferreira\\accountController.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3996,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\elciusferreira\\cardController.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1727,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\elciusferreira\\transferController.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1631,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\elite-elf\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\eshita53\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\eshita53\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\eshita53\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 27153,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\eshita53\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\eshita53\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25844,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\eshita53\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\esumit\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 807,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\evgenhvost\\demo_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3345,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ewerter\\customerloyalty.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2955,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\farmerrrrr\\asset management.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5531,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\femiadewumi\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 21092,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ferrygun\\smartbulb.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4936,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fishmc\\certification.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1798,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fishmc\\contract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1313,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fishmc\\test.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1317,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fishmc\\transcation.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1604,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\flybirdC\\contract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1737,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3283,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\chaincode_example01.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3014,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\chaincode_example03.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2808,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\chaincode_example04.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4849,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\chaincode_example05.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6690,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\eventsender.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2753,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\invokereturnsvalue.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3766,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\map.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5797,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\passthru.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1972,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\sleeper.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3145,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\freya-zhang\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5629,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\fushui-Fang\\lyan.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1603,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\georgkoester\\blacklist_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8190,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ggdranzor\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7289,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\giou-k\\votingAllinOne.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 22417,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\global-blockchain\\simplechaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1574,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\gorbunovperm\\optimum.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4122,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\grishawh\\new.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5956,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\gymgle\\diploma.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11579,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\harishtreddy\\wabco.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3123,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\haydencoinprima\\wallet_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7507,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\heixiongTT\\simple.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12993,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hhllii\\trading.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10750,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\higyigma\\hashChainCode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3658,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hisham-sameeh\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 21092,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hlf-go\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 773,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hoke58\\vendorpdc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9384,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hqiwui\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hqiwui\\demo.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4504,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hungryMob\\sendEvent.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9452,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hyperledgendary\\wasm_contract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3333,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\hysn19\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3562,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ianco\\cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6181,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\idowuakinde\\diamonds copy.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7166,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\idowuakinde\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13724,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\imineev\\carTrace.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 36243,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\imran-iitp\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5459,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\imran-iitp\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9539,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\imran-iitp\\high-throughput.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13564,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\imran-iitp\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31205,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\imran-iitp\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2852,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\inotnako\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8616,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\isheejong\\carTrace.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 36132,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\isheejong\\m2o.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12652,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\islamenshawy\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6660,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\issbgkh\\store.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2599,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ivaylopivanov\\storage.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4368,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ivaylopivanov\\wallet.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 787,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jakeeqsb\\kwo-rec.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2285,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\james3443112\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5772,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jasonren0403\\_useless.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3225,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jasonren0403\\operations.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 18325,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jastisriradheshyam\\custom.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4016,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jbibodi\\Invoice.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8315,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jganobsik\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8491,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jiameng15\\hkzgcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7623,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jinjiaKarl\\edu.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 15400,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jinjiaKarl\\energyCommunity.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10138,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jinjiaKarl\\token.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 19321,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jinjiaKarl\\vote.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2506,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jinnyjinnyjinjin-zz\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jonyjones96\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jonyjones96\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jonyjones96\\fyp.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5846,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jonyjones96\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jonyjones96\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\joseprados\\ReadingAsset.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10748,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5459,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\abstore.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5007,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\audit.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7063,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9539,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\foodSCM.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6837,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\high-throughput.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13564,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31205,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25713,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\juniorug\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2852,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\jyotku48\\PurchaseOrder.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11332,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\karthiksukumaran\\example_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2053,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kavixooa\\GetSetDelCC.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 14157,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kirtana01\\normalchaincode1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3959,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmazz\\sample.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2856,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\abstore.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5006,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\ledgersafe-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7757,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\ledgersafe_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25784,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\koakh\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 620,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\koakh\\configure.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12538,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\koakh\\init_private_data.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 897,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\koakh\\init_public_data.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 877,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\koakh\\lscc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 38737,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\koakh\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 30502,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\komaldhiman112\\material-trace.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 21507,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\krishna-suman\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7957,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lafenicecc\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lafenicecc\\map.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5796,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lafenicecc\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24909,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lafenicecc\\passthru.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1589,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lay-z\\marbles.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7504,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lcy1317\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2208,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2082,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\eventsender.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2395,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\invokereturnsvalue.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3408,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\map.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8701,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25696,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\passthru.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2079,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linqd1\\sleeper.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3145,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\linuxone-community-cloud\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5441,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\liuhuanyuxcx\\e2e.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4927,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\liuhuanyuxcx\\marbles02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31449,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\liujingkun2017\\chaincode_example.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5434,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lmj101910\\car.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 29903,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\calc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2486,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\caller.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1991,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5551,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\erc20.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6489,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\priv.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4454,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\qry.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3603,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\loganlomackon\\token.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1711,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lujiean\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lujiean\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12422,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lujiean\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lujiean\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26628,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lujiean\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25858,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lujiean\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lutianYan\\myHospital.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2402,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lzb13612\\example.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12202,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\lzb13612\\user.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8733,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mailtokartik1\\sampleChainCode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4667,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\malkani-kamal\\autonomy_chain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8182,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\malkani-kamal\\camera_data.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2578,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mallikarjunasai995\\marbles.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7504,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\marcelaadan\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6661,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\martingdela\\halley.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8535,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mattheleon-itpeople\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1812,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mattias7295\\payment.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5533,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mdarin\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2925,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\medoamanquer\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7166,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\motoreq\\sc_main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7134,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mrpuri\\fashion.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4799,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\msedzins\\simpleAsset.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1643,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\mukherjeearnab\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5430,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\murlionline\\product_review.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8535,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nagarajmanjunath\\fileData.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8153,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\narayanprusty\\identity_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5814,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\narayanprusty\\property_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5960,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\narayanprusty\\voting-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4667,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25939,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\product_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26060,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\neeraj-badhani\\chaincodeexample01.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26628,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nehaprashantmutke\\samplechaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1959,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\netkiller\\General.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3120,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\netkiller\\gasoline.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9988,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\netkiller\\state.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3175,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\netkiller\\token1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3409,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\netkiller\\token3.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 17852,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\netkiller\\token4.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 17933,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nguyentb\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 806,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\helloWorld.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2487,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 24910,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\simplechaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2082,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\test.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3144,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\nmatsui\\fabric-payment.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2028,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\noatt\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6323,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\odrodrig\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2891,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\off-grid-block\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7413,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\off-grid-block\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4891,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\oneminutenotes\\smartcontract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10839,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\pankajcheema\\dummyuser.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3110,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\papandas\\fabric-payment.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2014,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\pavanirao\\Proto1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5251,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\pavanirao\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\pavva91\\trustreputationledger.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11367,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\payprotocol\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7286,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\pchaivong\\hyperledger-cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2376,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\peteim\\fabric_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3133,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\phong101665\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6666,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\piedup\\pop.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11979,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\piyushkumar96\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2515,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\prabhu94\\Healthcare.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 16088,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\prabhu94\\carTrace_v1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 22883,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\prabhu94\\healthcare_v1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 22947,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\prabhu94\\visitflow.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26830,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\procrypt\\SmartContract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2680,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\project-smartlog\\Keystore.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4181,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\project-smartlog\\TransportChain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5618,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\project-smartlog\\UBL.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5553,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\qiushaoxi\\chaincode_union_loan.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4384,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\qubing\\balance_mgr.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 14754,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\qubing\\chaincode-api-go.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 18061,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\qubing\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2811,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\qubing\\relay_adapter.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13271,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\radouane-karra\\example01.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4859,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\radouane-karra\\example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5018,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rahulEth\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1364,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\raidinesh\\fabsc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3484,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ravinayag\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7537,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rfrabasile\\cc_example_footballbet.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5146,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\richardfelkl\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5807,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\risabhsharma71\\caller.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1935,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\risabhsharma71\\erc20.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6502,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\risabhsharma71\\priv.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2165,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\risabhsharma71\\qry.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3621,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\risabhsharma71\\token.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1721,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rolivieri\\removerCC.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5162,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25784,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\ryu-sato\\chaincode_sample.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1790,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\s7santosh\\slachaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4206,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\s7techlab\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 804,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\saan099\\InsuranceManagement.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11634,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sac1984pat\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sachin-ngpws\\cpu-use.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4848,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\samdwise1367\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5509,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\samlinux\\nfdt01.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7101,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\samlinux\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\samlinux\\sacc2.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3101,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\samlinux\\sacc3.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5669,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\samlinux\\sacc4.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7706,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sapcis\\perishable-net.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6500,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\schmidtp0740\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4959,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\schmidtp0740\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2820,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sejongtelecomnet\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1206,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\shahazad999\\medicalrecord.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5313,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\shubhamj25\\fabcar-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6629,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\shubhamkumar0\\knowledgeA.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10759,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5460,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\hello.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1600,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5026,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26628,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25858,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\payment.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6574,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\test.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1920,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\silvioqueiroz\\helloworld.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2983,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\skazska\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9918,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\skybat007\\purchase_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8072,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\skybat007\\sell_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9400,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\skybat007\\store_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9275,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\smfaizalkhan\\goodsInspection.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1578,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\soodakshay\\mycc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6199,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\souravdhar\\simplechaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1858,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sriyanshcse\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5321,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sriyanshcse\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 11166,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\starJsm\\account.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4988,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\suchongming\\chaincode_ep.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7277,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\suddutt1\\InvokersIdentity.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6181,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\suddutt1\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8612,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\suhyeon0911\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 13598,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5465,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31249,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\firstcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1537,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25784,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\mb.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3769,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1549,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\team_project.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31233,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\surajresearch\\smartcontract.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10839,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\swapnilshrivastava\\chaincode1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1088,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\szhygulin\\a-usd.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2980,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\tarakit\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5556,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\tcd93\\sample_token.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 12770,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\testibmbc\\diamonds.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 21092,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\the-hulk-id\\poc-cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2404,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\tinywell\\databackcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 915,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\tinywell\\databackscc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1597,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\tkalai25298\\cpu-use.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4964,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\to7485\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5938,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\u-wut-m8\\fabric.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6982,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\uhuchain\\car-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3096,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vanchpuck\\kuzmich-mcc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2562,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vanitas92\\marbles02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31449,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\varshard\\simple_asset.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2170,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vasile-coste\\MedChain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 15595,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vasile-coste\\newMed.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 36038,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\viridian-project\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2631,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vishal3152\\init.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1332,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vishal3152\\invoke.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1748,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vitorduarte\\basicChaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5263,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vivianLL\\mychaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 19466,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vmorris\\procon.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9797,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vtwenty3\\main.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5589,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\vu3mmg\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5436,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3283,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\chaincode_example01.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3014,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5078,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\chaincode_example03.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2808,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\chaincode_example04.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4951,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\chaincode_example05.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6782,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\eventsender.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2395,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\invokereturnsvalue.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3408,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\map.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5442,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\map_experimental.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8725,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 26414,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\passthru.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2079,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\sleeper.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3145,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xiaochi0310\\student.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8324,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\COD_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 23478,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\drug_information.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9154,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\hospital_fees.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6538,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\medical_record.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10532,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\patient_inormation.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 9722,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuchengli\\test.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2738,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xuehuiit\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 20202,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xwzx100200\\events_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2833,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xwzx100200\\example_cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 7428,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\xwzx100200\\example_cc1.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5964,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\chaincode_example02.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4925,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\fabcar.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 6393,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\marbles_chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 31204,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\marbles_chaincode_private.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 25784,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\rc-chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 10579,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\taxrefund.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5299,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yigitpolat\\NotaryApp.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 15556,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yigitpolat\\cc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3631,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yigitpolat\\voting.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8049,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yiwenlong\\abac.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4496,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yiwenlong\\tps.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 1361,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yokeshvs\\hello_world.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 14345,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\yoonjk\\account.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 8340,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\zale144\\musical_instruments.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5897,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\zerox12311\\pigchain.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 5227,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\zerox12311\\smart_contract_sample.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 4252,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\zhanglt\\chaincode.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 3493,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\zhangmin510\\sacc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2851,
+      "output_size": 0
+    },
+    {
+      "input_path": "02_resources\\golisa_benchmark\\Benchmark\\zs-papandas\\pscc.go",
+      "output_path": "",
+      "status": "success",
+      "input_size": 2328,
+      "output_size": 0
+    }
+  ]
+}

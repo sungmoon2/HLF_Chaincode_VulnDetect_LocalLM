@@ -1,0 +1,19 @@
+{
+  "file_id": "0683_raidinesh_fabsc",
+  "repo": "raidinesh",
+  "filename": "fabsc.go",
+  "elapsed_s": 14.37,
+  "input_tokens": 1461,
+  "output_tokens": 685,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The map `funcMap` is only accessed via direct key lookup, not iterated. No time.Now(), goroutines, rich queries, or package-level mutable state patterns are present. The chaincode functions defined in this file perform no ledger writes and return deterministic responses.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `FabSc` struct that take `shim.ChaincodeStubInterface` and return `pb.Response`. This is a valid HLF chaincode entrypoint. ✓\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 29-32: `inv.funcMap` is a `map[string]FuncTemplate`\n- However, there is NO `for...range` iteration over this map. The map is only accessed via direct key lookup (`inv.funcMap[funname]` at line 50).\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `logger` is referenced but not declared in this file (external import)\n- No package-level `var` declarations in this file that are mutable and influence writes\n\n**C5 ITERATOR_LEAK**: No iterators created.\n\n### Step 3: Detailed Review\n\nThe `funcMap` is a map, but it's only used for:\n1. Initialization (direct assignment with string keys)\n2. Direct key lookup (`inv.funcMap[funname]`)\n\nThere is no iteration over the map that would cause nondeterministic ordering. The map lookup by key is deterministic.\n\nThe `restartcheck` field is instance-level state on `FabSc`, not package-level global state. While this pattern could theoretically cause issues across peer restarts, it's not a C6 violation as defined (package-level var in THIS file).\n\n### Step 4: Sink Analysis\n- `ChainCodeStatusCheck` only returns a marshaled `Result` struct - no ledger writes\n- `CreateGenAssets` and `ListGenAssets` are referenced but not defined in this file (out of scope for intra-file analysis)\n- No `PutState`, `DelState`, or similar write operations in this file\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The map `funcMap` is only accessed via direct key lookup, not iterated. No time.Now(), goroutines, rich queries, or package-level mutable state patterns are present. The chaincode functions defined in this file perform no ledger writes and return deterministic responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:52:34.865494",
+  "annotator": "2nd"
+}

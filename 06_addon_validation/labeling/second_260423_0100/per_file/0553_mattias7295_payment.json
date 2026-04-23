@@ -1,0 +1,19 @@
+{
+  "file_id": "0553_mattias7295_payment",
+  "repo": "mattias7295",
+  "filename": "payment.go",
+  "elapsed_s": 4.43,
+  "input_tokens": 2693,
+  "output_tokens": 127,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF transaction entrypoints (Init and Invoke). The code uses only deterministic operations: GetState, PutState with values derived from transaction arguments. There are no time.Now() calls, goroutines, map iterations, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state. All operations are deterministic across endorsers.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF transaction entrypoints (Init and Invoke). The code uses only deterministic operations: GetState, PutState with values derived from transaction arguments. There are no time.Now() calls, goroutines, map iterations, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state. All operations are deterministic across endorsers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:42:55.956734",
+  "annotator": "2nd"
+}

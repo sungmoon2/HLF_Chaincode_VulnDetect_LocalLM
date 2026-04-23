@@ -1,0 +1,19 @@
+{
+  "file_id": "0745_sighttviewliu_main",
+  "repo": "sighttviewliu",
+  "filename": "main.go",
+  "elapsed_s": 14.58,
+  "input_tokens": 2582,
+  "output_tokens": 617,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L107-L111, L119-L123, L125-L140",
+  "rationale": "The GetQueryResult calls in queryBills and queryWaitBills are read-only queries that return results via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are explicitly NOT C4 vulnerabilities. The billInit function only writes deterministic hardcoded data.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has valid HLF transaction entrypoints: `Init` and `Invoke` methods on `CouchDBChaincode`, routing to `billInit`, `queryBills`, and `queryWaitBills`.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning.\n\n**C3 MAP_ITERATION**: No map iteration. The `BillStruct` is a struct, and `json.Marshal` on structs is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetQueryResult` is called in `getBillsByQueryString` (L125)\n- This is called by `queryBills` (L107) and `queryWaitBills` (L119)\n- Both functions return the query results via `shim.Success(result)` - they are **read-only queries**\n- The query results do NOT influence any write operations (PutState, DelState, etc.)\n- Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4\"\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: The iterator in `getBillsByQueryString` has `defer iterator.Close()` at L128, so it's properly closed.\n\n### Key Observation\n\nThe `queryBills` and `queryWaitBills` functions use `GetQueryResult` but only for **read-only purposes** - they return the data to the client without making any state modifications based on the query results. The `billInit` function only writes hardcoded deterministic data.\n\nAccording to the taxonomy, C4 applies when query results \"determine a write decision.\" Here, the queries are purely for reading and returning data, not for deciding what to write.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L107-L111, L119-L123, L125-L140\nRATIONALE: The GetQueryResult calls in queryBills and queryWaitBills are read-only queries that return results via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are explicitly NOT C4 vulnerabilities. The billInit function only writes deterministic hardcoded data.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:56:44.019848",
+  "annotator": "2nd"
+}

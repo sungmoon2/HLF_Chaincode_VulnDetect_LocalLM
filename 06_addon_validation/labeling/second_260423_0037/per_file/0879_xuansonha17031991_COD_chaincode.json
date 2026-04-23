@@ -1,0 +1,19 @@
+{
+  "file_id": "0879_xuansonha17031991_COD_chaincode",
+  "repo": "xuansonha17031991",
+  "filename": "COD_chaincode.go",
+  "elapsed_s": 5.56,
+  "input_tokens": 8704,
+  "output_tokens": 350,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L119-L122, L145-L148, L175-L178, L213-L216, L253-L256, L310-L313, L379-L382, L447-L450, L520-L523, L576-L579",
+  "rationale": "Multiple transaction functions (createCustomer, createAsset, query, createBalance, createDelivery, transferMoney, createOrder, createAssetHash, verifyShipper, dealLimitTime) capture time.Now() at the start of execution and then call time.Since(start) to compute elapsed time. While these elapsed times are only logged via fmt.Println (not written to ledger), the start and end timestamps themselves are printed via start.String() and end.String() calls. More critically, time.Now() is called before any ledger operations and the elapsed duration is computed, creating a consensus-critical dependency: if execution timing varies across endorsers, the logged timestamps will differ, potentially influencing proposal responses or being embedded in event data. The pattern at lines 119-122 (and repeated in all transaction functions) shows time.Now() → ledger writes (PutPrivateData/DelPrivateData) → time.Since() → shim.Success(), establishing a causal chain where transaction timing influences the response. Although the time values are only in logs, the nondeterministic elapsed time could affect response consistency across endorsers.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L119-L122, L145-L148, L175-L178, L213-L216, L253-L256, L310-L313, L379-L382, L447-L450, L520-L523, L576-L579\n\nRATIONALE: Multiple transaction functions (createCustomer, createAsset, query, createBalance, createDelivery, transferMoney, createOrder, createAssetHash, verifyShipper, dealLimitTime) capture time.Now() at the start of execution and then call time.Since(start) to compute elapsed time. While these elapsed times are only logged via fmt.Println (not written to ledger), the start and end timestamps themselves are printed via start.String() and end.String() calls. More critically, time.Now() is called before any ledger operations and the elapsed duration is computed, creating a consensus-critical dependency: if execution timing varies across endorsers, the logged timestamps will differ, potentially influencing proposal responses or being embedded in event data. The pattern at lines 119-122 (and repeated in all transaction functions) shows time.Now() → ledger writes (PutPrivateData/DelPrivateData) → time.Since() → shim.Success(), establishing a causal chain where transaction timing influences the response. Although the time values are only in logs, the nondeterministic elapsed time could affect response consistency across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:07.617288",
+  "annotator": "2nd"
+}

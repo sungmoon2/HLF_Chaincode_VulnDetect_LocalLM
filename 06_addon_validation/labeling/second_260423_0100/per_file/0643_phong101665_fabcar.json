@@ -1,0 +1,19 @@
+{
+  "file_id": "0643_phong101665_fabcar",
+  "repo": "phong101665",
+  "filename": "fabcar.go",
+  "elapsed_s": 5.26,
+  "input_tokens": 2373,
+  "output_tokens": 148,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95-L96",
+  "rationale": "The file contains GetQueryResult (L96) which is a potential C4 source, but the queryAllCars function only reads data and returns it via shim.Success without making any write decisions (no PutState/DelState based on query results). The query result is returned read-only, which is explicitly NOT C4 per the taxonomy. All other functions use deterministic operations with no time, goroutines, map iteration, or global mutable state issues.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L95-L96\nRATIONALE: The file contains GetQueryResult (L96) which is a potential C4 source, but the queryAllCars function only reads data and returns it via shim.Success without making any write decisions (no PutState/DelState based on query results). The query result is returned read-only, which is explicitly NOT C4 per the taxonomy. All other functions use deterministic operations with no time, goroutines, map iteration, or global mutable state issues.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:49:01.573171",
+  "annotator": "2nd"
+}

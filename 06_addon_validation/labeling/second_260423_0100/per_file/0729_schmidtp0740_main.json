@@ -1,0 +1,19 @@
+{
+  "file_id": "0729_schmidtp0740_main",
+  "repo": "schmidtp0740",
+  "filename": "main.go",
+  "elapsed_s": 15.35,
+  "input_tokens": 1844,
+  "output_tokens": 651,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains only the chaincode routing logic and a deterministic `createIndex` helper. No nondeterministic patterns (time.Now, goroutines, map iteration, rich queries, or mutable global state) are present. The actual transaction implementations that might contain issues are in separate files not provided here.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains both `Init` and `Invoke` methods on a type that implements `shim.ChaincodeStubInterface` patterns. This is a valid HLF chaincode.\n\n### Step 2: Check for C1-C4, C6 Source Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls in this file. The methods like `getRxHistoryOfPatient`, `getHeartRateHistory`, etc. are called but their implementations are not in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Examine the Code Present\n\nThe file contains:\n- `main()` function starting the chaincode\n- `Init()` method that calls `initPerson` (not defined in this file) and writes via that method\n- `Invoke()` method that routes to various handlers (none defined in this file)\n- `createIndex()` helper that calls `stub.PutState()` - this is a deterministic operation\n\nThe `createIndex` function (L85-99) performs a `PutState` but uses only deterministic inputs (indexName and attributes passed as parameters).\n\n### Step 4: Check for C5 (Iterator Leak)\nNo iterators are created in this file.\n\n### Conclusion\nThis file is essentially a routing/dispatcher file. The actual transaction logic implementations (`insertRx`, `getRxForPatient`, `fillRx`, etc.) are not present in this file. The code that IS present:\n- Uses only deterministic operations\n- No nondeterministic sources (C1-C4, C6) are present\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains only the chaincode routing logic and a deterministic `createIndex` helper. No nondeterministic patterns (time.Now, goroutines, map iteration, rich queries, or mutable global state) are present. The actual transaction implementations that might contain issues are in separate files not provided here.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:55:43.996514",
+  "annotator": "2nd"
+}

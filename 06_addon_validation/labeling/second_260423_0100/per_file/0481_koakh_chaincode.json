@@ -1,0 +1,19 @@
+{
+  "file_id": "0481_koakh_chaincode",
+  "repo": "koakh",
+  "filename": "chaincode.go",
+  "elapsed_s": 3.1,
+  "input_tokens": 949,
+  "output_tokens": 117,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L12-L14, L16-L18",
+  "rationale": "This is a minimal HLF chaincode with valid Init and Invoke entrypoints that both simply return shim.Success(nil) without any logic. No time operations, goroutines, map iterations, rich queries, or mutable global state are present. The chaincode is completely deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L12-L14, L16-L18\nRATIONALE: This is a minimal HLF chaincode with valid Init and Invoke entrypoints that both simply return shim.Success(nil) without any logic. No time operations, goroutines, map iterations, rich queries, or mutable global state are present. The chaincode is completely deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:36:58.601559",
+  "annotator": "2nd"
+}

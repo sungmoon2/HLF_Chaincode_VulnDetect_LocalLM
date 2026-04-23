@@ -1,0 +1,19 @@
+{
+  "file_id": "0901_yigitpolat_NotaryApp",
+  "repo": "yigitpolat",
+  "filename": "NotaryApp.go",
+  "elapsed_s": 6.71,
+  "input_tokens": 6183,
+  "output_tokens": 507,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "N/A**",
+  "rationale": "",
+  "raw_response": "# Audit Report: NotaryApp Chaincode\n\n## Decision\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: N/A**\n\n## Rationale\n\nThe file contains recognizable HLF transaction entrypoints (Init and Invoke methods implementing shim.ChaincodeStubInterface). However, a comprehensive scan reveals no consensus-critical nondeterminism patterns:\n\n1. **C1 (TIME_NOW)**: No `time.Now()`, `time.Since()`, or `time.Until()` calls that influence ledger writes. The `time.Unix()` calls in `getUserHistory()` and `getAssetHistory()` (lines 267, 369) operate on immutable `response.Timestamp` from the ledger history iterator—these are read-only query responses, not writes.\n\n2. **C2 (GOROUTINE)**: No `go func()` or `go methodCall()` patterns present.\n\n3. **C3 (MAP_ITERATION)**: No `for...range` over map-typed expressions. All iterations are over slices (`userList.UserIDs`, `assetList.AssetIDs`), which have deterministic order.\n\n4. **C4 (NON_REVALIDATED_QUERY)**: `GetHistoryForKey()` calls (lines 245, 347) return results used only for read-only response formatting via `shim.Success()`, not for write decisions. `GetState()` calls are used for validation and data retrieval but do not determine write logic in a nondeterministic way.\n\n5. **C6 (GLOBAL_MUTABLE_STATE)**: No package-level mutable variables that influence transaction logic.\n\n6. **C5 (ITERATOR_LEAK)**: Both `GetHistoryForKey()` iterators are properly closed via `defer resultsIterator.Close()` (lines 248, 350).\n\nAll transaction functions follow deterministic patterns: they read from arguments, query state by fixed keys, perform arithmetic/logic operations, and write results back to deterministic state keys.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:44.854004",
+  "annotator": "2nd"
+}

@@ -1,0 +1,28 @@
+{
+  "file_id": "0203_papandas_fabric-payment",
+  "repo": "papandas",
+  "filename": "fabric-payment.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\papandas\\fabric-payment.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "GLOBAL_MUTABLE_STATE"
+  ],
+  "code_chars": 2014,
+  "stripped_chars": 1695,
+  "code_hash": "55c6f69851ca53f1",
+  "stripped_hash": "e8e4d62403080ecc",
+  "elapsed_s": 3.72,
+  "input_tokens": 1668,
+  "output_tokens": 125,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "RATIONALE: This file is an entry point that delegates all transaction logic to external contract packages (contracts.AccountContract, etc.). The package-level variables (logger, accountContract, eventContract, historyContract) are initialized deterministically at startup and are read-only thereafter. No C1-C4 or C6 source patterns with intra-file evidence reaching sinks exist in this file.",
+  "rationale": "This file is an entry point that delegates all transaction logic to external contract packages (contracts.AccountContract, etc.). The package-level variables (logger, accountContract, eventContract, historyContract) are initialized deterministically at startup and are read-only thereafter. No C1-C4 or C6 source patterns with intra-file evidence reaching sinks exist in this file.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: \nRATIONALE: This file is an entry point that delegates all transaction logic to external contract packages (contracts.AccountContract, etc.). The package-level variables (logger, accountContract, eventContract, historyContract) are initialized deterministically at startup and are read-only thereafter. No C1-C4 or C6 source patterns with intra-file evidence reaching sinks exist in this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:30.615520"
+}

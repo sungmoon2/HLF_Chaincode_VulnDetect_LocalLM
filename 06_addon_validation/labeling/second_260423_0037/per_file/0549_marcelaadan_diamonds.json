@@ -1,0 +1,19 @@
+{
+  "file_id": "0549_marcelaadan_diamonds",
+  "repo": "marcelaadan",
+  "filename": "diamonds.go",
+  "elapsed_s": 2.91,
+  "input_tokens": 2292,
+  "output_tokens": 155,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState calls at L95 and L155) are preceded by deterministic operations: argument validation, string normalization (strings.ToLower), numeric parsing, and JSON marshaling of struct fields. No time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state patterns influence write decisions. The code is deterministic across all endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState calls at L95 and L155) are preceded by deterministic operations: argument validation, string normalization (strings.ToLower), numeric parsing, and JSON marshaling of struct fields. No time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state patterns influence write decisions. The code is deterministic across all endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:53:36.893375",
+  "annotator": "2nd"
+}

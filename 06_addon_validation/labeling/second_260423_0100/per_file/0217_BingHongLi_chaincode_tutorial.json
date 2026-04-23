@@ -1,0 +1,19 @@
+{
+  "file_id": "0217_BingHongLi_chaincode_tutorial",
+  "repo": "BingHongLi",
+  "filename": "chaincode_tutorial.go",
+  "elapsed_s": 3.72,
+  "input_tokens": 1240,
+  "output_tokens": 147,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains only the Init and Invoke dispatcher functions that route to other methods (putSampleAsset, getSampleAsset, getHistorySampleAsset, etc.). The actual implementations of these methods are not present in this file. No C1-C4 or C6 vulnerability patterns exist in the visible code - there are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state that influences ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains only the Init and Invoke dispatcher functions that route to other methods (putSampleAsset, getSampleAsset, getHistorySampleAsset, etc.). The actual implementations of these methods are not present in this file. No C1-C4 or C6 vulnerability patterns exist in the visible code - there are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state that influences ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:18:05.119977",
+  "annotator": "2nd"
+}

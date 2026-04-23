@@ -1,0 +1,19 @@
+{
+  "file_id": "0203_BCEvanFang_simpleasset",
+  "repo": "BCEvanFang",
+  "filename": "simpleasset.go",
+  "elapsed_s": 2.21,
+  "input_tokens": 1369,
+  "output_tokens": 146,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains two HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState calls at L18 and L47) are driven by deterministic inputs from stub.GetStringArgs() and stub.GetFunctionAndParameters(). No time-dependent operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence the write decisions or responses. The code is deterministic across all endorsers.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains two HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState calls at L18 and L47) are driven by deterministic inputs from stub.GetStringArgs() and stub.GetFunctionAndParameters(). No time-dependent operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence the write decisions or responses. The code is deterministic across all endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:43:22.354132",
+  "annotator": "2nd"
+}

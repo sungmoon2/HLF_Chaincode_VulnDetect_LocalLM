@@ -1,0 +1,19 @@
+{
+  "file_id": "0501_KTyrantOnly_crowdTest",
+  "repo": "KTyrantOnly",
+  "filename": "crowdTest.go",
+  "elapsed_s": 3.29,
+  "input_tokens": 4294,
+  "output_tokens": 227,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L118-L125, L127-L135, L137-L145",
+  "rationale": "The `query()` function (L118-L125) calls `getQueryResultForQueryString()` which invokes `stub.GetQueryResult()` (L180), a non-revalidated query source. The result directly influences the response returned via `shim.Success()` (L124). Similarly, `queryWithPagination()` (L127-L135) calls `getQueryResultWithPagination()` which uses `stub.GetQueryResultWithPagination()` (L191), another C4 source, with results returned via `shim.Success()` (L134). These query results are not read-only returns but determine the exact response content, creating consensus-critical nondeterminism if the underlying state differs across endorsers.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L118-L125, L127-L135, L137-L145\n\nRATIONALE: The `query()` function (L118-L125) calls `getQueryResultForQueryString()` which invokes `stub.GetQueryResult()` (L180), a non-revalidated query source. The result directly influences the response returned via `shim.Success()` (L124). Similarly, `queryWithPagination()` (L127-L135) calls `getQueryResultWithPagination()` which uses `stub.GetQueryResultWithPagination()` (L191), another C4 source, with results returned via `shim.Success()` (L134). These query results are not read-only returns but determine the exact response content, creating consensus-critical nondeterminism if the underlying state differs across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:18.602151",
+  "annotator": "2nd"
+}

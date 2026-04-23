@@ -1,0 +1,19 @@
+{
+  "file_id": "0679_RaeHowe_example_cc",
+  "repo": "RaeHowe",
+  "filename": "example_cc.go",
+  "elapsed_s": 13.05,
+  "input_tokens": 1659,
+  "output_tokens": 621,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L23-L27",
+  "rationale": "The map created at L23-25 is serialized via json.Marshal (L27), which is deterministic in Go's standard library. The package-level logger variable is only used for logging purposes. All other transaction logic delegates to external packages, which cannot be evaluated under intra-file analysis rules.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SimpleChaincode` implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Lines 23-25: A map `obj` is created with `make(map[string]interface{})` and populated.\n- Line 27: `json.Marshal(obj)` is called on this map.\n- However, `encoding/json.Marshal` in Go's standard library produces deterministic output by sorting map keys alphabetically. This is explicitly noted as SAFE in the taxonomy.\n\n**C4 NON_REVALIDATED_QUERY**: No direct usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` in this file. The `Invoke` function delegates to external packages (`_select.GetHistoryForProduct`, etc.), but per the rules, I must only consider intra-file evidence.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 12: `var logger = shim.NewLogger(\"example_cc\")` - This is a package-level variable, but it's only used for logging in `main()` (line 84). Logger-only globals are explicitly SAFE per the taxonomy.\n\n### Step 3: Auxiliary Check (C5)\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Conclusion\nThe only potential concern was the map usage with `json.Marshal`, but this is explicitly SAFE per the taxonomy. The logger global is only used for logging. All other operations delegate to external packages, which are out of scope for intra-file analysis.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L23-L27\nRATIONALE: The map created at L23-25 is serialized via json.Marshal (L27), which is deterministic in Go's standard library. The package-level logger variable is only used for logging purposes. All other transaction logic delegates to external packages, which cannot be evaluated under intra-file analysis rules.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:52:10.055747",
+  "annotator": "2nd"
+}

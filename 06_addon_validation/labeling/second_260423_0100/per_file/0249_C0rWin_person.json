@@ -1,0 +1,19 @@
+{
+  "file_id": "0249_C0rWin_person",
+  "repo": "C0rWin",
+  "filename": "person.go",
+  "elapsed_s": 12.88,
+  "input_tokens": 1476,
+  "output_tokens": 606,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L21, L61",
+  "rationale": "The package-level `functions` map is read-only after deterministic initialization and is accessed via direct key lookup (not iteration), making all transaction behavior deterministic across peers. No C1-C4 or C6 vulnerability patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` (L53-56) and `Invoke` (L58-66) methods on `PersonCC` struct implementing the shim interface. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C6 GLOBAL_MUTABLE_STATE Check:**\n- Line 21: `var functions = map[string]func(...)` - This is a package-level variable containing a map of function handlers.\n- However, this map is initialized once at package load time and is never modified during transaction execution. It's read-only after initialization.\n- The map is used in `Invoke` (L61) to look up the function by name, but this is a deterministic lookup by key (`functions[functionName]`), not an iteration.\n\n**C3 MAP_ITERATION Check:**\n- There is no `for...range` over any map in this code. The map access at L61 is a direct key lookup, not iteration.\n\n**C1 TIME_NOW Check:**\n- No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE Check:**\n- No goroutine spawning (`go func()` or `go methodCall()`).\n\n**C4 NON_REVALIDATED_QUERY Check:**\n- No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n- `GetState` at L30 is not a C4 source.\n\n**C5 ITERATOR_LEAK Check:**\n- No iterators are created in this code.\n\n### Step 3: Sink Analysis\nThe `functions` map is:\n1. Initialized deterministically at package load (same on all peers)\n2. Never modified during transaction execution\n3. Accessed via direct key lookup, not iteration\n\nThe map lookup `functions[functionName]` returns the same function pointer on all peers for the same input, making this deterministic.\n\n### Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L21, L61\nRATIONALE: The package-level `functions` map is read-only after deterministic initialization and is accessed via direct key lookup (not iteration), making all transaction behavior deterministic across peers. No C1-C4 or C6 vulnerability patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:20:32.757612",
+  "annotator": "2nd"
+}

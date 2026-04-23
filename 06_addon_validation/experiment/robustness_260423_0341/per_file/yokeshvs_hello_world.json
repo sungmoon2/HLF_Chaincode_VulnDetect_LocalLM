@@ -1,0 +1,55 @@
+{
+  "repo": "yokeshvs",
+  "filename": "hello_world.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "505f6ce2affc33d9",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'hello_world.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access Control Issues  \n**Severity:** Medium  \n**Affected Code Location:** `cc.read`, `cc.update`, `cc.delete`, `cc.history`, `cc.search`  \n**Description:** The chaincode does not enforce any access control checks. Any user can read, update, delete, and search for data without proper authorization.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the user and verifying their permissions.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input Validation Flaws  \n**Severity:** High  \n**Affected Code Location:** `cc.create`, `cc.update`, `cc.search`  \n**Description:** The chaincode does not validate the input data thoroughly. For example, the `search` function uses a regex pattern that can be exploited to perform SQL injection-like attacks.  \n**Recommended Fix:** Validate all input data thoroughly. Use parameterized queries or prepared statements to prevent SQL injection attacks.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  \n**Severity:** Low  \n**Affected Code Location:** `cc.search`  \n**Description:** The `search` function uses a regex pattern that can return unexpected results due to the use of the `limit` field. This can lead to phantom reads.  \n**Recommended Fix:** Avoid using the `limit` field in queries that involve regex patterns. Instead, use pagination or other methods to control the number of results returned.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private Data Leakage  \n**Severity:** High  \n**Affected Code Location:** `cc.search`  \n**Description:** The `search` function returns all fields of the document, including potentially sensitive information. This can lead to private data leakage.  \n**Recommended Fix:** Only return the necessary fields in the search results. Avoid returning sensitive information unless it is explicitly required.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-Deterministic Operations  \n**Severity:** Low  \n**Affected Code Location:** `cc.list`  \n**Description:** The `list` function does not provide any guarantees about the order of the results. This can lead to non-deterministic operations.  \n**Recommended Fix:** Provide a consistent order for the results. For example, sort the results by a specific field.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure Key Management  \n**Severity:** Low  \n**Affected Code Location:** None  \n**Description:** The chaincode does not manage keys securely. For example, the `id` is converted to lowercase, which can lead to potential security issues.  \n**Recommended Fix:** Ensure that keys are managed securely. Avoid converting keys to lowercase, as this can lead to potential security issues.\n\n### Summary\n- **Access Control Issues:** Medium\n- **Input Validation Flaws:** High\n- **Read-After-Write Conflicts (Phantom Reads):** Low\n- **Private Data Leakage:** High\n- **Non-Deterministic Operations:** Low\n- **Insecure Key Management:** Low\n\n**Recommendations:**\n1. Implement access control checks.\n2. Validate all input data thoroughly.\n3. Avoid using the `limit` field in queries that involve regex patterns.\n4. Only return the necessary fields in the search results.\n5. Provide a consistent order for the results.\n6. Ensure that keys are managed securely.",
+      "prediction": "vulnerable",
+      "elapsed_s": 7.32,
+      "finish_reason": "stop",
+      "prompt_tokens": 2241,
+      "completion_tokens": 751
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2241,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2241,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2241,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2241,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.8,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 1.5,
+  "total_elapsed_s": 7.5,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T08:02:03.287769"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0215_bhagyanik_DWPB",
+  "repo": "bhagyanik",
+  "filename": "DWPB.go",
+  "elapsed_s": 5.34,
+  "input_tokens": 1859,
+  "output_tokens": 142,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF transaction entrypoints (Init/Invoke) with deterministic operations. No time.Now(), goroutines, map iterations, rich queries, or mutable global state patterns are present. All operations use GetState/PutState with deterministic inputs from transaction arguments. Note: The code has compilation errors (type mismatches in struct initialization and redeclared err variable), but these are not nondeterminism issues.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF transaction entrypoints (Init/Invoke) with deterministic operations. No time.Now(), goroutines, map iterations, rich queries, or mutable global state patterns are present. All operations use GetState/PutState with deterministic inputs from transaction arguments. Note: The code has compilation errors (type mismatches in struct initialization and redeclared err variable), but these are not nondeterminism issues.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:18:01.377506",
+  "annotator": "2nd"
+}

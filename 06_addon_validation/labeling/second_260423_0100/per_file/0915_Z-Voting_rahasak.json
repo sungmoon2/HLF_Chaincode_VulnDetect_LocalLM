@@ -1,0 +1,19 @@
+{
+  "file_id": "0915_Z-Voting_rahasak",
+  "repo": "Z-Voting",
+  "filename": "rahasak.go",
+  "elapsed_s": 4.93,
+  "input_tokens": 1773,
+  "output_tokens": 135,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L73-L82",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). The Search function uses GetStateByRange (L73), which is explicitly NOT a C4 source per the taxonomy. The iterator is properly closed via defer (L77). No time.Now(), goroutines, map iteration, rich queries (GetQueryResult), or mutable global state patterns are present. All operations are deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L73-L82\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). The Search function uses GetStateByRange (L73), which is explicitly NOT a C4 source per the taxonomy. The iterator is properly closed via defer (L77). No time.Now(), goroutines, map iteration, rich queries (GetQueryResult), or mutable global state patterns are present. All operations are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:08:59.771559",
+  "annotator": "2nd"
+}

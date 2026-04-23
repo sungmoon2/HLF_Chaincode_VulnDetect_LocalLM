@@ -1,0 +1,19 @@
+{
+  "file_id": "0653_prabhu94_healthcare_v1",
+  "repo": "prabhu94",
+  "filename": "healthcare_v1.go",
+  "elapsed_s": 5.93,
+  "input_tokens": 4293,
+  "output_tokens": 190,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L136-L145, L280-L295",
+  "rationale": "The file contains `time.Unix()` (L168) which converts a timestamp from the ledger history to a string for read-only output - this is NOT `time.Now()` and is deterministic. `GetHistoryForKey` (L145) and `GetQueryResult` (L280) are used, but both only return data via `shim.Success()` without influencing any write decisions. The `queryVisitByDoctor` function (L261-L273) that uses `GetQueryResult` is NOT registered in the Invoke dispatcher, making it dead code. All iterators are properly closed with defer.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L136-L145, L280-L295\nRATIONALE: The file contains `time.Unix()` (L168) which converts a timestamp from the ledger history to a string for read-only output - this is NOT `time.Now()` and is deterministic. `GetHistoryForKey` (L145) and `GetQueryResult` (L280) are used, but both only return data via `shim.Success()` without influencing any write decisions. The `queryVisitByDoctor` function (L261-L273) that uses `GetQueryResult` is NOT registered in the Invoke dispatcher, making it dead code. All iterators are properly closed with defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:49:58.563692",
+  "annotator": "2nd"
+}

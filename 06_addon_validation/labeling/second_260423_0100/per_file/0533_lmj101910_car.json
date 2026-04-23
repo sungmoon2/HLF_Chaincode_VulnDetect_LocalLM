@@ -1,0 +1,19 @@
+{
+  "file_id": "0533_lmj101910_car",
+  "repo": "lmj101910",
+  "filename": "car.go",
+  "elapsed_s": 14.57,
+  "input_tokens": 9264,
+  "output_tokens": 647,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF operations using GetState, PutState, DelState, and GetStateByRange. No time-based operations, goroutines, map iterations, rich queries, or mutable global state patterns are present. All iterators are properly closed with defer statements.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify HLF Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods on `SmartContract` implementing the shim interface. This is a valid HLF chaincode. ✓\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The code uses structs and slices, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetStateByRange` is used in `getAllCar` (L310-330) and `getAllRepair` (L548-578), but these are explicitly excluded from C4 per the taxonomy.\n- No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls found.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- In `getAllCar` (L310): `resultsIter` is created and `defer resultsIter.Close()` is called at L316. ✓\n- In `getAllRepair` (L548): `resultsIter` is created and `defer resultsIter.Close()` is called at L560. ✓\n- Both iterators are properly closed.\n\n### Step 3: Review Code Flow\nThe chaincode performs standard CRUD operations:\n- Uses `GetState`, `PutState`, `DelState` for state management\n- Uses `GetStateByRange` for range queries (deterministic)\n- Uses `json.Marshal` on structs (not maps, so deterministic)\n- All operations are deterministic based on input arguments and ledger state\n\n### Step 4: Verify No Hidden Issues\n- No external network calls\n- No file system operations\n- No random number generation\n- No floating-point arithmetic affecting state\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF operations using GetState, PutState, DelState, and GetStateByRange. No time-based operations, goroutines, map iterations, rich queries, or mutable global state patterns are present. All iterators are properly closed with defer statements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:41:46.734759",
+  "annotator": "2nd"
+}

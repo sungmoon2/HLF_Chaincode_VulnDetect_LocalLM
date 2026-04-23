@@ -1,0 +1,19 @@
+{
+  "file_id": "0283_cprinyarux_priv",
+  "repo": "cprinyarux",
+  "filename": "priv.go",
+  "elapsed_s": 12.92,
+  "input_tokens": 1920,
+  "output_tokens": 596,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses only deterministic operations. All private data access uses explicit key lookups (GetPrivateData) rather than rich queries (GetPrivateDataQueryResult). No time-based, goroutine, map iteration, or global mutable state patterns are present that could cause endorsement divergence.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `PrivChaincode` implementing `shim.ChaincodeStubInterface` patterns. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetPrivateData` is used (lines 56-57, 59-60, 79-80, 95-96, 100-101), but this is a key-based lookup, NOT a rich query. `GetPrivateDataQueryResult` would be C4, but `GetPrivateData` with explicit keys is deterministic.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Detailed Review of Data Flow\n\nLooking at each function:\n- `Set`: Takes params, writes to private data with `PutPrivateData` - deterministic\n- `Get`: Reads from private data with explicit keys, returns result - deterministic\n- `GetFromImplicitCollection`: Reads from private data with explicit key - deterministic\n- `Del`: Deletes from private data with explicit key - deterministic\n- `MemberOnlyTest`: Reads from private data with explicit keys - deterministic\n\nAll operations use explicit key lookups (`GetPrivateData` with hardcoded or parameter-provided keys), not rich queries. The write operations (`PutPrivateData`, `DelPrivateData`) are based on deterministic inputs from transaction parameters.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses only deterministic operations. All private data access uses explicit key lookups (GetPrivateData) rather than rich queries (GetPrivateDataQueryResult). No time-based, goroutine, map iteration, or global mutable state patterns are present that could cause endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:23:10.287770",
+  "annotator": "2nd"
+}

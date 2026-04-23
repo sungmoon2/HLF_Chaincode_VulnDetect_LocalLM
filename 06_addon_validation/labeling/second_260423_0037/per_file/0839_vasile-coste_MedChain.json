@@ -1,0 +1,19 @@
+{
+  "file_id": "0839_vasile-coste_MedChain",
+  "repo": "vasile-coste",
+  "filename": "MedChain.go",
+  "elapsed_s": 10.94,
+  "input_tokens": 5314,
+  "output_tokens": 992,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "L89–90, L245–246, L381–390**",
+  "rationale": "**",
+  "raw_response": "# Audit Report\n\n## Summary\nThis file contains **consensus-critical nondeterminism** via improper use of transaction timestamps in key generation.\n\n---\n\n## Detailed Analysis\n\n### 1. Transaction Entrypoint Identification\n✓ **CONFIRMED**: `Invoke()` (L47) and `Init()` (L43) are standard HLF entrypoints.\n\n### 2. Vulnerability Detection\n\n#### **PRIMARY ISSUE: C1 TIME_NOW (Disguised)**\nLines **L89–L90** and **L245–L246**:\n```go\ntxTimeAsPtr, errTx := t.GetTxTimestampChannel(stub)\nobj.Hospital_ID = ComputeHashKey(args[0] + (txTimeAsPtr.String()))\n```\n\n**Root Cause:**\n- `GetTxTimestampChannel()` (L381–L390) calls `APIstub.GetTxTimestamp()` (L382), which is **SAFE** per HLF spec (deterministic, same across all endorsers).\n- **However**, the result is converted to `time.Time` via `time.Unix()` (L388), then `.String()` is called (L90, L246).\n- `time.Time.String()` produces **locale-dependent, non-deterministic output** (e.g., \"2024-01-15 10:30:45.123456789 +0000 UTC\" formatting varies by Go runtime version and system locale).\n- This non-deterministic string is **concatenated into the key** (L90, L246) and used in `PutState()` (L99, L256).\n\n**Impact:**\n- Different endorsers may generate different `Hospital_ID` and `HospitalToPatient_ID` values.\n- This causes **endorsement divergence** on `addHospital()` and `addHospitalToPatient()`.\n\n#### **SECONDARY ISSUE: C4 NON_REVALIDATED_QUERY**\nLines **L169–L175** (`getAllHospital`), **L289–L295** (`getAllHospitalToPatient`), **L310–L316** (`getAll`):\n```go\nqueryResults, err := getQueryResultForQueryString(stub, queryString)\nreturn shim.Success(queryResults)\n```\n\n**Analysis:**\n- `GetQueryResult()` (L349) is a C4 source.\n- However, the results are **returned directly via `shim.Success()` without influencing a write decision**.\n- Per taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n- **SAFE** (informational only, no write dependency).\n\n#### **AUXILIARY: C5 ITERATOR_LEAK**\nLine **L365**: `resultsIterator.Close()` is called in `getQueryResultForQueryString()`.\nLine **L333**: `resultsIterator.Close()` is called in `getHistory()`.\n- All iterator paths properly close. **NO C5 issue**.\n\n---\n\n## Evidence\n\n| Issue | Lines | Pattern | Sink |\n|-------|-------|---------|------|\n| C1 (Time String) | L89–90, L245–246 | `txTimeAsPtr.String()` concatenated into key | `PutState()` L99, L256 |\n| C1 (Time Conversion) | L388 | `time.Unix()` + `.String()` non-deterministic | Key generation |\n\n---\n\n## Verdict\n\n**VERDICT: VULNERABLE**\n\n**PRIMARY_CLASS: C1**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: L89–90, L245–246, L381–390**\n\n**RATIONALE:**\nThe `addHospital()` and `addHospitalToPatient()` functions use `time.Time.String()` (a non-deterministic, locale-dependent operation) to generate ledger keys via `PutState()`. Although `GetTxTimestamp()` itself is deterministic, converting it to `time.Time` and calling `.String()` produces different outputs across endorsers, causing consensus failure. This is a critical consensus violation.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:55.514090",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0589_neelbanker_product_chaincode_private",
+  "repo": "neelbanker",
+  "filename": "product_chaincode_private.go",
+  "elapsed_s": 7.56,
+  "input_tokens": 5174,
+  "output_tokens": 549,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "N/A**",
+  "rationale": "",
+  "raw_response": "# Audit Report: Hyperledger Fabric Chaincode\n\n## Decision\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: N/A**\n\n## Rationale\n\nThis file contains multiple HLF transaction entrypoints (Init, Invoke, and delegated functions like initProduct, readProduct, etc.), satisfying the recognizable entrypoint requirement. However, a comprehensive analysis reveals no consensus-critical nondeterminism:\n\n1. **No C1 (TIME_NOW)**: The code contains no calls to `time.Now()`, `time.Since()`, or `time.Until()`. All timestamps are obtained via `GetTxTimestamp()` (not present here) or transient input, both deterministic.\n\n2. **No C2 (GOROUTINE)**: No `go func()` or `go methodCall()` patterns exist anywhere in the code.\n\n3. **No C3 (MAP_ITERATION)**: While `transMap` (a map) is accessed via `stub.GetTransient()`, iteration is never performed. The code only checks key existence (`ok := transMap[\"key\"]`) and reads specific keys, which are deterministic operations. No `for...range` over maps influences writes or responses.\n\n4. **No C4 (NON_REVALIDATED_QUERY)**: Calls to `stub.GetPrivateDataQueryResult()` (line ~450) and `stub.GetPrivateDataByRange()` (line ~380) return results that are serialized into a buffer and returned via `shim.Success()`. These are read-only query results returned to the client, not used to determine write decisions. The query results do not influence any subsequent `PutState`, `DelState`, or conditional logic that affects ledger mutations.\n\n5. **No C6 (GLOBAL_MUTABLE_STATE)**: No package-level mutable variables are declared or used in transaction logic.\n\n6. **Iterator Management**: All iterators (`resultsIterator`) are properly closed via `defer resultsIterator.Close()` (lines ~385, ~451).\n\nThe code follows deterministic patterns: it reads from transient maps, validates inputs, performs keyed lookups, and writes to the ledger with deterministic keys and values derived from function arguments and prior state reads.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:50.527751",
+  "annotator": "2nd"
+}

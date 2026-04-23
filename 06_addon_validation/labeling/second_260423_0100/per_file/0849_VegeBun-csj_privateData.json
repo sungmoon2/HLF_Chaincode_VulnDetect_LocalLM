@@ -1,0 +1,19 @@
+{
+  "file_id": "0849_VegeBun-csj_privateData",
+  "repo": "VegeBun-csj",
+  "filename": "privateData.go",
+  "elapsed_s": 12.63,
+  "input_tokens": 1848,
+  "output_tokens": 544,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode uses only deterministic operations. Time values come from transaction arguments rather than system calls. All data operations are point queries or writes with deterministic inputs. No maps are iterated, no goroutines are spawned, and no global mutable state exists.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SmartContract` using `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. Time values are passed as arguments (args[1], args[3], etc.) rather than generated.\n\n**C2 GOROUTINE**: No `go` statements or goroutine spawning.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The structs `Car` and `ParkCarInfo` are marshaled with `json.Marshal()`, but these are structs, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetPrivateData` is used in `queryCar` and `queryParkInfo`, but these are point queries (key-value lookups), not rich queries.\n- No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Evidence Review\nAll data operations are:\n- `PutPrivateData` with deterministic inputs from transaction arguments\n- `GetPrivateData` for point queries returned directly via `shim.Success`\n- `json.Marshal` on structs (not maps)\n\nThe chaincode follows a straightforward pattern: create records from input arguments, query records by key.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode uses only deterministic operations. Time values come from transaction arguments rather than system calls. All data operations are point queries or writes with deterministic inputs. No maps are iterated, no goroutines are spawned, and no global mutable state exists.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:04:09.647647",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0841_vasile-coste_newMed",
+  "repo": "vasile-coste",
+  "filename": "newMed.go",
+  "elapsed_s": 17.65,
+  "input_tokens": 11821,
+  "output_tokens": 778,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L640-L644, L597-L600",
+  "rationale": "The chaincode uses GetQueryResult and GetHistoryForKey, but these are only used for read-only queries returned via shim.Success, not for making write decisions. Time operations use deterministic GetTxTimestamp(). No other nondeterminism sources are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: I see `time.Unix()` and `time.Time` usage, but let me check the sources:\n- `GetTxTimestampChannel` (lines 680-689) uses `stub.GetTxTimestamp()` which is deterministic\n- Line 617 in `getHistory`: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - this converts the response timestamp (from the ledger history) to a string, which is deterministic as it's based on stored data\n\nNo `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The code uses structs and slices.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `getQueryResultForQueryString` uses `stub.GetQueryResult()` (line 640)\n- This is called by: `loginPatient`, `getAllPatient`, `loginDoctor`, `getAllDoctor`, `getAllRecords`, `getAllRequestAccess`, `getAllAccessControl`, `getAll`\n- All these functions return the query results via `shim.Success(queryResults)` - they are **read-only** queries that don't influence write decisions\n- `getHistory` uses `stub.GetHistoryForKey()` (line 597) - also read-only, returned via `shim.Success`\n\nNone of these query results are used to make write decisions (PutState/DelState).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 597-600: `resultsIterator` from `GetHistoryForKey` has `defer resultsIterator.Close()` ✓\n- Line 640-644: `resultsIterator` from `GetQueryResult` has `defer resultsIterator.Close()` ✓\n\nAll iterators are properly closed.\n\n### Conclusion\n\nThe chaincode uses:\n1. Deterministic timestamps from `GetTxTimestamp()` \n2. Rich queries (`GetQueryResult`) but only for read-only operations returned to client\n3. History queries but only for read-only operations\n4. No maps iterated, no goroutines, no global mutable state, no `time.Now()`\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L640-L644, L597-L600\nRATIONALE: The chaincode uses GetQueryResult and GetHistoryForKey, but these are only used for read-only queries returned via shim.Success, not for making write decisions. Time operations use deterministic GetTxTimestamp(). No other nondeterminism sources are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:03:43.266294",
+  "annotator": "2nd"
+}

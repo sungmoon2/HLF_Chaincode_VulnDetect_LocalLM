@@ -1,0 +1,19 @@
+{
+  "file_id": "0821_TongjiUniversityStudent1_moneyTocoin",
+  "repo": "TongjiUniversityStudent1",
+  "filename": "moneyTocoin.go",
+  "elapsed_s": 6.05,
+  "input_tokens": 3093,
+  "output_tokens": 149,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. There is no time.Now(), no goroutines, no map iteration, no rich queries (GetQueryResult), and the package-level logger variable is only used for logging purposes and does not influence ledger writes or proposal responses. All operations use deterministic GetState/PutState with struct marshaling via json.Marshal on structs (not maps).",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. There is no time.Now(), no goroutines, no map iteration, no rich queries (GetQueryResult), and the package-level logger variable is only used for logging purposes and does not influence ledger writes or proposal responses. All operations use deterministic GetState/PutState with struct marshaling via json.Marshal on structs (not maps).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:02:10.086448",
+  "annotator": "2nd"
+}

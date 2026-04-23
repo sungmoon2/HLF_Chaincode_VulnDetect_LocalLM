@@ -1,0 +1,19 @@
+{
+  "file_id": "0617_off-grid-block_chaincode",
+  "repo": "off-grid-block",
+  "filename": "chaincode.go",
+  "elapsed_s": 3.21,
+  "input_tokens": 2857,
+  "output_tokens": 198,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L217-L227, L232-L260",
+  "rationale": "The `searchByOwner` function (L217-L227) calls `resultFromString` (L232-L260), which invokes `stub.GetQueryResult(queryString)` at L236. This is a C4 NON_REVALIDATED_QUERY source. The query result is iterated in `constructQueryResponse` (L249-L259) and the iteration order directly influences the response bytes returned via `shim.Success(results)` at L226. Since CouchDB query result ordering is not guaranteed to be deterministic across endorsers without explicit sorting, different endorsers may construct different response buffers, causing endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L217-L227, L232-L260\n\nRATIONALE: The `searchByOwner` function (L217-L227) calls `resultFromString` (L232-L260), which invokes `stub.GetQueryResult(queryString)` at L236. This is a C4 NON_REVALIDATED_QUERY source. The query result is iterated in `constructQueryResponse` (L249-L259) and the iteration order directly influences the response bytes returned via `shim.Success(results)` at L226. Since CouchDB query result ordering is not guaranteed to be deterministic across endorsers without explicit sorting, different endorsers may construct different response buffers, causing endorsement divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:55:48.650712",
+  "annotator": "2nd"
+}

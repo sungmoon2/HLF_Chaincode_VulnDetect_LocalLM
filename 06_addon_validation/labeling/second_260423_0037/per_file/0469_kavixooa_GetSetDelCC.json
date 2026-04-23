@@ -1,0 +1,19 @@
+{
+  "file_id": "0469_kavixooa_GetSetDelCC",
+  "repo": "kavixooa",
+  "filename": "GetSetDelCC.go",
+  "elapsed_s": 4.61,
+  "input_tokens": 4138,
+  "output_tokens": 315,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L318-L322, L330-L365",
+  "rationale": "The `getHistory()` function (L318-L365) calls `stub.GetHistoryForKey(myCompositeKey)` at L322, which is a C4 NON_REVALIDATED_QUERY source. The result (`resultsIterator`) is then iterated and its contents are directly serialized into the response (L330-L365) without any write operation, making this a read-only query. However, the `queryData()` function (L368-L395) calls `getQueryResultForQueryString()` (L398-L450), which invokes `stub.GetQueryResult(queryString)` at L404—another C4 source. Although `queryData()` itself does not perform writes, the query result determines the response content. More critically, the iterator in `getQueryResultForQueryString()` is properly closed (L408 defer), but the iterator in `getHistory()` is also properly closed (L325 defer), so C5 is present but not the primary issue. The core vulnerability is that query results influence the proposal response without revalidation, which can diverge across endorsers if the ledger state differs between invocations.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: YES\n\nEVIDENCE_LINES: L318-L322, L330-L365\n\nRATIONALE: The `getHistory()` function (L318-L365) calls `stub.GetHistoryForKey(myCompositeKey)` at L322, which is a C4 NON_REVALIDATED_QUERY source. The result (`resultsIterator`) is then iterated and its contents are directly serialized into the response (L330-L365) without any write operation, making this a read-only query. However, the `queryData()` function (L368-L395) calls `getQueryResultForQueryString()` (L398-L450), which invokes `stub.GetQueryResult(queryString)` at L404—another C4 source. Although `queryData()` itself does not perform writes, the query result determines the response content. More critically, the iterator in `getQueryResultForQueryString()` is properly closed (L408 defer), but the iterator in `getHistory()` is also properly closed (L325 defer), so C5 is present but not the primary issue. The core vulnerability is that query results influence the proposal response without revalidation, which can diverge across endorsers if the ledger state differs between invocations.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:51:14.468881",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0121_adityachap_example_cc",
+  "repo": "adityachap",
+  "filename": "example_cc.go",
+  "elapsed_s": 5.09,
+  "input_tokens": 2327,
+  "output_tokens": 135,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init, Invoke) with helper methods (move, delete, query). The only package-level variable is a logger (L11), which is used only for logging and does not influence ledger writes or proposal responses. All operations use deterministic inputs from transaction arguments and GetState calls. No time.Now(), goroutines, map iterations, or rich queries are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init, Invoke) with helper methods (move, delete, query). The only package-level variable is a logger (L11), which is used only for logging and does not influence ledger writes or proposal responses. All operations use deterministic inputs from transaction arguments and GetState calls. No time.Now(), goroutines, map iterations, or rich queries are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:11:24.522732",
+  "annotator": "2nd"
+}

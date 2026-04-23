@@ -1,0 +1,19 @@
+{
+  "file_id": "0619_off-grid-block_main",
+  "repo": "off-grid-block",
+  "filename": "main.go",
+  "elapsed_s": 5.21,
+  "input_tokens": 2028,
+  "output_tokens": 184,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L108-L109",
+  "rationale": "The file contains GetPrivateDataQueryResult (L108) which is a C4 source, but examining the code flow shows it's only used in getQueryResultForQueryString which constructs a JSON response returned via shim.Success in query functions (queryVotesByPoll, queryVotesByVoter, queryVotes, queryVotePrivateDetailsByPoll). The query results are read-only and returned directly to the client without influencing any ledger writes (PutState, DelState, PutPrivateData, DelPrivateData). No write operations are present in this file that depend on query results.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L108-L109\nRATIONALE: The file contains GetPrivateDataQueryResult (L108) which is a C4 source, but examining the code flow shows it's only used in getQueryResultForQueryString which constructs a JSON response returned via shim.Success in query functions (queryVotesByPoll, queryVotesByVoter, queryVotes, queryVotePrivateDetailsByPoll). The query results are read-only and returned directly to the client without influencing any ledger writes (PutState, DelState, PutPrivateData, DelPrivateData). No write operations are present in this file that depend on query results.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:47:43.881805",
+  "annotator": "2nd"
+}

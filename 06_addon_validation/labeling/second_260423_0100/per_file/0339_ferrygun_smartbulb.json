@@ -1,0 +1,19 @@
+{
+  "file_id": "0339_ferrygun_smartbulb",
+  "repo": "ferrygun",
+  "filename": "smartbulb.go",
+  "elapsed_s": 14.0,
+  "input_tokens": 1818,
+  "output_tokens": 657,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no nondeterministic patterns. The global logger variable is used only for logging (explicitly SAFE). JSON unmarshaling creates a map but it's only used for validation, not iterated. GetState is deterministic and not a C4 source.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SmartBulb` struct implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Analysis\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 42: `json.Unmarshal([]byte(args[i]), &jsonData)` unmarshals into `map[string]interface{}`\n- However, this map is only used for validation (checking if JSON is valid), not iterated over. The map is never ranged over, and no iteration order affects any write or response.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 83: `stub.GetState(id)` - This is `GetState`, not `GetQueryResult` or similar rich query. `GetState` is deterministic and not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**:\n- Line 56: `var logger = shim.NewLogger(\"chaincode\")` - This is a package-level variable.\n- The logger is used throughout for logging (`logger.Errorf`, `logger.Debugf`, `logger.Warningf`).\n- Logger usage is explicitly stated as SAFE in the taxonomy (\"Logger-only globals... are SAFE\").\n\n### Step 3: Sink Analysis\n- `stub.PutState(args[0], []byte(args[1]))` at line 100\n- `stub.SetEvent(\"event-name\", []byte(args[1]))` at line 96\n- Various `Success()` and `Error()` returns\n\nNone of the identified patterns (C1-C4, C6) reach these sinks in a way that would cause nondeterminism.\n\n### Step 4: C5 Iterator Leak Check\nNo iterators are created in this file (no `GetStateByRange`, `GetQueryResult`, etc. that return iterators).\n\n## Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no nondeterministic patterns. The global logger variable is used only for logging (explicitly SAFE). JSON unmarshaling creates a map but it's only used for validation, not iterated. GetState is deterministic and not a C4 source.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:27:25.972073",
+  "annotator": "2nd"
+}

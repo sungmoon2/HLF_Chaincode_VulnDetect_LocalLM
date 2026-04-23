@@ -1,0 +1,19 @@
+{
+  "file_id": "0691_rfrabasile_cc_example_footballbet",
+  "repo": "rfrabasile",
+  "filename": "cc_example_footballbet.go",
+  "elapsed_s": 5.5,
+  "input_tokens": 2386,
+  "output_tokens": 133,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L133-L145",
+  "rationale": "The file contains GetQueryResult (L137) which is a potential C4 source, but the query result is only returned via shim.Success for read-only purposes (L127). The result does not influence any write decision (PutState/DelState). The insertFootballBet function uses deterministic inputs from args without any C1-C4 or C6 patterns affecting writes.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L133-L145\nRATIONALE: The file contains GetQueryResult (L137) which is a potential C4 source, but the query result is only returned via shim.Success for read-only purposes (L127). The result does not influence any write decision (PutState/DelState). The insertFootballBet function uses deterministic inputs from args without any C1-C4 or C6 patterns affecting writes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:52:53.191791",
+  "annotator": "2nd"
+}

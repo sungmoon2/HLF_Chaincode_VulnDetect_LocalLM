@@ -1,0 +1,19 @@
+{
+  "file_id": "0657_procrypt_SmartContract",
+  "repo": "procrypt",
+  "filename": "SmartContract.go",
+  "elapsed_s": 4.98,
+  "input_tokens": 1761,
+  "output_tokens": 155,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init/Invoke) with three functions: buyCar, sellCar, and queryCar. None of the code uses time.Now() (C1), goroutines (C2), map iteration (C3), rich queries like GetQueryResult (C4), or mutable global state (C6). All operations use deterministic GetState/PutState with explicit keys and json.Marshal on structs (not maps), which is deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init/Invoke) with three functions: buyCar, sellCar, and queryCar. None of the code uses time.Now() (C1), goroutines (C2), map iteration (C3), rich queries like GetQueryResult (C4), or mutable global state (C6). All operations use deterministic GetState/PutState with explicit keys and json.Marshal on structs (not maps), which is deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:50:18.437698",
+  "annotator": "2nd"
+}

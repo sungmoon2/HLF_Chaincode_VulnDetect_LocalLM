@@ -1,0 +1,19 @@
+{
+  "file_id": "0341_Ferwoo_EvidenceChaincode",
+  "repo": "Ferwoo",
+  "filename": "EvidenceChaincode.go",
+  "elapsed_s": 14.05,
+  "input_tokens": 1915,
+  "output_tokens": 612,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses only deterministic operations: simple key-value GetState/PutState, JSON marshaling of structs, and client-provided arguments. No time functions, goroutines, map iterations, rich queries, or global mutable state are present.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods on `EvidenceChaincode` implementing the shim interface. This is a valid HLF chaincode. **Not EXCLUDE.**\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. The `_time` field in `newEvidence` comes from `args[2]` (client-provided), not from system time.\n\n**C2 GOROUTINE**: No `go` statements or goroutine spawning.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The structs use defined fields, and `json.Marshal` on structs is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `queryEvidence` uses `stub.GetState()` - this is NOT a rich query (GetQueryResult), it's a simple key lookup which is deterministic.\n- `newEvidence` uses `stub.GetState()` to check existence before `PutState()` - again, simple key lookup, not a rich query.\n- No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables that are read/written in transaction logic.\n\n### Step 3: Auxiliary Check\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code. `GetState` returns bytes directly, not an iterator.\n\n### Summary\n\nThe chaincode performs:\n1. `newEvidence`: Takes ID, hash, and time from arguments, checks if key exists via `GetState`, then writes via `PutState`\n2. `queryEvidence`: Simple `GetState` lookup and returns result\n\nAll operations are deterministic:\n- No time-based operations\n- No goroutines\n- No map iteration\n- No rich queries\n- No global mutable state\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses only deterministic operations: simple key-value GetState/PutState, JSON marshaling of structs, and client-provided arguments. No time functions, goroutines, map iterations, rich queries, or global mutable state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:27:40.042139",
+  "annotator": "2nd"
+}

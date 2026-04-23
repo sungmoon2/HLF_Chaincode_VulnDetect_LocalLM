@@ -1,0 +1,19 @@
+{
+  "file_id": "0467_karthiksukumaran_example_chaincode",
+  "repo": "karthiksukumaran",
+  "filename": "example_chaincode.go",
+  "elapsed_s": 11.98,
+  "input_tokens": 1388,
+  "output_tokens": 580,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains only deterministic operations using GetState, PutState, and DelState with direct argument-based keys. The only package-level variable is a logger used exclusively for logging purposes, which is explicitly safe per the taxonomy.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `Init` method (L12-L23)\n- `Invoke` method (L25-L58)\n\nBoth implement the `shim.ChaincodeStubInterface` pattern.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetState` is used at L43, but this is NOT a C4 source. C4 applies to `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. `GetState` is a deterministic key-based lookup.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 8: `var logger = shim.NewLogger(\"example_chaincode\")` - This is a package-level variable, but it's only used for logging purposes (L13, L26, L56, L63). Logger-only globals are explicitly SAFE per the taxonomy.\n\n### Step 3: Check for C5 (Auxiliary)\nNo iterators are created in this code (`GetStateByRange`, `GetQueryResult`, etc. are not used).\n\n### Summary\nThe chaincode performs straightforward operations:\n- `Init`: Takes args and writes to state\n- `Invoke/delete`: Deletes state by key\n- `Invoke/query`: Reads state by key (read-only, returned via shim.Success)\n- `Invoke/setdata`: Writes to state\n\nAll operations are deterministic. The only global variable is a logger used exclusively for logging.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains only deterministic operations using GetState, PutState, and DelState with direct argument-based keys. The only package-level variable is a logger used exclusively for logging purposes, which is explicitly safe per the taxonomy.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:36:17.423159",
+  "annotator": "2nd"
+}

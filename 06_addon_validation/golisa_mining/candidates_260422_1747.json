@@ -1,0 +1,3782 @@
+[
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\marbles_chaincode.go",
+    "repo_id": "2016Nishi",
+    "filename": "marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "file_hash": "18ec7ec6d7010586",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 526,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 358,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 398,
+          "match": "GetStateByPartialCompositeKey (",
+          "context": "// Uses a GetStateByPartialCompositeKey (range query) against color~name 'index'.",
+          "close_found": true
+        },
+        {
+          "line": 418,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "coloredMarbleResultsIterator, err := stub.GetStateByPartialCompositeKey(\"color~name\", []string{color})",
+          "close_found": true
+        },
+        {
+          "line": 574,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(marbleName)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Amit9887\\marble.go",
+    "repo_id": "Amit9887",
+    "filename": "marble.go",
+    "file_size": 31341,
+    "line_count": 756,
+    "file_hash": "c869a062b83747c2",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 566,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        },
+        {
+          "line": 674,
+          "match": "GetQueryResultWithPagination(",
+          "context": "resultsIterator, responseMetadata, err := stub.GetQueryResultWithPagination(queryString, pageSize, bookmark)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 420,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 438,
+          "match": "GetStateByPartialCompositeKey (",
+          "context": "// Uses a GetStateByPartialCompositeKey (range query) against color~name 'index'.",
+          "close_found": true
+        },
+        {
+          "line": 458,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "coloredMarbleResultsIterator, err := stub.GetStateByPartialCompositeKey(\"color~name\", []string{color})",
+          "close_found": true
+        },
+        {
+          "line": 702,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(marbleName)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 6
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Avery7Li\\chaincode.go",
+    "repo_id": "Avery7Li",
+    "filename": "chaincode.go",
+    "file_size": 26125,
+    "line_count": 738,
+    "file_hash": "b61daa02fd8adce5",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 479,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 324,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "nameUnpsupplyIDResultsIterator, err := stub.GetStateByPartialCompositeKey(\"name~unpsupplyID\", []string{name})",
+          "close_found": true
+        },
+        {
+          "line": 353,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "namePsupplyIDResultsIterator, err := stub.GetStateByPartialCompositeKey(\"name~psupplyID\", []string{name})",
+          "close_found": true
+        },
+        {
+          "line": 382,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "organizationUnpsupplyIDResultsIterator, err := stub.GetStateByPartialCompositeKey(\"organization~unpsupplyID\", []string{o",
+          "close_found": true
+        },
+        {
+          "line": 411,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "organizationPsupplyIDResultsIterator, err := stub.GetStateByPartialCompositeKey(\"organization~unpsupplyID\", []string{org",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\BadBaman\\marbles_chaincode.go",
+    "repo_id": "BadBaman",
+    "filename": "marbles_chaincode.go",
+    "file_size": 28423,
+    "line_count": 687,
+    "file_hash": "26945d7aed61d00d",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 585,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 417,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 457,
+          "match": "GetStateByPartialCompositeKey (",
+          "context": "// Uses a GetStateByPartialCompositeKey (range query) against color~name 'index'.",
+          "close_found": true
+        },
+        {
+          "line": 477,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "ApplicantedApplicationRecordResultsIterator, err := stub.GetStateByPartialCompositeKey(\"Applicant~Dataset\", []string{App",
+          "close_found": true
+        },
+        {
+          "line": 633,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(Dataset)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\C0rWin\\person.go",
+    "repo_id": "C0rWin",
+    "filename": "person.go",
+    "file_size": 2049,
+    "line_count": 80,
+    "file_hash": "6a9efb79255f1fb8",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 21,
+          "match": "var functions",
+          "context": "var functions = map[string]func(args []string, stub shim.ChaincodeStubInterface) peer.Response{"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\DCoT-EL\\dcotWorkflow.go",
+    "repo_id": "DCoT-EL",
+    "filename": "dcotWorkflow.go",
+    "file_size": 24742,
+    "line_count": 806,
+    "file_hash": "fb9b1eae4e4a5caa",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 751,
+          "match": "GetHistoryForKey(",
+          "context": "historyResponse, err3 := stub.GetHistoryForKey(COCKey)",
+          "close_found": false
+        },
+        {
+          "line": 753,
+          "match": "GetHistoryForKey(",
+          "context": "logger.Error(\"getChainOfEvents ERROR: GetHistoryForKey()\\n \")",
+          "close_found": false
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\DappCampus\\chaincode.go",
+    "repo_id": "DappCampus",
+    "filename": "chaincode.go",
+    "file_size": 5007,
+    "line_count": 176,
+    "file_hash": "74aa22c7c086047c",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 86,
+          "match": "GetStateByRange(",
+          "context": "//   - GetStateByRange()",
+          "close_found": false
+        },
+        {
+          "line": 135,
+          "match": "GetStateByRange(",
+          "context": "iterator, _ := stub.GetStateByRange(startKey, endKey)",
+          "close_found": false
+        },
+        {
+          "line": 90,
+          "match": "GetHistoryForKey(",
+          "context": "//   - GetHistoryForKey()",
+          "close_found": false
+        },
+        {
+          "line": 166,
+          "match": "GetHistoryForKey(",
+          "context": "iterator, _ := stub.GetHistoryForKey(key)",
+          "close_found": false
+        }
+      ]
+    },
+    "hit_count": 4
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\FLombardi-PhD\\governance.go",
+    "repo_id": "FLombardi-PhD",
+    "filename": "governance.go",
+    "file_size": 16219,
+    "line_count": 434,
+    "file_hash": "f92b5a080461ab7b",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 232,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "keyResultsIterator, err := stub.GetStateByPartialCompositeKey(\"proposal~voter\", []string{propID})",
+          "close_found": true
+        },
+        {
+          "line": 324,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "keyResultsIterator, err := stub.GetStateByPartialCompositeKey(\"proposal~voter\", []string{propID})",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\FeiyangTan\\main.go",
+    "repo_id": "FeiyangTan",
+    "filename": "main.go",
+    "file_size": 13570,
+    "line_count": 477,
+    "file_hash": "25ba7e1aca31e9b6",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 452,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "result, err := stub.GetStateByPartialCompositeKey(\"history\", keys)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\KTyrantOnly\\crowdTest.go",
+    "repo_id": "KTyrantOnly",
+    "filename": "crowdTest.go",
+    "file_size": 10732,
+    "line_count": 366,
+    "file_hash": "277479c9d39c85bf",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 277,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        },
+        {
+          "line": 295,
+          "match": "GetQueryResultWithPagination(",
+          "context": "resultsIterator, responseMetadata, err := stub.GetQueryResultWithPagination(queryString, pageSize, bookmark)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 225,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Kayaanoosh\\fabcar.go",
+    "repo_id": "Kayaanoosh",
+    "filename": "fabcar.go",
+    "file_size": 6393,
+    "line_count": 205,
+    "file_hash": "31228ae20242b105",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 140,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\LinkaKorea\\linkatoken.go",
+    "repo_id": "LinkaKorea",
+    "filename": "linkatoken.go",
+    "file_size": 10826,
+    "line_count": 259,
+    "file_hash": "d60c92d53dafa512",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 75,
+          "match": "var m",
+          "context": "var m majorfunc"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\MSaber9\\diamonds.go",
+    "repo_id": "MSaber9",
+    "filename": "diamonds.go",
+    "file_size": 21092,
+    "line_count": 555,
+    "file_hash": "b43db8ead0267d51",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 453,
+          "match": "GetQueryResult(",
+          "context": "// \tresultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 285,
+          "match": "GetStateByRange(",
+          "context": "// \tresultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 325,
+          "match": "GetStateByPartialCompositeKey (",
+          "context": "// Uses a GetStateByPartialCompositeKey (range query) against origin~name 'index'.",
+          "close_found": true
+        },
+        {
+          "line": 345,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "// \toriginateddiamondResultsIterator, err := stub.GetStateByPartialCompositeKey(\"origin~name\", []string{origin})",
+          "close_found": true
+        },
+        {
+          "line": 501,
+          "match": "GetHistoryForKey(",
+          "context": "// \tresultsIterator, err := stub.GetHistoryForKey(diamondName)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Noonefang\\chaincode.go",
+    "repo_id": "Noonefang",
+    "filename": "chaincode.go",
+    "file_size": 10953,
+    "line_count": 377,
+    "file_hash": "aa149e2d61bab83d",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 117,
+          "match": "GetHistoryForKey(",
+          "context": "history, _ := stub.GetHistoryForKey(index)",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 41,
+          "match": "var state",
+          "context": "var state = [3]string{\"start\", \"vote\", \"balance\"}"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Pharmeum\\chaincode.go",
+    "repo_id": "Pharmeum",
+    "filename": "chaincode.go",
+    "file_size": 8495,
+    "line_count": 255,
+    "file_hash": "7fabb7216fdef997",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 58,
+          "match": "time.Now(",
+          "context": "startedTime := time.Now()"
+        },
+        {
+          "line": 60,
+          "match": "time.Since(",
+          "context": "c.logger.Infof(\"invocation request finished %s, status %d, duration %s\", function, response.Status, time.Since(startedTi"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\RAntonio09\\ccConsortium.go",
+    "repo_id": "RAntonio09",
+    "filename": "ccConsortium.go",
+    "file_size": 20238,
+    "line_count": 821,
+    "file_hash": "e4298684fcd6d188",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "MAP_ITERATION"
+    ],
+    "hits": {
+      "MAP_ITERATION": [
+        {
+          "line": 36,
+          "match": "for _, v := range",
+          "context": "for _, v := range shares {"
+        },
+        {
+          "line": 44,
+          "match": "for k, v := range",
+          "context": "for k, v := range shares {"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\goroutine\\GoRoutines.go",
+    "repo_id": "Running_Examples",
+    "filename": "GoRoutines.go",
+    "file_size": 458,
+    "line_count": 41,
+    "file_hash": "976e903a571653a2",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "GOROUTINE",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "GOROUTINE": [
+        {
+          "line": 18,
+          "match": "go func(",
+          "context": "go func() {"
+        },
+        {
+          "line": 25,
+          "match": "go func(",
+          "context": "go func() {"
+        },
+        {
+          "line": 18,
+          "match": "go func(",
+          "context": "go func() {"
+        },
+        {
+          "line": 25,
+          "match": "go func(",
+          "context": "go func() {"
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 10,
+          "match": "var wg",
+          "context": "var wg sync.WaitGroup"
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\SipengXie\\record.go",
+    "repo_id": "SipengXie",
+    "filename": "record.go",
+    "file_size": 9095,
+    "line_count": 316,
+    "file_hash": "7d2a2a5e65d57b16",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 257,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\TigerWit\\sealtx.go",
+    "repo_id": "TigerWit",
+    "filename": "sealtx.go",
+    "file_size": 3899,
+    "line_count": 141,
+    "file_hash": "6082774a34b8440c",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 56,
+          "match": "GetHistoryForKey(",
+          "context": "iter, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        },
+        {
+          "line": 90,
+          "match": "GetHistoryForKey(",
+          "context": "iter, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Trust-Contract\\cargo-chaincode.go",
+    "repo_id": "Trust-Contract",
+    "filename": "cargo-chaincode.go",
+    "file_size": 6226,
+    "line_count": 202,
+    "file_hash": "5de353d288abfdb9",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 138,
+          "match": "time.Now(",
+          "context": "now := time.Now()"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\YewPu\\rowObjects.go",
+    "repo_id": "YewPu",
+    "filename": "rowObjects.go",
+    "file_size": 32521,
+    "line_count": 785,
+    "file_hash": "68b73539405ef9ff",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 595,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        },
+        {
+          "line": 703,
+          "match": "GetQueryResultWithPagination(",
+          "context": "resultsIterator, responseMetadata, err := stub.GetQueryResultWithPagination(queryString, pageSize, bookmark)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 447,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 465,
+          "match": "GetStateByPartialCompositeKey (",
+          "context": "// Uses a GetStateByPartialCompositeKey (range query) against versionName~versionId 'index'.",
+          "close_found": true
+        },
+        {
+          "line": 485,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "coloredMarbleResultsIterator, err := stub.GetStateByPartialCompositeKey(\"versionName~versionId\", []string{versionName})",
+          "close_found": true
+        },
+        {
+          "line": 731,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(rowObjectKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 6
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Z-Voting\\rahasak.go",
+    "repo_id": "Z-Voting",
+    "filename": "rahasak.go",
+    "file_size": 3130,
+    "line_count": 129,
+    "file_hash": "274ef06ae9fd015b",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 81,
+          "match": "GetStateByRange(",
+          "context": "iterator, err := stub.GetStateByRange(frm, to)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\akm4\\Person.go",
+    "repo_id": "akm4",
+    "filename": "Person.go",
+    "file_size": 4122,
+    "line_count": 139,
+    "file_hash": "ea53b30c7a668229",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 54,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\akshay111meher\\myexample.go",
+    "repo_id": "akshay111meher",
+    "filename": "myexample.go",
+    "file_size": 2437,
+    "line_count": 89,
+    "file_hash": "ffbec184f11ddbe1",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 16,
+          "match": "var A",
+          "context": "var A, B string"
+        },
+        {
+          "line": 17,
+          "match": "var Aval",
+          "context": "var Aval, Bval, X int"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\alejandrolr\\lab.go",
+    "repo_id": "alejandrolr",
+    "filename": "lab.go",
+    "file_size": 11860,
+    "line_count": 404,
+    "file_hash": "34e82b0bc3e1a585",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 95,
+          "match": "time.Now(",
+          "context": "current_time := time.Now().Local()"
+        },
+        {
+          "line": 187,
+          "match": "time.Now(",
+          "context": "current_time := time.Now().Local()"
+        }
+      ],
+      "PHANTOM_READ": [
+        {
+          "line": 356,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\marble.go",
+    "repo_id": "allan-zhou",
+    "filename": "marble.go",
+    "file_size": 9806,
+    "line_count": 349,
+    "file_hash": "25cc01dde959878d",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 63,
+          "match": "GetStateByRange(",
+          "context": "queryIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 198,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "coloredQueryIterator, err := stub.GetStateByPartialCompositeKey(compositeKeyType, []string{color})",
+          "close_found": true
+        },
+        {
+          "line": 256,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "coloredQueryIterator, err := stub.GetStateByPartialCompositeKey(compositeKeyType, []string{color})",
+          "close_found": true
+        },
+        {
+          "line": 292,
+          "match": "GetHistoryForKey(",
+          "context": "historyQueryIterator, err := stub.GetHistoryForKey(marbleKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 4
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\arthurmsouza\\boleto.go",
+    "repo_id": "arthurmsouza",
+    "filename": "boleto.go",
+    "file_size": 8768,
+    "line_count": 318,
+    "file_hash": "8b0141ad6b4793a3",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 106,
+          "match": "time.Now(",
+          "context": "var notExpiredDate = time.Now()"
+        },
+        {
+          "line": 304,
+          "match": "time.Now(",
+          "context": "var hoje = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Now().Location())"
+        },
+        {
+          "line": 304,
+          "match": "time.Now(",
+          "context": "var hoje = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Now().Location())"
+        },
+        {
+          "line": 304,
+          "match": "time.Now(",
+          "context": "var hoje = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Now().Location())"
+        },
+        {
+          "line": 304,
+          "match": "time.Now(",
+          "context": "var hoje = time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Now().Location())"
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\ashokcin1\\main.go",
+    "repo_id": "ashokcin1",
+    "filename": "main.go",
+    "file_size": 5531,
+    "line_count": 201,
+    "file_hash": "ae812a546c00fd56",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 82,
+          "match": "time.Now(",
+          "context": "now := time.Now()"
+        }
+      ],
+      "MAP_ITERATION": [
+        {
+          "line": 141,
+          "match": "for id, _ := range",
+          "context": "for id, _ := range blocks {"
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 30,
+          "match": "var blocks",
+          "context": "var blocks map[string]bool"
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bairathirahul\\genesiskyc.go",
+    "repo_id": "bairathirahul",
+    "filename": "genesiskyc.go",
+    "file_size": 24084,
+    "line_count": 817,
+    "file_hash": "c99cf561f17f9635",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 581,
+          "match": "time.Now(",
+          "context": "comment.Created = time.Now().UnixNano() / int64(time.Millisecond)"
+        }
+      ],
+      "PHANTOM_READ": [
+        {
+          "line": 790,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 627,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(\"0\", \"99999\")",
+          "close_found": true
+        },
+        {
+          "line": 671,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(\"0\", \"99999\")",
+          "close_found": true
+        },
+        {
+          "line": 727,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(customerID)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bluezd\\integralTrace.go",
+    "repo_id": "bluezd",
+    "filename": "integralTrace.go",
+    "file_size": 23770,
+    "line_count": 700,
+    "file_hash": "fd0edced884817c4",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 686,
+          "match": "time.Now(",
+          "context": "t := time.Now()"
+        }
+      ],
+      "PHANTOM_READ": [
+        {
+          "line": 594,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 532,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "integralResultsIterator, err := stub.GetStateByPartialCompositeKey(\"username~all\", []string{userName})",
+          "close_found": true
+        },
+        {
+          "line": 271,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(keyComposite)",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 674,
+          "match": "var enterpriseNameList",
+          "context": "var enterpriseNameList = []string{\"bank\", \"telecom\", \"shopping_mall\"}"
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\boohyung\\fabcar.go",
+    "repo_id": "boohyung",
+    "filename": "fabcar.go",
+    "file_size": 8450,
+    "line_count": 242,
+    "file_hash": "8e17404cda83ab77",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 169,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\solution.go",
+    "repo_id": "bugfrog1024",
+    "filename": "solution.go",
+    "file_size": 13792,
+    "line_count": 498,
+    "file_hash": "e0cad10148b0c2ae",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "MAP_ITERATION": [
+        {
+          "line": 347,
+          "match": "for id, shipment := range",
+          "context": "for id, shipment := range shipmentStore {"
+        },
+        {
+          "line": 355,
+          "match": "for id, shipment := range",
+          "context": "for id, shipment := range shipmentStore {"
+        },
+        {
+          "line": 363,
+          "match": "for id, shipment := range",
+          "context": "for id, shipment := range shipmentStore {"
+        },
+        {
+          "line": 408,
+          "match": "for id, shipmentValue := range",
+          "context": "for id, shipmentValue := range shipmentStore {"
+        },
+        {
+          "line": 469,
+          "match": "for id, shipmentValue := range",
+          "context": "for id, shipmentValue := range shipmentStore {"
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 44,
+          "match": "var buyerStore",
+          "context": "var buyerStore map[string]Buyer"
+        },
+        {
+          "line": 45,
+          "match": "var sellerStore",
+          "context": "var sellerStore map[string]Seller"
+        },
+        {
+          "line": 47,
+          "match": "var shipmentStore",
+          "context": "var shipmentStore map[string]Shipment"
+        }
+      ]
+    },
+    "hit_count": 8
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\chpwssn\\redvblue.go",
+    "repo_id": "chpwssn",
+    "filename": "redvblue.go",
+    "file_size": 3752,
+    "line_count": 139,
+    "file_hash": "d5cc46fd0b193a41",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 73,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\clydedacruz\\simplechaincode.go",
+    "repo_id": "clydedacruz",
+    "filename": "simplechaincode.go",
+    "file_size": 20533,
+    "line_count": 554,
+    "file_hash": "325ec218eddf4b78",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 452,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 284,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 324,
+          "match": "GetStateByPartialCompositeKey (",
+          "context": "// Uses a GetStateByPartialCompositeKey (range query) against color~name 'index'.",
+          "close_found": true
+        },
+        {
+          "line": 344,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "coloredMarbleResultsIterator, err := stub.GetStateByPartialCompositeKey(\"color~name\", []string{color})",
+          "close_found": true
+        },
+        {
+          "line": 500,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(marbleName)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\code2understand\\02_composite_asset_chaincode.go",
+    "repo_id": "code2understand",
+    "filename": "02_composite_asset_chaincode.go",
+    "file_size": 2951,
+    "line_count": 129,
+    "file_hash": "eaf9cb1a7c5ac58e",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 102,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(prefixBatch, []string{})",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\cristiano-andrade\\chaincode-test.go",
+    "repo_id": "cristiano-andrade",
+    "filename": "chaincode-test.go",
+    "file_size": 3752,
+    "line_count": 152,
+    "file_hash": "60d4842c2177dac1",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 101,
+          "match": "time.Now(",
+          "context": "payment.PaidAt = time.Now().Format(\"2006-01-02\")"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\dachrillz\\chaincode.go",
+    "repo_id": "dachrillz",
+    "filename": "chaincode.go",
+    "file_size": 6905,
+    "line_count": 301,
+    "file_hash": "b8d7c71b236240db",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 161,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 257,
+          "match": "GetHistoryForKey(",
+          "context": "history, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\deevotech\\food_supplychain.go",
+    "repo_id": "deevotech",
+    "filename": "food_supplychain.go",
+    "file_size": 26434,
+    "line_count": 864,
+    "file_hash": "cada5415cb6019f6",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 579,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 407,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(CK_SC_LOG, []string{ID})",
+          "close_found": true
+        },
+        {
+          "line": 452,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(CK_PRODUCT_LOG, []string{ID})",
+          "close_found": true
+        },
+        {
+          "line": 479,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(CK_AUDIT_OBJ, []string{ID})",
+          "close_found": true
+        },
+        {
+          "line": 520,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(CK_AUDITOR_AUDIT, []string{ID})",
+          "close_found": true
+        },
+        {
+          "line": 630,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(ID)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 6
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\eshita53\\fabcar.go",
+    "repo_id": "eshita53",
+    "filename": "fabcar.go",
+    "file_size": 27153,
+    "line_count": 759,
+    "file_hash": "93890028e80129bc",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 354,
+          "match": "time.Now(",
+          "context": "TransactionTime: time.Now(),"
+        },
+        {
+          "line": 373,
+          "match": "time.Now(",
+          "context": "transactionTracker.EndorserTransactionTime =time.Now()"
+        },
+        {
+          "line": 420,
+          "match": "time.Now(",
+          "context": "MoneyTransaction.TransactionTime =  time.Now()"
+        },
+        {
+          "line": 449,
+          "match": "time.Now(",
+          "context": "certificateHolderTransactionTrack.CertificateHolderTransactionTime = time.Now()"
+        },
+        {
+          "line": 500,
+          "match": "time.Now(",
+          "context": "TransactionTime: time.Now(),"
+        },
+        {
+          "line": 519,
+          "match": "time.Now(",
+          "context": "TransactionTime:     time.Now(),"
+        },
+        {
+          "line": 523,
+          "match": "time.Now(",
+          "context": "var str = accountAddress+ \" has given you \" + fmt.Sprintf(\"%f\",k) + \"from \" + time.Now().String() + \" based on\" + fmt.Sp"
+        },
+        {
+          "line": 562,
+          "match": "time.Now(",
+          "context": "TransactionTime: time.Now(),"
+        }
+      ]
+    },
+    "hit_count": 8
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\farmerrrrr\\asset management.go",
+    "repo_id": "farmerrrrr",
+    "filename": "asset management.go",
+    "file_size": 5531,
+    "line_count": 219,
+    "file_hash": "34bcc581915298c8",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 181,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 20,
+          "match": "var userNumber",
+          "context": "var userNumber int = 0"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\georgkoester\\blacklist_chaincode.go",
+    "repo_id": "georgkoester",
+    "filename": "blacklist_chaincode.go",
+    "file_size": 8190,
+    "line_count": 282,
+    "file_hash": "fc94263245ab3301",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 229,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "stateIter, err := stub.GetStateByPartialCompositeKey(objectType, []string{blacklistValue})",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\ggdranzor\\chaincode_example02.go",
+    "repo_id": "ggdranzor",
+    "filename": "chaincode_example02.go",
+    "file_size": 7289,
+    "line_count": 222,
+    "file_hash": "e53276683d55ca99",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 173,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\grishawh\\new.go",
+    "repo_id": "grishawh",
+    "filename": "new.go",
+    "file_size": 5956,
+    "line_count": 230,
+    "file_hash": "ccf0e6c99a607171",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 173,
+          "match": "GetHistoryForKey(",
+          "context": "resultIt, err := stub.GetHistoryForKey(name)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\gymgle\\diploma.go",
+    "repo_id": "gymgle",
+    "filename": "diploma.go",
+    "file_size": 11579,
+    "line_count": 467,
+    "file_hash": "fb9df94acdf7ac09",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 188,
+          "match": "time.Now(",
+          "context": "record = Record{Id: RecordNo, SchoolAddress: schAddress, StudentAddress: stuAddress, SchoolSign: schoolSign, ModifyTime:"
+        },
+        {
+          "line": 243,
+          "match": "time.Now(",
+          "context": "record = Record{Id: RecordNo, SchoolAddress: schAddress, StudentAddress: stuAddress, SchoolSign: schoolSign, ModifyTime:"
+        },
+        {
+          "line": 251,
+          "match": "time.Now(",
+          "context": "background = Background{Id: BackGroundNo, ExitTime: time.Now().Unix(), Status: modOperation}"
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 29,
+          "match": "var BackGroundNo",
+          "context": "var BackGroundNo int = 0"
+        },
+        {
+          "line": 30,
+          "match": "var RecordNo",
+          "context": "var RecordNo int = 0"
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\haydencoinprima\\wallet_chaincode.go",
+    "repo_id": "haydencoinprima",
+    "filename": "wallet_chaincode.go",
+    "file_size": 7507,
+    "line_count": 248,
+    "file_hash": "729c062ecd43d901",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 156,
+          "match": "time.Now(",
+          "context": "tx.Timestamp = time.Now().String()"
+        },
+        {
+          "line": 210,
+          "match": "time.Now(",
+          "context": "tx.Timestamp = time.Now().String()"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 228,
+          "match": "GetHistoryForKey(",
+          "context": "iter, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\heixiongTT\\simple.go",
+    "repo_id": "heixiongTT",
+    "filename": "simple.go",
+    "file_size": 12993,
+    "line_count": 449,
+    "file_hash": "ac9fed4539721ecc",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 348,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 396,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hhllii\\trading.go",
+    "repo_id": "hhllii",
+    "filename": "trading.go",
+    "file_size": 10382,
+    "line_count": 369,
+    "file_hash": "4cc4dd10c22e1487",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 101,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 254,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\higyigma\\hashChainCode.go",
+    "repo_id": "higyigma",
+    "filename": "hashChainCode.go",
+    "file_size": 3658,
+    "line_count": 135,
+    "file_hash": "d58e560a05fce10f",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 86,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hoke58\\vendorpdc.go",
+    "repo_id": "hoke58",
+    "filename": "vendorpdc.go",
+    "file_size": 9384,
+    "line_count": 272,
+    "file_hash": "23567cc5a70c3ce8",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 235,
+          "match": "GetPrivateDataByRange(",
+          "context": "resultsIterator, err := stub.GetPrivateDataByRange(\"vendor\", startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hungryMob\\sendEvent.go",
+    "repo_id": "hungryMob",
+    "filename": "sendEvent.go",
+    "file_size": 9452,
+    "line_count": 383,
+    "file_hash": "833e92bda18056d2",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 72,
+          "match": "GetHistoryForKey(",
+          "context": "history, errHist := stub.GetHistoryForKey(stringaSettata)",
+          "close_found": false
+        },
+        {
+          "line": 117,
+          "match": "GetHistoryForKey(",
+          "context": "history, err := stub.GetHistoryForKey(asset)",
+          "close_found": false
+        },
+        {
+          "line": 131,
+          "match": "GetHistoryForKey(",
+          "context": "history, err := stub.GetHistoryForKey(realValue)",
+          "close_found": false
+        },
+        {
+          "line": 159,
+          "match": "GetHistoryForKey(",
+          "context": "history, errHist := stub.GetHistoryForKey(stringaSettata)",
+          "close_found": false
+        },
+        {
+          "line": 201,
+          "match": "GetHistoryForKey(",
+          "context": "history, err := stub.GetHistoryForKey(args[0])",
+          "close_found": false
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\idowuakinde\\diamonds.go",
+    "repo_id": "idowuakinde",
+    "filename": "diamonds.go",
+    "file_size": 13724,
+    "line_count": 370,
+    "file_hash": "54ee5ca753eb8e87",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 267,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "originateddiamondResultsIterator, err := stub.GetStateByPartialCompositeKey(\"origin~name\", []string{origin})",
+          "close_found": true
+        },
+        {
+          "line": 316,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(diamondName)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\imineev\\carTrace.go",
+    "repo_id": "imineev",
+    "filename": "carTrace.go",
+    "file_size": 36243,
+    "line_count": 887,
+    "file_hash": "9d91010105a5451f",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 870,
+          "match": "time.Now(",
+          "context": "recallTime = int(time.Now().UTC().Unix())"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 719,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 770,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(recordKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\inotnako\\main.go",
+    "repo_id": "inotnako",
+    "filename": "main.go",
+    "file_size": 8616,
+    "line_count": 304,
+    "file_hash": "cb344f8a05238ef2",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 244,
+          "match": "GetQueryResult(",
+          "context": "keysIter, err := stub.GetQueryResult(query)"
+        },
+        {
+          "line": 127,
+          "match": "GetPrivateDataQueryResult(",
+          "context": "keysIter, err := stub.GetPrivateDataQueryResult(collection, query)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 212,
+          "match": "GetStateByRange(",
+          "context": "keysIter, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 267,
+          "match": "GetHistoryForKey(",
+          "context": "keysIter, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        },
+        {
+          "line": 93,
+          "match": "GetPrivateDataByRange(",
+          "context": "keysIter, err := stub.GetPrivateDataByRange(collection, startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jasonren0403\\operations.go",
+    "repo_id": "jasonren0403",
+    "filename": "operations.go",
+    "file_size": 18325,
+    "line_count": 618,
+    "file_hash": "a2e9f8d6e74496b9",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "MAP_ITERATION",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "MAP_ITERATION": [
+        {
+          "line": 386,
+          "match": "for _, v := range",
+          "context": "for _, v := range filterRec {"
+        },
+        {
+          "line": 430,
+          "match": "for _, v := range",
+          "context": "for _, v := range filterRec {"
+        },
+        {
+          "line": 469,
+          "match": "for k, v := range",
+          "context": "for k, v := range kvs {"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 306,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "query, _ := stub.GetStateByPartialCompositeKey(utils.DOCTOR_STATE_KEY_PREFIX, []string{})",
+          "close_found": true
+        },
+        {
+          "line": 516,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "query, _ := stub.GetStateByPartialCompositeKey(utils.PATIENT_INFO_STATE_KEY_PREFIX, []string{})",
+          "close_found": true
+        },
+        {
+          "line": 536,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "queryRes, err = stub.GetStateByPartialCompositeKey(utils.PATIENT_RECORD_STATE_KEY_PREFIX,",
+          "close_found": true
+        },
+        {
+          "line": 539,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "queryRes, err = stub.GetStateByPartialCompositeKey(utils.PATIENT_RECORD_STATE_KEY_PREFIX,",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 22,
+          "match": "var Name",
+          "context": "var Name = \"smartMedicineSystem\""
+        }
+      ]
+    },
+    "hit_count": 8
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jbibodi\\Invoice.go",
+    "repo_id": "jbibodi",
+    "filename": "Invoice.go",
+    "file_size": 8315,
+    "line_count": 277,
+    "file_hash": "fe68e29baf4d747b",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 176,
+          "match": "time.Now(",
+          "context": "currDate := time.Now()"
+        }
+      ],
+      "PHANTOM_READ": [
+        {
+          "line": 120,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jinjiaKarl\\edu.go",
+    "repo_id": "jinjiaKarl",
+    "filename": "edu.go",
+    "file_size": 15400,
+    "line_count": 580,
+    "file_hash": "d97d22497c641169",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 206,
+          "match": "time.Now(",
+          "context": "record = Record{Id: RecordNo, SchoolAddress: schAddress, StudentAddress: stuAddress, SchoolSign: schoolSign, ModifyTime:"
+        },
+        {
+          "line": 310,
+          "match": "time.Now(",
+          "context": "record = Record{Id: RecordNo, SchoolAddress: schAddress, StudentAddress: stuAddress, SchoolSign: schoolSign, ModifyTime:"
+        },
+        {
+          "line": 336,
+          "match": "time.Now(",
+          "context": "background = Background{Id: BackGroundNo, ExitTime: time.Now().Unix(), Sch: school, Status: modOperation}"
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 25,
+          "match": "var BackGroundNo",
+          "context": "var BackGroundNo int = 0"
+        },
+        {
+          "line": 26,
+          "match": "var RecordNo",
+          "context": "var RecordNo int = 0"
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\juniorug\\foodSCM.go",
+    "repo_id": "juniorug",
+    "filename": "foodSCM.go",
+    "file_size": 6837,
+    "line_count": 269,
+    "file_hash": "fe58533bb7d70ed2",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 93,
+          "match": "time.Now(",
+          "context": "currentts := time.Now()"
+        },
+        {
+          "line": 117,
+          "match": "time.Now(",
+          "context": "currentts := time.Now()"
+        },
+        {
+          "line": 144,
+          "match": "time.Now(",
+          "context": "currentts := time.Now()"
+        },
+        {
+          "line": 172,
+          "match": "time.Now(",
+          "context": "currentts := time.Now()"
+        },
+        {
+          "line": 198,
+          "match": "time.Now(",
+          "context": "currentts := time.Now()"
+        },
+        {
+          "line": 224,
+          "match": "time.Now(",
+          "context": "currentts := time.Now()"
+        }
+      ]
+    },
+    "hit_count": 6
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\kavixooa\\GetSetDelCC.go",
+    "repo_id": "kavixooa",
+    "filename": "GetSetDelCC.go",
+    "file_size": 14157,
+    "line_count": 502,
+    "file_hash": "e5c325c585024fb7",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 441,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        },
+        {
+          "line": 445,
+          "match": "GetQueryResult(",
+          "context": "logger.Debug(\"Error occured while calling GetQueryResult() - \", err.Error())"
+        },
+        {
+          "line": 446,
+          "match": "GetQueryResult(",
+          "context": "response := shim.Error(\"Error occured while calling GetQueryResult() - \" + err.Error())"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 345,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(myCompositeKey)",
+          "close_found": true
+        },
+        {
+          "line": 349,
+          "match": "GetHistoryForKey(",
+          "context": "logger.Error(\"Error occured while calling GetHistoryForKey() - \", err.Error())",
+          "close_found": true
+        },
+        {
+          "line": 350,
+          "match": "GetHistoryForKey(",
+          "context": "response := shim.Error(\"Error occured while calling GetHistoryForKey() - \" + err.Error())",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 6
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\kmazz\\sample.go",
+    "repo_id": "kmazz",
+    "filename": "sample.go",
+    "file_size": 2856,
+    "line_count": 115,
+    "file_hash": "1b85a93a6e851bc4",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 12,
+          "match": "var invokes",
+          "context": "var invokes = map[string] func {"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\komaldhiman112\\material-trace.go",
+    "repo_id": "komaldhiman112",
+    "filename": "material-trace.go",
+    "file_size": 21507,
+    "line_count": 560,
+    "file_hash": "d9ed35b0b6337f75",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 30,
+          "match": "var currentMspId",
+          "context": "var currentMspId = \"\""
+        },
+        {
+          "line": 33,
+          "match": "var organizationMap",
+          "context": "var organizationMap = map[string]string{"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\krishna-suman\\chaincode_example02.go",
+    "repo_id": "krishna-suman",
+    "filename": "chaincode_example02.go",
+    "file_size": 7957,
+    "line_count": 280,
+    "file_hash": "939a146c63ab6771",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 240,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(\"a\", \"z\")",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\lmj101910\\car.go",
+    "repo_id": "lmj101910",
+    "filename": "car.go",
+    "file_size": 28800,
+    "line_count": 1104,
+    "file_hash": "a436b15b08716313",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 432,
+          "match": "GetStateByRange(",
+          "context": "resultsIter, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 831,
+          "match": "GetStateByRange(",
+          "context": "resultsIter, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 947,
+          "match": "GetStateByRange(",
+          "context": "resultsIter, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\lzb13612\\example.go",
+    "repo_id": "lzb13612",
+    "filename": "example.go",
+    "file_size": 12202,
+    "line_count": 409,
+    "file_hash": "1d541876d10f6080",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 282,
+          "match": "GetStateByRange(",
+          "context": "resultIterator, err := stub.GetStateByRange(\"name1\", \"name3\")",
+          "close_found": true
+        },
+        {
+          "line": 321,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(\"name\", []string{})",
+          "close_found": true
+        },
+        {
+          "line": 364,
+          "match": "GetHistoryForKey(",
+          "context": "historyIterator, err := stub.GetHistoryForKey(\"name\")",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\malkani-kamal\\autonomy_chain.go",
+    "repo_id": "malkani-kamal",
+    "filename": "autonomy_chain.go",
+    "file_size": 8182,
+    "line_count": 249,
+    "file_hash": "d61742681268557d",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 167,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\martingdela\\halley.go",
+    "repo_id": "martingdela",
+    "filename": "halley.go",
+    "file_size": 8535,
+    "line_count": 292,
+    "file_hash": "f6cd5feaaa357657",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 257,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\murlionline\\product_review.go",
+    "repo_id": "murlionline",
+    "filename": "product_review.go",
+    "file_size": 8535,
+    "line_count": 234,
+    "file_hash": "06d470faf0422f2b",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 201,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\nagarajmanjunath\\fileData.go",
+    "repo_id": "nagarajmanjunath",
+    "filename": "fileData.go",
+    "file_size": 8153,
+    "line_count": 243,
+    "file_hash": "3b22706b6255ce16",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 193,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\off-grid-block\\chaincode.go",
+    "repo_id": "off-grid-block",
+    "filename": "chaincode.go",
+    "file_size": 7413,
+    "line_count": 281,
+    "file_hash": "b150cb84156b1278",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 237,
+          "match": "GetQueryResult(",
+          "context": "result, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\oneminutenotes\\smartcontract.go",
+    "repo_id": "oneminutenotes",
+    "filename": "smartcontract.go",
+    "file_size": 10839,
+    "line_count": 375,
+    "file_hash": "645751ceef9ca79a",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 236,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(\"\", \"\")",
+          "close_found": true
+        },
+        {
+          "line": 300,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\piedup\\pop.go",
+    "repo_id": "piedup",
+    "filename": "pop.go",
+    "file_size": 11979,
+    "line_count": 429,
+    "file_hash": "a3f92091f6fa92e2",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 304,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        },
+        {
+          "line": 339,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\prabhu94\\healthcare_v1.go",
+    "repo_id": "prabhu94",
+    "filename": "healthcare_v1.go",
+    "file_size": 22947,
+    "line_count": 532,
+    "file_hash": "28bd905274afb044",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 495,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 353,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 404,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultsIterator, err := stub.GetStateByPartialCompositeKey(\"doctor~visit~patient\", []string{docId})",
+          "close_found": true
+        },
+        {
+          "line": 285,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(recordKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 4
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\qubing\\chaincode-api-go.go",
+    "repo_id": "qubing",
+    "filename": "chaincode-api-go.go",
+    "file_size": 18061,
+    "line_count": 623,
+    "file_hash": "7b775df612d62975",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 268,
+          "match": "GetQueryResult(",
+          "context": "fmt.Printf(`GetQueryResult(\"%s\") \\n<Begin>\\n`, args[0])"
+        },
+        {
+          "line": 271,
+          "match": "GetQueryResult(",
+          "context": "queryIt, err := stub.GetQueryResult(queryString)"
+        },
+        {
+          "line": 298,
+          "match": "GetQueryResult(",
+          "context": "fmt.Printf(`GetQueryResult(\"%s\") \\n<Begin>\\n`, args[0])"
+        },
+        {
+          "line": 458,
+          "match": "GetPrivateDataQueryResult(",
+          "context": "fmt.Printf(`GetPrivateDataQueryResult(\"%s\", \"%s\") \\n<Begin>\\n`, collection, args[0])"
+        },
+        {
+          "line": 461,
+          "match": "GetPrivateDataQueryResult(",
+          "context": "queryIt, err := stub.GetPrivateDataQueryResult(collection, queryString)"
+        },
+        {
+          "line": 301,
+          "match": "GetQueryResultWithPagination(",
+          "context": "queryIt, metadata, err := stub.GetQueryResultWithPagination(queryString, pageSize, bookmark)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 114,
+          "match": "GetStateByRange(",
+          "context": "fmt.Printf(`GetStateByRange(\"%s\",\"%s\") \\n<Begin>\\n`, key0, key1)",
+          "close_found": true
+        },
+        {
+          "line": 115,
+          "match": "GetStateByRange(",
+          "context": "resultIt, err := stub.GetStateByRange(key0, key1)",
+          "close_found": true
+        },
+        {
+          "line": 196,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "fmt.Printf(`GetStateByPartialCompositeKey(\"%s\") \\n<Begin>\\n`, args[0])",
+          "close_found": true
+        },
+        {
+          "line": 198,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "resultIt, err := stub.GetStateByPartialCompositeKey(indexName, []string{args[0]})",
+          "close_found": true
+        },
+        {
+          "line": 231,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "fmt.Printf(`GetStateByPartialCompositeKey(\"%s\") \\n<Begin>\\n`, args[0])",
+          "close_found": true
+        },
+        {
+          "line": 329,
+          "match": "GetHistoryForKey(",
+          "context": "fmt.Printf(`GetHistoryForKey(\"%s\") \\n<Begin>\\n`, key)",
+          "close_found": true
+        },
+        {
+          "line": 330,
+          "match": "GetHistoryForKey(",
+          "context": "historyIt, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        },
+        {
+          "line": 395,
+          "match": "GetPrivateDataByRange(",
+          "context": "fmt.Printf(`GetPrivateDataByRange(\"%s\",\"%s\",\"%s\") \\n<Begin>\\n`, collection, key0, key1)",
+          "close_found": true
+        },
+        {
+          "line": 396,
+          "match": "GetPrivateDataByRange(",
+          "context": "resultIt, err := stub.GetPrivateDataByRange(collection, key0, key1)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 15
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\rfrabasile\\cc_example_footballbet.go",
+    "repo_id": "rfrabasile",
+    "filename": "cc_example_footballbet.go",
+    "file_size": 5146,
+    "line_count": 184,
+    "file_hash": "68e3c3c69ef6e427",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 160,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err1 := stub.GetQueryResult(queryString)"
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\richardfelkl\\main.go",
+    "repo_id": "richardfelkl",
+    "filename": "main.go",
+    "file_size": 5807,
+    "line_count": 214,
+    "file_hash": "b38a475150933a45",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 176,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "value, err := stub.GetStateByPartialCompositeKey(ObjectType, []string{})",
+          "close_found": false
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\rolivieri\\removerCC.go",
+    "repo_id": "rolivieri",
+    "filename": "removerCC.go",
+    "file_size": 5162,
+    "line_count": 144,
+    "file_hash": "e4e1955232989c62",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 109,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "iterator, err := stub.GetStateByPartialCompositeKey(namespace, []string{})",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\s7santosh\\slachaincode.go",
+    "repo_id": "s7santosh",
+    "filename": "slachaincode.go",
+    "file_size": 4051,
+    "line_count": 156,
+    "file_hash": "653c001c24a1db1f",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 98,
+          "match": "GetHistoryForKey(",
+          "context": "Avalbytes, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sachin-ngpws\\cpu-use.go",
+    "repo_id": "sachin-ngpws",
+    "filename": "cpu-use.go",
+    "file_size": 4848,
+    "line_count": 234,
+    "file_hash": "9cadd873e455ea64",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 88,
+          "match": "time.Now(",
+          "context": "Time: time.Now(),"
+        },
+        {
+          "line": 161,
+          "match": "time.Now(",
+          "context": "usageVal.Time = time.Now()"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 198,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 17,
+          "match": "var nameSpace",
+          "context": "var nameSpace string = \"org.cpu-use.Usage\""
+        }
+      ]
+    },
+    "hit_count": 4
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\samdwise1367\\chaincode_example02.go",
+    "repo_id": "samdwise1367",
+    "filename": "chaincode_example02.go",
+    "file_size": 5509,
+    "line_count": 188,
+    "file_hash": "d967754a341cd58c",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 140,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\samlinux\\sacc4.go",
+    "repo_id": "samlinux",
+    "filename": "sacc4.go",
+    "file_size": 7706,
+    "line_count": 250,
+    "file_hash": "45c404276607ec9f",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 131,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 196,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(keyName)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sapcis\\perishable-net.go",
+    "repo_id": "sapcis",
+    "filename": "perishable-net.go",
+    "file_size": 6500,
+    "line_count": 222,
+    "file_hash": "7eb352eaf19af096",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 206,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 155,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(\"log-\" + id)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\shahazad999\\medicalrecord.go",
+    "repo_id": "shahazad999",
+    "filename": "medicalrecord.go",
+    "file_size": 5313,
+    "line_count": 174,
+    "file_hash": "e0867ee8de543722",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 78,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\shubhamj25\\fabcar-chaincode.go",
+    "repo_id": "shubhamj25",
+    "filename": "fabcar-chaincode.go",
+    "file_size": 6629,
+    "line_count": 225,
+    "file_hash": "d7afbdd537c0bbb4",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 152,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\skazska\\main.go",
+    "repo_id": "skazska",
+    "filename": "main.go",
+    "file_size": 9918,
+    "line_count": 321,
+    "file_hash": "3b6b0e07927067fc",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 252,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\skybat007\\purchase_chaincode.go",
+    "repo_id": "skybat007",
+    "filename": "purchase_chaincode.go",
+    "file_size": 8072,
+    "line_count": 280,
+    "file_hash": "6cff4d3b5c6df725",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 225,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\soodakshay\\mycc.go",
+    "repo_id": "soodakshay",
+    "filename": "mycc.go",
+    "file_size": 6199,
+    "line_count": 266,
+    "file_hash": "53b372ee50fc231f",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 155,
+          "match": "GetQueryResult(",
+          "context": "queryIterator, queryError := stub.GetQueryResult(string(queryByte))"
+        },
+        {
+          "line": 210,
+          "match": "GetQueryResult(",
+          "context": "queryIterator, queryError := stub.GetQueryResult(string(selectorByte))"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sriyanshcse\\fabcar.go",
+    "repo_id": "sriyanshcse",
+    "filename": "fabcar.go",
+    "file_size": 11166,
+    "line_count": 388,
+    "file_hash": "1540d93e39473993",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 165,
+          "match": "time.Now(",
+          "context": "Med{ID :\"Med0\", Description: \"\", Owner: \"Tomoko\", Location: \"NA\", Timestamp: time.Now(), Temperature: 23, Status : true,"
+        },
+        {
+          "line": 166,
+          "match": "time.Now(",
+          "context": "Med{ID : \"Med1\", Description: \"\", Owner: \"Thomas\", Location: \"NA\", Timestamp: time.Now(), Temperature: 23, Status : true"
+        },
+        {
+          "line": 210,
+          "match": "time.Now(",
+          "context": "Timestamp: time.Now(),"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 225,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 326,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 137,
+          "match": "GetHistoryForKey(",
+          "context": "versionsIterator, err := APIstub.GetHistoryForKey(args[0])",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 45,
+          "match": "var OpenTradeKey",
+          "context": "var OpenTradeKey = \"_opentrades\""
+        }
+      ]
+    },
+    "hit_count": 7
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\suddutt1\\main.go",
+    "repo_id": "suddutt1",
+    "filename": "main.go",
+    "file_size": 8612,
+    "line_count": 271,
+    "file_hash": "18f2355943d24b95",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 183,
+          "match": "GetHistoryForKey(",
+          "context": "history, err := stub.GetHistoryForKey(key)",
+          "close_found": false
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\tcd93\\sample_token.go",
+    "repo_id": "tcd93",
+    "filename": "sample_token.go",
+    "file_size": 12770,
+    "line_count": 392,
+    "file_hash": "f07c91211bccc629",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 303,
+          "match": "GetStateByPartialCompositeKey(",
+          "context": "iterator, err := stub.GetStateByPartialCompositeKey(\"Memo\", args)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\tkalai25298\\cpu-use.go",
+    "repo_id": "tkalai25298",
+    "filename": "cpu-use.go",
+    "file_size": 4964,
+    "line_count": 242,
+    "file_hash": "49bbcdc6f2e95779",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 109,
+          "match": "time.Now(",
+          "context": "Time: time.Now(),"
+        },
+        {
+          "line": 178,
+          "match": "time.Now(",
+          "context": "usageVal.Time = time.Now()"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 207,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 17,
+          "match": "var name_space",
+          "context": "var name_space string = \"org.cpu-use.Usage\""
+        }
+      ]
+    },
+    "hit_count": 4
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\to7485\\fabcar.go",
+    "repo_id": "to7485",
+    "filename": "fabcar.go",
+    "file_size": 5938,
+    "line_count": 198,
+    "file_hash": "2caf1f6a41d5ba47",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 133,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\u-wut-m8\\fabric.go",
+    "repo_id": "u-wut-m8",
+    "filename": "fabric.go",
+    "file_size": 6982,
+    "line_count": 229,
+    "file_hash": "e7435879eb0f56e8",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 147,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vasile-coste\\MedChain.go",
+    "repo_id": "vasile-coste",
+    "filename": "MedChain.go",
+    "file_size": 15595,
+    "line_count": 527,
+    "file_hash": "94e60a79a8726770",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 476,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 410,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(recordKey)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vitorduarte\\basicChaincode.go",
+    "repo_id": "vitorduarte",
+    "filename": "basicChaincode.go",
+    "file_size": 5263,
+    "line_count": 198,
+    "file_hash": "4a80db150a452bae",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 144,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 1
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vivianLL\\mychaincode.go",
+    "repo_id": "vivianLL",
+    "filename": "mychaincode.go",
+    "file_size": 19466,
+    "line_count": 640,
+    "file_hash": "f46b3d86f6556097",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 274,
+          "match": "time.Now(",
+          "context": "t := time.Now()"
+        },
+        {
+          "line": 363,
+          "match": "time.Now(",
+          "context": "t := time.Now()"
+        },
+        {
+          "line": 444,
+          "match": "time.Now(",
+          "context": "t := time.Now()"
+        },
+        {
+          "line": 500,
+          "match": "time.Now(",
+          "context": "t := time.Now()"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 586,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(key_id)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 5
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vmorris\\procon.go",
+    "repo_id": "vmorris",
+    "filename": "procon.go",
+    "file_size": 9797,
+    "line_count": 280,
+    "file_hash": "46229bf60f29109b",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 116,
+          "match": "time.Now(",
+          "context": "producedDate := time.Now().Unix()"
+        },
+        {
+          "line": 151,
+          "match": "time.Now(",
+          "context": "offeredDate := time.Now().Unix()"
+        },
+        {
+          "line": 202,
+          "match": "time.Now(",
+          "context": "tradedDate := time.Now().Unix()"
+        },
+        {
+          "line": 232,
+          "match": "time.Now(",
+          "context": "consumedDate := time.Now().Unix()"
+        }
+      ]
+    },
+    "hit_count": 4
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\COD_chaincode.go",
+    "repo_id": "xuansonha17031991",
+    "filename": "COD_chaincode.go",
+    "file_size": 23478,
+    "line_count": 848,
+    "file_hash": "0695e18c4eda7e5b",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 147,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 194,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 208,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 264,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 278,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 297,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 312,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 362,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 377,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 421,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 438,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 501,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 515,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 562,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 577,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 623,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 681,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 736,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 750,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 776,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 789,
+          "match": "time.Now(",
+          "context": "start := time.Now()"
+        },
+        {
+          "line": 824,
+          "match": "time.Now(",
+          "context": "end := time.Now()"
+        },
+        {
+          "line": 195,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 265,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 298,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 363,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 422,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 502,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 563,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 624,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 737,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 777,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        },
+        {
+          "line": 825,
+          "match": "time.Since(",
+          "context": "elapsed := time.Since(start)"
+        }
+      ]
+    },
+    "hit_count": 33
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\xuehuiit\\example_cc.go",
+    "repo_id": "xuehuiit",
+    "filename": "example_cc.go",
+    "file_size": 20202,
+    "line_count": 818,
+    "file_hash": "441e0fe6c2a76a9e",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "TIME_NOW",
+      "GOROUTINE",
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hits": {
+      "TIME_NOW": [
+        {
+          "line": 383,
+          "match": "time.Now(",
+          "context": "rand.Seed(time.Now().UnixNano())"
+        },
+        {
+          "line": 422,
+          "match": "time.Now(",
+          "context": "order.CreateTime = time.Now().String()"
+        },
+        {
+          "line": 423,
+          "match": "time.Now(",
+          "context": "order.EndTime = time.Now().String()"
+        },
+        {
+          "line": 450,
+          "match": "time.Now(",
+          "context": "order.CreateTime = time.Now().String()"
+        },
+        {
+          "line": 451,
+          "match": "time.Now(",
+          "context": "order.EndTime = time.Now().String()"
+        }
+      ],
+      "GOROUTINE": [
+        {
+          "line": 141,
+          "match": "go Invest(",
+          "context": "go Invest(o1.ID,user1.ID,10000)"
+        },
+        {
+          "line": 142,
+          "match": "go Invest(",
+          "context": "go Invest(o1.ID,user1.ID,10000)"
+        },
+        {
+          "line": 143,
+          "match": "go Invest(",
+          "context": "go Invest(o1.ID,user1.ID,10000)"
+        },
+        {
+          "line": 144,
+          "match": "go Invest(",
+          "context": "go Invest(o1.ID,user1.ID,10000)"
+        }
+      ],
+      "MAP_ITERATION": [
+        {
+          "line": 309,
+          "match": "for _,v := range",
+          "context": "for _,v := range primaryKeyToUser{"
+        },
+        {
+          "line": 329,
+          "match": "for _,v := range",
+          "context": "for _,v := range creatorToOrder{"
+        },
+        {
+          "line": 342,
+          "match": "for _,v := range",
+          "context": "for _,v := range creatorToOrder{"
+        },
+        {
+          "line": 476,
+          "match": "for _,v:= range",
+          "context": "for _,v:= range creatorToOrder{"
+        },
+        {
+          "line": 534,
+          "match": "for _,v := range",
+          "context": "for _,v := range creatorToOrder{"
+        },
+        {
+          "line": 560,
+          "match": "for _,v := range",
+          "context": "for _,v := range creatorToOrder{"
+        },
+        {
+          "line": 689,
+          "match": "for _,v:= range",
+          "context": "for _,v:= range creatorToOrder{"
+        },
+        {
+          "line": 745,
+          "match": "for _,v := range",
+          "context": "for _,v := range creatorToOrder{"
+        },
+        {
+          "line": 769,
+          "match": "for _,v := range",
+          "context": "for _,v := range creatorToOrder{"
+        }
+      ],
+      "GLOBAL_MUTABLE_STATE": [
+        {
+          "line": 40,
+          "match": "var primaryKeyToUser",
+          "context": "var primaryKeyToUser = map[string]*User{}"
+        },
+        {
+          "line": 42,
+          "match": "var nameToUser",
+          "context": "var nameToUser = map[string]*User{}"
+        },
+        {
+          "line": 45,
+          "match": "var creatorToOrder",
+          "context": "var creatorToOrder = map[string]map[string]*Order{}"
+        },
+        {
+          "line": 48,
+          "match": "var creatorToInvestRecord",
+          "context": "var creatorToInvestRecord = map[string][]*InvestRecord{}"
+        },
+        {
+          "line": 51,
+          "match": "var creatorToRefundRecord",
+          "context": "var creatorToRefundRecord = map[string][]*RefundRecord{}"
+        }
+      ]
+    },
+    "hit_count": 23
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yigitpolat\\voting.go",
+    "repo_id": "yigitpolat",
+    "filename": "voting.go",
+    "file_size": 8049,
+    "line_count": 271,
+    "file_hash": "6ccca663c799e7bc",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 140,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 188,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 257,
+          "match": "GetHistoryForKey(",
+          "context": "historyInterface, _ := stub.GetHistoryForKey(candidateID)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yokeshvs\\hello_world.go",
+    "repo_id": "yokeshvs",
+    "filename": "hello_world.go",
+    "file_size": 14345,
+    "line_count": 409,
+    "file_hash": "7d524617c2511536",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 380,
+          "match": "GetQueryResult(",
+          "context": "resultsIterator, err := stub.GetQueryResult(queryString)"
+        }
+      ],
+      "ITERATOR_LEAK": [
+        {
+          "line": 214,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(startKey, endKey)",
+          "close_found": true
+        },
+        {
+          "line": 326,
+          "match": "GetHistoryForKey(",
+          "context": "resultsIterator, err := stub.GetHistoryForKey(id)",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 3
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yoonjk\\account.go",
+    "repo_id": "yoonjk",
+    "filename": "account.go",
+    "file_size": 8340,
+    "line_count": 333,
+    "file_hash": "52998e7ed78153fc",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "hits": {
+      "PHANTOM_READ": [
+        {
+          "line": 74,
+          "match": "GetQueryResult(",
+          "context": "iterator, err := stub.GetQueryResult(queryStr)"
+        },
+        {
+          "line": 133,
+          "match": "GetQueryResult(",
+          "context": "// \tresultsIterator, err := stub.GetQueryResult(queryStr)"
+        }
+      ]
+    },
+    "hit_count": 2
+  },
+  {
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\zerox12311\\smart_contract_sample.go",
+    "repo_id": "zerox12311",
+    "filename": "smart_contract_sample.go",
+    "file_size": 4252,
+    "line_count": 183,
+    "file_hash": "259b7af71239bd60",
+    "is_chaincode": true,
+    "has_sink": true,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hits": {
+      "ITERATOR_LEAK": [
+        {
+          "line": 65,
+          "match": "GetStateByRange(",
+          "context": "resultsIterator, err := stub.GetStateByRange(args[0], args[1])",
+          "close_found": true
+        },
+        {
+          "line": 125,
+          "match": "GetHistoryForKey(",
+          "context": "valueIter, err := stub.GetHistoryForKey(args[0])",
+          "close_found": true
+        }
+      ]
+    },
+    "hit_count": 2
+  }
+]

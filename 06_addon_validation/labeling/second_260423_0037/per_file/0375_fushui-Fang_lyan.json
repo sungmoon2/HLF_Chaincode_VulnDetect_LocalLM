@@ -1,0 +1,19 @@
+{
+  "file_id": "0375_fushui-Fang_lyan",
+  "repo": "fushui-Fang",
+  "filename": "lyan.go",
+  "elapsed_s": 2.31,
+  "input_tokens": 1262,
+  "output_tokens": 163,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only the HLF transaction entrypoints (Init and Invoke methods) with routing logic. All actual transaction logic is delegated to external methods (s.createContractAcount(), s.queryAccount(), etc.) via a hub object created by makeChainCodeHub(). There are no C1–C6 vulnerability patterns within this file itself: no time.Now(), goroutines, map iterations, non-revalidated queries, or mutable global state that influences writes or responses. Cross-file analysis is out of scope.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only the HLF transaction entrypoints (Init and Invoke methods) with routing logic. All actual transaction logic is delegated to external methods (s.createContractAcount(), s.queryAccount(), etc.) via a hub object created by makeChainCodeHub(). There are no C1–C6 vulnerability patterns within this file itself: no time.Now(), goroutines, map iterations, non-revalidated queries, or mutable global state that influences writes or responses. Cross-file analysis is out of scope.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:08.258275",
+  "annotator": "2nd"
+}

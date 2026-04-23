@@ -1,0 +1,19 @@
+{
+  "file_id": "0323_elciusferreira_cardController",
+  "repo": "elciusferreira",
+  "filename": "cardController.go",
+  "elapsed_s": 2.08,
+  "input_tokens": 1086,
+  "output_tokens": 150,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only the HLF chaincode entry point (Init/Invoke) with no transaction logic implemented locally. All functional calls (card.Create, card.GetByNumber, card.GetAll) are delegated to external package functions in the `card` module. Per scope rules, intra-file evidence only is considered, and no C1–C6 patterns exist within this file itself. The audit must be performed on the actual transaction logic in the imported `card` package.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only the HLF chaincode entry point (Init/Invoke) with no transaction logic implemented locally. All functional calls (card.Create, card.GetByNumber, card.GetAll) are delegated to external package functions in the `card` module. Per scope rules, intra-file evidence only is considered, and no C1–C6 patterns exist within this file itself. The audit must be performed on the actual transaction logic in the imported `card` package.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:46:47.255150",
+  "annotator": "2nd"
+}

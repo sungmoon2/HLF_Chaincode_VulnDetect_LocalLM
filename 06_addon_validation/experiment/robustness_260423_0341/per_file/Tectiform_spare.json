@@ -1,0 +1,55 @@
+{
+  "repo": "Tectiform",
+  "filename": "spare.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "02a7aa1b3ba31a79",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'spare.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access Control Issues  \n**Severity:** Medium  \n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions  \n**Description:** The chaincode does not implement any access control checks. Any user can invoke the `addPartRecord` and `getPartRecord` functions, which could lead to unauthorized data manipulation and exposure.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can add or retrieve part records. This can be done by checking the identity of the invoking user and comparing it against a list of authorized users.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input Validation Flaws  \n**Severity:** High  \n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions  \n**Description:** The chaincode does not validate the input arguments. For example, in the `addPartRecord` function, it does not check if the `Name`, `Barcode`, or `Comment` fields are empty or contain invalid characters. Similarly, in the `getPartRecord` function, it does not validate the `Key` argument. This could lead to injection attacks or other security issues.  \n**Recommended Fix:** Add input validation to ensure that the input arguments are valid and meet the expected format. For example, you can check if the `Name` and `Comment` fields are not empty and do not contain invalid characters.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  \n**Severity:** Low  \n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions  \n**Description:** The chaincode does not handle concurrent transactions properly. If two transactions are trying to add or retrieve the same part record at the same time, it could lead to phantom reads, where a transaction reads a value that was not committed yet.  \n**Recommended Fix:** Use transactions to ensure that concurrent transactions are handled properly. You can use the `stub.GetTxID()` method to get the transaction ID and use it as a unique identifier for the part record.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private Data Leakage  \n**Severity:** High  \n**Affected Code Location:** `getPartRecord` function  \n**Description:** The chaincode does not check if the part record being retrieved is private. If a private part record is retrieved by an unauthorized user, it could lead to private data leakage.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can retrieve private part records. You can use the `stub.GetCreator()` method to get the identity of the invoking user and compare it against a list of authorized users.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-Deterministic Operations  \n**Severity:** Low  \n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions  \n**Description:** The chaincode does not handle non-deterministic operations properly. For example, if two transactions are trying to add the same part record at the same time, it could lead to non-deterministic operations, where the final state of the part record is not predictable.  \n**Recommended Fix:** Use transactions to ensure that non-deterministic operations are handled properly. You can use the `stub.GetTxID()` method to get the transaction ID and use it as a unique identifier for the part record.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure Key Management  \n**Severity:** Low  \n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions  \n**Description:** The chaincode does not manage keys securely. For example, if the `Key` argument is not validated, it could lead to insecure key management, where an attacker could use a malicious key to manipulate the chaincode.  \n**Recommended Fix:** Add input validation to ensure that the `Key` argument is valid and meets the expected format. For example, you can check if the `Key` argument is not empty and does not contain invalid characters.\n\n### Conclusion\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. It is recommended to address these vulnerabilities to ensure the security of the chaincode.",
+      "prediction": "vulnerable",
+      "elapsed_s": 8.25,
+      "finish_reason": "stop",
+      "prompt_tokens": 646,
+      "completion_tokens": 927
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 646,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 646,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "### Analysis of 'spare.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access Control Issues\n**Severity:** Medium\n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions\n**Description:** The chaincode does not implement any access control checks. Any user can invoke the `addPartRecord` and `getPartRecord` functions, which could lead to unauthorized data modification or retrieval.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can add or retrieve part records. This can be done by checking the identity of the invoking user and comparing it against a list of authorized users.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input Validation Flaws\n**Severity:** High\n**Affected Code Location:** `addPartRecord` function\n**Description:** The `addPartRecord` function does not validate the input arguments. For example, it does not check if the `Name`, `Barcode`, or `Comment` fields are empty or contain invalid characters.\n**Recommended Fix:** Add input validation to ensure that the input arguments are valid. For example, check if the `Name` field is not empty and does not contain invalid characters.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)\n**Severity:** Low\n**Affected Code Location:** `getPartRecord` function\n**Description:** The `getPartRecord` function does not handle the case where the part record is deleted or modified between the time it is read and the time it is returned. This could lead to phantom reads, where the same part record is read multiple times but the data is different each time.\n**Recommended Fix:** Use a transaction to ensure that the part record is not modified between the time it is read and the time it is returned. This can be done by using the `stub.GetState` and `stub.PutState` functions within a transaction.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private Data Leakage\n**Severity:** High\n**Affected Code Location:** `getPartRecord` function\n**Description:** The `getPartRecord` function does not check if the part record is private and should only be accessible to authorized users. This could lead to private data leakage.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can retrieve private part records. This can be done by checking the identity of the invoking user and comparing it against a list of authorized users.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-Deterministic Operations\n**Severity:** Low\n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions\n**Description:** The `addPartRecord` and `getPartRecord` functions do not handle the case where the same key is used to store multiple part records. This could lead to non-deterministic operations, where the same key is used to store multiple part records.\n**Recommended Fix:** Use a unique key for each part record. This can be done by using a combination of the `Name` and `Barcode` fields to create a unique key.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure Key Management\n**Severity:** Low\n**Affected Code Location:** `addPartRecord` and `getPartRecord` functions\n**Description:** The `addPartRecord` and `getPartRecord` functions do not use secure key management practices. For example, they do not use a secure random number generator to generate the key.\n**Recommended Fix:** Use a secure random number generator to generate the key. This can be done by using the `crypto/rand` package in Go.\n\n### Summary\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. These vulnerabilities could lead to unauthorized data modification, retrieval, or leakage. To mitigate these vulnerabilities, access control checks, input validation, secure key management, and other security best practices should be implemented.",
+      "prediction": "vulnerable",
+      "elapsed_s": 7.55,
+      "finish_reason": "stop",
+      "prompt_tokens": 646,
+      "completion_tokens": 862
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 646,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.6,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 3.19,
+  "total_elapsed_s": 15.93,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T07:34:21.222380"
+}

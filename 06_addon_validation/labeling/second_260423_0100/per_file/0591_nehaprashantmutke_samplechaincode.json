@@ -1,0 +1,19 @@
+{
+  "file_id": "0591_nehaprashantmutke_samplechaincode",
+  "repo": "nehaprashantmutke",
+  "filename": "samplechaincode.go",
+  "elapsed_s": 13.11,
+  "input_tokens": 1468,
+  "output_tokens": 570,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no nondeterministic patterns. It uses only deterministic operations: struct marshaling (not map), `GetState` for reads, and `PutState` for writes with data derived solely from transaction arguments.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify HLF Transaction Entrypoints\nThe file contains a `StudentChaincode` struct with `Init` and `Invoke` methods implementing the shim interface. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `Student` struct is marshaled via `json.Marshal()`, but it's a struct, not a map.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetState()` is used in `Read()` (L58), but this is NOT a C4 source. C4 applies to `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n- The `Read` function only returns data via `shim.Success()`, no write decisions based on queries.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Check for C5 (Auxiliary)\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Code Review Summary\n- `Write()`: Takes args, creates a `Student` struct, marshals it deterministically (struct fields have fixed order), and writes via `PutState()`. Fully deterministic.\n- `Read()`: Reads state via `GetState()` and returns it. No writes, fully deterministic.\n- Note: There's a bug on L67 (`lcno` should be `rollNo`), but this is a compilation error, not a nondeterminism issue.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no nondeterministic patterns. It uses only deterministic operations: struct marshaling (not map), `GetState` for reads, and `PutState` for writes with data derived solely from transaction arguments.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:45:43.533403",
+  "annotator": "2nd"
+}

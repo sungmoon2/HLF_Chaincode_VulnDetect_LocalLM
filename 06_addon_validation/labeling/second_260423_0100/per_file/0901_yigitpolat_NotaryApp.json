@@ -1,0 +1,19 @@
+{
+  "file_id": "0901_yigitpolat_NotaryApp",
+  "repo": "yigitpolat",
+  "filename": "NotaryApp.go",
+  "elapsed_s": 15.11,
+  "input_tokens": 6183,
+  "output_tokens": 636,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L224-L227, L320-L323",
+  "rationale": "The time.Unix() calls use deterministic timestamp data from the ledger history iterator (response.Timestamp), not time.Now(). All iterations are over slices, not maps. GetHistoryForKey results are only returned as read-only responses without influencing any write decisions.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is valid HLF chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Lines 224-227 and 320-323 use `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - this converts the transaction timestamp from the history iterator to a string. This is NOT `time.Now()` - it's using deterministic timestamp data from the ledger history.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: \n- Lines 395-420 and 443-468 iterate over `userList.UserIDs` and `assetList.AssetIDs` respectively - these are slices (`[]string`), not maps. Slice iteration is deterministic.\n- No `for...range` over map types found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetHistoryForKey` is used in `getUserHistory` (L203) and `getAssetHistory` (L299), but these are read-only functions that return data via `shim.Success()` without making write decisions based on the results. They don't influence any `PutState` or `DelState` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables declared in this file.\n\n**C5 ITERATOR_LEAK**: \n- Line 208: `defer resultsIterator.Close()` - properly closed\n- Line 304: `defer resultsIterator.Close()` - properly closed\n\n### Key Observations\n\n1. The `time.Unix()` usage converts ledger-stored timestamps (from `response.Timestamp`), not current time. This is deterministic across peers.\n\n2. All iterations are over slices, not maps.\n\n3. History queries (`GetHistoryForKey`) are only used for read-only responses - the results are serialized and returned but never used to make write decisions.\n\n4. No global mutable state exists.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L224-L227, L320-L323\nRATIONALE: The time.Unix() calls use deterministic timestamp data from the ledger history iterator (response.Timestamp), not time.Now(). All iterations are over slices, not maps. GetHistoryForKey results are only returned as read-only responses without influencing any write decisions.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:08:11.606569",
+  "annotator": "2nd"
+}

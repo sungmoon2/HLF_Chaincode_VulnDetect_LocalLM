@@ -1,0 +1,19 @@
+{
+  "file_id": "0293_ctacampado_beacon_transact",
+  "repo": "ctacampado",
+  "filename": "beacon_transact.go",
+  "elapsed_s": 10.76,
+  "input_tokens": 1229,
+  "output_tokens": 588,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The map `t.FMap` is accessed via direct key lookup (L30), not iterated with for...range, so no C3 issue exists. No other vulnerability patterns (C1, C2, C4, C6) are present in this file.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods on a `Chaincode` type that implement the `shim.ChaincodeStubInterface` pattern. These are valid HLF transaction entrypoints.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 17-20: A map `t.FMap` is created with string keys mapping to `ccfunc` values.\n- Line 30: The map is accessed via direct key lookup `t.FMap[function]`, NOT iterated with `for...range`.\n- Direct map access by key is deterministic and does not cause nondeterminism.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level `var` declarations in this file.\n- `t.FMap` and `t.Msg` are instance fields on the `Chaincode` struct, not package-level globals.\n- The struct fields are set within `Invoke`, which is per-transaction context.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Step 3: Evidence of Source-to-Sink Flow\nThe map `t.FMap` is only accessed via direct key lookup (`t.FMap[function]`), not iterated. This is deterministic behavior.\n\n### Step 4: Logging/Test/Dead Code Check\nThe `fmt.Printf` calls are logging only and don't affect the verdict.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The map `t.FMap` is accessed via direct key lookup (L30), not iterated with for...range, so no C3 issue exists. No other vulnerability patterns (C1, C2, C4, C6) are present in this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:24:11.369301",
+  "annotator": "2nd"
+}

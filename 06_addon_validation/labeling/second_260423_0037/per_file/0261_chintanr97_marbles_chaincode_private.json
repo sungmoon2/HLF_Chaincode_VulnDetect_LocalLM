@@ -1,0 +1,19 @@
+{
+  "file_id": "0261_chintanr97_marbles_chaincode_private",
+  "repo": "chintanr97",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 9.92,
+  "input_tokens": 5271,
+  "output_tokens": 766,
+  "verdict": "SAFE",
+  "primary_class": "** NONE",
+  "secondary_class": "** NONE",
+  "auxiliary_c5": "** NO",
+  "evidence_lines": "** None (no vulnerabilities detected)",
+  "rationale": "** The file contains valid HLF transaction entrypoints but exhibits no C1–C6 consensus-critical nondeterminism. Query results are returned read-only without influencing write decisions. All state modifications use deterministic inputs from args and transient maps. Iterator cleanup is properly handled via defer statements.",
+  "raw_response": "# Audit Report\n\n## Summary\nThis file contains HLF transaction entrypoints (Init/Invoke) and multiple transaction functions. Analysis reveals **no consensus-critical nondeterminism patterns** that would cause endorsement divergence.\n\n## Detailed Analysis\n\n### Transaction Entrypoints Identified\n- `Init()` (L36-38): Returns static success\n- `Invoke()` (L40-67): Dispatcher routing to transaction functions\n- `initMarble()`, `readMarble()`, `readMarblePrivateDetails()`, `delete()`, `transferMarble()`, `getMarblesByRange()`, `queryMarblesByOwner()`, `queryMarbles()`\n\n### Vulnerability Class Assessment\n\n**C1 TIME_NOW**: Not present. No `time.Now()`, `time.Since()`, or `time.Until()` calls.\n\n**C2 GOROUTINE**: Not present. No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- `transMap` (transient map) is read via key lookup (`transMap[\"marble\"]`, `transMap[\"marble_delete\"]`, `transMap[\"marble_owner\"]`) but never iterated with `for...range`.\n- No map iteration influences writes or responses.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `stub.GetPrivateDataQueryResult()` (L533) in `getQueryResultForQueryString()` is called from `queryMarblesByOwner()` (L505) and `queryMarbles()` (L517).\n- However, the query result is **only serialized and returned via `shim.Success()`** (L507, L519). The result does **not determine a write decision** (no conditional PutState/DelState based on query content).\n- Per taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n- `stub.GetPrivateDataByRange()` (L475) is not a C4 source per taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables declared in this file that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- L476: `resultsIterator.Close()` called via `defer` (safe).\n- L534: `resultsIterator.Close()` called via `defer` (safe).\n- No iterator leak paths.\n\n### Concrete Evidence Chain\nAll transaction functions either:\n1. Read deterministic inputs (args, transient map, state keys)\n2. Perform deterministic JSON marshaling/unmarshaling\n3. Write to state with deterministic keys and values\n4. Return query results without conditioning writes on query content\n\nNo source pattern reaches a consensus-critical sink.\n\n---\n\n## Output\n\n**VERDICT:** SAFE\n\n**PRIMARY_CLASS:** NONE\n\n**SECONDARY_CLASS:** NONE\n\n**AUXILIARY_C5:** NO\n\n**EVIDENCE_LINES:** None (no vulnerabilities detected)\n\n**RATIONALE:** The file contains valid HLF transaction entrypoints but exhibits no C1–C6 consensus-critical nondeterminism. Query results are returned read-only without influencing write decisions. All state modifications use deterministic inputs from args and transient maps. Iterator cleanup is properly handled via defer statements.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:45:04.993551",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0297_DappCampus_chaincode",
+  "repo": "DappCampus",
+  "filename": "chaincode.go",
+  "elapsed_s": 6.73,
+  "input_tokens": 2296,
+  "output_tokens": 190,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L95-L103, L107-L119, L123-L132",
+  "rationale": "The file contains HLF transaction entrypoints (Init/Invoke). While iterators are created without Close() calls (C5 auxiliary issue), there are no C1-C4 or C6 patterns that influence ledger writes or responses within this file. GetHistoryForKey at L124 only prints values and returns shim.Success(nil) without using the history data to determine writes - this is read-only logging, not a C4 violation. GetStateByRange is explicitly excluded from C4 sources per the taxonomy. All controller method calls are cross-file and out of scope.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L95-L103, L107-L119, L123-L132\nRATIONALE: The file contains HLF transaction entrypoints (Init/Invoke). While iterators are created without Close() calls (C5 auxiliary issue), there are no C1-C4 or C6 patterns that influence ledger writes or responses within this file. GetHistoryForKey at L124 only prints values and returns shim.Success(nil) without using the history data to determine writes - this is read-only logging, not a C4 violation. GetStateByRange is explicitly excluded from C4 sources per the taxonomy. All controller method calls are cross-file and out of scope.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:24:23.470920",
+  "annotator": "2nd"
+}

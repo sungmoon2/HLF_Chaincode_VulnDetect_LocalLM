@@ -1,0 +1,19 @@
+{
+  "file_id": "0493_KolevDarko_kyc-chaincode",
+  "repo": "KolevDarko",
+  "filename": "kyc-chaincode.go",
+  "elapsed_s": 12.08,
+  "input_tokens": 1475,
+  "output_tokens": 579,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains no nondeterministic patterns. It uses only deterministic operations: GetState for reads, PutState for writes, and json.Marshal on a struct (not a map). No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains `Init` and `Invoke` methods on `SmartContract` struct using `shim.ChaincodeStubInterface`. This is a valid HLF chaincode.\n\n### Step 2: Check for Source Patterns (C1-C4, C6)\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `Customer` struct is marshaled with `json.Marshal()`, but it's a struct, not a map.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used (L44), which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Auxiliary Check (C5)\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Summary of Findings\n\nThe chaincode is straightforward:\n- `queryCustomer` (L40-49): Uses `GetState` to read and returns via `shim.Success` - deterministic\n- `initLedger` (L51-53): Empty, returns success - deterministic\n- `insertCustomer` (L55-68): Takes args, creates struct, marshals to JSON, calls `PutState` - deterministic\n\nThe `json.Marshal` on a struct (not a map) produces deterministic output since struct field order is fixed by the struct definition.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains no nondeterministic patterns. It uses only deterministic operations: GetState for reads, PutState for writes, and json.Marshal on a struct (not a map). No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:38:09.575914",
+  "annotator": "2nd"
+}

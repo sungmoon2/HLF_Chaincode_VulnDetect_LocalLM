@@ -1,0 +1,19 @@
+{
+  "file_id": "0909_yokeshvs_hello_world",
+  "repo": "yokeshvs",
+  "filename": "hello_world.go",
+  "elapsed_s": 3.42,
+  "input_tokens": 3601,
+  "output_tokens": 193,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L273-L305",
+  "rationale": "The `search()` function (L273-L305) uses `stub.GetQueryResult()` at L283, which is a C4 NON_REVALIDATED_QUERY source. The query result is iterated and directly influences the response payload returned via `shim.Success()` at L304. Since `GetQueryResult()` executes a CouchDB query whose results may vary across endorsers due to index state, timing, or consistency differences, and this result determines the exact response content, this creates consensus-critical nondeterminism. The query is not re-validated against ledger state before being returned, making it a direct C4 vulnerability.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L273-L305\n\nRATIONALE: The `search()` function (L273-L305) uses `stub.GetQueryResult()` at L283, which is a C4 NON_REVALIDATED_QUERY source. The query result is iterated and directly influences the response payload returned via `shim.Success()` at L304. Since `GetQueryResult()` executes a CouchDB query whose results may vary across endorsers due to index state, timing, or consistency differences, and this result determines the exact response content, this creates consensus-critical nondeterminism. The query is not re-validated against ledger state before being returned, making it a direct C4 vulnerability.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:56.307227",
+  "annotator": "2nd"
+}

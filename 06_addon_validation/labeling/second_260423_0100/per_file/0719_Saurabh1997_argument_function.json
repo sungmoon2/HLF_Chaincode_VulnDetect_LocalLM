@@ -1,0 +1,19 @@
+{
+  "file_id": "0719_Saurabh1997_argument_function",
+  "repo": "Saurabh1997",
+  "filename": "argument_function.go",
+  "elapsed_s": 3.54,
+  "input_tokens": 1220,
+  "output_tokens": 133,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains valid HLF transaction entrypoints (Init and Invoke) but performs no ledger writes (no PutState, DelState, etc.). The Invoke function only reads transaction arguments and prints debug information to stdout, then returns shim.Success(nil). No C1-C4 or C6 vulnerability patterns are present since there are no sinks that could cause endorsement divergence.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains valid HLF transaction entrypoints (Init and Invoke) but performs no ledger writes (no PutState, DelState, etc.). The Invoke function only reads transaction arguments and prints debug information to stdout, then returns shim.Success(nil). No C1-C4 or C6 vulnerability patterns are present since there are no sinks that could cause endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:54:54.188604",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0509_lay-z_marbles",
+  "repo": "lay-z",
+  "filename": "marbles.go",
+  "elapsed_s": 14.09,
+  "input_tokens": 1924,
+  "output_tokens": 584,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only the Init/Invoke routing logic with deterministic operations. All state writes use values derived deterministically from transaction inputs. The external functions called from Invoke are not defined in this file, so they are out of scope for intra-file analysis.",
+  "raw_response": "Looking at this chaincode file, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods on `SimpleChaincode` implementing the shim interface - these are valid HLF transaction entrypoints.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls in this file. The `Invoke` method references functions like `getHistory`, `read_everything`, `getMarblesByRange`, but these are external function calls - I cannot reason about their implementation as they are not defined in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Code Review\n\nThe `Init` function:\n- Uses `stub.GetFunctionAndParameters()` - deterministic\n- Uses `stub.GetTxID()` - deterministic\n- Uses `stub.PutState()` with deterministic values derived from input args\n- Uses `stub.GetStringArgs()` - deterministic\n\nThe `Invoke` function:\n- Routes to various handler functions based on function name\n- The handler functions (`read`, `write`, `delete_marble`, etc.) are not defined in this file\n\nThe `Query` function:\n- Simply returns an error - deterministic\n\nAll operations in this file use deterministic inputs (transaction arguments, transaction ID) and produce deterministic outputs. The `fmt.Println` calls are for logging only and don't affect ledger state or responses.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only the Init/Invoke routing logic with deterministic operations. All state writes use values derived deterministically from transaction inputs. The external functions called from Invoke are not defined in this file, so they are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:39:36.404097",
+  "annotator": "2nd"
+}

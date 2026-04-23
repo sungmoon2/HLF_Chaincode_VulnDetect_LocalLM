@@ -1,0 +1,19 @@
+{
+  "file_id": "0919_zerox12311_pigchain",
+  "repo": "zerox12311",
+  "filename": "pigchain.go",
+  "elapsed_s": 3.23,
+  "input_tokens": 2279,
+  "output_tokens": 178,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init, Invoke, and helper methods). All ledger writes (PutState calls at L47, L119) use deterministic inputs derived from function arguments or hardcoded initialization data. The queryPigHistory function uses GetHistoryForKey (L80), which is NOT a C4 source because its result is only formatted and returned via shim.Success without influencing any write decision. No time.Now(), goroutines, map iterations over non-deterministic maps, or mutable global state that influences writes are present. The code is consensus-safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init, Invoke, and helper methods). All ledger writes (PutState calls at L47, L119) use deterministic inputs derived from function arguments or hardcoded initialization data. The queryPigHistory function uses GetHistoryForKey (L80), which is NOT a C4 source because its result is only formatted and returned via shim.Success without influencing any write decision. No time.Now(), goroutines, map iterations over non-deterministic maps, or mutable global state that influences writes are present. The code is consensus-safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:04:12.719256",
+  "annotator": "2nd"
+}

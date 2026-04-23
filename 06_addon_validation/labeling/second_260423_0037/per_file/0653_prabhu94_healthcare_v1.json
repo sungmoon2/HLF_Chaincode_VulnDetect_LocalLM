@@ -1,0 +1,19 @@
+{
+  "file_id": "0653_prabhu94_healthcare_v1",
+  "repo": "prabhu94",
+  "filename": "healthcare_v1.go",
+  "elapsed_s": 3.43,
+  "input_tokens": 4293,
+  "output_tokens": 193,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init, Invoke, and helper functions initVisit, getHistoryForRecord, getVisitByRange, getVisitByDocCompostiteKey). However, no consensus-critical nondeterminism sources are present: (1) time.Now() is not used; GetHistoryForKey and GetStateByRange results are only formatted for read-only responses via shim.Success, not used to determine writes; (2) no goroutines influence ledger state; (3) no map iteration influences writes; (4) no global mutable state in this file. All iterators are properly closed with defer statements.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init, Invoke, and helper functions initVisit, getHistoryForRecord, getVisitByRange, getVisitByDocCompostiteKey). However, no consensus-critical nondeterminism sources are present: (1) time.Now() is not used; GetHistoryForKey and GetStateByRange results are only formatted for read-only responses via shim.Success, not used to determine writes; (2) no goroutines influence ledger state; (3) no map iteration influences writes; (4) no global mutable state in this file. All iterators are properly closed with defer statements.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:51.902621",
+  "annotator": "2nd"
+}

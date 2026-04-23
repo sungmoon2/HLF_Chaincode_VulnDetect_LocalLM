@@ -1,0 +1,19 @@
+{
+  "file_id": "0445_jganobsik_chaincode",
+  "repo": "jganobsik",
+  "filename": "chaincode.go",
+  "elapsed_s": 7.86,
+  "input_tokens": 3501,
+  "output_tokens": 648,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "None**",
+  "rationale": "** The file contains valid HLF transaction entrypoints but exhibits no C1–C6 vulnerability patterns. All state modifications are deterministic, driven by explicit parameters and validated state reads. No time-dependent, concurrent, map-iteration, or query-result-dependent logic influences ledger writes or responses.",
+  "raw_response": "# Audit Report: Hyperledger Fabric Chaincode\n\n## Analysis\n\n### 1. Transaction Entrypoint Detection\n✓ File contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface)` (L15)\n- `Invoke(stub shim.ChaincodeStubInterface)` (L21)\n\n### 2. Vulnerability Class Screening\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls detected.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns detected.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions detected. The `ticket` struct is marshaled via `json.Marshal()` which is deterministic in Go stdlib.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `stub.GetState()` calls at L82, L119, L145, L175, L207 are used for read-only validation or state retrieval.\n- These reads determine write decisions (e.g., L82 checks existence before `PutState` at L97).\n- However, `GetState()` is **NOT** a C4 source per the taxonomy (C4 sources are `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables declared in this file that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterator creation detected.\n\n### 3. Concrete Evidence of Sink Reach\nAll ledger writes (`PutState`, `DelState`) are preceded by deterministic validation:\n- L97: `PutState` after argument validation and existence check\n- L108: `PutState` in index creation (deterministic)\n- L118: `DelState` in index deletion (deterministic)\n- L195: `PutState` after ownership verification\n- L220: `PutState` after redemption flag check\n\nAll writes are driven by explicit function parameters and deterministic state reads, not nondeterministic sources.\n\n---\n\n## Verdict\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: None**\n\n**RATIONALE:** The file contains valid HLF transaction entrypoints but exhibits no C1–C6 vulnerability patterns. All state modifications are deterministic, driven by explicit parameters and validated state reads. No time-dependent, concurrent, map-iteration, or query-result-dependent logic influences ledger writes or responses.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:50:15.847217",
+  "annotator": "2nd"
+}

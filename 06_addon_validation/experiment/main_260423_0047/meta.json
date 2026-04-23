@@ -1,0 +1,17 @@
+{
+  "run_start": "2026-04-23T00:47:50.895619",
+  "run_end": "2026-04-23T02:11:50.688432",
+  "total_files": 463,
+  "processed": 463,
+  "errors": 0,
+  "qwen_total_s": 3862.4,
+  "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+  "inference_params": {
+    "n_gpu_layers": -1,
+    "n_ctx": 16384,
+    "temperature": 0.0,
+    "max_tokens": 2048
+  },
+  "semgrep_version": "1.151.0",
+  "semgrep_rules": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\rules\\hlf_consensus.yml"
+}

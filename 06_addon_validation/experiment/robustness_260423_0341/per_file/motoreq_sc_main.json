@@ -1,0 +1,55 @@
+{
+  "repo": "motoreq",
+  "filename": "sc_main.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "ae3eefea1237fa95",
+  "seeds": {
+    "1": {
+      "raw_response": "### Vulnerability Analysis\n\n1. **Vulnerability Type**: Access Control Issues\n   - **Severity**: High\n   - **Affected Code Location**: `CreateState`, `UpdateState`, `DeleteState`, `QueryState`, `PartialUpdateState`\n   - **Description**: The chaincode does not implement any access control checks. Any user can invoke these functions without any restrictions.\n   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the invoking user and comparing it against a list of authorized users.\n\n2. **Vulnerability Type**: Input Validation Flaws\n   - **Severity**: Medium\n   - **Affected Code Location**: `CreateState`, `UpdateState`, `ReadState`, `DeleteState`, `QueryState`, `PartialUpdateState`\n   - **Description**: The chaincode does not validate the input data thoroughly. For example, it does not check if the input data is in the correct format or if it contains any malicious content.\n   - **Recommended Fix**: Implement thorough input validation to ensure that the input data is in the correct format and does not contain any malicious content.\n\n3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)\n   - **Severity**: Medium\n   - **Affected Code Location**: `ReadState`, `UpdateState`, `DeleteState`\n   - **Description**: The chaincode does not handle read-after-write conflicts properly. If a user reads a state before it is updated, they may read the old value.\n   - **Recommended Fix**: Implement proper read-after-write conflict handling to ensure that the user reads the most up-to-date value.\n\n4. **Vulnerability Type**: Private Data Leakage\n   - **Severity**: Medium\n   - **Affected Code Location**: `ReadState`, `QueryState`\n   - **Description**: The chaincode does not ensure that private data is not leaked. If a user is not authorized to read a state, they may still be able to read it.\n   - **Recommended Fix**: Implement proper access control checks to ensure that private data is not leaked.\n\n5. **Vulnerability Type**: Non-Deterministic Operations\n   - **Severity**: Low\n   - **Affected Code Location**: `CreateState`, `UpdateState`, `DeleteState`, `QueryState`, `PartialUpdateState`\n   - **Description**: The chaincode does not ensure that operations are deterministic. For example, if a user updates a state and then reads it, they may get different results.\n   - **Recommended Fix**: Implement proper deterministic operations to ensure that operations always return the same result.\n\n6. **Vulnerability Type**: Insecure Key Management\n   - **Severity**: Low\n   - **Affected Code Location**: None\n   - **Description**: The chaincode does not implement any insecure key management practices. For example, it does not use secure keys for encryption and decryption.\n   - **Recommended Fix**: Implement proper key management practices to ensure that keys are secure.\n\n### Conclusion\n\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. It is recommended to address these vulnerabilities to ensure the security of the chaincode.",
+      "prediction": "vulnerable",
+      "elapsed_s": 6.47,
+      "finish_reason": "stop",
+      "prompt_tokens": 1669,
+      "completion_tokens": 680
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1669,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1669,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 1669,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1669,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.8,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 1.33,
+  "total_elapsed_s": 6.66,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:30:24.156352"
+}

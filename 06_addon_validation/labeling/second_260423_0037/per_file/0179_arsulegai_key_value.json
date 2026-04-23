@@ -1,0 +1,19 @@
+{
+  "file_id": "0179_arsulegai_key_value",
+  "repo": "arsulegai",
+  "filename": "key_value.go",
+  "elapsed_s": 2.48,
+  "input_tokens": 1593,
+  "output_tokens": 174,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Init/Invoke methods on KeyValue type). All transaction functions (create, read, update, delete) use only deterministic operations: stub.GetState (read-only query, not C4 source), stub.PutState, stub.DelState with simple string arguments derived from function parameters. No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated query decisions (C4), or mutable global state (C6) are present. The code is consensus-safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains a valid HLF transaction entrypoint (Init/Invoke methods on KeyValue type). All transaction functions (create, read, update, delete) use only deterministic operations: stub.GetState (read-only query, not C4 source), stub.PutState, stub.DelState with simple string arguments derived from function parameters. No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated query decisions (C4), or mutable global state (C6) are present. The code is consensus-safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:42:46.096459",
+  "annotator": "2nd"
+}

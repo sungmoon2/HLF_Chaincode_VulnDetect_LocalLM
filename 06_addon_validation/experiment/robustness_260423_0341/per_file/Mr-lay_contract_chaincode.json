@@ -1,0 +1,55 @@
+{
+  "repo": "Mr-lay",
+  "filename": "contract_chaincode.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "a00b2f69641d6216",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.53,
+      "finish_reason": "stop",
+      "prompt_tokens": 2411,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2411,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2411,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2411,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2411,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.14,
+  "total_elapsed_s": 0.71,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:30:24.922056"
+}

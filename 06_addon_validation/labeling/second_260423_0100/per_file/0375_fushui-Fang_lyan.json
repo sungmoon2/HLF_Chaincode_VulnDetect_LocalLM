@@ -1,0 +1,19 @@
+{
+  "file_id": "0375_fushui-Fang_lyan",
+  "repo": "fushui-Fang",
+  "filename": "lyan.go",
+  "elapsed_s": 4.31,
+  "input_tokens": 1262,
+  "output_tokens": 159,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains HLF transaction entrypoints (Init and Invoke) but no consensus-critical nondeterminism patterns. The file uses a logger variable that appears to be defined elsewhere (not in this file), so C6 does not apply. The switch statement dispatches to methods on a chaincode hub object, but there are no time.Now(), goroutines, map iterations, or rich queries within this file itself. All potentially problematic logic is delegated to external methods which are out of scope for intra-file analysis.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains HLF transaction entrypoints (Init and Invoke) but no consensus-critical nondeterminism patterns. The file uses a logger variable that appears to be defined elsewhere (not in this file), so C6 does not apply. The switch statement dispatches to methods on a chaincode hub object, but there are no time.Now(), goroutines, map iterations, or rich queries within this file itself. All potentially problematic logic is delegated to external methods which are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:29:30.515879",
+  "annotator": "2nd"
+}

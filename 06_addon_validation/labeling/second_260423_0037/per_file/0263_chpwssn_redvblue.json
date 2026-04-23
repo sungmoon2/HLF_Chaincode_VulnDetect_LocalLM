@@ -1,0 +1,19 @@
+{
+  "file_id": "0263_chpwssn_redvblue",
+  "repo": "chpwssn",
+  "filename": "redvblue.go",
+  "elapsed_s": 2.87,
+  "input_tokens": 1799,
+  "output_tokens": 167,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). Analysis of all transaction paths (initLedger, scorePoint, queryAllFlags) reveals no C1 time-based sources, C2 goroutines, C3 map iterations, C4 non-revalidated queries influencing writes, or C6 mutable global state. GetStateByRange in queryAllFlags is deterministic and only returns data via shim.Success without influencing any ledger writes. All ledger modifications use deterministic keys and values.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). Analysis of all transaction paths (initLedger, scorePoint, queryAllFlags) reveals no C1 time-based sources, C2 goroutines, C3 map iterations, C4 non-revalidated queries influencing writes, or C6 mutable global state. GetStateByRange in queryAllFlags is deterministic and only returns data via shim.Success without influencing any ledger writes. All ledger modifications use deterministic keys and values.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:45:07.894672",
+  "annotator": "2nd"
+}

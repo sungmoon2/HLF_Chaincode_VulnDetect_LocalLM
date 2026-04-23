@@ -1,0 +1,19 @@
+{
+  "file_id": "0049_Trust-Contract_cargo-chaincode",
+  "repo": "Trust-Contract",
+  "filename": "cargo-chaincode.go",
+  "elapsed_s": 3.06,
+  "input_tokens": 2233,
+  "output_tokens": 204,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95-L96, L101-L102",
+  "rationale": "The `initLedger` function (a transaction entrypoint called via Invoke) uses `time.Now()` at line 95 to obtain the current timestamp, formats it at line 96 as `date := now.Format(\"20060102\")`, and then uses this value directly as part of ledger state keys in `stub.PutState(\"CARGO\"+date+\"_1\", ...)` and `stub.PutState(\"CARGO\"+date, ...)` at lines 101–102. Since the formatted date depends on the endorser's local clock at execution time, different endorsers will produce different state keys and thus divergent ledger writes, violating consensus determinism.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L95-L96, L101-L102\n\nRATIONALE: The `initLedger` function (a transaction entrypoint called via Invoke) uses `time.Now()` at line 95 to obtain the current timestamp, formats it at line 96 as `date := now.Format(\"20060102\")`, and then uses this value directly as part of ledger state keys in `stub.PutState(\"CARGO\"+date+\"_1\", ...)` and `stub.PutState(\"CARGO\"+date, ...)` at lines 101–102. Since the formatted date depends on the endorser's local clock at execution time, different endorsers will produce different state keys and thus divergent ledger writes, violating consensus determinism.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:18.581237",
+  "annotator": "2nd"
+}

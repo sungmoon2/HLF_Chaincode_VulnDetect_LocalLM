@@ -1,0 +1,55 @@
+{
+  "repo": "varshard",
+  "filename": "simple_asset.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "53c86e71d5fd6a91",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.13,
+      "finish_reason": "stop",
+      "prompt_tokens": 595,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 595,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 595,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 595,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 595,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.06,
+  "total_elapsed_s": 0.3,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T07:43:38.032414"
+}

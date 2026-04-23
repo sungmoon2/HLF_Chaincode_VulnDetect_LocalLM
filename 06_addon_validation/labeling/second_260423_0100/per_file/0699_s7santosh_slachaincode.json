@@ -1,0 +1,19 @@
+{
+  "file_id": "0699_s7santosh_slachaincode",
+  "repo": "s7santosh",
+  "filename": "slachaincode.go",
+  "elapsed_s": 14.87,
+  "input_tokens": 2028,
+  "output_tokens": 651,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L83, L107",
+  "rationale": "The `GetHistoryForKey` result is only used to construct a read-only response returned via `shim.Success`, not to make write decisions. The `time.Unix()` call converts deterministic ledger timestamps, not current time. No consensus-critical nondeterminism patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on a struct implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: \n- Line 107: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger history, NOT `time.Now()`. The timestamp comes from `response.Timestamp` which is deterministic blockchain data. This is SAFE.\n\n**C2 GOROUTINE**: No goroutines detected.\n\n**C3 MAP_ITERATION**: No map iterations detected.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 83: `stub.GetHistoryForKey(key)` - This is a C4 source. However, examining the usage in `getSlaDataHistory`:\n  - The iterator is used to build a JSON response\n  - The result is returned via `shim.Success(buffer.Bytes())` at line 118\n  - There are NO write operations (PutState, DelState, etc.) based on this query result\n  - This is a **read-only query** returned to the client, which is explicitly NOT C4 per the taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### Step 3: C5 Iterator Leak Check\n- Line 91: `defer Avalbytes.Close()` - The iterator is properly closed with defer.\n\n### Step 4: Sink Analysis\n- `addSlaData`: Uses `PutState` but only with deterministic input from args\n- `getSlaData`: Read-only, returns via `shim.Success`\n- `getSlaDataHistory`: Read-only, returns via `shim.Success` - no writes based on history query\n\nThe `time.Unix()` call converts a deterministic timestamp from the ledger (not current time), and `GetHistoryForKey` result is only used for read-only response construction.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L83, L107\nRATIONALE: The `GetHistoryForKey` result is only used to construct a read-only response returned via `shim.Success`, not to make write decisions. The `time.Unix()` call converts deterministic ledger timestamps, not current time. No consensus-critical nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:53:37.733912",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0319_DID-hyperledger_did",
+  "repo": "DID-hyperledger",
+  "filename": "did.go",
+  "elapsed_s": 4.29,
+  "input_tokens": 1609,
+  "output_tokens": 135,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains valid HLF transaction entrypoints (Init, Invoke). The writeBlock function performs deterministic operations: it concatenates input arguments, computes SHA256 hashes using deterministic inputs (blockData + loop index), and writes to state. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All operations are fully deterministic across endorsers.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains valid HLF transaction entrypoints (Init, Invoke). The writeBlock function performs deterministic operations: it concatenates input arguments, computes SHA256 hashes using deterministic inputs (blockData + loop index), and writes to state. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All operations are fully deterministic across endorsers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:26:31.891198",
+  "annotator": "2nd"
+}

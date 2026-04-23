@@ -1,0 +1,19 @@
+{
+  "file_id": "0329_esumit_chaincode",
+  "repo": "esumit",
+  "filename": "chaincode.go",
+  "elapsed_s": 1.87,
+  "input_tokens": 928,
+  "output_tokens": 134,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains HLF transaction entrypoints (Init and Invoke methods on a shim.Chaincode-compatible struct), but all logic is delegated to external methods (cc.router.HandleInit and cc.router.Handle). No consensus-critical nondeterminism sources (C1–C6) are present in this file itself. Cross-file analysis is out of scope per the audit rules.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains HLF transaction entrypoints (Init and Invoke methods on a shim.Chaincode-compatible struct), but all logic is delegated to external methods (cc.router.HandleInit and cc.router.Handle). No consensus-critical nondeterminism sources (C1–C6) are present in this file itself. Cross-file analysis is out of scope per the audit rules.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:46:54.618425",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0345_fishmc_certification",
+  "repo": "fishmc",
+  "filename": "certification.go",
+  "elapsed_s": 2.33,
+  "input_tokens": 1313,
+  "output_tokens": 162,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF chaincode with Init and Invoke entrypoints. All transaction logic (check and add functions) operates exclusively on deterministic inputs (function parameters and GetState results). The check function performs string parsing and comparison without time-dependent, goroutine-based, map-iteration, or non-revalidated-query sources. The add function performs a simple string concatenation and PutState write with deterministic inputs. No C1, C2, C3, C4, or C6 vulnerability patterns are present.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains a valid HLF chaincode with Init and Invoke entrypoints. All transaction logic (check and add functions) operates exclusively on deterministic inputs (function parameters and GetState results). The check function performs string parsing and comparison without time-dependent, goroutine-based, map-iteration, or non-revalidated-query sources. The add function performs a simple string concatenation and PutState write with deterministic inputs. No C1, C2, C3, C4, or C6 vulnerability patterns are present.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:19.910243",
+  "annotator": "2nd"
+}

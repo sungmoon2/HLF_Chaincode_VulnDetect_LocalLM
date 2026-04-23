@@ -1,0 +1,19 @@
+{
+  "file_id": "0273_code2understand_04_history_of_keys",
+  "repo": "code2understand",
+  "filename": "04_history_of_keys.go",
+  "elapsed_s": 16.6,
+  "input_tokens": 1665,
+  "output_tokens": 723,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L65-L106",
+  "rationale": "The GetHistoryForKey at L65 is used in a read-only context where results are formatted and returned via shim.Success without influencing any write operations. The time.Unix() call converts stored ledger timestamps deterministically, not time.Now(). The logger global is explicitly safe per taxonomy.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: \n- Line 87: `time.Unix(Result.Timestamp.Seconds, int64(Result.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger data, NOT `time.Now()`. This is deterministic as it converts stored timestamp values.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iterations found.\n\n**C4 NON_REVALIDATED_QUERY**:\n- Line 65: `stub.GetHistoryForKey(startKey)` - This is a C4 source. However, examining the `get` function:\n  - The results are iterated and formatted into a JSON buffer\n  - The buffer is returned via `shim.Success(buffer.Bytes())` at line 106\n  - This is a **read-only query** - the results are returned to the client but do NOT influence any write operations (PutState, DelState, etc.)\n  - Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4\"\n\n**C6 GLOBAL_MUTABLE_STATE**:\n- Line 15: `var logger = shim.NewLogger(\"SimpleChaincode\")` - This is a logger-only global, explicitly marked as SAFE in the taxonomy.\n\n### Step 3: C5 Iterator Leak Check\n- Line 66: `defer resultsIterator.Close()` is called immediately after creating the iterator, but this is BEFORE the error check on line 68. If `err != nil`, the function returns early and `resultsIterator` could be nil, causing a panic on the deferred Close(). However, this is a code quality issue, not a C5 leak - the defer IS present.\n\n### Step 4: Sink Analysis\n- The `set` function writes to ledger via `PutState` but uses only deterministic inputs (args from transaction).\n- The `get` function uses `GetHistoryForKey` but only for read-only response - no writes are influenced.\n\n### Verdict\nNo C1-C4 or C6 patterns that influence ledger writes or cause endorsement divergence. The `GetHistoryForKey` is used purely for read-only query response.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L65-L106\nRATIONALE: The GetHistoryForKey at L65 is used in a read-only context where results are formatted and returned via shim.Success without influencing any write operations. The time.Unix() call converts stored ledger timestamps deterministically, not time.Now(). The logger global is explicitly safe per taxonomy.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:22:31.649107",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0203_BCEvanFang_simpleasset",
+  "repo": "BCEvanFang",
+  "filename": "simpleasset.go",
+  "elapsed_s": 3.55,
+  "input_tokens": 1369,
+  "output_tokens": 141,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF transaction entrypoints (Init and Invoke methods). The code performs simple key-value operations using GetState and PutState with deterministic inputs from transaction arguments. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no mutable global state (C6). All operations are fully deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF transaction entrypoints (Init and Invoke methods). The code performs simple key-value operations using GetState and PutState with deterministic inputs from transaction arguments. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no mutable global state (C6). All operations are fully deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:17:26.089226",
+  "annotator": "2nd"
+}

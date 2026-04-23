@@ -1,0 +1,55 @@
+{
+  "repo": "DappCampus",
+  "filename": "controller.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "c9a95656e5b231fa",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'controller.go'\n\n#### 1. **Vulnerability Type:** Access Control Issues\n**Severity:** Medium  \n**Affected Code Location:** `Init` function, lines 20-21  \n**Description:** The `Init` function does not enforce any access control. Any user can invoke this function to create a new ERC20 token, which could lead to unauthorized creation of tokens.\n**Recommended Fix:** Implement access control to ensure that only authorized users (e.g., a predefined set of users or a specific role) can invoke the `Init` function.\n\n#### 2. **Vulnerability Type:** Input Validation Flaws\n**Severity:** High  \n**Affected Code Location:** `Init` function, lines 20-21  \n**Description:** The input validation for the `amount` parameter is not robust. The code checks if `amount` is a number but does not ensure that it is non-negative. This could lead to issues if a negative amount is provided.\n**Recommended Fix:** Ensure that the `amount` parameter is non-negative by adding a check for this condition.\n\n#### 3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)\n**Severity:** Low  \n**Affected Code Location:** `Init` function, lines 24-25  \n**Description:** The `repository.SaveBalance` function is called with the `amount` parameter, which is a string. This could lead to inconsistencies if the `amount` is not properly validated or converted before being used.\n**Recommended Fix:** Ensure that the `amount` parameter is properly validated and converted to a numeric type before being used in the `repository.SaveBalance` function.\n\n#### 4. **Vulnerability Type:** Private Data Leakage\n**Severity:** Low  \n**Affected Code Location:** `Init` function, lines 24-25  \n**Description:** The `repository.SaveBalance` function stores the balance of the owner, which could potentially be sensitive information. If the balance is not properly secured, it could lead to private data leakage.\n**Recommended Fix:** Ensure that the balance is properly secured and that only authorized users can access it.\n\n#### 5. **Vulnerability Type:** Non-Deterministic Operations\n**Severity:** Low  \n**Affected Code Location:** `Init` function, lines 24-25  \n**Description:** The `repository.SaveBalance` function stores the balance of the owner, which could potentially lead to non-deterministic operations if the balance is not properly managed.\n**Recommended Fix:** Ensure that the balance is properly managed and that non-deterministic operations are avoided.\n\n#### 6. **Vulnerability Type:** Insecure Key Management\n**Severity:** Low  \n**Affected Code Location:** `Init` function, lines 24-25  \n**Description:** The `repository.SaveBalance` function stores the balance of the owner, which could potentially lead to insecure key management if the keys are not properly managed.\n**Recommended Fix:** Ensure that the keys are properly managed and that insecure key management is avoided.\n\n### Summary\n- **Access Control Issues:** Medium\n- **Input Validation Flaws:** High\n- **Read-After-Write Conflicts (Phantom Reads):** Low\n- **Private Data Leakage:** Low\n- **Non-Deterministic Operations:** Low\n- **Insecure Key Management:** Low\n\n**No vulnerabilities detected.**",
+      "prediction": "safe",
+      "elapsed_s": 6.49,
+      "finish_reason": "stop",
+      "prompt_tokens": 435,
+      "completion_tokens": 699
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 435,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 435,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 435,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 435,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 1.33,
+  "total_elapsed_s": 6.67,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:14:15.855436"
+}

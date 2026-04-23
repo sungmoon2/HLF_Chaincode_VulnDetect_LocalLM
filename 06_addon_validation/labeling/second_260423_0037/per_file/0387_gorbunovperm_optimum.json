@@ -1,0 +1,19 @@
+{
+  "file_id": "0387_gorbunovperm_optimum",
+  "repo": "gorbunovperm",
+  "filename": "optimum.go",
+  "elapsed_s": 3.42,
+  "input_tokens": 2202,
+  "output_tokens": 171,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns exist: there are no time.Now() calls influencing writes, no goroutines, no map iterations determining writes, no non-revalidated queries driving write decisions, and no mutable package-level state. All ledger writes (PutState in Init and setVar) use deterministic input from function arguments or stored state. External API calls (Gmail, OAuth2) do not influence ledger writes—their results are only logged or returned in responses.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns exist: there are no time.Now() calls influencing writes, no goroutines, no map iterations determining writes, no non-revalidated queries driving write decisions, and no mutable package-level state. All ledger writes (PutState in Init and setVar) use deterministic input from function arguments or stored state. External API calls (Gmail, OAuth2) do not influence ledger writes—their results are only logged or returned in responses.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:26.866264",
+  "annotator": "2nd"
+}

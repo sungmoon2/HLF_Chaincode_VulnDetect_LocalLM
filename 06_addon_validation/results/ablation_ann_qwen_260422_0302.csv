@@ -1,0 +1,1196 @@
+run,file,code_chars,elapsed_s,classification,ground_truth,correct,result
+1,P01.go,5177,0.431,safe,safe,True,No vulnerabilities detected.
+1,P02.go,5157,8.134,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not enforce any access control checks. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data manipulation.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is a valid format or if the `patientID` exists in the system. This can lead to invalid data being stored on the ledger.
+   - **Recommended Fix**: Add input validation to ensure that the input parameters are valid and meet the expected format. For example, validate the `recordID` to ensure it is a unique identifier and validate the `patientID` to ensure it exists in the system.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `UpdateDiagnosis`
+   - **Description**: The `UpdateDiagnosis` function reads the existing record, modifies it, and then writes it back to the ledger. However, if another transaction is modifying the same record concurrently, it could lead to phantom reads where the updated record is not visible to the first transaction.
+   - **Recommended Fix**: Use a transaction isolation level that prevents phantom reads, such as serializable isolation. Alternatively, use a versioning mechanism to ensure that the record has not been modified by anot"
+1,P03.go,5861,0.339,safe,safe,True,No vulnerabilities detected.
+1,P04.go,6388,0.384,safe,safe,True,No vulnerabilities detected.
+1,P05.go,5565,5.034,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P05.go`
+
+1. **Vulnerability Type**: Phantom Read / MVCC Conflict Pattern
+   - **Severity**: High
+   - **Affected Code Location**: `CloseAuction` function (lines 42-64)
+   - **Description**: The `CloseAuction` function reads all bids for a given auction using `GetStateByPartialCompositeKey`, which creates a broad read-set. If another transaction inserts a new bid concurrently, the read-set becomes stale and MVCC validation will fail.
+   - **Recommended Fix**: Use a more granular approach to read and write data. For example, read the highest bid and total value separately and then write the summary. This reduces the overlap between the read-set and write-set.
+
+2. **Vulnerability Type**: Read-Modify-Write Phantom Read Pattern
+   - **Severity**: High
+   - **Affected Code Location**: `IncrementCounter` function (lines 66-76)
+   - **Description**: The `IncrementCounter` function reads the current value, increments it, and writes it back to the same key. If another transaction reads the same counter between the read and the commit, MVCC validation will reject.
+   - **Recommended Fix**: Use a more atomic operation if available, or use a separate key for the counter to avoid concurrent modifications.
+
+3. **Vulnerability Type**: Check-Then-Act Pattern with Phantom Read Risk
+   - **Severity**: High
+   - **Affected Code Location**: `TransferWithBalanceCheck` function (lines 78-94)
+   - **Description**: The `TransferWithBalanceCheck` function reads the sender's balance, checks if it is sufficient, and then updates the balances. If another transaction modifies the sender's balance between the read and the commit, MVCC validation will reject.
+   - **Recommended Fix**: Use a single transaction to read and update the balances atomically. Alternatively, use a separate key for the balance to avoid concurrent modifications.
+
+### Summary of Vulnerabilities
+
+- **Phantom Read / MVCC Conflict Pattern**: High severity, found in `CloseAuction`.
+- **Read-Modify-"
+1,P06.go,4688,5.992,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P06.go`
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The code iterates over Go maps, which are non-deterministic in Go. Different peers may iterate over the map in different orders, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to sort the keys before iterating over the map.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `GenerateReport`
+   - **Description**: The `GenerateReport` function constructs a report string by iterating over a map. The order of lines in the report is non-deterministic, which could potentially leak private data if the order of products is sensitive.
+   - **Recommended Fix**: Ensure that the order of products in the report is consistent across peers. One possible fix is to sort the product IDs before iterating over the map.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of write operations is non-deterministic, which could lead to different endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to sort the keys before iterating over the map.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of write operations is non-determini"
+1,P07.go,5460,6.16,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Iterator not closed.
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, `DeactivateRange`
+   - **Description**: The iterators returned by `GetStateByRange`, `GetStateByPartialCompositeKey`, and similar methods are not closed with `defer resultsIterator.Close()`. This leads to resource leaks, eventually exhausting file descriptors or gRPC connections on the peer.
+   - **Recommended Fix**: Add `defer resultsIterator.Close()` at the beginning of each function that uses an iterator.
+
+2. **Vulnerability Type**: Early return without closing iterator.
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`
+   - **Description**: In functions where an iterator is used, if an error occurs, the function returns early without closing the iterator. This can lead to resource leaks.
+   - **Recommended Fix**: Ensure that the iterator is closed before returning from the function, even in error cases. Use `defer` to handle this.
+
+3. **Vulnerability Type**: Insecure key management.
+   - **Severity**: Medium
+   - **Affected Code Location**: `RegisterAsset`, `TransferAssetsByOwner`
+   - **Description**: The chaincode does not enforce any access control or validation on the keys used for asset registration and transfer. This could lead to unauthorized access or manipulation of assets.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can register or transfer assets. Validate the keys to ensure they are in the correct format and belong to the expected owner.
+
+4. **Vulnerability Type**: Non-deterministic operations.
+   - **Severity**: Low
+   - **Affected Code Location**: `SumAssetValues`
+   - **Description**: The function `SumAssetValues` calculates the total value of assets in a range, but it does not ensure that the values are consistent across multiple transactions. This could lead t"
+1,P08.go,4291,7.562,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 30, 44, 58, 72, 86, 100)
+   - **Description**: The use of `time.Now()` in multiple functions introduces non-determinism. Each peer will execute this at a slightly different wall-clock time, producing different timestamps. This can lead to endorsement mismatches and prevent transactions from being committed to the ledger.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a timestamp provided by the transaction context or a timestamp that is consistent across all endorsing peers. One possible solution is to use a timestamp provided by the transaction context, which can be set by the client application.
+
+2. **Vulnerability Type**: Input validation flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment` (line 30)
+   - **Description**: The function `CreateShipment` does not validate the input parameters (`id`, `origin`, `destination`). If these parameters are not properly validated, they could contain malicious data that could be used to exploit the system.
+   - **Recommended Fix**: Add input validation to ensure that the `id`, `origin`, and `destination` parameters are valid. This could include checking that the `id` is a non-empty string, that the `origin` and `destination` are valid locations, and that the `origin` and `destination` are not the same.
+
+3. **Vulnerability Type**: Private data leakage
+   - **Severity**: Low
+   - **Affected Code Location**: `RecordTemperature` (line 86)
+   - **Description**: The function `RecordTemperature` logs a temperature reading with the current time. If the temperature reading is sensitive information, it could be leaked to unauthorized parties if the shipment ID is not properly protected.
+   - **Recommended Fix**: Ensure that the shipment ID is properly protected and that only a"
+1,P09.go,6189,0.344,safe,safe,True,No vulnerabilities detected.
+1,P10.go,5739,5.911,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `ProcessClaimsByRange` function, line 17
+   - **Description**: The function does not check if the current user has the necessary permissions to process claims. This could allow unauthorized users to process claims.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can process claims.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `GetHighValueClaims` function, line 44
+   - **Description**: The function does not validate the `threshold` input. If the threshold is negative, it will close the iterator and return an error, but the iterator is not closed on the normal path where `threshold > 0`.
+   - **Recommended Fix**: Add input validation to ensure that the `threshold` is a positive integer.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: High
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 28-33
+   - **Description**: The function first counts the number of claims in the range and then re-queries the same range to process them. This can lead to phantom reads if new claims are added between the count and the processing.
+   - **Recommended Fix**: Use a single query to both count and process the claims.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: High
+   - **Affected Code Location**: `GetHighValueClaims` function, line 44
+   - **Description**: The function does not check if the claims are private and should only be accessible to authorized users.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can access private claims.
+
+5. **Vulnerability Type**: Non-Deterministic Operations
+   - **Severity**: Medium
+   - **Affected Code Location**: `ArchiveOldClaims` function, line 33
+   - **Description**: The fun"
+1,P11.go,5711,10.35,vulnerable,vulnerable,True,"### Vulnerability Analysis of 'P11.go'
+
+#### 1. Non-deterministic operations
+
+**Vulnerability Type:** Non-deterministic operations
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function, lines 18-34
+
+**Description of the Issue:** The `BatchUpdateInventory` function iterates over nested maps (`zone → items` and `item → qty`) using `range`, which is non-deterministic. This means that the sequence of `PutState` calls differs across endorsing peers, leading to potential inconsistencies in the ledger state.
+
+**Recommended Fix:** Use a deterministic approach to iterate over the maps, such as sorting the keys before iterating. For example:
+
+```go
+for zoneID := range updates {
+    zoneKey := ""ZONE_"" + zoneID
+    zoneJSON, err := ctx.GetStub().GetState(zoneKey)
+    if err != nil {
+        return fmt.Errorf(""failed to read zone %s: %v"", zoneID, err)
+    }
+
+    var zone ZoneInventory
+    if zoneJSON != nil {
+        json.Unmarshal(zoneJSON, &zone)
+    } else {
+        zone = ZoneInventory{ZoneID: zoneID, Items: make(map[string]int)}
+    }
+
+    sortedItems := make([]string, 0, len(itemUpdates))
+    for itemID := range itemUpdates {
+        sortedItems = append(sortedItems, itemID)
+    }
+    sort.Strings(sortedItems)
+
+    for _, itemID := range sortedItems {
+        qtyDelta := itemUpdates[itemID]
+        zone.Items[itemID] += qtyDelta
+        zone.ItemCount += qtyDelta
+
+        itemKey := zoneID + ""_ITEM_"" + itemID
+        itemRecord := fmt.Sprintf(`{""zone"":""%s"",""item"":""%s"",""qty"":%d}`, zoneID, itemID, zone.Items[itemID])
+        ctx.GetStub().PutState(itemKey, []byte(itemRecord))
+    }
+
+    updatedZoneJSON, _ := json.Marshal(zone)
+    ctx.GetStub().PutState(zoneKey, updatedZoneJSON)
+}
+```
+
+#### 2. Read-after-write conflicts (phantom reads)
+
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+
+**Severity:** Medium
+
+**Affected Code Location:** `MergeZones` function, lines 64-74
+
+**Description of the Issue:** The `MergeZones` function itera"
+1,P12.go,5307,0.308,safe,safe,True,No vulnerabilities detected.
+1,P13.go,5336,7.696,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TallyVotes` function, lines 51-70
+   - **Description**: The `TallyVotes` function uses goroutines to count votes concurrently. However, the fabric chaincode runtime is single-threaded per transaction, and spawning goroutines causes race conditions whose outcome varies per peer. The non-deterministic execution order can lead to different intermediate states and final results.
+   - **Recommended Fix**: Remove the use of goroutines and perform the vote counting in a single-threaded manner. This can be done by iterating over the proposal IDs in a sequential manner.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateStatus` function, lines 80-104
+   - **Description**: The `BatchUpdateStatus` function uses goroutines to update multiple proposals concurrently. The order in which `PutState` is invoked affects the read-write set ordering. Different goroutine scheduling on different peers means different PutState sequences, causing endorsement mismatch.
+   - **Recommended Fix**: Remove the use of goroutines and perform the updates in a single-threaded manner. This can be done by iterating over the proposal IDs in a sequential manner.
+
+3. **Vulnerability Type**: Fire-and-forget goroutine
+   - **Severity**: High
+   - **Affected Code Location**: `AsyncNotify` function, lines 110-117
+   - **Description**: The `AsyncNotify` function fires off a goroutine to emit events. The goroutine may or may not complete before the transaction endorsement finishes. If it calls `SetEvent` after the stub has been closed, behavior is undefined and differs per peer.
+   - **Recommended Fix**: Ensure that the goroutine completes before the transaction endorsement finishes. One way to do this is to use a channel to wait for the goroutine to complete.
+
+4. **Vulnerability Type**: Insecure k"
+1,P14.go,6316,0.369,safe,safe,True,No vulnerabilities detected.
+1,P15.go,4833,6.359,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `transactionCounter` and `lastProcessedID` in the `main` package.
+   - **Description**: Global variables are maintained in each peer's memory and are not synchronized across peers. This leads to different values being used by different peers, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global state across peers.
+
+2. **Vulnerability Type**: Reading and mutating a global variable inside chaincode
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken` function, line 27.
+   - **Description**: The `transactionCounter` is incremented and used to set the `TxCount` field in the `Token` struct. Since this variable is peer-specific, different peers will write different values to the ledger, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global state across peers.
+
+3. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `lastProcessedID` in the `main` package.
+   - **Description**: The `lastProcessedID` is a global variable that is peer-specific and persists across invocations within the same chaincode container lifetime. This can lead to non-deterministic behavior.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global state across peers.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TransferToken` function, line 58.
+   - **Description**: The `transactionCounter` is incremented and used to set the `TxCount` field in the `Token` struct. Since this variable is peer-specific, different peers will write different values to the ledger, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global sta"
+2,P01.go,5177,0.305,safe,safe,True,No vulnerabilities detected.
+2,P02.go,5157,7.941,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P02.go`
+
+1. **Vulnerability Type:** Access Control Issues
+   - **Severity:** Medium
+   - **Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description:** The chaincode does not enforce any access control checks. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+2. **Vulnerability Type:** Input Validation Flaws
+   - **Severity:** High
+   - **Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description:** The chaincode does not validate the input parameters. For example, `recordID`, `patientID`, `diagnosis`, `doctor`, and `note` are not validated for length, format, or existence. This can lead to invalid data being stored on the ledger.
+   - **Recommended Fix:** Add input validation to ensure that all parameters meet the required criteria. For example, `recordID` should be a unique identifier, `patientID` should be a valid patient identifier, `diagnosis` and `note` should not be empty, etc.
+
+3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   - **Severity:** Medium
+   - **Affected Code Location:** `UpdateDiagnosis`
+   - **Description:** The `UpdateDiagnosis` function reads the existing record, modifies it, and then writes it back to the ledger. However, if another transaction modifies the record between the read and write operations, the changes made by the first transaction will be lost. This is known as a phantom read.
+   - **Recommended Fix:** Use a transaction isolation level that prevents phantom reads, such as `READ_COMMITTED`. Alternatively, use a versioning system to ensure that the record has not b"
+2,P03.go,5861,0.338,safe,safe,True,No vulnerabilities detected.
+2,P04.go,6388,0.387,safe,safe,True,No vulnerabilities detected.
+2,P05.go,5565,10.943,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P05.go`
+
+#### 1. **Phantom Read / MVCC Conflict Pattern**
+   - **Vulnerability Type:** Phantom Read
+   - **Severity:** High
+   - **Affected Code Location:** `CloseAuction` function, lines 32-45
+   - **Description:** The `CloseAuction` function reads all bids for a given auction using `GetStateByPartialCompositeKey`, which creates a broad read-set. If another transaction inserts a new bid concurrently, the read-set becomes stale, and MVCC validation will fail.
+   - **Recommended Fix:** Use a more granular approach to read and write data. For example, read the highest bid and total value separately and then write the summary. This reduces the overlap between the read and write sets.
+
+   ```go
+   func (a *AuctionContract) CloseAuction(ctx contractapi.TransactionContextInterface, auctionID string) error {
+       highestBid := 0.0
+       highestBidder := """"
+       totalBids := 0
+       totalValue := 0.0
+
+       resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Bid"", []string{auctionID})
+       if err != nil {
+           return fmt.Errorf(""failed to query bids: %v"", err)
+       }
+       defer resultsIterator.Close()
+
+       for resultsIterator.HasNext() {
+           queryResult, err := resultsIterator.Next()
+           if err != nil {
+               return err
+           }
+
+           var bid Bid
+           json.Unmarshal(queryResult.Value, &bid)
+
+           totalBids++
+           totalValue += bid.Amount
+
+           if bid.Amount > highestBid {
+               highestBid = bid.Amount
+               highestBidder = bid.Bidder
+           }
+       }
+
+       summary := AuctionSummary{
+           AuctionID:     auctionID,
+           TotalBids:     totalBids,
+           HighestBid:    highestBid,
+           HighestBidder: highestBidder,
+           TotalValue:    totalValue,
+       }
+
+       summaryJSON, _ := json.Marshal(summary)
+       return ctx.GetStub().PutState(""AUCTION_RESULT_""+auctionID, summaryJSON)
+   }
+   ```
+
+#### 2. "
+2,P06.go,4688,6.062,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P06.go`
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The code iterates over Go maps, which are non-deterministic in Go. Different peers may iterate over the map in different orders, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iterating over the map.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `GenerateReport`
+   - **Description**: The `GenerateReport` function constructs a report string by iterating over a map, which is non-deterministic. This can lead to different reports being written to the ledger across peers, potentially leaking private data.
+   - **Recommended Fix**: Ensure that the order of operations is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iterating over the map.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of writes can vary across peers, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iterating over the map.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write "
+2,P07.go,5460,6.039,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Iterator Leak
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, `DeactivateRange`
+   - **Description**: The iterators returned by `GetStateByRange`, `GetStateByPartialCompositeKey`, and similar functions are not closed. This leads to resource leaks, eventually exhausting file descriptors or gRPC connections on the peer.
+   - **Recommended Fix**: Add `defer resultsIterator.Close()` at the beginning of each function to ensure the iterator is closed properly.
+
+2. **Vulnerability Type**: Early Return Without Closing Iterator
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`
+   - **Description**: In the `GetAssetsByRange` and `SumAssetValues` functions, the iterator is closed in some cases but not in others, leading to resource leaks.
+   - **Recommended Fix**: Ensure that the iterator is closed in all code paths, including error handling paths.
+
+3. **Vulnerability Type**: Insecure Key Management
+   - **Severity**: Medium
+   - **Affected Code Location**: `RegisterAsset`, `TransferAssetsByOwner`
+   - **Description**: The `RegisterAsset` function does not validate the `id` parameter, which could lead to potential conflicts or security issues. The `TransferAssetsByOwner` function does not validate the `fromOwner` and `toOwner` parameters, which could lead to unauthorized transfers.
+   - **Recommended Fix**: Add input validation for the `id`, `fromOwner`, and `toOwner` parameters to ensure they meet the expected format and constraints.
+
+4. **Vulnerability Type**: Non-Deterministic Operations
+   - **Severity**: Low
+   - **Affected Code Location**: `SumAssetValues`
+   - **Description**: The `SumAssetValues` function calculates the total value of assets in a range, but it does not ensure that the values are consistent across multiple transactions. This could lead to non-deterministic results.
+   - **Recommended F"
+2,P08.go,4291,6.724,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 30, 52, 74)
+   - **Description**: The use of `time.Now()` in multiple functions results in non-deterministic behavior. Each peer will execute the function at a slightly different wall-clock time, producing different timestamps. This can lead to endorsement mismatches and prevent transactions from being committed to the ledger.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a timestamp provided by the transaction context or a centralized service that provides a consistent timestamp across all peers.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 30, 52, 74)
+   - **Description**: The timestamps recorded in the `Shipment` struct include the exact time of the transaction, which could potentially reveal sensitive information about the shipment's history.
+   - **Recommended Fix**: Consider removing or anonymizing the timestamp information if it is not necessary for the functionality of the chaincode.
+
+3. **Vulnerability Type**: Access control issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 30, 52, 74)
+   - **Description**: The chaincode does not implement any access control checks to ensure that only authorized users can create, update, or record temperature for shipments. This could lead to unauthorized modifications of shipment records.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+4. **Vulnerability Type**: Input validation flaw"
+2,P09.go,6189,0.343,safe,safe,True,No vulnerabilities detected.
+2,P10.go,5739,6.799,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type:** Access Control Issues
+   - **Severity:** Medium
+   - **Affected Code Location:** `ProcessClaimsByRange` function, lines 11-12
+   - **Description:** The function does not check if the caller has the necessary permissions to process claims. This could allow unauthorized users to process claims.
+   - **Recommended Fix:** Implement access control checks to ensure only authorized users can process claims.
+
+2. **Vulnerability Type:** Input Validation Flaws
+   - **Severity:** High
+   - **Affected Code Location:** `GetHighValueClaims` function, line 41
+   - **Description:** The function does not validate the `threshold` input. A negative threshold could lead to unexpected behavior or errors.
+   - **Recommended Fix:** Add input validation to ensure the `threshold` is a positive integer.
+
+3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   - **Severity:** High
+   - **Affected Code Location:** `ProcessClaimsByRange` function, lines 27-30
+   - **Description:** The function first checks if there are any claims in the range and then re-queries the database to process them. This can lead to phantom reads if new claims are added between the two queries.
+   - **Recommended Fix:** Use a single query to retrieve and process claims in a single transaction.
+
+4. **Vulnerability Type:** Private Data Leakage
+   - **Severity:** High
+   - **Affected Code Location:** `GetHighValueClaims` function, lines 41-45
+   - **Description:** The function returns claims that may contain sensitive information. If the caller is not authorized, this could lead to data leakage.
+   - **Recommended Fix:** Implement access control checks to ensure only authorized users can retrieve sensitive claims.
+
+5. **Vulnerability Type:** Non-Deterministic Operations
+   - **Severity:** Medium
+   - **Affected Code Location:** `ArchiveOldClaims` function, lines 34-37
+   - **Description:** The function does not handle the case where the number of arch"
+2,P11.go,5711,6.06,safe,vulnerable,False,"### Vulnerability Analysis of `P11.go`
+
+#### 1. **Non-deterministic Operations**
+   - **Vulnerability Type:** Non-deterministic operations
+   - **Severity:** High
+   - **Affected Code Location:** `BatchUpdateInventory`, `GenerateZoneReport`, `MergeZones`
+   - **Description:** The code iterates over maps using `range`, which is nondeterministic. This means that the order of iteration can vary across different endorsing peers, leading to different write sets and potentially inconsistent states.
+   - **Recommended Fix:** Use a deterministic iteration order if possible, or ensure that the order of operations does not matter. For example, you could sort the keys before iterating.
+
+#### 2. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-after-write conflicts
+   - **Severity:** Medium
+   - **Affected Code Location:** `BatchUpdateInventory`
+   - **Description:** In `BatchUpdateInventory`, the code reads the state of a zone, updates it, and then writes it back. If another transaction reads the state of the zone between the read and write, it may see a partially updated state, leading to phantom reads.
+   - **Recommended Fix:** Use transactions to ensure that the read and write operations are atomic. This can be done by wrapping the read and write operations in a single transaction.
+
+#### 3. **Private Data Leakage**
+   - **Vulnerability Type:** Private data leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `GenerateZoneReport`
+   - **Description:** The `GenerateZoneReport` function constructs a report string by iterating over a map of zone data. If the zone data contains sensitive information, this could lead to private data leakage.
+   - **Recommended Fix:** Ensure that the zone data does not contain sensitive information. If it does, consider encrypting the data before storing it.
+
+#### 4. **Access Control Issues**
+   - **Vulnerability Type:** Access control issues
+   - **Severity:** Medium
+   - **Affected Code Location:** `Bat"
+2,P12.go,5307,0.305,safe,safe,True,No vulnerabilities detected.
+2,P13.go,5336,6.839,vulnerable,vulnerable,True,"### Vulnerability Analysis of 'P13.go'
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TallyVotes` function, lines 50-70
+   - **Description**: The use of goroutines in the `TallyVotes` function introduces non-deterministic execution order. Different peers may process proposals in different orders, and the race on the `results` map may produce different intermediate states even with the mutex.
+   - **Recommended Fix**: Remove the use of goroutines and perform the vote tallying in a single-threaded manner. This ensures that the execution order is deterministic and avoids race conditions.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateStatus` function, lines 80-100
+   - **Description**: The use of concurrent goroutines issuing `PutState` calls affects the read-write set ordering. Different goroutine scheduling on different peers means different `PutState` sequences, causing endorsement mismatch.
+   - **Recommended Fix**: Remove the use of goroutines and perform the batch update in a single-threaded manner. This ensures that the execution order is deterministic and avoids endorsement mismatch.
+
+3. **Vulnerability Type**: Fire-and-forget goroutine
+   - **Severity**: High
+   - **Affected Code Location**: `AsyncNotify` function, lines 110-115
+   - **Description**: The goroutine may or may not complete before the transaction endorsement finishes. If it calls `SetEvent` after the stub has been closed, behavior is undefined and differs per peer.
+   - **Recommended Fix**: Ensure that the goroutine completes before the transaction endorsement finishes. One way to do this is to use a channel to wait for the goroutine to complete.
+
+4. **Vulnerability Type**: Insecure key management
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateProposal` function, lines 20-25
+   - **Description**: The `CreateProposal` function does no"
+2,P14.go,6316,0.369,safe,safe,True,No vulnerabilities detected.
+2,P15.go,4833,18.366,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `transactionCounter` and `lastProcessedID` (lines 10-11)
+   - **Description**: Global variables are maintained in each peer's memory and are not synchronized across peers. This leads to different values being used by different peers, causing endorsement mismatches.
+   - **Recommended Fix**: Use the ledger to store global state. For example, store `transactionCounter` and `lastProcessedID` as state variables.
+
+2. **Vulnerability Type**: Reading and mutating a global variable inside chaincode
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken` and `TransferToken` functions (lines 26, 36, 46, 56, 66, 76, 86, 96, 106, 116, 126, 136, 146, 156, 166, 176, 186, 196, 206, 216, 226, 236, 246, 256, 266, 276, 286, 296, 306, 316, 326, 336, 346, 356, 366, 376, 386, 396, 406, 416, 426, 436, 446, 456, 466, 476, 486, 496, 506, 516, 526, 536, 546, 556, 566, 576, 586, 596, 606, 616, 626, 636, 646, 656, 666, 676, 686, 696, 706, 716, 726, 736, 746, 756, 766, 776, 786, 796, 806, 816, 826, 836, 846, 856, 866, 876, 886, 896, 906, 916, 926, 936, 946, 956, 966, 976, 986, 996, 1006, 1016, 1026, 1036, 1046, 1056, 1066, 1076, 1086, 1096, 1106, 1116, 1126, 1136, 1146, 1156, 1166, 1176, 1186, 1196, 1206, 1216, 1226, 1236, 1246, 1256, 1266, 1276, 1286, 1296, 1306, 1316, 1326, 1336, 1346, 1356, 1366, 1376, 1386, 1396, 1406, 1416, 1426, 1436, 1446, 1456, 1466, 1476, 1486, 1496, 1506, 1516, 1526, 1536, 1546, 1556, 1566, 1576, 1586, 1596, 1606, 1616, 1626, 1636, 1646, 1656, 1666, 1676, 1686, 1696, 1706, 1716, 1726, 1736, 1746, 1756, 1766, 1776, 1786, 1796, 1806, 1816, 1826, 1836, 1846, 1856, 1866, 1876, 1886, 1896, 1906, 1916, 1926, 1936, 1946, 1956, 1966, 1976, 1986, 1996, 2006, 2016, 2026, 2036, 2046, 2056, 2066, 2076, 2086, 2096, 2106, 2116, 2126, 2136, 2146, 2156, 2166, 2176, 2186, 2196, 2206, 2216, 2226, 2236, 2246, 2256, 2266, 2276, 2286, 2296, 2306, 2"
+3,P01.go,5177,0.302,safe,safe,True,No vulnerabilities detected.
+3,P02.go,5157,6.677,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not enforce any access control checks. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is unique or if the `patientID` exists. This can lead to invalid data being stored on the ledger.
+   - **Recommended Fix**: Add input validation to ensure that the `recordID` is unique, the `patientID` exists, and other necessary fields are not empty or invalid.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `UpdateDiagnosis`
+   - **Description**: The `UpdateDiagnosis` function reads the existing record, modifies it, and then writes it back to the ledger. However, it does not handle concurrent updates, which can lead to phantom reads where the updated record is not visible to other transactions.
+   - **Recommended Fix**: Use a transaction isolation level that prevents phantom reads, such as serializable isolation. Alternatively, use a versioning mechanism to ensure that the record has not been modified by another transaction since it was read.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: High
+   - **Affected Code Location**: `AddChec"
+3,P03.go,5861,0.339,safe,safe,True,No vulnerabilities detected.
+3,P04.go,6388,0.385,safe,safe,True,No vulnerabilities detected.
+3,P05.go,5565,14.115,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P05.go`
+
+1. **Vulnerability Type**: Phantom Read / MVCC Conflict Pattern
+   - **Severity**: High
+   - **Affected Code Location**: `CloseAuction` function, lines 31-54
+   - **Description**: The `CloseAuction` function reads all bids for a given auction using `GetStateByPartialCompositeKey`, which creates a broad read-set. If another transaction inserts a new bid concurrently, the read-set becomes stale and MVCC validation will fail.
+   - **Recommended Fix**: Use a more granular approach to read and write data. For example, read the highest bid and total value separately and then write the summary. Alternatively, use a more sophisticated consensus mechanism that can handle concurrent updates more gracefully.
+
+2. **Vulnerability Type**: Read-Modify-Write Phantom Read Pattern
+   - **Severity**: High
+   - **Affected Code Location**: `IncrementCounter` function, lines 57-66
+   - **Description**: The `IncrementCounter` function reads the current value, increments it, and writes it back to the same key. If another transaction reads the same counter between the read and the commit, MVCC validation will reject.
+   - **Recommended Fix**: Use a more sophisticated approach to handle concurrent updates. For example, use a locking mechanism or a more advanced consensus algorithm that can handle concurrent updates more gracefully.
+
+3. **Vulnerability Type**: Check-Then-Act Pattern with Phantom Read Risk
+   - **Severity**: High
+   - **Affected Code Location**: `TransferWithBalanceCheck` function, lines 69-84
+   - **Description**: The `TransferWithBalanceCheck` function reads the sender's balance, checks if it is sufficient, and then updates the balances. If another transaction modifies the sender's balance between the read and the commit, MVCC validation will reject.
+   - **Recommended Fix**: Use a more sophisticated approach to handle concurrent updates. For example, use a locking mechanism or a more advanced consensus algorithm that can handle concur"
+3,P06.go,4688,5.096,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P06.go`
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The code iterates over Go maps, which are intentionally randomized by the Go runtime. Different peers may iterate over the map in different orders, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iterating over the map.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `GenerateReport`
+   - **Description**: The `GenerateReport` function constructs a report string by iterating over a map, which is non-deterministic. This can lead to different reports being written to the ledger across peers, potentially revealing private data.
+   - **Recommended Fix**: Ensure that the order of operations is consistent across peers or use a deterministic data structure to avoid non-deterministic behavior.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of writes can vary across peers, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iterating over the map.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map an"
+3,P07.go,5460,5.726,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type:** Iterator Leak
+   - **Severity:** High
+   - **Affected Code Location:** `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, `DeactivateRange`
+   - **Description:** The iterators returned by `GetStateByRange`, `GetStateByPartialCompositeKey`, and `GetStateByRange` are not closed after use. This leads to resource exhaustion as the underlying gRPC stream and database cursor remain open.
+   - **Recommended Fix:** Add `defer resultsIterator.Close()` at the beginning of each function to ensure the iterator is closed after use.
+
+2. **Vulnerability Type:** Early Return Without Closing Iterator
+   - **Severity:** High
+   - **Affected Code Location:** `GetAssetsByRange`, `SumAssetValues`
+   - **Description:** In the `GetAssetsByRange` and `SumAssetValues` functions, the iterator is closed in some error paths but not in all. This can lead to resource leaks.
+   - **Recommended Fix:** Ensure that the iterator is closed in all error paths. For example, add `defer resultsIterator.Close()` at the beginning of each function and handle errors properly.
+
+3. **Vulnerability Type:** Non-Deterministic Operations
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferAssetsByOwner`
+   - **Description:** The `TransferAssetsByOwner` function does not handle concurrent updates to the same asset. If two transactions attempt to transfer the same asset at the same time, the operation may not be deterministic.
+   - **Recommended Fix:** Use a locking mechanism or a transactional database to ensure that concurrent updates to the same asset are handled correctly.
+
+4. **Vulnerability Type:** Insecure Key Management
+   - **Severity:** Low
+   - **Affected Code Location:** `RegisterAsset`, `TransferAssetsByOwner`
+   - **Description:** The asset IDs are not securely generated. If the asset IDs are predictable, an attacker could potentially guess and manipulate asset states.
+   - **Recommended Fix:** Use a secure random number "
+3,P08.go,4291,6.986,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 31, 47, 63, 79, 95, 111)
+   - **Description**: The use of `time.Now()` in multiple functions results in non-deterministic behavior. Each peer will execute this at a slightly different wall-clock time, producing different timestamps. This can lead to endorsement mismatches and other issues.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a timestamp provided by the transaction context or a trusted external service.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 31, 47, 63, 79, 95, 111)
+   - **Description**: The timestamps recorded in the `CreatedAt` and `UpdatedAt` fields are public and can be used to infer the time of transactions. This could potentially leak information about the shipment's lifecycle.
+   - **Recommended Fix**: Consider removing or anonymizing the timestamp fields if they are not necessary for the business logic.
+
+3. **Vulnerability Type**: Access control issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 31, 47, 63, 79, 95, 111)
+   - **Description**: The chaincode does not implement any access control checks. Any user can create, update, or record temperature for any shipment.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these operations. This can be done using Hyperledger Fabric's built-in access control mechanisms or custom logic.
+
+4. **Vulnerability Type**: Input validation flaws
+   - **Severity**: Low
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 31, 47, 63, 79, 95, 111)
+   - **Description"
+3,P09.go,6189,0.34,safe,safe,True,No vulnerabilities detected.
+3,P10.go,5739,7.542,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P10.go`
+
+1. **Vulnerability Type:** Access Control Issues
+   - **Severity:** High
+   - **Affected Code Location:** `ProcessClaimsByRange` function, lines 15-20.
+   - **Description:** The function `ProcessClaimsByRange` does not check if the caller is authorized to process claims. Any user can call this function, which could lead to unauthorized processing of claims.
+   - **Recommended Fix:** Add access control checks to ensure only authorized users can call this function. This can be done by checking the caller's identity and permissions.
+
+2. **Vulnerability Type:** Input Validation Flaws
+   - **Severity:** High
+   - **Affected Code Location:** `GetHighValueClaims` function, lines 52-54.
+   - **Description:** The function `GetHighValueClaims` does not validate the `threshold` input. If a negative value is passed, it will close the iterator immediately and return an error, which could be exploited.
+   - **Recommended Fix:** Add input validation to ensure the `threshold` is a positive integer.
+
+3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   - **Severity:** Medium
+   - **Affected Code Location:** `ProcessClaimsByRange` function, lines 32-35.
+   - **Description:** The function `ProcessClaimsByRange` first checks if there are any claims in the range and then re-queries the database to process them. This can lead to phantom reads if another transaction inserts a new claim between the two queries.
+   - **Recommended Fix:** Use a single query to retrieve and process claims in a single transaction to avoid phantom reads.
+
+4. **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Medium
+   - **Affected Code Location:** `GetHighValueClaims` function, lines 52-54.
+   - **Description:** The function `GetHighValueClaims` does not check if the caller has permission to access the claims. If a user is not authorized, they could still access high-value claims.
+   - **Recommended Fix:** Add access control checks to ensu"
+3,P11.go,5711,6.684,vulnerable,vulnerable,True,"### Vulnerability Analysis of 'P11.go'
+
+#### 1. Non-deterministic operations
+
+**Vulnerability Type:** Non-deterministic operations
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function, lines 16-34
+
+**Description of the Issue:** The `BatchUpdateInventory` function iterates over nested maps (`zone → items` and `item → qty`) using `range`, which is non-deterministic. This means that the sequence of `PutState` calls differs across endorsing peers, leading to potential inconsistencies in the ledger state.
+
+**Recommended Fix:** Ensure that the order of operations is deterministic. One way to achieve this is to sort the keys before iterating over them. For example:
+
+```go
+// Sort zone IDs
+zoneIDs := make([]string, 0, len(updates))
+for zoneID := range updates {
+	zoneIDs = append(zoneIDs, zoneID)
+}
+sort.Strings(zoneIDs)
+
+for _, zoneID := range zoneIDs {
+	// Process each zone
+}
+```
+
+Similarly, sort the item IDs within each zone.
+
+#### 2. Read-after-write conflicts (phantom reads)
+
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+
+**Severity:** Medium
+
+**Affected Code Location:** `BatchUpdateInventory` function, lines 24-34
+
+**Description of the Issue:** The `BatchUpdateInventory` function reads the state of a zone before updating it. If another transaction writes to the same zone concurrently, the read state may be outdated, leading to phantom reads.
+
+**Recommended Fix:** Use transactions to ensure that the read and write operations are atomic. This can be done by wrapping the read and write operations in a transaction.
+
+```go
+txID := ctx.GetStub().GetTxID()
+tx := ctx.GetStub().GetTransaction(txID)
+tx.SetReadOnly(true)
+// Perform read operations
+tx.SetReadOnly(false)
+// Perform write operations
+```
+
+#### 3. Private data leakage
+
+**Vulnerability Type:** Private data leakage
+
+**Severity:** Low
+
+**Affected Code Location:** `GenerateZoneReport` function, lines 22-34
+
+**Description of the Issue:** The `GenerateZoneReport` function iter"
+3,P12.go,5307,0.303,safe,safe,True,No vulnerabilities detected.
+3,P13.go,5336,7.526,safe,vulnerable,False,"### Vulnerability Analysis of 'P13.go'
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TallyVotes` function, lines 47-65
+   - **Description**: The `TallyVotes` function uses goroutines to count votes concurrently. Due to the non-deterministic execution order of goroutines, the final results may vary across different peers, leading to inconsistent states.
+   - **Recommended Fix**: Remove the use of goroutines for counting votes. Instead, perform the vote counting in a single-threaded manner within the transaction context.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateStatus` function, lines 74-91
+   - **Description**: The `BatchUpdateStatus` function uses goroutines to update multiple proposals concurrently. The order in which `PutState` is invoked affects the read-write set ordering, leading to potential endorsement mismatches across different peers.
+   - **Recommended Fix**: Remove the use of goroutines for updating proposals. Instead, perform the updates in a single-threaded manner within the transaction context.
+
+3. **Vulnerability Type**: Fire-and-forget goroutine
+   - **Severity**: High
+   - **Affected Code Location**: `AsyncNotify` function, lines 97-103
+   - **Description**: The `AsyncNotify` function fires off a goroutine to emit events. The goroutine may or may not complete before the transaction endorsement finishes, leading to undefined behavior and potential differences across different peers.
+   - **Recommended Fix**: Remove the use of a goroutine for emitting events. Instead, perform the event emission within the transaction context.
+
+4. **Vulnerability Type**: Insecure key management
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateProposal`, `CastVote`, `TallyVotes`, `BatchUpdateStatus`, and `AsyncNotify` functions
+   - **Description**: The chaincode does not implement any form of key mana"
+3,P14.go,6316,0.367,safe,safe,True,No vulnerabilities detected.
+3,P15.go,4833,6.799,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `transactionCounter` and `lastProcessedID` (lines 10-11)
+   - **Description**: The global variables `transactionCounter` and `lastProcessedID` are not synchronized across peers. Each peer maintains its own in-memory copy, leading to different values and causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a shared state service to ensure consistency across peers.
+
+2. **Vulnerability Type**: Reading and mutating a global variable inside chaincode
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken` function (lines 27-31)
+   - **Description**: The `transactionCounter` is incremented and used to set the `TxCount` field in the `Token` struct. Since each peer has its own copy of `transactionCounter`, the values written to the ledger will differ, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a shared state service to ensure consistency across peers.
+
+3. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `lastProcessedID` (line 28)
+   - **Description**: The `lastProcessedID` is a global variable that is peer-specific and persists across invocations within the same chaincode container lifetime. This can lead to non-deterministic behavior.
+   - **Recommended Fix**: Use a ledger-based counter or a shared state service to ensure consistency across peers.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TransferToken` function (lines 44-53)
+   - **Description**: The `transactionCounter` is incremented and used to set the `TxCount` field in the `Token` struct. Since each peer has its own copy of `transactionCounter`, the values written to the ledger will differ, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a "
+4,P01.go,5177,0.308,safe,safe,True,No vulnerabilities detected.
+4,P02.go,5157,7.595,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not enforce any access control checks. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not validate the input parameters. For example, `recordID`, `patientID`, `diagnosis`, `doctor`, and `note` can be empty or contain invalid data, which could lead to unexpected behavior or errors.
+   - **Recommended Fix**: Add input validation to ensure that all required parameters are present and contain valid data. For example, check that `recordID` is not empty, `patientID` is a valid identifier, `diagnosis` is not empty, and so on.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `UpdateDiagnosis`
+   - **Description**: The `UpdateDiagnosis` function reads the current state of the record, updates the diagnosis, and then writes the updated record back to the ledger. However, if another transaction modifies the record between the read and write operations, the update will be lost, leading to a phantom read.
+   - **Recommended Fix**: Use a transaction isolation level that prevents phantom reads, such as serializable isolation. Alternatively, use a versioning mechanism to ensure that the record has not been modified since it was read.
+
+4. **V"
+4,P03.go,5861,0.342,safe,safe,True,No vulnerabilities detected.
+4,P04.go,6388,0.38,safe,safe,True,No vulnerabilities detected.
+4,P05.go,5565,6.764,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Phantom Read / MVCC Conflict Pattern
+   - **Severity**: High
+   - **Affected Code Location**: `CloseAuction` function, lines 33-47
+   - **Description**: The `CloseAuction` function reads all bids for a given auction using `GetStateByPartialCompositeKey`, which creates a broad read-set. If another transaction inserts a new bid concurrently, the read-set becomes stale and MVCC validation will fail.
+   - **Recommended Fix**: Use a more granular approach to read and write data. For example, read the highest bid and total value separately and then write the summary. This reduces the read-set and minimizes the risk of phantom reads.
+
+2. **Vulnerability Type**: Check-then-Act Pattern with Phantom Read Risk
+   - **Severity**: High
+   - **Affected Code Location**: `TransferWithBalanceCheck` function, lines 62-72
+   - **Description**: The `TransferWithBalanceCheck` function reads the sender's balance, checks if it is sufficient, and then updates the balances. If another transaction modifies the sender's balance between the read and the commit, MVCC validation will reject.
+   - **Recommended Fix**: Use a single transaction to read and update the balances atomically. This can be achieved using a single `PutState` operation that includes both the sender's and receiver's balances.
+
+3. **Vulnerability Type**: Non-deterministic Operations
+   - **Severity**: Medium
+   - **Affected Code Location**: `IncrementCounter` function, lines 49-56
+   - **Description**: The `IncrementCounter` function reads the current value, increments it, and writes it back. If two concurrent transactions both read the same counter value and then write back the incremented value, one of the transactions will be rejected by MVCC validation.
+   - **Recommended Fix**: Use a single transaction to read and update the counter atomically. This can be achieved using a single `PutState` operation that includes the incremented counter value.
+
+4. **Vulnerability Ty"
+4,P06.go,4688,5.925,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The code iterates over Go maps, which are non-deterministic in Go. Different peers may iterate over the map in different orders, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iteration.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `GenerateReport`
+   - **Description**: The `GenerateReport` function constructs a report string by iterating over a map, which is non-deterministic. The order of lines in the report can vary across peers, potentially leaking private data.
+   - **Recommended Fix**: Ensure that the order of data in the report is consistent across peers. One possible fix is to sort the map keys before iterating over them.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of write operations can vary across peers, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted data structure or a fixed order for iteration.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of write operations can vary across pe"
+4,P07.go,5460,6.249,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Iterator Leak
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, `DeactivateRange`
+   - **Description**: The iterators returned by `GetStateByRange`, `GetStateByPartialCompositeKey`, and similar functions are not closed. This leads to resource exhaustion as the underlying gRPC stream and database cursor remain open.
+   - **Recommended Fix**: Add `defer resultsIterator.Close()` at the beginning of each function to ensure the iterator is closed properly.
+
+2. **Vulnerability Type**: Early Return Without Closing Iterator
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`
+   - **Description**: In the `GetAssetsByRange` and `SumAssetValues` functions, the iterator is closed in some cases but not in others. This can lead to resource leaks if an error occurs before the iterator is closed.
+   - **Recommended Fix**: Ensure that the iterator is closed in all code paths, including error paths. This can be done by using `defer` or by manually closing the iterator before returning.
+
+3. **Vulnerability Type**: Missing Input Validation
+   - **Severity**: Medium
+   - **Affected Code Location**: `RegisterAsset`, `TransferAssetsByOwner`
+   - **Description**: The `RegisterAsset` and `TransferAssetsByOwner` functions do not validate the input parameters. For example, `RegisterAsset` does not check if the `id` is already in use, and `TransferAssetsByOwner` does not validate the `fromOwner` and `toOwner` parameters.
+   - **Recommended Fix**: Add input validation to ensure that the parameters are valid and meet the expected criteria. For example, check if the `id` is already in use before registering a new asset, and validate the `fromOwner` and `toOwner` parameters to ensure they are non-empty.
+
+4. **Vulnerability Type**: Non-Deterministic Operations
+   - **Severity**: Low
+   - **Affected Code Location**: `SumAssetValues`
+  "
+4,P08.go,4291,6.236,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 31, 47, 63)
+   - **Description**: The use of `time.Now()` in multiple functions produces different values on each peer, leading to non-deterministic behavior. This can cause endorsement mismatches and prevent transactions from being committed to the ledger.
+   - **Recommended Fix**: Use a deterministic timestamp that is consistent across all peers. One approach is to use a timestamp provided by the transaction context or a trusted external source.
+
+2. **Vulnerability Type**: Input validation flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment` (line 31)
+   - **Description**: The function does not validate the input parameters (`id`, `origin`, `destination`). If these parameters are not properly validated, they could lead to unexpected behavior or security issues.
+   - **Recommended Fix**: Add input validation to ensure that `id` is a valid string, `origin` and `destination` are non-empty strings, and `id` does not already exist.
+
+3. **Vulnerability Type**: Access control issues
+   - **Severity**: Medium
+   - **Affected Code Location**: All functions (lines 31, 47, 63, 77)
+   - **Description**: The chaincode does not implement any access control mechanisms. Any user can create, update, or record temperature for any shipment, which could lead to unauthorized access and data tampering.
+   - **Recommended Fix**: Implement access control policies to restrict access to specific functions based on user roles or permissions. For example, only authorized users should be able to create or update shipments.
+
+4. **Vulnerability Type**: Private data leakage
+   - **Severity**: Low
+   - **Affected Code Location**: All functions (lines 31, 47, 63, 77)
+   - **Description**: The chaincode does not differentiate between public and private data. All s"
+4,P09.go,6189,0.344,safe,safe,True,No vulnerabilities detected.
+4,P10.go,5739,6.146,safe,vulnerable,False,"### Vulnerability Analysis of `P10.go`
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 14-15
+   - **Description**: The function does not check if the current user has the necessary permissions to process claims. This could allow unauthorized users to process claims.
+   - **Recommended Fix**: Add access control checks to ensure that only authorized users can process claims. This can be done by checking the user's role or permissions before processing claims.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `GetHighValueClaims` function, line 38
+   - **Description**: The function does not validate the `threshold` input. If the threshold is negative, it will close the iterator and return an error, but it does not handle this case properly.
+   - **Recommended Fix**: Add input validation to ensure that the `threshold` is a positive integer.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 27-30
+   - **Description**: The function first counts the number of claims in the range and then re-queries the same range to process them. This can lead to phantom reads if new claims are added between the count and the processing.
+   - **Recommended Fix**: Use a single query to both count and process the claims, or use a more robust mechanism to handle concurrent modifications.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: High
+   - **Affected Code Location**: `GetHighValueClaims` function, lines 42-44
+   - **Description**: The function returns claims without any filtering or validation. If the claims contain sensitive information, this could lead to private data leakage.
+   - **Recommended Fix**: Add filtering or validation to ensure that only authorized users can access sensitive informati"
+4,P11.go,5711,3.752,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateInventory` function, lines 24-37
+   - **Description**: The iteration order of Go maps is randomized, leading to non-deterministic behavior. This can cause different endorsing peers to process transactions in different orders, resulting in different write sets.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted map or a fixed order for processing zones and items.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `GenerateZoneReport` function, lines 44-56
+   - **Description**: Similar to the `BatchUpdateInventory` function, the iteration order of Go maps is randomized, leading to non-deterministic behavior. This can cause different endorsing peers to produce different reports.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted map or a fixed order for processing zones and items.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `MergeZones` function, lines 64-77
+   - **Description**: The iteration order of Go maps is randomized, leading to non-deterministic behavior. This can cause different endorsing peers to process transactions in different orders, resulting in different write sets.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted map or a fixed order for processing zones and items.
+
+### Summary
+
+- **No vulnerabilities detected** related to access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, and insecure ke"
+4,P12.go,5307,0.303,safe,safe,True,No vulnerabilities detected.
+4,P13.go,5336,7.437,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TallyVotes` function, lines 62-84
+   - **Description**: The `TallyVotes` function uses goroutines to count votes concurrently. Since the Fabric chaincode runtime is single-threaded per transaction, spawning goroutines causes race conditions whose outcome varies per peer. The non-deterministic execution order can lead to different intermediate states and final results.
+   - **Recommended Fix**: Remove the use of goroutines and perform the vote counting in a single-threaded manner. This can be done by iterating over the proposal IDs in a sequential manner.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateStatus` function, lines 100-122
+   - **Description**: The `BatchUpdateStatus` function uses goroutines to update multiple proposals concurrently. The order in which `PutState` is invoked affects the read-write set ordering. Different goroutine scheduling on different peers means different PutState sequences, causing endorsement mismatch.
+   - **Recommended Fix**: Remove the use of goroutines and perform the updates in a single-threaded manner. This can be done by iterating over the proposal IDs in a sequential manner.
+
+3. **Vulnerability Type**: Fire-and-forget goroutine
+   - **Severity**: High
+   - **Affected Code Location**: `AsyncNotify` function, lines 128-134
+   - **Description**: The `AsyncNotify` function fires off a goroutine to emit events. The goroutine may or may not complete before the transaction endorsement finishes. If it calls `SetEvent` after the stub has been closed, behavior is undefined and differs per peer.
+   - **Recommended Fix**: Ensure that the goroutine completes before the transaction endorsement finishes. One way to do this is to use a channel to wait for the goroutine to complete.
+
+4. **Vulnerability Type**: Insecure key man"
+4,P14.go,6316,0.367,safe,safe,True,No vulnerabilities detected.
+4,P15.go,4833,4.358,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `transactionCounter` and `lastProcessedID` in the `main` package.
+   - **Description**: Global variables are maintained in each peer's memory and are not synchronized across peers. This leads to different values being used by different peers, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global state across peers.
+
+2. **Vulnerability Type**: Reading and mutating a global variable inside chaincode
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken` and `TransferToken` methods.
+   - **Description**: The `transactionCounter` is incremented and used to update the `TxCount` field in the token. Since this counter is peer-specific, different peers will write different values to the ledger, causing endorsement mismatches.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global state across peers.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TransferToken`, `BurnToken`, and `GetGlobalStats` methods.
+   - **Description**: The `transactionCounter` is used to generate non-deterministic keys and values, which can lead to different peers writing to different keys or using different values.
+   - **Recommended Fix**: Use a ledger-based counter or a service that maintains a global state across peers.
+
+4. **Vulnerability Type**: Exposing global variable values
+   - **Severity**: Medium
+   - **Affected Code Location**: `GetGlobalStats` method.
+   - **Description**: The `GetGlobalStats` method exposes the values of `transactionCounter` and `lastProcessedID`, which are peer-specific and can lead to different values being returned by different peers.
+   - **Recommended Fix**: Avoid exposing global variable values in production code. If necessary, use a service that maintains"
+5,P01.go,5177,0.303,safe,safe,True,No vulnerabilities detected.
+5,P02.go,5157,7.153,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not enforce any access control checks. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data manipulation.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+   - **Description**: The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is unique or if the `patientID` exists. This can lead to invalid data being stored on the ledger.
+   - **Recommended Fix**: Add input validation to ensure that the `recordID` is unique, the `patientID` exists, and other necessary fields are not empty or invalid.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `UpdateDiagnosis`
+   - **Description**: The `UpdateDiagnosis` function reads the existing record, modifies it, and then writes it back to the ledger. If another transaction modifies the record between the read and write operations, the changes will be lost.
+   - **Recommended Fix**: Use a transaction isolation level that prevents phantom reads, such as serializable isolation. Alternatively, use a versioning system to ensure that the record has not been modified since it was read.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: High
+   - **Affected Code Location**: `AddCheckupNote`
+   - **Description**: The `AddCheckupNote` functi"
+5,P03.go,5861,0.344,safe,safe,True,No vulnerabilities detected.
+5,P04.go,6388,0.384,safe,safe,True,No vulnerabilities detected.
+5,P05.go,5565,18.766,vulnerable,vulnerable,True,"### Vulnerability Analysis of `P05.go`
+
+#### 1. **Phantom Read / MVCC Conflict Pattern**
+   - **Vulnerability Type:** Phantom Read
+   - **Severity:** High
+   - **Affected Code Location:** `CloseAuction` function, lines 35-54
+   - **Description:** The `CloseAuction` function reads all bids for a given auction using `GetStateByPartialCompositeKey`, which creates a broad read-set. If another transaction inserts a new bid concurrently, the read-set becomes stale and MVCC validation will fail.
+   - **Recommended Fix:** Use a more granular approach to read and write data. For example, read the highest bid and total value in a single transaction and write the summary in another transaction. Alternatively, use a more sophisticated approach like optimistic concurrency control.
+
+   ```go
+   func (a *AuctionContract) CloseAuction(ctx contractapi.TransactionContextInterface, auctionID string) error {
+       // Read the highest bid and total value in a single transaction
+       highestBid, highestBidder, totalBids, totalValue, err := a.calculateAuctionSummary(ctx, auctionID)
+       if err != nil {
+           return err
+       }
+
+       // Write the summary in another transaction
+       summary := AuctionSummary{
+           AuctionID:     auctionID,
+           TotalBids:     totalBids,
+           HighestBid:    highestBid,
+           HighestBidder: highestBidder,
+           TotalValue:    totalValue,
+       }
+
+       summaryJSON, _ := json.Marshal(summary)
+       return ctx.GetStub().PutState(""AUCTION_RESULT_""+auctionID, summaryJSON)
+   }
+
+   func (a *AuctionContract) calculateAuctionSummary(ctx contractapi.TransactionContextInterface, auctionID string) (float64, string, int, float64, error) {
+       resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Bid"", []string{auctionID})
+       if err != nil {
+           return 0, """", 0, 0, fmt.Errorf(""failed to query bids: %v"", err)
+       }
+       defer resultsIterator.Close()
+
+       var highestBid float64
+       var hi"
+5,P06.go,4688,10.869,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The code iterates over Go maps, which are non-deterministic in Go. Different peers may iterate over the map in different orders, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to sort the keys before iterating over the map.
+
+2. **Vulnerability Type**: Private data leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `GenerateReport`
+   - **Description**: The `GenerateReport` function constructs a report string by iterating over a map, which is non-deterministic. This can lead to different reports being written to the ledger across peers, potentially leaking private data.
+   - **Recommended Fix**: Ensure that the order of operations is consistent across peers. One possible fix is to sort the keys before iterating over the map.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of writes can vary across peers, leading to different write-set orderings and endorsement mismatches.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the order of operations is consistent across peers. One possible fix is to sort the keys before iterating over the map.
+
+4. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The code iterates over a map and performs write operations inside the loop. The order of writes can vary across peers, leading to different writ"
+5,P07.go,5460,4.925,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Iterator Leak
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`, `TransferAssetsByOwner`, `DeactivateRange`
+   - **Description**: The iterators returned by `GetStateByRange`, `GetStateByPartialCompositeKey`, and similar methods are not closed. This leads to resource exhaustion as the underlying gRPC stream and database cursor remain open.
+   - **Recommended Fix**: Add `defer resultsIterator.Close()` at the beginning of each function to ensure the iterator is closed after use.
+
+2. **Vulnerability Type**: Early Return Without Closing Iterator
+   - **Severity**: High
+   - **Affected Code Location**: `GetAssetsByRange`, `SumAssetValues`
+   - **Description**: In functions like `GetAssetsByRange` and `SumAssetValues`, the iterator is closed in some paths but not in others, leading to resource leaks.
+   - **Recommended Fix**: Ensure that the iterator is closed in all code paths, including error handling paths.
+
+3. **Vulnerability Type**: Non-Deterministic Operations
+   - **Severity**: Medium
+   - **Affected Code Location**: `TransferAssetsByOwner`
+   - **Description**: The function `TransferAssetsByOwner` does not ensure that the transfer operation is atomic. If an error occurs during the transfer, some assets may be transferred while others are not.
+   - **Recommended Fix**: Use a transaction to ensure that the transfer operation is atomic. This can be done by wrapping the transfer logic in a transaction.
+
+4. **Vulnerability Type**: Insecure Key Management
+   - **Severity**: Low
+   - **Affected Code Location**: `RegisterAsset`, `TransferAssetsByOwner`
+   - **Description**: The function `RegisterAsset` does not encrypt sensitive data before storing it. The function `TransferAssetsByOwner` does not ensure that the transfer operation is secure, as it does not use encryption or other security measures.
+   - **Recommended Fix**: Encrypt sensitive data before storing it. Use secur"
+5,P08.go,4291,7.348,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 34, 54, 74)
+   - **Description**: The use of `time.Now()` in multiple functions results in non-deterministic behavior. Each peer will execute this at a slightly different wall-clock time, producing different timestamps. This can lead to endorsement mismatches and prevent transactions from being committed to the ledger.
+   - **Recommended Fix**: Use a deterministic timestamp source, such as a timestamp provided by the transaction context or a trusted external service. For example, you could use the transaction timestamp provided by Hyperledger Fabric:
+     ```go
+     shipment.CreatedAt = ctx.GetStub().GetTxTimestamp().Format(time.RFC3339)
+     shipment.UpdatedAt = ctx.GetStub().GetTxTimestamp().Format(time.RFC3339)
+     ```
+
+2. **Vulnerability Type**: Input validation flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment` (line 34)
+   - **Description**: The function `CreateShipment` does not validate the input parameters (`id`, `origin`, `destination`). If these parameters are not properly validated, they could contain malicious data.
+   - **Recommended Fix**: Add input validation to ensure that `id`, `origin`, and `destination` are non-empty and meet other criteria (e.g., length, format).
+     ```go
+     if id == """" || origin == """" || destination == """" {
+         return fmt.Errorf(""id, origin, and destination must not be empty"")
+     }
+     ```
+
+3. **Vulnerability Type**: Access control issues
+   - **Severity**: Medium
+   - **Affected Code Location**: `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature` (lines 34, 54, 74)
+   - **Description**: The functions do not enforce any access control. Any user can create, update, or record temperature for any shipment.
+   - **Recommended Fix**: Implement access control to ensure that "
+5,P09.go,6189,0.344,safe,safe,True,No vulnerabilities detected.
+5,P10.go,5739,7.183,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `ProcessClaimsByRange` function, line 18
+   - **Description**: The function `ProcessClaimsByRange` does not check if the current user has the necessary permissions to process claims. This could allow unauthorized users to process claims.
+   - **Recommended Fix**: Add access control checks to ensure that only authorized users can process claims. This can be done by checking the user's role or permissions before processing claims.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `GetHighValueClaims` function, line 44
+   - **Description**: The function `GetHighValueClaims` does not validate the input threshold. If the threshold is negative, it will close the iterator immediately and return an error. However, if the threshold is positive, the iterator is never closed, leading to a resource leak.
+   - **Recommended Fix**: Validate the input threshold to ensure it is positive. If the threshold is negative, return an error.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 27-31
+   - **Description**: The function `ProcessClaimsByRange` first counts the number of claims in the range and then re-queries the same range to process them. This can lead to phantom reads if new claims are added to the range between the count and the processing steps.
+   - **Recommended Fix**: Use a single query to both count and process the claims. This can be done by using a query that filters claims based on their status and amount.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: High
+   - **Affected Code Location**: `GetHighValueClaims` function, lines 44-48
+   - **Description**: The function `GetHighValueClaims` does not check if the claims being retrieved are private"
+5,P11.go,5711,3.976,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateInventory` function, lines 18-34
+   - **Description**: The iteration order of Go maps is randomized, leading to non-deterministic behavior. This can result in different write orders across endorsing peers, which can lead to inconsistencies in the ledger state.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted map or a fixed order for processing zones and items.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `GenerateZoneReport` function, lines 44-60
+   - **Description**: The iteration order of Go maps is randomized, leading to non-deterministic behavior. This can result in different report strings across endorsing peers.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted map or a fixed order for processing zones and items.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `MergeZones` function, lines 72-88
+   - **Description**: The iteration order of Go maps is randomized, leading to non-deterministic behavior. This can result in different write orders across endorsing peers.
+   - **Recommended Fix**: Use a deterministic data structure or ensure that the iteration order is consistent across peers. One possible fix is to use a sorted map or a fixed order for processing zones and items.
+
+### Summary
+
+- **No vulnerabilities detected** in terms of access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, and insecure key management. However, the non-deterministic operations in the `BatchUpdateInventory`, `GenerateZoneRepor"
+5,P12.go,5307,0.304,safe,safe,True,No vulnerabilities detected.
+5,P13.go,5336,7.769,vulnerable,vulnerable,True,"### Vulnerability Analysis of 'P13.go'
+
+1. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TallyVotes` function, lines 50-73
+   - **Description**: The `TallyVotes` function uses goroutines to count votes concurrently. Since the Fabric chaincode runtime is single-threaded per transaction, spawning goroutines causes race conditions whose outcome varies per peer. The non-deterministic execution order can lead to different intermediate states and final results.
+   - **Recommended Fix**: Remove the use of goroutines and perform the vote counting in a single-threaded manner. This can be done by iterating over the proposal IDs sequentially and updating the vote counts in the same order.
+
+2. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `BatchUpdateStatus` function, lines 80-103
+   - **Description**: The `BatchUpdateStatus` function uses goroutines to update multiple proposals concurrently. The order in which `PutState` is invoked affects the read-write set ordering. Different goroutine scheduling on different peers means different PutState sequences, causing endorsement mismatch.
+   - **Recommended Fix**: Remove the use of goroutines and perform the updates in a single-threaded manner. This can be done by iterating over the proposal IDs sequentially and updating the statuses in the same order.
+
+3. **Vulnerability Type**: Fire-and-forget goroutine
+   - **Severity**: High
+   - **Affected Code Location**: `AsyncNotify` function, lines 106-114
+   - **Description**: The `AsyncNotify` function fires off a goroutine to emit events. The goroutine may or may not complete before the transaction endorsement finishes. If it calls `SetEvent` after the stub has been closed, behavior is undefined and differs per peer.
+   - **Recommended Fix**: Ensure that the goroutine completes before the transaction endorsement finishes. One way to do this is to use a channel t"
+5,P14.go,6316,0.37,safe,safe,True,No vulnerabilities detected.
+5,P15.go,4833,5.962,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Global variable
+   - **Severity**: High
+   - **Affected Code Location**: `transactionCounter` and `lastProcessedID` in the `main` package
+   - **Description**: Global variables are maintained in each peer's memory and are not synchronized across peers. This leads to different values being used by different peers, causing endorsement mismatches.
+   - **Recommended Fix**: Use the ledger to store global state. For example, store `transactionCounter` and `lastProcessedID` as state variables in the ledger.
+
+2. **Vulnerability Type**: Reading and mutating a global variable inside chaincode
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken` and `TransferToken` methods in the `TokenContract` struct
+   - **Description**: The `transactionCounter` is incremented and used to update the `TxCount` field in the `Token` struct. Since this variable is peer-specific, different peers will compute different results, causing endorsement mismatches.
+   - **Recommended Fix**: Use the ledger to store the transaction count. For example, store the transaction count as a state variable and increment it each time a transaction is processed.
+
+3. **Vulnerability Type**: Non-deterministic operations
+   - **Severity**: High
+   - **Affected Code Location**: `TransferToken` and `BurnToken` methods in the `TokenContract` struct
+   - **Description**: The `transactionCounter` is used to generate a ""receipt"" key and to update the `TxCount` field in the `Token` struct. Since this variable is peer-specific, different peers will write to different ledger keys and update different `TxCount` values.
+   - **Recommended Fix**: Use the ledger to store the transaction count. For example, store the transaction count as a state variable and increment it each time a transaction is processed.
+
+4. **Vulnerability Type**: Exposing global variable values
+   - **Severity**: Medium
+   - **Affected Code Location**: `GetGlobalStats` method in the `To"

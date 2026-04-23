@@ -1,0 +1,2045 @@
+run,file,code_chars,elapsed_s,classification,ground_truth,correct,result
+1,safe_01_logging.go,3899,0.393,safe,safe,True,No vulnerabilities detected.
+1,safe_02_local_var.go,4410,0.295,safe,safe,True,No vulnerabilities detected.
+1,safe_03_map_read.go,4208,19.691,vulnerable,safe,False,"### Analysis of 'safe_03_map_read.go'
+
+#### 1. Access Control Issues
+
+**Vulnerability Type:** Access control issues
+
+**Severity:** Medium
+
+**Affected Code Location:** `ValidateVoterEligibility` function (line 100)
+
+**Description:** The `ValidateVoterEligibility` function checks if a voter is eligible to vote based on their district. However, it does not ensure that only authorized users (e.g., election officials) can call this function. This could allow any user to check the eligibility of any voter, which might be a security risk.
+
+**Recommended Fix:** Restrict access to the `ValidateVoterEligibility` function to authorized users. This can be done by checking the identity of the caller within the function.
+
+```go
+func (v *VotingContract) ValidateVoterEligibility(ctx contractapi.TransactionContextInterface, voterID string) (bool, error) {
+	// Check if the caller is an authorized user (e.g., election official)
+	caller, err := ctx.GetStub().GetCreator()
+	if err != nil {
+		return false, fmt.Errorf(""failed to get caller identity: %v"", err)
+	}
+	// Add logic to check if the caller is authorized
+	// For example, check if the caller's role is ""ElectionOfficial""
+	if caller.Role != ""ElectionOfficial"" {
+		return false, fmt.Errorf(""caller is not authorized to validate voter eligibility"")
+	}
+
+	// Existing logic to check voter eligibility
+	eligibleDistricts := map[string]bool{
+		""DISTRICT_A"": true,
+		""DISTRICT_B"": true,
+		""DISTRICT_C"": true,
+		""DISTRICT_D"": false, // suspended
+	}
+
+	voterJSON, err := ctx.GetStub().GetState(""VOTER_"" + voterID)
+	if err != nil {
+		return false, fmt.Errorf(""failed to read voter record: %v"", err)
+	}
+	if voterJSON == nil {
+		return false, fmt.Errorf(""voter %s is not registered"", voterID)
+	}
+
+	var voterRecord map[string]string
+	err = json.Unmarshal(voterJSON, &voterRecord)
+	if err != nil {
+		return false, err
+	}
+
+	district := voterRecord[""district""]
+
+	eligible, found := eligibleDistricts[district]
+	if !found {
+		return false, nil
+	}
+
+	return eligible, ni"
+1,safe_04_math_rand.go,3721,7.214,vulnerable,safe,False,"### Analysis of 'safe_04_math_rand.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description:** The chaincode does not enforce any access control checks. Any user can call these functions, which could lead to unauthorized modifications or data manipulation.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can call these functions. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of allowed users or roles.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** Medium
+**Affected Code Location:** `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `trackingID` is unique or if the `weight` is a positive number.
+**Recommended Fix:** Add input validation to ensure that the parameters are valid. For example, check if the `trackingID` is unique, if the `weight` is a positive number, and if the `newWarehouseID` is a valid warehouse ID.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `TransferPackage`, `DeliverPackage`
+**Description:** The chaincode does not handle concurrent updates to the same package. If two transactions attempt to update the same package at the same time, it could lead to phantom reads.
+**Recommended Fix:** Use a locking mechanism to ensure that only one transaction can update a package at a time. This can be done by using a lock table or by using the `GetState` and `PutState` methods with a transaction ID.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private data leakage
+**Severity:** Low
+**Affected Code Location:** `RegisterPackage"
+1,safe_05_deterministic_time.go,4119,17.523,vulnerable,safe,False,"### Analysis of 'safe_05_deterministic_time.go'
+
+#### 1. **Vulnerability Type**: Non-deterministic operations
+**Severity**: High
+**Affected Code Location**: `IssueCertificate` and `RenewCertificate` functions
+**Description**: The code uses `time.Now()` to get the current time, which is non-deterministic. This can lead to different results on different nodes or at different times, which is not desirable for blockchain applications where consistency is crucial.
+**Recommended Fix**: Use the deterministic timestamp provided by the transaction context (`txTimestamp`) instead of `time.Now()`.
+
+```go
+// IssueCertificate creates a new certificate on the ledger
+func (c *CertificateContract) IssueCertificate(ctx contractapi.TransactionContextInterface, certID string, holderName string, courseID string) error {
+	exists, err := c.CertExists(ctx, certID)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return fmt.Errorf(""certificate %s already exists"", certID)
+	}
+
+	startLocal := time.Now()
+
+	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+	if err != nil {
+		return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+	}
+	deterministicTime := time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos))
+
+	cert := Certificate{
+		CertID:     certID,
+		HolderName: holderName,
+		CourseID:   courseID,
+		IssuedAt:   deterministicTime.Format(time.RFC3339),
+		ExpiresAt:  deterministicTime.AddDate(2, 0, 0).Format(time.RFC3339),
+		Status:     ""ACTIVE"",
+	}
+
+	certJSON, err := json.Marshal(cert)
+	if err != nil {
+		return err
+	}
+
+	err = ctx.GetStub().PutState(certID, certJSON)
+	if err != nil {
+		return err
+	}
+
+	elapsed := time.Since(startLocal)
+	fmt.Printf(""[PERF] IssueCertificate(%s) took %v\n"", certID, elapsed)
+
+	return nil
+}
+
+// RenewCertificate extends the expiration date of a certificate
+func (c *CertificateContract) RenewCertificate(ctx contractapi.TransactionContextInterface, certID string) error {
+	certJSON, err := ctx.GetStub().GetState(certID)
+	if err != nil {
+		return fmt.Errorf("""
+1,safe_06_external_lib.go,4558,0.283,safe,safe,True,No vulnerabilities detected.
+1,vuln_01_b_interprocedural.go,3698,8.793,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_b_interprocedural.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not enforce any access control measures. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is a valid format or if the `patientID` exists in the system. This could lead to invalid data being stored on the ledger.
+**Recommended Fix:** Add input validation checks to ensure that the input parameters are valid and meet the expected format. For example, you can check if the `recordID` is a valid UUID, if the `patientID` exists in the system, and if the `diagnosis` and `note` are not empty strings.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `UpdateDiagnosis`
+**Description:** The `UpdateDiagnosis` function reads the current state of the medical record, updates the diagnosis, and then writes the updated state back to the ledger. However, there is no guarantee that the state of the medical record has not changed between the read and write operations. This could lead to phantom reads, where the updated state is based on an outdated version of the data.
+**Recommended Fix:**"
+1,vuln_01_time.go,3431,7.391,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_time.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access Control Issues  
+**Severity:** Medium  
+**Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not implement any access control checks. Any user can create, update, or record temperature for any shipment. This can lead to unauthorized modifications and data tampering.  
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input Validation Flaws  
+**Severity:** Medium  
+**Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `id` is a valid string or if the `status` is one of the expected values. This can lead to unexpected behavior or errors.  
+**Recommended Fix:** Add input validation to ensure that the input parameters are valid and meet the expected criteria.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  
+**Severity:** Low  
+**Affected Code Location:** `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not handle concurrent updates to the same shipment. If two transactions attempt to update the same shipment at the same time, it can lead to phantom reads or other concurrency issues.  
+**Recommended Fix:** Use a locking mechanism or a versioning system to handle concurrent updates to the same shipment.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private Data Leakage  
+**Severity:** Low  
+**Affected Code Location:** `RecordTemperature`  
+**Description:** The chaincode records temperature readings with the"
+1,vuln_02_global.go,3544,7.723,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken`, `TransferToken`, `BurnToken`
+   - **Description**: The chaincode does not enforce any access control checks. Any user can call `IssueToken`, `TransferToken`, and `BurnToken` without any restrictions. This can lead to unauthorized token creation, transfer, and burning.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `TransferToken`, `BurnToken`
+   - **Description**: The chaincode does not validate the input parameters (e.g., `amount`) to ensure they are within a reasonable range. For example, `amount` can be set to a very large value, which could lead to unexpected behavior or potential overflows.
+   - **Recommended Fix**: Add input validation to ensure that `amount` is a positive number and within a reasonable range.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `TransferToken`
+   - **Description**: The `TransferToken` function reads the state of the sender and recipient before updating their balances. If another transaction is executed between these reads and writes, it could lead to a phantom read, where the sender's balance is updated based on the old recipient's balance.
+   - **Recommended Fix**: Use a transactional update mechanism to ensure that the read and write operations are atomic. This can be done by using the `ctx.GetStub().GetState` and `ctx.GetStub().PutState` methods within a single transaction.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: Low
+   - **Affected Code Location**:"
+1,vuln_03_goroutine.go,3930,13.368,safe,vulnerable,False,"### Analysis of 'vuln_03_goroutine.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `CastVote` function (line 44)
+   - **Description:** The `CastVote` function does not check if the voter is authorized to vote. Any user can cast a vote for any proposal.
+   - **Recommended Fix:** Add access control checks to ensure only authorized users can cast votes. This could involve checking a whitelist of authorized voters or using a more sophisticated access control mechanism.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `CreateProposal` function (line 24)
+   - **Description:** The `CreateProposal` function does not validate the input parameters (`id` and `title`). If these parameters are not properly validated, they could lead to unexpected behavior or security issues.
+   - **Recommended Fix:** Add input validation to ensure that `id` is a non-empty string and `title` is not empty.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Medium
+   - **Affected Code Location:** `TallyVotes` function (line 81)
+   - **Description:** The `TallyVotes` function uses goroutines to read and update proposal vote counts concurrently. However, it does not ensure that the reads and writes are consistent. If a proposal is updated between reads, the tally could be incorrect.
+   - **Recommended Fix:** Use a mutex to ensure that reads and writes to the proposal vote counts are atomic. Alternatively, use a more sophisticated concurrency control mechanism.
+
+#### 4. **Private Data Leakage**
+   - **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `AsyncNotify` function (line 121)
+   - **Description:** The `AsyncNotify` function emits an event containing the proposal ID and a message. If the "
+1,vuln_04_b_nested_map.go,3798,20.092,vulnerable,vulnerable,True,"### Analysis of 'vuln_04_b_nested_map.go'
+
+#### 1. Access Control Issues
+
+**Vulnerability Type:** Access Control Issues
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 28-34)
+
+**Description:** The `BatchUpdateInventory` function does not check if the transaction is authorized to update the inventory. Any user can call this function and update the inventory, which could lead to unauthorized modifications.
+
+**Recommended Fix:** Implement access control checks to ensure only authorized users can update the inventory. This can be done by checking the transaction's identity and permissions.
+
+```go
+// Add access control check
+if !ctx.GetStub().GetCreator().Role.IsAdmin() {
+    return fmt.Errorf(""access denied: only admins can update inventory"")
+}
+```
+
+#### 2. Input Validation Flaws
+
+**Vulnerability Type:** Input Validation Flaws
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 28-34)
+
+**Description:** The `BatchUpdateInventory` function does not validate the input JSON. An attacker could provide malformed JSON that could cause the function to fail or behave unexpectedly.
+
+**Recommended Fix:** Validate the input JSON to ensure it conforms to the expected structure.
+
+```go
+// Validate input JSON
+if !isValidJSON(updateJSON) {
+    return fmt.Errorf(""invalid update JSON"")
+}
+
+func isValidJSON(s string) bool {
+    var js json.RawMessage
+    return json.Unmarshal([]byte(s), &js) == nil
+}
+```
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+
+**Severity:** Medium
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 30-34)
+
+**Description:** The `BatchUpdateInventory` function reads the state of a zone before updating it. If another transaction is modifying the same zone concurrently, the read state might not reflect the most recent changes, leading to phantom reads.
+
+**Recommended Fix:** Use transactions to ensure that t"
+1,vuln_04_map_iter.go,3393,14.152,safe,vulnerable,False,"### Analysis of 'vuln_04_map_iter.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `GenerateReport` function (line 68)
+   - **Description:** The `GenerateReport` function iterates over a list of product IDs and generates a report. However, it does not check if the calling transaction has the necessary permissions to read these products. This could allow unauthorized users to generate reports for products they are not authorized to view.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can generate reports for specific products.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `BatchRestock` function (line 36)
+   - **Description:** The `BatchRestock` function does not validate the input `restockMap` to ensure that all product IDs exist in the state. If a product ID does not exist, the function will continue to the next iteration, which could lead to unexpected behavior.
+   - **Recommended Fix:** Add validation to check if all product IDs in the `restockMap` exist in the state before proceeding with the restock operation.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Medium
+   - **Affected Code Location:** `BatchRestock` function (line 36)
+   - **Description:** The `BatchRestock` function reads the state of a product before updating it. If another transaction modifies the product state between the read and write operations, the `BatchRestock` function will not reflect these changes, leading to phantom reads.
+   - **Recommended Fix:** Use transactions to ensure that read and write operations are atomic and consistent.
+
+#### 4. **Private Data Leakage**
+   - **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Medium
+   - **Affected Code Location:** `Ge"
+1,vuln_05_phantom.go,4004,29.516,vulnerable,vulnerable,True,"### Analysis of 'vuln_05_phantom.go'
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: Medium
+**Affected Code Location**: `PlaceBid` function (line 30)
+**Description**: The `PlaceBid` function does not check if the caller has the authority to place a bid. Any user can place a bid for any auction.
+**Recommended Fix**: Implement access control to ensure only authorized users can place bids. This can be done by checking the caller's identity and ensuring they are allowed to bid on the specified auction.
+
+```go
+func (a *AuctionContract) PlaceBid(ctx contractapi.TransactionContextInterface, bidID string, bidder string, amount float64, auctionID string) error {
+	// Check if the caller is authorized to place a bid
+	caller := ctx.GetStub().GetCreator()
+	if !isAuthorized(caller, auctionID) {
+		return fmt.Errorf(""caller is not authorized to place a bid on this auction"")
+	}
+
+	bid := Bid{
+		BidID:     bidID,
+		Bidder:    bidder,
+		Amount:    amount,
+		AuctionID: auctionID,
+	}
+
+	bidJSON, err := json.Marshal(bid)
+	if err != nil {
+		return err
+	}
+
+	compositeKey, err := ctx.GetStub().CreateCompositeKey(""Bid"", []string{auctionID, bidID})
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(compositeKey, bidJSON)
+}
+
+func isAuthorized(caller []byte, auctionID string) bool {
+	// Implement logic to check if the caller is authorized to bid on the specified auction
+	// This could involve checking a whitelist of authorized bidders or roles
+	return true // Placeholder
+}
+```
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: Medium
+**Affected Code Location**: `PlaceBid` function (line 30)
+**Description**: The `PlaceBid` function does not validate the input parameters. For example, it does not check if `bidID`, `bidder`, `amount`, or `auctionID` are empty or contain invalid characters.
+**Recommended Fix**: Add input validation to ensure that all parameters are valid and meet the expected format.
+
+```go
+func (a *AuctionContract) PlaceBid(ctx co"
+1,vuln_06_b_conditional_leak.go,3884,10.682,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 24-26
+   - **Description**: The function `ProcessClaimsByRange` does not check if the current user has the necessary permissions to process claims. This could allow unauthorized users to approve claims.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can process claims. This can be done by checking the user's role or permissions before processing claims.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `GetHighValueClaims` function, lines 54-56
+   - **Description**: The function `GetHighValueClaims` does not validate the `threshold` parameter. If the threshold is negative, it will close the iterator immediately and return an error. However, if the threshold is zero, it will not return any claims, which might be unexpected behavior.
+   - **Recommended Fix**: Validate the `threshold` parameter to ensure it is positive. If the threshold is zero, return an error or an appropriate message.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 34-41
+   - **Description**: The function `ProcessClaimsByRange` first counts the number of claims in the range and then re-queries the same range to process them. This can lead to phantom reads if new claims are added to the range between the count and the processing steps.
+   - **Recommended Fix**: Use a single query to both count and process the claims. This can be done by using a query that filters claims based on their status and then processes them.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: Low
+   - **Affected Code Location**: `GetHighValueClaims` function, lines 54-56
+   - **Description**: The function `GetHighVa"
+1,vuln_06_iterator_leak.go,3995,7.125,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_iterator_leak.go'
+
+#### 1. **Vulnerability Type**: Iterator Leak
+#### 2. **Severity**: High
+#### 3. **Affected Code Location**: `TransferAssetsByOwner` and `DeactivateRange` functions
+#### 4. **Description of the Issue**:
+   - In the `TransferAssetsByOwner` and `DeactivateRange` functions, the iterator is not closed after its use. This can lead to resource leaks and potential performance issues.
+#### 5. **Recommended Fix**:
+   - Close the iterator after its use by calling `resultsIterator.Close()`.
+
+```go
+// TransferAssetsByOwner transfers all assets from one owner to another
+func (ar *AssetRegistryContract) TransferAssetsByOwner(ctx contractapi.TransactionContextInterface, fromOwner string, toOwner string) error {
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Asset"", []string{fromOwner})
+	if err != nil {
+		return fmt.Errorf(""failed to query assets by owner: %v"", err)
+	}
+	defer resultsIterator.Close() // Close the iterator after use
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return err
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		asset.Owner = toOwner
+
+		updatedJSON, _ := json.Marshal(asset)
+		err = ctx.GetStub().PutState(asset.ID, updatedJSON)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// DeactivateRange marks all assets in a range as inactive
+func (ar *AssetRegistryContract) DeactivateRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close() // Close the iterator after use
+
+	count := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return count, err
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+
+		if asset.IsActive {
+			asset.IsActive = false
+			updatedJSON, _ "
+2,safe_01_logging.go,3899,0.372,safe,safe,True,No vulnerabilities detected.
+2,safe_02_local_var.go,4410,0.393,safe,safe,True,No vulnerabilities detected.
+2,safe_03_map_read.go,4208,0.413,safe,safe,True,No vulnerabilities detected.
+2,safe_04_math_rand.go,3721,10.193,vulnerable,safe,False,"### Analysis of 'safe_04_math_rand.go' for Security Vulnerabilities
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: Medium
+**Affected Code Location**: `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not enforce any access control checks. Any user can call these functions, which could lead to unauthorized modifications or data leakage.
+**Recommended Fix**: Implement access control checks to ensure that only authorized users can call these functions. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: High
+**Affected Code Location**: `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not validate the input parameters. For example, it does not check if the `trackingID` is unique or if the `weight` is a positive number.
+**Recommended Fix**: Add input validation to ensure that the input parameters are valid. For example, check if the `trackingID` is unique, if the `weight` is a positive number, and if the `newWarehouseID` is a valid warehouse ID.
+
+#### 3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+**Severity**: Low
+**Affected Code Location**: `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not handle concurrent updates to the same package. If two transactions attempt to update the same package at the same time, it could lead to phantom reads.
+**Recommended Fix**: Use a locking mechanism to ensure that only one transaction can update a package at a time. This can be done by using a lock table or by using the `GetState` and `PutState` methods with a transaction ID.
+
+#### 4. **Vulnerability Type**: Private Data Leakage
+**Severity**: Medium
+**Affected Code Location**: `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not encry"
+2,safe_05_deterministic_time.go,4119,11.296,safe,safe,True,"### Analysis of 'safe_05_deterministic_time.go'
+
+#### 1. **Vulnerability Type**: Non-deterministic operations
+**Severity**: High
+**Affected Code Location**: `IssueCertificate` and `RenewCertificate` functions
+**Description**: The use of `time.Now()` is non-deterministic because it depends on the local system time, which can vary between different nodes in a Hyperledger Fabric network. This can lead to inconsistencies in the blockchain state if the same transaction is processed on different nodes at slightly different times.
+**Recommended Fix**: Use the deterministic timestamp obtained from `ctx.GetStub().GetTxTimestamp()` instead of `time.Now()`.
+
+#### 2. **Vulnerability Type**: Access control issues
+**Severity**: Medium
+**Affected Code Location**: `IssueCertificate`, `RenewCertificate`, and `RevokeCertificate` functions
+**Description**: The functions do not enforce any access control checks. Any user can call these functions, which could lead to unauthorized certificate issuance, renewal, or revocation.
+**Recommended Fix**: Implement access control checks to ensure that only authorized users can issue, renew, or revoke certificates. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 3. **Vulnerability Type**: Input validation flaws
+**Severity**: Medium
+**Affected Code Location**: `IssueCertificate` function
+**Description**: The function does not validate the input parameters (`certID`, `holderName`, `courseID`). This could lead to invalid or malicious data being stored on the blockchain.
+**Recommended Fix**: Add input validation to ensure that the input parameters are valid and meet the expected format. For example, `certID` should be a unique identifier, `holderName` and `courseID` should be non-empty strings.
+
+#### 4. **Vulnerability Type**: Private data leakage
+**Severity**: Low
+**Affected Code Location**: `IssueCertificate`, `RenewCertificate`, and "
+2,safe_06_external_lib.go,4558,10.924,safe,safe,True,"### Analysis of 'safe_06_external_lib.go'
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: Medium
+**Affected Code Location**: `CreateAccount`, `AddPoints`, `RedeemPoints`
+**Description**: The chaincode does not enforce any access control measures. Any user can call `CreateAccount`, `AddPoints`, and `RedeemPoints` methods, which could lead to unauthorized access and manipulation of loyalty accounts.
+**Recommended Fix**: Implement access control by checking the identity of the caller and ensuring they have the necessary permissions to perform the requested action. This can be done using Hyperledger Fabric's built-in capabilities for identity verification and authorization.
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: High
+**Affected Code Location**: `AddPoints`, `RedeemPoints`
+**Description**: The `AddPoints` and `RedeemPoints` methods do not validate the input values properly. For example, `AddPoints` converts `pointsStr` to an integer without checking if it is a valid integer, which could lead to errors or unexpected behavior.
+**Recommended Fix**: Add proper input validation to ensure that `pointsStr` is a valid integer before converting it to an integer. Additionally, consider adding checks to ensure that the points values are within a reasonable range.
+
+#### 3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+**Severity**: Low
+**Affected Code Location**: `AddPoints`, `RedeemPoints`
+**Description**: The chaincode does not handle concurrent updates to the same account. If two transactions attempt to update the same account simultaneously, it could lead to phantom reads, where a transaction reads a value that was not committed by any other transaction.
+**Recommended Fix**: Use Hyperledger Fabric's built-in support for transactions and ensure that each transaction is atomic and isolated. This can be achieved by using the `GetStub().GetState()` and `GetStub().PutState()` methods within a transaction.
+
+#### "
+2,vuln_01_b_interprocedural.go,3698,11.525,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_b_interprocedural.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not enforce any access control measures. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is a valid format or if the `patientID` exists in the system.
+**Recommended Fix:** Add input validation to ensure that the input parameters are valid and meet the expected format. For example, you can check if the `recordID` is a valid UUID and if the `patientID` exists in the system.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `UpdateDiagnosis`
+**Description:** The `UpdateDiagnosis` function reads the current state of the record and then updates it. However, if another transaction modifies the record between the read and update operations, the update operation will overwrite the changes made by the other transaction.
+**Recommended Fix:** Use a transaction isolation level that prevents phantom reads, such as `READ_COMMITTED`. This ensures that the read operation sees the state of the record as it was at the time of the read operation.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private"
+2,vuln_01_time.go,3431,10.823,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_time.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access Control Issues  
+**Severity:** Medium  
+**Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not implement any access control checks. Any user can create, update, or record temperature for any shipment, which could lead to unauthorized modifications or data tampering.  
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter and comparing it against a list of authorized users or roles.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input Validation Flaws  
+**Severity:** Medium  
+**Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `id` is a valid UUID, if the `origin` and `destination` are non-empty strings, or if the `newStatus` is a valid status. This could lead to invalid data being stored on the ledger.  
+**Recommended Fix:** Add input validation checks to ensure that the input parameters are valid and meet the expected format.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  
+**Severity:** Low  
+**Affected Code Location:** `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not handle concurrent updates to the same shipment. If two transactions attempt to update the same shipment at the same time, one transaction may overwrite the changes made by the other, leading to phantom reads.  
+**Recommended Fix:** Use a locking mechanism to ensure that only one transaction can update a shipment at a time. This can be done by using a lock table or by using the `GetState` and `PutState` methods with a transaction ID.
+
+"
+2,vuln_02_global.go,3544,10.91,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `IssueToken`, `TransferToken`, `BurnToken`
+   - **Description**: The chaincode does not enforce any access control. Any user can call `IssueToken`, `TransferToken`, and `BurnToken` without any restrictions. This can lead to unauthorized token creation, transfer, and burning.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `TransferToken`, `BurnToken`
+   - **Description**: The chaincode does not validate the input parameters (e.g., `amount`) to ensure they are within a reasonable range. For example, `amount` can be set to a very large value, which could lead to unexpected behavior or potential overflows.
+   - **Recommended Fix**: Add input validation to ensure that `amount` is a positive number and within a reasonable range.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `TransferToken`
+   - **Description**: The `TransferToken` function reads the state of the sender and recipient before updating their balances. If another transaction is executed between these reads and writes, it could lead to a phantom read where the sender's balance is updated before the recipient's balance, resulting in an inconsistent state.
+   - **Recommended Fix**: Use a transactional approach to ensure that the read and write operations are atomic. This can be done by using a single transaction to update both the sender and recipient's balances.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: Low
+   - **Affected Code Location**: `GetGlo"
+2,vuln_03_goroutine.go,3930,10.417,safe,vulnerable,False,"### Analysis of 'vuln_03_goroutine.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `CastVote` function (line 42)
+   - **Description:** The `CastVote` function does not check if the voter is authorized to vote. Any user can cast a vote for any proposal, which could lead to manipulation.
+   - **Recommended Fix:** Add access control checks to ensure only authorized users can cast votes. This could involve checking a whitelist of authorized voters or using a more sophisticated access control mechanism.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `CastVote` function (line 42)
+   - **Description:** The `CastVote` function does not validate the `voterID`. If an invalid or malicious `voterID` is provided, it could lead to unexpected behavior.
+   - **Recommended Fix:** Validate the `voterID` to ensure it meets certain criteria (e.g., length, format).
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Medium
+   - **Affected Code Location:** `TallyVotes` function (line 85)
+   - **Description:** The `TallyVotes` function uses goroutines to read and update proposal vote counts concurrently. If the order of reads and writes is not properly synchronized, it could lead to phantom reads where the final tally does not reflect the actual votes cast.
+   - **Recommended Fix:** Use a mutex to synchronize access to the `results` map to prevent concurrent reads and writes.
+
+#### 4. **Private Data Leakage**
+   - **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `AsyncNotify` function (line 114)
+   - **Description:** The `AsyncNotify` function emits an event containing the proposal ID and a message. If the message contains sensitive information, it could lead to private data lea"
+2,vuln_04_b_nested_map.go,3798,13.53,vulnerable,vulnerable,True,"### Analysis of 'vuln_04_b_nested_map.go'
+
+#### 1. Access Control Issues
+
+**Vulnerability Type:** Access Control Issues
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 24-35)
+
+**Description:** The `BatchUpdateInventory` function does not check if the transaction is authorized to update the inventory. Any user can call this function and update the inventory, which could lead to unauthorized modifications.
+
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can update the inventory. This can be done by checking the transaction's identity and ensuring it has the necessary permissions.
+
+```go
+// Add access control check
+if !ctx.GetStub().GetCreator().Role.IsAdmin() {
+    return fmt.Errorf(""access denied: only admins can update inventory"")
+}
+```
+
+#### 2. Input Validation Flaws
+
+**Vulnerability Type:** Input Validation Flaws
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 24-35)
+
+**Description:** The `BatchUpdateInventory` function does not validate the input JSON. An attacker could provide invalid JSON that could cause the function to fail or behave unpredictably.
+
+**Recommended Fix:** Validate the input JSON to ensure it is well-formed and contains the expected data structure.
+
+```go
+// Add input validation
+if len(updates) == 0 {
+    return fmt.Errorf(""no updates provided"")
+}
+```
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+
+**Severity:** Medium
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 24-35)
+
+**Description:** The `BatchUpdateInventory` function reads the state of a zone before updating it. If another transaction is modifying the same zone concurrently, the read operation might return stale data, leading to phantom reads.
+
+**Recommended Fix:** Use transactions to ensure that the read and write operations are atomic.
+
+```go
+// Use transactions to ensure "
+2,vuln_04_map_iter.go,3393,10.064,safe,vulnerable,False,"### Analysis of 'vuln_04_map_iter.go'
+
+#### 1. **Access Control Issues**
+**Vulnerability Type:** Access Control
+**Severity:** Medium
+**Affected Code Location:** `GenerateReport` and `ApplyDiscounts`
+**Description:** The `GenerateReport` and `ApplyDiscounts` functions do not check if the calling identity has the necessary permissions to read or modify the state. This could allow unauthorized users to generate reports or apply discounts.
+**Recommended Fix:** Implement access control checks using Hyperledger Fabric's access control features (e.g., `stub.GetCreator()` to get the identity of the caller and check if it has the required permissions).
+
+#### 2. **Input Validation Flaws**
+**Vulnerability Type:** Input Validation
+**Severity:** High
+**Affected Code Location:** `BatchRestock` and `ApplyDiscounts`
+**Description:** The `BatchRestock` and `ApplyDiscounts` functions do not validate the input JSON strings. If the input is malformed, it could lead to unexpected behavior or errors.
+**Recommended Fix:** Add input validation to ensure that the JSON strings are well-formed and contain the expected data.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+**Vulnerability Type:** Read-After-Write Conflict
+**Severity:** Medium
+**Affected Code Location:** `BatchRestock` and `ApplyDiscounts`
+**Description:** Both functions iterate over a map and update the state based on the map. However, if another transaction is modifying the state concurrently, it could lead to phantom reads where the function reads a value that was not present in the map at the start of the iteration.
+**Recommended Fix:** Use transactions to ensure that the read and write operations are atomic. This can be done by wrapping the read and write operations in a single transaction.
+
+#### 4. **Private Data Leakage**
+**Vulnerability Type:** Private Data Leakage
+**Severity:** High
+**Affected Code Location:** `GenerateReport`
+**Description:** The `GenerateReport` function constructs a report that includes the n"
+2,vuln_05_phantom.go,4004,28.182,vulnerable,vulnerable,True,"### Analysis of 'vuln_05_phantom.go'
+
+#### 1. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+**Severity:** Medium  
+**Affected Code Location:** `IncrementCounter` function (line 68)  
+**Description:** The `IncrementCounter` function reads the current value of a counter, increments it, and then writes the new value back. However, if another transaction reads the counter value between the read and write operations, it will see the old value, leading to a phantom read. This can result in incorrect counter values if multiple transactions are trying to increment the same counter concurrently.
+
+**Recommended Fix:** Use a transactional update mechanism to ensure that the read and write operations are atomic. This can be achieved by using a single transaction that reads the current value, increments it, and writes the new value back. Alternatively, use a database that supports transactions to ensure atomicity.
+
+```go
+func (a *AuctionContract) IncrementCounter(ctx contractapi.TransactionContextInterface, counterKey string) error {
+	txID := ctx.GetStub().GetTxID()
+	counterBytes, err := ctx.GetStub().GetState(counterKey)
+	if err != nil {
+		return fmt.Errorf(""failed to read counter: %v"", err)
+	}
+
+	counter := 0
+	if counterBytes != nil {
+		counter, err = strconv.Atoi(string(counterBytes))
+		if err != nil {
+			return fmt.Errorf(""invalid counter value: %v"", err)
+		}
+	}
+
+	counter++
+	return ctx.GetStub().PutState(counterKey, []byte(strconv.Itoa(counter)))
+}
+```
+
+#### 2. **Vulnerability Type:** Non-Deterministic Operations
+**Severity:** Low  
+**Affected Code Location:** `TransferWithBalanceCheck` function (line 92)  
+**Description:** The `TransferWithBalanceCheck` function reads the balance of the sender and recipient, checks if the sender has sufficient funds, and then updates the balances. However, if the sender's balance is updated before the recipient's balance, it can lead to a race condition where the recipient's balance is updated before the sender's balance"
+2,vuln_06_b_conditional_leak.go,3884,19.157,safe,vulnerable,False,"### Analysis of 'vuln_06_b_conditional_leak.go'
+
+#### 1. **Vulnerability Type:** Access Control Issues
+**Severity:** High  
+**Affected Code Location:** `ProcessClaimsByRange` function (lines 24-34)  
+**Description:** The function `ProcessClaimsByRange` does not check if the current transaction is authorized to process claims. Any user can call this function and process claims, which could lead to unauthorized access and manipulation of insurance claims.
+
+**Recommended Fix:** Implement access control checks to ensure only authorized users can process claims. This can be done by checking the transaction's identity and ensuring it belongs to an authorized role.
+
+```go
+func (ic *InsuranceContract) ProcessClaimsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string, approver string) error {
+	// Check if the current transaction is authorized to process claims
+	identity, err := ctx.GetStub().GetCreator()
+	if err != nil {
+		return fmt.Errorf(""failed to get transaction creator: %v"", err)
+	}
+	// Implement role-based access control
+	if !isAuthorized(identity) {
+		return fmt.Errorf(""unauthorized access"")
+	}
+
+	// Rest of the function remains the same
+	// ...
+}
+```
+
+#### 2. **Vulnerability Type:** Input Validation Flaws
+**Severity:** Medium  
+**Affected Code Location:** `GetHighValueClaims` function (lines 62-68)  
+**Description:** The function `GetHighValueClaims` does not validate the `threshold` parameter. If a negative threshold is provided, the function will close the iterator and return an error, which could be exploited to bypass the threshold check.
+
+**Recommended Fix:** Add input validation to ensure the `threshold` parameter is positive.
+
+```go
+func (ic *InsuranceContract) GetHighValueClaims(ctx contractapi.TransactionContextInterface, startKey string, endKey string, threshold int) ([]*Claim, error) {
+	if threshold <= 0 {
+		return nil, fmt.Errorf(""threshold must be positive, got %d"", threshold)
+	}
+
+	// Rest of the function remains the same
+	"
+2,vuln_06_iterator_leak.go,3995,8.606,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_iterator_leak.go'
+
+#### 1. **Vulnerability Type:** Iterator Leak
+#### 2. **Severity:** High
+#### 3. **Affected Code Location:** `TransferAssetsByOwner` and `DeactivateRange` functions
+#### 4. **Description of the Issue:**
+   - The `TransferAssetsByOwner` and `DeactivateRange` functions use iterators (`resultsIterator`) to iterate over a range of assets. However, they do not close the iterator after use, which can lead to resource leaks and potential performance issues.
+   - The `resultsIterator` is not closed in either function, which can cause the iterator to leak and potentially consume excessive memory.
+
+#### 5. **Recommended Fix:**
+   - Ensure that the iterator is closed after use. This can be done by calling `resultsIterator.Close()` after the loop completes.
+
+```go
+// TransferAssetsByOwner transfers all assets from one owner to another
+func (ar *AssetRegistryContract) TransferAssetsByOwner(ctx contractapi.TransactionContextInterface, fromOwner string, toOwner string) error {
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Asset"", []string{fromOwner})
+	if err != nil {
+		return fmt.Errorf(""failed to query assets by owner: %v"", err)
+	}
+	defer resultsIterator.Close() // Ensure the iterator is closed after use
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return err
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		asset.Owner = toOwner
+
+		updatedJSON, _ := json.Marshal(asset)
+		err = ctx.GetStub().PutState(asset.ID, updatedJSON)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// DeactivateRange marks all assets in a range as inactive
+func (ar *AssetRegistryContract) DeactivateRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close() // Ensure the iterator"
+3,safe_01_logging.go,3899,0.358,safe,safe,True,No vulnerabilities detected.
+3,safe_02_local_var.go,4410,0.41,safe,safe,True,No vulnerabilities detected.
+3,safe_03_map_read.go,4208,0.404,safe,safe,True,No vulnerabilities detected.
+3,safe_04_math_rand.go,3721,10.814,vulnerable,safe,False,"### Analysis of 'safe_04_math_rand.go' for Security Vulnerabilities
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description:** The chaincode does not enforce any access control checks. Any user can call these functions, which could lead to unauthorized package registration, transfer, or delivery.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `trackingID` is unique or if the `weight` is a positive number.
+**Recommended Fix:** Add input validation checks to ensure that the input parameters are valid. For example, you can check if the `trackingID` is not empty, if the `weight` is greater than zero, and if the `newWarehouseID` is a valid warehouse ID.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `TransferPackage`, `DeliverPackage`
+**Description:** The chaincode does not handle concurrent updates to the same package. If two transactions attempt to update the same package simultaneously, it could lead to phantom reads.
+**Recommended Fix:** Use a locking mechanism to ensure that only one transaction can update a package at a time. This can be done by using a lock table or by using the `GetState` and `PutState` methods with a transaction ID.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private data leakage
+**Seve"
+3,safe_05_deterministic_time.go,4119,9.175,vulnerable,safe,False,"### Analysis of 'safe_05_deterministic_time.go'
+
+#### 1. **Vulnerability Type**: Non-deterministic operations
+**Severity**: High
+**Affected Code Location**: `IssueCertificate` and `RenewCertificate` functions
+**Description**: The use of `time.Now()` to determine the current time is non-deterministic, as it can vary between different invocations of the function. This can lead to inconsistencies in the blockchain state if the same transaction is processed at different times.
+**Recommended Fix**: Use the deterministic timestamp obtained from `ctx.GetStub().GetTxTimestamp()` for all time-related operations.
+
+#### 2. **Vulnerability Type**: Access control issues
+**Severity**: Medium
+**Affected Code Location**: `IssueCertificate`, `RenewCertificate`, and `RevokeCertificate` functions
+**Description**: The functions do not enforce any access control checks. Any user can issue, renew, or revoke a certificate, which could lead to unauthorized access and manipulation of the blockchain state.
+**Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 3. **Vulnerability Type**: Input validation flaws
+**Severity**: Medium
+**Affected Code Location**: `IssueCertificate` function
+**Description**: The function does not validate the input parameters (`certID`, `holderName`, `courseID`). If these parameters are not properly validated, they could lead to unexpected behavior or security vulnerabilities.
+**Recommended Fix**: Add input validation checks to ensure that the input parameters are valid and meet the expected format.
+
+#### 4. **Vulnerability Type**: Private data leakage
+**Severity**: Low
+**Affected Code Location**: `IssueCertificate`, `RenewCertificate`, and `RevokeCertificate` functions
+**Description**: The functions do not encrypt sensitive data before st"
+3,safe_06_external_lib.go,4558,11.91,safe,safe,True,"### Analysis of 'safe_06_external_lib.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateAccount`, `AddPoints`, `RedeemPoints`
+**Description:** The chaincode does not enforce any access control measures. Any user can call `CreateAccount`, `AddPoints`, and `RedeemPoints` methods, which could lead to unauthorized access and manipulation of loyalty accounts.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can create, add points, and redeem points. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `AddPoints`, `RedeemPoints`
+**Description:** The `AddPoints` and `RedeemPoints` methods do not validate the input values. For example, `AddPoints` does not check if `pointsStr` is a valid integer, and `RedeemPoints` does not check if `redeemAmount` is a non-negative integer. This can lead to unexpected behavior and potential errors.
+**Recommended Fix:** Validate the input values before processing them. For example, in `AddPoints`, ensure that `pointsStr` is a valid integer and in `RedeemPoints`, ensure that `redeemAmount` is a non-negative integer.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `AddPoints`, `RedeemPoints`
+**Description:** The chaincode does not handle concurrent transactions properly. If two transactions attempt to modify the same loyalty account simultaneously, it could lead to phantom reads, where a transaction reads a value that was not committed yet.
+**Recommended Fix:** Use transactions to ensure that concurrent modifications to the same loyalty account are handled correctly. This ca"
+3,vuln_01_b_interprocedural.go,3698,11.214,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_b_interprocedural.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not enforce any access control measures. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is a valid format or if the `patientID` exists in the system.
+**Recommended Fix:** Add input validation to ensure that the input parameters are valid and meet the expected format. For example, you can check if the `recordID` is a valid UUID and if the `patientID` exists in the system.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `UpdateDiagnosis`
+**Description:** The `UpdateDiagnosis` function reads the current state of the record, updates the diagnosis, and then writes the updated state back to the ledger. However, if another transaction is reading the record at the same time, it may read the intermediate state of the record, which could lead to phantom reads.
+**Recommended Fix:** Use a transaction isolation level that prevents phantom reads, such as `READ_COMMITTED`. This ensures that a transaction reads only committed data, preventing phantom reads.
+
+#### 4. Private Data"
+3,vuln_01_time.go,3431,9.957,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_time.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** Medium
+   - **Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`
+   - **Description:** The chaincode does not enforce any access control checks. Any user can create, update, or record temperature for any shipment, which could lead to unauthorized modifications.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter and comparing it against a list of authorized users or roles.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** High
+   - **Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`
+   - **Description:** The chaincode does not validate the input parameters. For example, it does not check if the `id` is a valid string, if `origin` and `destination` are non-empty strings, or if `tempCelsius` is a valid temperature value.
+   - **Recommended Fix:** Add input validation to ensure that all parameters are valid and meet the expected format. For example, you can use regular expressions to validate the `id` and `tempCelsius` fields.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Low
+   - **Affected Code Location:** `UpdateShipmentStatus`, `RecordTemperature`
+   - **Description:** The chaincode does not handle concurrent updates to the same shipment. If two transactions attempt to update the same shipment at the same time, it could lead to phantom reads where the updated values are not visible to the other transaction.
+   - **Recommended Fix:** Use a locking mechanism to ensure that only one transaction can update a shipment at a time. This can be done by using a lock table or by using the `GetState`"
+3,vuln_02_global.go,3544,11.043,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type:** Access Control Issues
+   - **Severity:** High
+   - **Affected Code Location:** `IssueToken`, `TransferToken`, `BurnToken`
+   - **Description:** The chaincode does not enforce any access control checks. Any user can call `IssueToken`, `TransferToken`, and `BurnToken` without any restrictions. This can lead to unauthorized token creation, transfer, and burning.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+2. **Vulnerability Type:** Input Validation Flaws
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferToken`, `BurnToken`
+   - **Description:** The `TransferToken` and `BurnToken` functions do not validate the input parameters (e.g., `amount`). If an attacker provides invalid or malicious input, it could lead to unexpected behavior or errors.
+   - **Recommended Fix:** Add input validation to ensure that the `amount` is a positive number and that the `from` and `to` addresses are valid.
+
+3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferToken`
+   - **Description:** The `TransferToken` function reads the state of the `from` and `to` accounts before updating them. If another transaction modifies the state between the read and write operations, it could lead to phantom reads.
+   - **Recommended Fix:** Use a transactional approach to ensure that the read and write operations are atomic. This can be done by using the `ctx.GetStub().GetState` and `ctx.GetStub().PutState` methods within a single transaction.
+
+4. **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `GetGlobalStats`
+   - **Description:** The `GetGlobalStats` function returns the global "
+3,vuln_03_goroutine.go,3930,10.529,safe,vulnerable,False,"### Analysis of 'vuln_03_goroutine.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `CastVote` function (line 44)
+   - **Description:** The `CastVote` function does not check if the voter is authorized to vote. Any user can cast a vote for any proposal.
+   - **Recommended Fix:** Add access control checks to ensure only authorized users can cast votes. This could involve checking a whitelist of authorized voters or using a more sophisticated access control mechanism.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `CreateProposal` function (line 24)
+   - **Description:** The `CreateProposal` function does not validate the input parameters (`id` and `title`). If these parameters are not properly validated, they could lead to unexpected behavior or security issues.
+   - **Recommended Fix:** Add input validation to ensure that `id` is a non-empty string and `title` is not empty.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Medium
+   - **Affected Code Location:** `TallyVotes` function (line 74)
+   - **Description:** The `TallyVotes` function uses goroutines to read and update proposal vote counts concurrently. However, it does not ensure that the reads and writes are consistent. If a proposal is updated between reads, the tally could be incorrect.
+   - **Recommended Fix:** Use a mutex to ensure that reads and writes are serialized. Alternatively, use a more sophisticated concurrency control mechanism like a distributed lock.
+
+#### 4. **Private Data Leakage**
+   - **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `AsyncNotify` function (line 104)
+   - **Description:** The `AsyncNotify` function emits an event containing the proposal ID and a message. If the "
+3,vuln_04_b_nested_map.go,3798,16.517,vulnerable,vulnerable,True,"### Analysis of 'vuln_04_b_nested_map.go'
+
+#### 1. Access Control Issues
+
+**Vulnerability Type:** Access Control Issues
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 24-34)
+
+**Description:** The `BatchUpdateInventory` function does not check if the transaction is authorized to update the inventory. Any user can call this function and modify the inventory data.
+
+**Recommended Fix:** Implement access control checks to ensure only authorized users can update the inventory. This can be done by checking the transaction's identity and permissions.
+
+```go
+// Add access control check
+if !ctx.GetStub().GetCreator().IsInRole(""admin"") {
+    return fmt.Errorf(""access denied: only admins can update inventory"")
+}
+```
+
+#### 2. Input Validation Flaws
+
+**Vulnerability Type:** Input Validation Flaws
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 24-34)
+
+**Description:** The `BatchUpdateInventory` function does not validate the input JSON. An attacker could provide malformed JSON that could cause the function to fail or behave unpredictably.
+
+**Recommended Fix:** Validate the input JSON to ensure it conforms to the expected structure.
+
+```go
+// Add input validation
+if !isValidJSON(updateJSON) {
+    return fmt.Errorf(""invalid update JSON"")
+}
+
+func isValidJSON(s string) bool {
+    var js map[string]interface{}
+    return json.Unmarshal([]byte(s), &js) == nil
+}
+```
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+
+**Severity:** Medium
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 24-34)
+
+**Description:** The `BatchUpdateInventory` function reads the state of a zone before updating it. If another transaction modifies the zone between the read and write operations, the update may not be accurate.
+
+**Recommended Fix:** Use a transactional approach to ensure that the read and write operations are atomic.
+
+```go
+// Use "
+3,vuln_04_map_iter.go,3393,9.937,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `RegisterProduct`, `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The chaincode does not enforce any access control checks. Any user can call these functions, potentially leading to unauthorized modifications or data leakage.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can call these functions. This can be done by checking the transaction context (e.g., using `ctx.GetStub().GetCreator()` to verify the identity of the caller).
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `RegisterProduct`, `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description**: The chaincode does not validate the input data. For example, `RegisterProduct` does not check if the `id` is unique, and `BatchRestock` does not validate the `restockMap` keys.
+   - **Recommended Fix**: Add input validation to ensure that the input data is valid and meets the expected format. For example, check if the `id` is unique before registering a new product.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `BatchRestock`, `ApplyDiscounts`
+   - **Description**: The chaincode reads the state before writing it, which can lead to phantom reads if another transaction modifies the state between the read and write operations.
+   - **Recommended Fix**: Use transactions to ensure that the read and write operations are atomic. This can be done by wrapping the read and write operations in a transaction using `ctx.GetStub().GetTxID()`.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: High
+   - **Affected Code Location**: `GenerateReport`
+   - **Description**: The chaincode generates a report that includes the product prices, which could be sensiti"
+3,vuln_05_phantom.go,4004,26.82,vulnerable,vulnerable,True,"### Analysis of 'vuln_05_phantom.go'
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: Medium
+**Affected Code Location**: `PlaceBid` function (line 30)
+**Description**: The `PlaceBid` function does not check if the caller is authorized to place a bid. Any user can place a bid for any auction.
+**Recommended Fix**: Implement access control to ensure only authorized users can place bids. This could involve checking a whitelist of authorized users or roles.
+
+```go
+func (a *AuctionContract) PlaceBid(ctx contractapi.TransactionContextInterface, bidID string, bidder string, amount float64, auctionID string) error {
+	// Check if the caller is authorized to place a bid
+	caller, err := ctx.GetStub().GetCreator()
+	if err != nil {
+		return err
+	}
+	if !isAuthorized(caller) {
+		return fmt.Errorf(""unauthorized user"")
+	}
+
+	bid := Bid{
+		BidID:     bidID,
+		Bidder:    bidder,
+		Amount:    amount,
+		AuctionID: auctionID,
+	}
+
+	bidJSON, err := json.Marshal(bid)
+	if err != nil {
+		return err
+	}
+
+	compositeKey, err := ctx.GetStub().CreateCompositeKey(""Bid"", []string{auctionID, bidID})
+	if err != nil {
+		return err
+	}
+
+	return ctx.GetStub().PutState(compositeKey, bidJSON)
+}
+
+func isAuthorized(caller []byte) bool {
+	// Implement logic to check if the caller is authorized
+	// Example: Check against a whitelist of authorized users or roles
+	return true
+}
+```
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: High
+**Affected Code Location**: `PlaceBid` function (line 30)
+**Description**: The `PlaceBid` function does not validate the input parameters. For example, it does not check if the `bidID`, `bidder`, `amount`, or `auctionID` are empty or invalid.
+**Recommended Fix**: Add input validation to ensure that all parameters are valid and non-empty.
+
+```go
+func (a *AuctionContract) PlaceBid(ctx contractapi.TransactionContextInterface, bidID string, bidder string, amount float64, auctionID string) error {
+	if bidID == """" || bidder == """" || auctionID == """" {
+"
+3,vuln_06_b_conditional_leak.go,3884,16.032,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_b_conditional_leak.go'
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: High
+**Affected Code Location**: `ProcessClaimsByRange` function (lines 28-30)
+**Description**: The function `ProcessClaimsByRange` does not check if the current transaction is authorized to process claims. Any user can call this function and process claims, which could lead to unauthorized access and manipulation of insurance claims.
+**Recommended Fix**: Implement access control checks to ensure that only authorized users can process claims. This can be done by checking the transaction's identity and ensuring it belongs to an authorized role.
+
+```go
+// Add access control check
+if !isAuthorized(ctx, approver) {
+    return fmt.Errorf(""unauthorized access"")
+}
+```
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: High
+**Affected Code Location**: `ProcessClaimsByRange` function (lines 28-30)
+**Description**: The function `ProcessClaimsByRange` does not validate the `approver` input. An empty or invalid `approver` can lead to errors or unexpected behavior.
+**Recommended Fix**: Ensure that the `approver` input is validated and sanitized before use.
+
+```go
+// Validate approver input
+if approver == """" {
+    return fmt.Errorf(""approver cannot be empty"")
+}
+```
+
+#### 3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+**Severity**: Medium
+**Affected Code Location**: `ProcessClaimsByRange` function (lines 37-42)
+**Description**: The function `ProcessClaimsByRange` first counts the number of claims in the range and then re-queries the same range to process them. This can lead to phantom reads if new claims are added between the count and the processing steps.
+**Recommended Fix**: Use a single query to both count and process the claims.
+
+```go
+resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+if err != nil {
+    return fmt.Errorf(""failed to get state by range: %v"", err)
+}
+
+for resultsIterator.HasNext() {
+ "
+3,vuln_06_iterator_leak.go,3995,8.397,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_iterator_leak.go'
+
+#### 1. **Vulnerability Type**: Iterator Leak
+#### 2. **Severity**: High
+#### 3. **Affected Code Location**: `TransferAssetsByOwner` and `DeactivateRange` functions
+#### 4. **Description of the Issue**:
+   - In the `TransferAssetsByOwner` and `DeactivateRange` functions, the iterator is not closed after its use. This can lead to resource leaks and potential performance issues.
+   - The `resultsIterator` is not closed after the loop, which can prevent the iterator from being properly released and can lead to memory leaks.
+
+#### 5. **Recommended Fix**:
+   - Close the iterator after its use by calling `resultsIterator.Close()`.
+
+```go
+// TransferAssetsByOwner transfers all assets from one owner to another
+func (ar *AssetRegistryContract) TransferAssetsByOwner(ctx contractapi.TransactionContextInterface, fromOwner string, toOwner string) error {
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Asset"", []string{fromOwner})
+	if err != nil {
+		return fmt.Errorf(""failed to query assets by owner: %v"", err)
+	}
+	defer resultsIterator.Close() // Close the iterator after use
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return err
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		asset.Owner = toOwner
+
+		updatedJSON, _ := json.Marshal(asset)
+		err = ctx.GetStub().PutState(asset.ID, updatedJSON)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// DeactivateRange marks all assets in a range as inactive
+func (ar *AssetRegistryContract) DeactivateRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close() // Close the iterator after use
+
+	count := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return count"
+4,safe_01_logging.go,3899,0.371,safe,safe,True,No vulnerabilities detected.
+4,safe_02_local_var.go,4410,0.398,safe,safe,True,No vulnerabilities detected.
+4,safe_03_map_read.go,4208,28.241,vulnerable,safe,False,"### Analysis of 'safe_03_map_read.go'
+
+#### 1. Access Control Issues
+
+**Vulnerability Type:** Access control issues
+
+**Severity:** Medium
+
+**Affected Code Location:** `ValidateVoterEligibility` function (line 100)
+
+**Description of the Issue:** The `ValidateVoterEligibility` function does not enforce any access control. It simply checks if the voter is registered and if they are eligible based on the `eligibleDistricts` map. There is no restriction on who can call this function, which could lead to unauthorized access to voter eligibility information.
+
+**Recommended Fix:** Restrict access to the `ValidateVoterEligibility` function to only authorized users, such as election officials or administrators. This can be done by checking the caller's identity within the function.
+
+```go
+func (v *VotingContract) ValidateVoterEligibility(ctx contractapi.TransactionContextInterface, voterID string) (bool, error) {
+	// Check if the caller is authorized
+	caller, err := ctx.GetStub().GetCreator()
+	if err != nil {
+		return false, fmt.Errorf(""failed to get caller identity: %v"", err)
+	}
+	// Add logic to check if the caller is authorized to validate voter eligibility
+
+	eligibleDistricts := map[string]bool{
+		""DISTRICT_A"": true,
+		""DISTRICT_B"": true,
+		""DISTRICT_C"": true,
+		""DISTRICT_D"": false, // suspended
+	}
+
+	voterJSON, err := ctx.GetStub().GetState(""VOTER_"" + voterID)
+	if err != nil {
+		return false, fmt.Errorf(""failed to read voter record: %v"", err)
+	}
+	if voterJSON == nil {
+		return false, fmt.Errorf(""voter %s is not registered"", voterID)
+	}
+
+	var voterRecord map[string]string
+	err = json.Unmarshal(voterJSON, &voterRecord)
+	if err != nil {
+		return false, err
+	}
+
+	district := voterRecord[""district""]
+
+	eligible, found := eligibleDistricts[district]
+	if !found {
+		return false, nil
+	}
+
+	return eligible, nil
+}
+```
+
+#### 2. Input Validation Flaws
+
+**Vulnerability Type:** Input validation flaws
+
+**Severity:** Medium
+
+**Affected Code Location:** `CastVote` function (line 40)
+
+**Descri"
+4,safe_04_math_rand.go,3721,9.846,vulnerable,safe,False,"### Analysis of 'safe_04_math_rand.go' for Security Vulnerabilities
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: Medium
+**Affected Code Location**: `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not enforce any access control checks. Any user can call these functions, which could lead to unauthorized package registration, transfer, or delivery.
+**Recommended Fix**: Implement access control checks to ensure that only authorized users can perform these actions. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: High
+**Affected Code Location**: `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not validate the input parameters. For example, `RegisterPackage` does not check if `trackingID`, `sender`, `receiver`, and `weight` are non-empty or valid. This could lead to invalid data being stored on the ledger.
+**Recommended Fix**: Add input validation to ensure that all parameters are valid and non-empty. For example, check if `trackingID` is not empty and if `weight` is a positive integer.
+
+#### 3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+**Severity**: Medium
+**Affected Code Location**: `TransferPackage`, `DeliverPackage`
+**Description**: The chaincode does not handle concurrent updates to the same package. If two transactions attempt to update the same package simultaneously, it could lead to phantom reads where the state of the package is inconsistent.
+**Recommended Fix**: Use transactions to ensure that updates to the same package are atomic. This can be done by wrapping the update logic in a transaction using `ctx.GetStub().InvokeChaincode()`.
+
+#### 4. **Vulnerability Type**: Private Data Leakage
+**Severity**: Low
+**Affected Code Location**: `RegisterPackage`, `TransferPackag"
+4,safe_05_deterministic_time.go,4119,8.158,vulnerable,safe,False,"### Analysis of 'safe_05_deterministic_time.go'
+
+#### 1. **Vulnerability Type**: Non-deterministic operations
+**Severity**: High
+**Affected Code Location**: `IssueCertificate` and `RenewCertificate` functions
+**Description**: The use of `time.Now()` to determine the current time is non-deterministic, as it can vary between different invocations of the chaincode. This can lead to inconsistencies in the blockchain state if the same transaction is executed multiple times.
+**Recommended Fix**: Use the deterministic timestamp obtained from `ctx.GetStub().GetTxTimestamp()` for all time-related operations.
+
+#### 2. **Vulnerability Type**: Access control issues
+**Severity**: Medium
+**Affected Code Location**: `IssueCertificate`, `RenewCertificate`, and `RevokeCertificate` functions
+**Description**: The chaincode does not enforce any access control measures. Any user can issue, renew, or revoke certificates without any restrictions.
+**Recommended Fix**: Implement access control mechanisms to restrict who can issue, renew, or revoke certificates. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a predefined set of authorized users.
+
+#### 3. **Vulnerability Type**: Input validation flaws
+**Severity**: Medium
+**Affected Code Location**: `IssueCertificate` function
+**Description**: The function does not validate the input parameters (`certID`, `holderName`, `courseID`). This can lead to invalid or malicious data being stored on the blockchain.
+**Recommended Fix**: Add input validation to ensure that `certID` is a valid string, `holderName` and `courseID` are non-empty strings, and `certID` does not already exist.
+
+#### 4. **Vulnerability Type**: Private data leakage
+**Severity**: Low
+**Affected Code Location**: `IssueCertificate`, `RenewCertificate`, and `RevokeCertificate` functions
+**Description**: The chaincode does not handle private data. All data is stored on the blockchain, which is public. "
+4,safe_06_external_lib.go,4558,7.422,safe,safe,True,"### Analysis of 'safe_06_external_lib.go' for Security Vulnerabilities
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access Control Issues  
+**Severity:** Medium  
+**Affected Code Location:** `CreateAccount`, `AddPoints`, `RedeemPoints`  
+**Description:** The chaincode does not enforce any access control measures. Any user can call these functions, which could lead to unauthorized creation, modification, or redemption of loyalty points.  
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input Validation Flaws  
+**Severity:** High  
+**Affected Code Location:** `AddPoints`  
+**Description:** The `AddPoints` function does not validate the input string `pointsStr` to ensure it contains only numeric characters. This could lead to errors if non-numeric characters are provided.  
+**Recommended Fix:** Add input validation to ensure `pointsStr` contains only numeric characters. This can be done using a regular expression or by converting the string to an integer and checking for errors.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  
+**Severity:** Medium  
+**Affected Code Location:** `AddPoints`, `RedeemPoints`  
+**Description:** The chaincode does not handle concurrent transactions properly. If two transactions attempt to modify the same account simultaneously, it could lead to phantom reads where the state appears to change unexpectedly.  
+**Recommended Fix:** Use a locking mechanism to ensure that only one transaction can modify an account at a time. This can be done using a mutex or by using the `GetStub().GetState()` and `PutState()` functions in a transactional manner.
+
+#### 4. Private Data Leakage
+**Vulnera"
+4,vuln_01_b_interprocedural.go,3698,7.829,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_b_interprocedural.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not enforce any access control measures. Any user can create, update, or add notes to any medical record. This can lead to unauthorized access and manipulation of patient data.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and comparing it against a list of authorized users.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is a valid format or if the `patientID` exists in the system. This can lead to unexpected behavior or security vulnerabilities.
+**Recommended Fix:** Validate all input parameters to ensure they meet the expected format and constraints. For example, you can check if the `recordID` is a valid UUID, if the `patientID` exists in the system, and if the `diagnosis` and `note` are not empty.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `UpdateDiagnosis`
+**Description:** The `UpdateDiagnosis` function reads the current state of the record, updates it, and then writes it back to the ledger. However, there is no guarantee that the state of the record has not changed between the read and write operations. This can lead to phantom reads, where the updated record does not reflect the actual state of the record.
+**Recommended Fix:** Use a transaction to ensure that the read and "
+4,vuln_01_time.go,3431,7.376,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_time.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access Control Issues  
+**Severity:** Medium  
+**Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not enforce any access control checks. Any user can create, update, or record temperature for any shipment. This can lead to unauthorized modifications and data tampering.  
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users or roles.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input Validation Flaws  
+**Severity:** Medium  
+**Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `id` is a valid string or if the `newStatus` is one of the allowed statuses. This can lead to unexpected behavior or errors.  
+**Recommended Fix:** Add input validation to ensure that the input parameters are valid. For example, you can check if the `id` is not empty and if the `newStatus` is one of the allowed statuses.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  
+**Severity:** Low  
+**Affected Code Location:** `UpdateShipmentStatus`, `RecordTemperature`  
+**Description:** The chaincode does not handle concurrent updates to the same shipment. If two transactions attempt to update the same shipment at the same time, one of them may overwrite the other's changes. This can lead to phantom reads.  
+**Recommended Fix:** Use a locking mechanism to ensure that only one transaction can update a shipment at a time. This can be done by using a lock table or by using the `PutState` method w"
+4,vuln_02_global.go,3544,7.378,safe,vulnerable,False,"### Analysis of 'vuln_02_global.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `TransferToken` function (lines 42-60)
+   - **Description:** The `TransferToken` function does not check if the transaction is authorized. Any user can call this function to transfer tokens from any owner to any recipient.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can transfer tokens. This can be done by checking the transaction's identity and ensuring it matches the owner of the tokens being transferred.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferToken` function (lines 42-60)
+   - **Description:** The `TransferToken` function does not validate the input parameters (e.g., `from`, `to`, `amount`). If these parameters are not properly validated, they could lead to unexpected behavior or errors.
+   - **Recommended Fix:** Add input validation to ensure that the `from`, `to`, and `amount` parameters are valid and within expected ranges.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferToken` function (lines 42-60)
+   - **Description:** The `TransferToken` function reads the state of the `from` and `to` accounts before updating them. If another transaction modifies these accounts between the read and write operations, it could lead to phantom reads.
+   - **Recommended Fix:** Use a transactional approach to ensure that the read and write operations are atomic. This can be done by using the `GetStub().GetState` and `GetStub().PutState` methods within a single transaction.
+
+#### 4. **Private Data Leakage**
+   - **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `GetGlobalS"
+4,vuln_03_goroutine.go,3930,6.364,vulnerable,vulnerable,True,"### Analysis of 'vuln_03_goroutine.go' for Security Vulnerabilities
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** High
+**Affected Code Location:** `CastVote`, `TallyVotes`, `BatchUpdateStatus`, `AsyncNotify`
+**Description:** The chaincode does not enforce any access control checks. Any user can call these functions, which could lead to unauthorized voting, vote manipulation, and event emission.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can cast votes, tally votes, update proposal statuses, and emit events.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `CreateProposal`, `CastVote`, `BatchUpdateStatus`
+**Description:** The chaincode does not validate the input parameters. For example, `CreateProposal` does not check if the proposal ID is unique, and `CastVote` does not validate the voter ID.
+**Recommended Fix:** Add input validation to ensure that the proposal ID is unique, the voter ID is valid, and other parameters meet the expected format.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Medium
+**Affected Code Location:** `TallyVotes`
+**Description:** The `TallyVotes` function uses goroutines to read and update proposal vote counts concurrently. However, it does not ensure that the reads and writes are consistent, which could lead to phantom reads.
+**Recommended Fix:** Use a mutex to ensure that the reads and writes are consistent. Alternatively, use a database that supports transactions to ensure atomicity.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private data leakage
+**Severity:** Medium
+**Affected Code Location:** `TallyVotes`
+**Description:** The `TallyVotes` function writes the vote counts to a public state variable (`TALLY_RESULT`). This could expose private data to unauthorized users.
+**Recomm"
+4,vuln_04_b_nested_map.go,3798,7.347,vulnerable,vulnerable,True,"### Analysis of 'vuln_04_b_nested_map.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access Control
+**Severity:** High
+**Affected Code Location:** `BatchUpdateInventory`, `GenerateZoneReport`, `MergeZones`
+**Description:** The chaincode does not enforce any access control checks. Any user can call these functions, potentially leading to unauthorized updates or data leakage.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can call these functions. This can be done by checking the transaction context (e.g., using `ctx.GetStub().GetCreator()` to verify the identity of the caller).
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input Validation
+**Severity:** High
+**Affected Code Location:** `BatchUpdateInventory`, `GenerateZoneReport`, `MergeZones`
+**Description:** The chaincode does not validate the input data. For example, it does not check if the `updateJSON` or `zonesJSON` is empty or malformed.
+**Recommended Fix:** Add input validation to ensure that the input data is valid and not empty. For example, check if the JSON data is well-formed and contains the expected keys.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-After-Write Conflict
+**Severity:** Medium
+**Affected Code Location:** `BatchUpdateInventory`
+**Description:** The chaincode reads the state of a zone before updating it. If another transaction updates the same zone concurrently, the read operation may return stale data, leading to phantom reads.
+**Recommended Fix:** Use a transactional approach to ensure that the read and write operations are atomic. This can be done by using the `ctx.GetStub().GetState()` and `ctx.GetStub().PutState()` methods within a transaction.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private Data Leakage
+**Severity:** High
+**Affected Code Location:** `GenerateZoneReport`
+**Description:** The chaincode stores a summary report of all zones in the state. If this report contai"
+4,vuln_04_map_iter.go,3393,7.86,safe,vulnerable,False,"### Analysis of 'vuln_04_map_iter.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `GenerateReport` function (line 64)
+   - **Description:** The `GenerateReport` function iterates over a list of product IDs and calculates the total value for each product. However, it does not check if the calling transaction has the necessary permissions to read the product data. This could lead to unauthorized access to private or sensitive data.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can access the product data. This can be done by checking the transaction context for the appropriate permissions.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `BatchRestock` function (line 26)
+   - **Description:** The `BatchRestock` function does not validate the input `restockMap` to ensure that the product IDs are valid or that the quantities are non-negative. This could lead to unexpected behavior or errors if invalid input is provided.
+   - **Recommended Fix:** Add input validation to ensure that the product IDs are valid and that the quantities are non-negative.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Medium
+   - **Affected Code Location:** `BatchRestock` function (line 26)
+   - **Description:** The `BatchRestock` function reads the current state of a product, updates the quantity, and then writes the updated state back to the ledger. However, if another transaction modifies the product state between the read and write operations, the update may be lost. This is known as a phantom read.
+   - **Recommended Fix:** Use a transactional update mechanism to ensure that the read and write operations are atomic. This can be done by using the `GetStub().GetState()` and `GetStu"
+4,vuln_05_phantom.go,4004,5.828,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `PlaceBid` function (line 36)
+   - **Description**: The `PlaceBid` function does not check if the caller has the authority to place a bid. Any user can place a bid for any auction.
+   - **Recommended Fix**: Implement access control to ensure only authorized users can place bids. This could involve checking the caller's identity and ensuring they are allowed to bid on the specified auction.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: High
+   - **Affected Code Location**: `PlaceBid` function (line 36)
+   - **Description**: The `PlaceBid` function does not validate the input parameters. For example, it does not check if `bidID`, `bidder`, `amount`, or `auctionID` are empty or invalid.
+   - **Recommended Fix**: Add input validation to ensure that all parameters are valid and meet the expected format.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `IncrementCounter` function (line 62)
+   - **Description**: The `IncrementCounter` function uses a read-modify-write pattern, which can lead to phantom reads if another transaction reads the counter value between the read and write operations.
+   - **Recommended Fix**: Use a transactional approach to ensure that the read and write operations are atomic. This can be achieved by using a single transaction or by using a locking mechanism.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: Medium
+   - **Affected Code Location**: `CloseAuction` function (line 44)
+   - **Description**: The `CloseAuction` function writes the auction summary to a public state, which could potentially leak private information about the bids.
+   - **Recommended Fix**: Ensure that the auction summary is written to a private state or that the information is encrypted before being written to the state."
+4,vuln_06_b_conditional_leak.go,3884,6.932,safe,vulnerable,False,"### Vulnerability Analysis
+
+1. **Vulnerability Type**: Access Control Issues
+   - **Severity**: High
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 20-21
+   - **Description**: The function `ProcessClaimsByRange` does not check if the current user is authorized to process claims. Any user can call this function and process claims, which could lead to unauthorized access and manipulation of claims.
+   - **Recommended Fix**: Implement access control checks to ensure that only authorized users can process claims. This can be done by checking the user's role or permissions before processing claims.
+
+2. **Vulnerability Type**: Input Validation Flaws
+   - **Severity**: Medium
+   - **Affected Code Location**: `GetHighValueClaims` function, lines 44-45
+   - **Description**: The function `GetHighValueClaims` does not validate the `threshold` parameter. If a negative threshold is provided, it will close the iterator and return an error. However, if a non-integer value is provided, it will not handle the error gracefully and could lead to unexpected behavior.
+   - **Recommended Fix**: Add input validation to ensure that the `threshold` parameter is a positive integer.
+
+3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+   - **Severity**: Medium
+   - **Affected Code Location**: `ProcessClaimsByRange` function, lines 27-30
+   - **Description**: The function `ProcessClaimsByRange` first counts the number of claims in the range and then re-queries the state to process them. This can lead to phantom reads if another transaction inserts a new claim between the count and the processing steps.
+   - **Recommended Fix**: Use a single query to both count and process the claims to avoid phantom reads.
+
+4. **Vulnerability Type**: Private Data Leakage
+   - **Severity**: Low
+   - **Affected Code Location**: `GetHighValueClaims` function, lines 44-45
+   - **Description**: The function `GetHighValueClaims` does not handle private data leakage. If the "
+4,vuln_06_iterator_leak.go,3995,5.642,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_iterator_leak.go'
+
+#### 1. **Vulnerability Type**: Iterator Leak
+#### 2. **Severity**: High
+#### 3. **Affected Code Location**: `TransferAssetsByOwner` and `DeactivateRange` functions
+#### 4. **Description of the Issue**:
+   - In the `TransferAssetsByOwner` and `DeactivateRange` functions, the iterator is not closed after use. This can lead to resource leaks and potential denial of service (DoS) attacks.
+   - The `resultsIterator` is not closed after the loop, which can cause the iterator to leak and potentially block other transactions.
+
+#### 5. **Recommended Fix**:
+   - Close the iterator after the loop completes. This can be done using the `Close` method provided by the iterator.
+
+```go
+// TransferAssetsByOwner transfers all assets from one owner to another
+func (ar *AssetRegistryContract) TransferAssetsByOwner(ctx contractapi.TransactionContextInterface, fromOwner string, toOwner string) error {
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Asset"", []string{fromOwner})
+	if err != nil {
+		return fmt.Errorf(""failed to query assets by owner: %v"", err)
+	}
+	defer resultsIterator.Close() // Close the iterator after the loop
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return err
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		asset.Owner = toOwner
+
+		updatedJSON, _ := json.Marshal(asset)
+		err = ctx.GetStub().PutState(asset.ID, updatedJSON)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// DeactivateRange marks all assets in a range as inactive
+func (ar *AssetRegistryContract) DeactivateRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close() // Close the iterator after the loop
+
+	count := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := result"
+5,safe_01_logging.go,3899,0.256,safe,safe,True,No vulnerabilities detected.
+5,safe_02_local_var.go,4410,0.285,safe,safe,True,No vulnerabilities detected.
+5,safe_03_map_read.go,4208,0.28,safe,safe,True,No vulnerabilities detected.
+5,safe_04_math_rand.go,3721,7.544,vulnerable,safe,False,"### Analysis of 'safe_04_math_rand.go' for Security Vulnerabilities
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** High
+   - **Affected Code Location:** `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+   - **Description:** The chaincode does not enforce any access control checks. Any user can call these functions, which could lead to unauthorized package registration, transfer, or delivery.
+   - **Recommended Fix:** Implement access control checks to ensure only authorized users can perform these actions. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users or roles.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `RegisterPackage`, `TransferPackage`, `DeliverPackage`
+   - **Description:** The chaincode does not validate the input parameters (e.g., `trackingID`, `sender`, `receiver`, `weight`, `newWarehouseID`). This could lead to invalid or malicious data being stored on the ledger.
+   - **Recommended Fix:** Add input validation to ensure that the parameters meet the expected format and constraints. For example, validate that `trackingID` is a non-empty string, `weight` is a positive integer, etc.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Low
+   - **Affected Code Location:** `TransferPackage`, `DeliverPackage`
+   - **Description:** The chaincode does not handle concurrent updates to the same package. If two transactions attempt to update the same package simultaneously, it could lead to phantom reads or other concurrency issues.
+   - **Recommended Fix:** Use transactions to ensure that updates to the same package are atomic. This can be done by wrapping the update logic in a transaction using `ctx.GetStub().InvokeChaincode()`.
+
+#### 4. **Priv"
+5,safe_05_deterministic_time.go,4119,19.015,vulnerable,safe,False,"### Analysis of 'safe_05_deterministic_time.go'
+
+#### 1. **Vulnerability Type:** Non-deterministic operations
+**Severity:** High  
+**Affected Code Location:** `IssueCertificate` and `RenewCertificate` functions  
+**Description:** The use of `time.Now()` to set the `IssuedAt` and `ExpiresAt` fields is non-deterministic because it depends on the local time of the node where the transaction is executed. This can lead to inconsistencies if the transaction is replicated across different nodes with different local times.
+
+**Recommended Fix:** Use the deterministic timestamp obtained from `ctx.GetStub().GetTxTimestamp()` for all time-related fields.
+
+```go
+// IssueCertificate creates a new certificate on the ledger
+func (c *CertificateContract) IssueCertificate(ctx contractapi.TransactionContextInterface, certID string, holderName string, courseID string) error {
+	exists, err := c.CertExists(ctx, certID)
+	if err != nil {
+		return err
+	}
+	if exists {
+		return fmt.Errorf(""certificate %s already exists"", certID)
+	}
+
+	startLocal := time.Now()
+
+	txTimestamp, err := ctx.GetStub().GetTxTimestamp()
+	if err != nil {
+		return fmt.Errorf(""failed to get transaction timestamp: %v"", err)
+	}
+	deterministicTime := time.Unix(txTimestamp.Seconds, int64(txTimestamp.Nanos))
+
+	cert := Certificate{
+		CertID:     certID,
+		HolderName: holderName,
+		CourseID:   courseID,
+		IssuedAt:   deterministicTime.Format(time.RFC3339),
+		ExpiresAt:  deterministicTime.AddDate(2, 0, 0).Format(time.RFC3339),
+		Status:     ""ACTIVE"",
+	}
+
+	certJSON, err := json.Marshal(cert)
+	if err != nil {
+		return err
+	}
+
+	err = ctx.GetStub().PutState(certID, certJSON)
+	if err != nil {
+		return err
+	}
+
+	elapsed := time.Since(startLocal)
+	fmt.Printf(""[PERF] IssueCertificate(%s) took %v\n"", certID, elapsed)
+
+	return nil
+}
+
+// RenewCertificate extends the expiration date of a certificate
+func (c *CertificateContract) RenewCertificate(ctx contractapi.TransactionContextInterface, certID string) error {
+	certJSON, err := ctx.GetStub("
+5,safe_06_external_lib.go,4558,6.635,safe,safe,True,"### Analysis of 'safe_06_external_lib.go' for Security Vulnerabilities
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateAccount`, `AddPoints`, `RedeemPoints`
+**Description:** The chaincode does not enforce any access control measures. Any user can create an account, add points, or redeem points. This can lead to unauthorized access and manipulation of loyalty points.
+**Recommended Fix:** Implement access control by checking the identity of the transaction submitter and ensuring only authorized users can perform certain actions. For example, only allow certain roles (e.g., ""admin"") to create accounts.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `AddPoints`, `RedeemPoints`
+**Description:** The chaincode does not validate the input values for `pointsStr` and `redeemAmount`. This can lead to invalid data being processed, such as negative points or non-numeric values.
+**Recommended Fix:** Validate the input values to ensure they are within expected ranges and are numeric. For example, check that `pointsStr` is a valid integer and that `redeemAmount` is not negative.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `AddPoints`, `RedeemPoints`
+**Description:** The chaincode does not handle concurrent transactions properly. If two transactions attempt to modify the same account simultaneously, it can lead to phantom reads where the state appears to change unexpectedly.
+**Recommended Fix:** Use transactions to ensure that read and write operations are atomic. This can be done by wrapping the read and write operations in a single transaction.
+
+#### 4. Private Data Leakage
+**Vulnerability Type:** Private data leakage
+**Severity:** Low
+**Affected Code Location:** `RedeemPoints`
+**Description:** The ch"
+5,vuln_01_b_interprocedural.go,3698,7.939,vulnerable,vulnerable,True,"### Analysis of 'vuln_01_b_interprocedural.go'
+
+#### 1. Access Control Issues
+**Vulnerability Type:** Access control issues
+**Severity:** Medium
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not enforce any access control measures. Any user can create, update, or add notes to any medical record, which could lead to unauthorized access and data tampering.
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can create, update, or add notes to medical records. This can be done by checking the identity of the transaction submitter and ensuring they have the necessary permissions.
+
+#### 2. Input Validation Flaws
+**Vulnerability Type:** Input validation flaws
+**Severity:** High
+**Affected Code Location:** `CreateRecord`, `UpdateDiagnosis`, `AddCheckupNote`
+**Description:** The chaincode does not validate the input parameters. For example, it does not check if the `recordID` is a valid format or if the `patientID` exists in the system. This could lead to invalid data being stored on the ledger.
+**Recommended Fix:** Add input validation to ensure that the input parameters are valid and meet the expected format. For example, validate the `recordID` to ensure it is a unique identifier and the `patientID` to ensure it exists in the system.
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+**Vulnerability Type:** Read-after-write conflicts (phantom reads)
+**Severity:** Low
+**Affected Code Location:** `UpdateDiagnosis`
+**Description:** The `UpdateDiagnosis` function reads the current state of the record and then updates it. However, if another transaction modifies the record between the read and write operations, the update operation may overwrite the changes made by the other transaction.
+**Recommended Fix:** Use a transaction isolation level that prevents phantom reads, such as serializable isolation. Alternatively, use a versioning system to ensure that the record has"
+5,vuln_01_time.go,3431,7.249,safe,vulnerable,False,"### Analysis of 'vuln_01_time.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** Medium
+   - **Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`
+   - **Description:** The chaincode does not enforce any access control measures. Any user can call these functions, which could lead to unauthorized modifications or creation of shipments.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can create, update, or record temperature for shipments. This can be done by checking the identity of the transaction submitter using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `CreateShipment`, `UpdateShipmentStatus`, `RecordTemperature`
+   - **Description:** The chaincode does not validate the input parameters. For example, it does not check if the `id` is a valid format or if the `newStatus` is a valid status value.
+   - **Recommended Fix:** Add input validation to ensure that the `id` is a valid string, the `origin` and `destination` are non-empty strings, and the `newStatus` is one of the allowed status values (e.g., ""CREATED"", ""IN_TRANSIT"", ""DELIVERED"").
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** Low
+   - **Affected Code Location:** `UpdateShipmentStatus`, `RecordTemperature`
+   - **Description:** The chaincode reads the current state of the shipment and then updates it. If another transaction modifies the shipment between the read and update, it could lead to phantom reads.
+   - **Recommended Fix:** Use a transaction isolation level that prevents phantom reads, such as `READ_COMMITTED`. However, in Hyperledger Fabric, the default isolation level is `READ_COMMITTED`, so this is not an issu"
+5,vuln_02_global.go,3544,7.329,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type:** Access Control Issues
+   - **Severity:** High
+   - **Affected Code Location:** `IssueToken`, `TransferToken`, `BurnToken`
+   - **Description:** The chaincode does not enforce any access control checks. Any user can call `IssueToken`, `TransferToken`, and `BurnToken` without any restrictions. This can lead to unauthorized token creation, transfer, and burning.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `ctx.GetStub().GetCreator()` and comparing it against a list of authorized users.
+
+2. **Vulnerability Type:** Input Validation Flaws
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferToken`, `BurnToken`
+   - **Description:** The `TransferToken` and `BurnToken` functions do not validate the input parameters (e.g., `amount`). If an attacker provides invalid or malicious input, it could lead to unexpected behavior or errors.
+   - **Recommended Fix:** Add input validation to ensure that the `amount` is a positive number and that the `from` and `to` addresses are valid.
+
+3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   - **Severity:** Medium
+   - **Affected Code Location:** `TransferToken`
+   - **Description:** The `TransferToken` function reads the state of the `from` and `to` accounts before updating them. If another transaction modifies the state between the read and write operations, it could lead to phantom reads.
+   - **Recommended Fix:** Use a transactional approach to ensure that the read and write operations are atomic. This can be done by using a single transaction to update both accounts.
+
+4. **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:** `GetGlobalStats`
+   - **Description:** The `GetGlobalStats` function returns the global counters, which could potentially reveal informat"
+5,vuln_03_goroutine.go,3930,7.366,safe,vulnerable,False,"### Analysis of 'vuln_03_goroutine.go'
+
+#### 1. **Access Control Issues**
+   - **Vulnerability Type:** Access Control
+   - **Severity:** Medium
+   - **Affected Code Location:** `CastVote` function (line 40)
+   - **Description:** The `CastVote` function does not check if the voter is authorized to vote on the proposal. Any user can cast a vote on any proposal, which could lead to unauthorized voting.
+   - **Recommended Fix:** Add access control checks to ensure that only authorized users can cast votes. This could involve checking a whitelist of authorized voters or using a more sophisticated access control mechanism.
+
+#### 2. **Input Validation Flaws**
+   - **Vulnerability Type:** Input Validation
+   - **Severity:** Medium
+   - **Affected Code Location:** `CastVote` function (line 40)
+   - **Description:** The `CastVote` function does not validate the input parameters (`proposalID` and `voterID`). If these parameters are not properly validated, they could lead to unexpected behavior or security vulnerabilities.
+   - **Recommended Fix:** Validate the input parameters to ensure they are valid and within expected ranges. For example, check if `proposalID` exists and if `voterID` is not already a voter for the proposal.
+
+#### 3. **Read-After-Write Conflicts (Phantom Reads)**
+   - **Vulnerability Type:** Read-After-Write Conflict
+   - **Severity:** High
+   - **Affected Code Location:** `TallyVotes` function (line 80)
+   - **Description:** The `TallyVotes` function uses goroutines to count votes concurrently, but it does not ensure that the reads and writes are consistent. This could lead to phantom reads, where the final tally does not reflect the actual votes cast.
+   - **Recommended Fix:** Use a mutex to ensure that the reads and writes are synchronized. This will prevent concurrent reads and writes from interfering with each other.
+
+#### 4. **Private Data Leakage**
+   - **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Low
+   - **Affected Code Location:*"
+5,vuln_04_b_nested_map.go,3798,10.231,vulnerable,vulnerable,True,"### Analysis of 'vuln_04_b_nested_map.go'
+
+#### 1. Access Control Issues
+
+**Vulnerability Type:** Access Control Issues
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 22-38)
+
+**Description:** The `BatchUpdateInventory` function does not check if the transaction is authorized to update the inventory. Any user can call this function and modify the inventory data.
+
+**Recommended Fix:** Implement access control checks to ensure only authorized users can update the inventory. This can be done by checking the transaction's identity and permissions.
+
+```go
+// Add access control check
+if !ctx.GetStub().GetCreator().IsInRole(""admin"") {
+    return fmt.Errorf(""access denied: only admins can update inventory"")
+}
+```
+
+#### 2. Input Validation Flaws
+
+**Vulnerability Type:** Input Validation Flaws
+
+**Severity:** High
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 22-38)
+
+**Description:** The `BatchUpdateInventory` function does not validate the input JSON. An attacker could provide malformed JSON that could cause the function to fail or behave unexpectedly.
+
+**Recommended Fix:** Validate the input JSON to ensure it conforms to the expected structure.
+
+```go
+// Validate input JSON
+if !isValidJSON(updateJSON) {
+    return fmt.Errorf(""invalid update JSON"")
+}
+
+func isValidJSON(s string) bool {
+    var js json.RawMessage
+    return json.Unmarshal([]byte(s), &js) == nil
+}
+```
+
+#### 3. Read-After-Write Conflicts (Phantom Reads)
+
+**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+
+**Severity:** Medium
+
+**Affected Code Location:** `BatchUpdateInventory` function (lines 22-38)
+
+**Description:** The `BatchUpdateInventory` function reads the state of a zone before updating it. If another transaction modifies the zone between the read and write operations, it could lead to phantom reads.
+
+**Recommended Fix:** Use transactions to ensure that the read and write operations are atomic.
+
+```go
+// Use transactions to ensur"
+5,vuln_04_map_iter.go,3393,7.149,vulnerable,vulnerable,True,"### Vulnerability Analysis
+
+1. **Vulnerability Type:** Access Control Issues
+   - **Severity:** High
+   - **Affected Code Location:** `RegisterProduct`, `BatchRestock`, `GenerateReport`, `ApplyDiscounts`
+   - **Description:** The chaincode does not enforce any access control checks. Any user can call these functions, potentially leading to unauthorized modifications or data leakage.
+   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can call these functions. This can be done by checking the transaction context (e.g., using `ctx.GetStub().GetCreator()` to verify the identity of the caller).
+
+2. **Vulnerability Type:** Input Validation Flaws
+   - **Severity:** High
+   - **Affected Code Location:** `BatchRestock`, `ApplyDiscounts`
+   - **Description:** The chaincode does not validate the input data. For example, `BatchRestock` and `ApplyDiscounts` do not check if the product IDs exist in the state before attempting to update them.
+   - **Recommended Fix:** Add input validation to ensure that the product IDs exist in the state before attempting to update them. This can be done by checking if the product JSON is `nil` before proceeding with the update.
+
+3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+   - **Severity:** Medium
+   - **Affected Code Location:** `BatchRestock`, `ApplyDiscounts`
+   - **Description:** The chaincode does not handle concurrent updates correctly. For example, in `BatchRestock`, if two transactions are updating the same product simultaneously, the final state may not be consistent due to read-after-write conflicts.
+   - **Recommended Fix:** Use transactions to ensure that updates are atomic and consistent. This can be done by wrapping the update logic in a transaction using `ctx.GetStub().GetTxID()` and `ctx.GetStub().GetBlockNumber()`.
+
+4. **Vulnerability Type:** Private Data Leakage
+   - **Severity:** Medium
+   - **Affected Code Location:** `GenerateReport`
+   - **Description:** T"
+5,vuln_05_phantom.go,4004,6.503,safe,vulnerable,False,"### Analysis of 'vuln_05_phantom.go'
+
+#### 1. **Vulnerability Type**: Access Control Issues
+**Severity**: High
+**Affected Code Location**: `PlaceBid`, `CloseAuction`, `IncrementCounter`, `TransferWithBalanceCheck`
+**Description**: The chaincode does not enforce any access control checks. Any user can call these functions without proper authorization. This can lead to unauthorized modifications of auction data, manipulation of counters, and unauthorized transfers of funds.
+**Recommended Fix**: Implement access control checks using Hyperledger Fabric's built-in capabilities such as `stub.VerifyClientIdentity` to ensure that only authorized users can perform certain actions.
+
+#### 2. **Vulnerability Type**: Input Validation Flaws
+**Severity**: High
+**Affected Code Location**: `PlaceBid`, `CloseAuction`, `IncrementCounter`, `TransferWithBalanceCheck`
+**Description**: The chaincode does not validate the input parameters. For example, `PlaceBid` does not check if the `bidID` or `auctionID` already exists, which could lead to duplicate bids or invalid auction IDs.
+**Recommended Fix**: Add input validation to ensure that all parameters are valid and meet the expected format and constraints.
+
+#### 3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)
+**Severity**: High
+**Affected Code Location**: `CloseAuction`
+**Description**: The `CloseAuction` function reads all bids and then writes the summary. However, if another transaction modifies the bids between the read and write operations, the summary will be incorrect.
+**Recommended Fix**: Use a transactional approach to ensure that the read and write operations are atomic. This can be achieved by using a single transaction to read and write the data.
+
+#### 4. **Vulnerability Type**: Private Data Leakage
+**Severity**: Medium
+**Affected Code Location**: `CloseAuction`
+**Description**: The `CloseAuction` function writes the summary to a public state variable (`""AUCTION_RESULT_"" + auctionID`). This could potentiall"
+5,vuln_06_b_conditional_leak.go,3884,15.806,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_b_conditional_leak.go'
+
+#### 1. **Vulnerability Type:** Access Control Issues
+**Severity:** High  
+**Affected Code Location:** `ProcessClaimsByRange` function (lines 20-25)  
+**Description:** The function `ProcessClaimsByRange` does not check if the current user is authorized to process claims. Any user can call this function and process claims, which could lead to unauthorized access and manipulation of claims.
+
+**Recommended Fix:** Implement access control checks to ensure that only authorized users can process claims. This can be done by checking the user's role or permissions before processing claims.
+
+```go
+func (ic *InsuranceContract) ProcessClaimsByRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string, approver string) error {
+	// Check if the current user is authorized to process claims
+	currentUser := ctx.GetStub().GetCreator()
+	if !isAuthorized(currentUser) {
+		return fmt.Errorf(""user is not authorized to process claims"")
+	}
+
+	// Existing code...
+}
+```
+
+#### 2. **Vulnerability Type:** Input Validation Flaws
+**Severity:** Medium  
+**Affected Code Location:** `GetHighValueClaims` function (lines 46-48)  
+**Description:** The function `GetHighValueClaims` does not validate the `threshold` parameter. If a negative threshold is provided, the function will close the iterator and return an error. However, if a non-integer value is provided, it will not handle the error gracefully, leading to potential issues.
+
+**Recommended Fix:** Add input validation to ensure that the `threshold` parameter is a positive integer.
+
+```go
+func (ic *InsuranceContract) GetHighValueClaims(ctx contractapi.TransactionContextInterface, startKey string, endKey string, threshold int) ([]*Claim, error) {
+	if threshold <= 0 {
+		return nil, fmt.Errorf(""threshold must be a positive integer, got %d"", threshold)
+	}
+
+	// Existing code...
+}
+```
+
+#### 3. **Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)
+**Severity:** Medium  
+**"
+5,vuln_06_iterator_leak.go,3995,8.287,vulnerable,vulnerable,True,"### Analysis of 'vuln_06_iterator_leak.go'
+
+#### 1. **Vulnerability Type**: Iterator Leak
+#### 2. **Severity**: High
+#### 3. **Affected Code Location**: `TransferAssetsByOwner` and `DeactivateRange` functions
+#### 4. **Description of the Issue**:
+   - In the `TransferAssetsByOwner` and `DeactivateRange` functions, the iterator is not closed after its use. This can lead to resource leaks and potential performance issues.
+   - The `resultsIterator` is not closed after the loop, which can cause the iterator to leak and potentially consume more memory than necessary.
+
+#### 5. **Recommended Fix**:
+   - Close the iterator after its use by calling `resultsIterator.Close()`.
+
+```go
+// TransferAssetsByOwner transfers all assets from one owner to another
+func (ar *AssetRegistryContract) TransferAssetsByOwner(ctx contractapi.TransactionContextInterface, fromOwner string, toOwner string) error {
+	resultsIterator, err := ctx.GetStub().GetStateByPartialCompositeKey(""Asset"", []string{fromOwner})
+	if err != nil {
+		return fmt.Errorf(""failed to query assets by owner: %v"", err)
+	}
+	defer resultsIterator.Close() // Close the iterator after use
+
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return err
+		}
+
+		var asset RegistryAsset
+		json.Unmarshal(queryResult.Value, &asset)
+		asset.Owner = toOwner
+
+		updatedJSON, _ := json.Marshal(asset)
+		err = ctx.GetStub().PutState(asset.ID, updatedJSON)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// DeactivateRange marks all assets in a range as inactive
+func (ar *AssetRegistryContract) DeactivateRange(ctx contractapi.TransactionContextInterface, startKey string, endKey string) (int, error) {
+	resultsIterator, err := ctx.GetStub().GetStateByRange(startKey, endKey)
+	if err != nil {
+		return 0, err
+	}
+	defer resultsIterator.Close() // Close the iterator after use
+
+	count := 0
+	for resultsIterator.HasNext() {
+		queryResult, err := resultsIterator.Next()
+		if err != nil {
+			return count,"

@@ -1,0 +1,19 @@
+{
+  "file_id": "0025_hungryMob_sendEvent",
+  "repo": "hungryMob",
+  "filename": "sendEvent.go",
+  "elapsed_s": 20.76,
+  "input_tokens": 4358,
+  "output_tokens": 896,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L62-79, L150-175, L260-265, L280-285",
+  "rationale": "GetHistoryForKey in getOrgIn (L65) and controllaStringa (L151) returns results in non-deterministic order across peers. These results directly gate PutState operations in setRandom (L284) and sendRealValue (L264), causing potential endorsement divergence.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with multiple transaction functions: `sendEvent`, `sendRealValue`, `get`, `setRandom`, `getHistory`.\n\n### C4 NON_REVALIDATED_QUERY Analysis\n\n**GetHistoryForKey usage:**\n\n1. **`getOrgIn` (L62-79)**: Uses `GetHistoryForKey` to check if an org has already submitted. The result determines whether `setRandom` writes to state (L283-285).\n\n2. **`getPeers` (L103-120)**: Uses `GetHistoryForKey` to count entries. Result influences `sendEvent` logic and state writes (L218-248).\n\n3. **`computeRandom` (L122-148)**: Uses `GetHistoryForKey` to compute XOR of values. Result is returned in response (L238).\n\n4. **`controllaStringa` (L150-175)**: Uses `GetHistoryForKey` to verify a hash. Result determines whether `sendRealValue` writes to state (L260-265).\n\n5. **`getHistory` (L179-210)**: Uses `GetHistoryForKey` but only for read-only display via `shim.Success` - this is NOT C4.\n\nThe critical issue is that `GetHistoryForKey` returns results in **non-deterministic order** across peers. The history iterator order depends on the local database state and is not guaranteed to be consistent across endorsing peers.\n\n**Specific vulnerable patterns:**\n\n- **L260-265 (`sendRealValue`)**: Calls `controllaStringa` which iterates history to find a matching org. If history order differs, the first match found could differ, affecting the boolean result that gates `PutState`.\n\n- **L280-285 (`setRandom`)**: Calls `getOrgIn` which iterates history. The iteration order could affect which entry is found first, though in this case it's checking for existence which is order-independent. However, the early return on error at L71 could cause divergence if history order affects which error occurs first.\n\n- **L218-248 (`sendEvent`)**: Uses `getPeers` count and `computeRandom` XOR computation. The XOR in `computeRandom` (L139-145) processes values in history order - if order differs, intermediate `cXor` values differ (though XOR is commutative, there's a bug at L140 where `elem` is never set, making this code broken but still nondeterministic in its brokenness).\n\n### C5 Iterator Leak Analysis\nMultiple iterators are created but `Close()` is never called:\n- L65: `history` in `getOrgIn`\n- L108: `history` in `getPeers`\n- L123: `history` in `computeRandom`\n- L151: `history` in `controllaStringa`\n- L188: `history` in `getHistory`\n\n### Verdict\n\nThe `GetHistoryForKey` results directly influence `PutState` decisions in `setRandom` and `sendRealValue`, making this C4 vulnerable.\n\n```\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C4\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L62-79, L150-175, L260-265, L280-285\nRATIONALE: GetHistoryForKey in getOrgIn (L65) and controllaStringa (L151) returns results in non-deterministic order across peers. These results directly gate PutState operations in setRandom (L284) and sendRealValue (L264), causing potential endorsement divergence.\n```",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:34.271678",
+  "annotator": "2nd"
+}

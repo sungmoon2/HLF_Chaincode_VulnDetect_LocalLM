@@ -1,0 +1,19 @@
+{
+  "file_id": "0529_liuhuanyuxcx_marbles02",
+  "repo": "liuhuanyuxcx",
+  "filename": "marbles02.go",
+  "elapsed_s": 17.92,
+  "input_tokens": 6044,
+  "output_tokens": 839,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L424",
+  "rationale": "The `time.Unix()` call converts existing ledger timestamps (not `time.Now()`), making it deterministic. All rich queries (`GetQueryResult`, `GetHistoryForKey`) are read-only and returned via `shim.Success()` without influencing write decisions. `GetStateByPartialCompositeKey` is explicitly excluded from C4 sources per taxonomy. All iterators are properly closed.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SimpleChaincode` implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: \n- Line 424: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger history, NOT `time.Now()`. This is deterministic as it converts existing data.\n\n**C2 GOROUTINE**: No goroutines detected.\n\n**C3 MAP_ITERATION**: No map iteration detected. The `marble` struct is marshaled via `json.Marshal()` which is deterministic for structs.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (L305-320): Uses `stub.GetQueryResult()` - result is returned via `shim.Success()` (read-only, NOT C4).\n- `queryMarblesByOwner` (L283-294): Calls `getQueryResultForQueryString`, returns via `shim.Success()` (read-only).\n- `queryMarbles` (L296-306): Same pattern, read-only.\n- `getHistoryForMarble` (L380-432): Uses `GetHistoryForKey()`, returns via `shim.Success()` (read-only).\n- `queryMarblesWithPagination` (L354-370): Uses pagination query, returns via `shim.Success()` (read-only).\n\nNone of these query results are used to make write decisions (PutState/DelState).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables detected.\n\n**C5 ITERATOR_LEAK**: All iterators have proper `defer resultsIterator.Close()` calls:\n- L248, L262, L320, L340, L366, L393\n\n### Step 3: Sink Analysis\nThe write operations (`PutState`, `DelState`) in:\n- `initMarble`: Uses only input args and `GetState` results\n- `delete`: Uses only input args and `GetState` results  \n- `transferMarble`: Uses only input args and `GetState` results\n- `transferMarblesBasedOnColor`: Uses `GetStateByPartialCompositeKey` (NOT a C4 source per taxonomy) and calls `transferMarble`\n\nThe `time.Unix()` usage in `getHistoryForMarble` converts ledger-stored timestamps to strings for a read-only response - this is deterministic and doesn't influence any writes.\n\n### Step 4: Logging/Test/Dead Code Check\nAll detected patterns are in active transaction code paths, but none constitute actual vulnerabilities.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L424\nRATIONALE: The `time.Unix()` call converts existing ledger timestamps (not `time.Now()`), making it deterministic. All rich queries (`GetQueryResult`, `GetHistoryForKey`) are read-only and returned via `shim.Success()` without influencing write decisions. `GetStateByPartialCompositeKey` is explicitly excluded from C4 sources per taxonomy. All iterators are properly closed.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:41:27.478779",
+  "annotator": "2nd"
+}

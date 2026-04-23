@@ -1,0 +1,19 @@
+{
+  "file_id": "0733_sejongtelecomnet_chaincode",
+  "repo": "sejongtelecomnet",
+  "filename": "chaincode.go",
+  "elapsed_s": 9.89,
+  "input_tokens": 1070,
+  "output_tokens": 610,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. The only transaction function (`WalletTest`) performs no ledger writes and only logs data before returning success. External package calls are out of scope for intra-file analysis.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, the file contains `Init` and `Invoke` methods on a struct implementing `shim.ChaincodeStubInterface` patterns. This is a valid HLF chaincode.\n\n### Step 2: Check for C1-C4, C6 Source Patterns\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns present.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions present.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls present.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file.\n\n### Step 3: Auxiliary Check (C5)\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Observations\n- The `Init` function returns `shim.Success(nil)` directly - safe.\n- The `Invoke` function routes to `WalletTest` based on function name.\n- `WalletTest` calls `wallet.CallVaildWallet(stub)` from an external package, but per the rules, I must only consider intra-file evidence.\n- The result is used only for `fmt.Println` (logging) and then returns `shim.Success(nil)`.\n- No ledger writes (`PutState`, `DelState`, etc.) occur in this file.\n- The external call to `wallet.CallVaildWallet` is out of scope for this analysis.\n\nSince there are no C1-C4 or C6 source patterns within this file, and no ledger writes occur, the file is safe from the perspective of intra-file analysis.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. The only transaction function (`WalletTest`) performs no ledger writes and only logs data before returning success. External package calls are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:55:57.182794",
+  "annotator": "2nd"
+}

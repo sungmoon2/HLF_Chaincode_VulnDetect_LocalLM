@@ -1,0 +1,19 @@
+{
+  "file_id": "0365_fourbroad_chaincode_example05",
+  "repo": "fourbroad",
+  "filename": "chaincode_example05.go",
+  "elapsed_s": 9.25,
+  "input_tokens": 2502,
+  "output_tokens": 873,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L56-L76, L78",
+  "rationale": "The invoke() function calls stub.InvokeChaincode() twice (lines 56, 68) to query remote chaincode state for \"a\" and \"b\", parses the responses without revalidation (lines 62, 74), computes sumVal from these non-deterministic sources (line 76), and writes the result to the ledger (line 78). If the remote chaincode or network conditions cause divergent responses across endorsers, the ledger write will be nondeterministic, violating consensus.",
+  "raw_response": "# Audit Report: SimpleChaincode\n\n## Decision Process\n\n1. **Entrypoint Check**: The file contains `Init()` and `Invoke()` methods (lines 14 and 167), which are standard HLF transaction entrypoints. ✓ INCLUDE.\n\n2. **Vulnerability Pattern Scan**:\n   - **C1 (TIME_NOW)**: No `time.Now()`, `time.Since()`, or `time.Until()` calls. ✓\n   - **C2 (GOROUTINE)**: No `go func()` or `go methodCall()` statements. ✓\n   - **C3 (MAP_ITERATION)**: No `for...range` over maps. ✓\n   - **C4 (NON_REVALIDATED_QUERY)**: `stub.InvokeChaincode()` calls at lines 56, 68, 119, 131 return responses that are parsed and used to compute `sumVal`, which then influences `PutState()` at line 82 (in `invoke()` function). This is a C4 pattern.\n   - **C6 (GLOBAL_MUTABLE_STATE)**: No package-level mutable variables. ✓\n\n3. **Intra-file Evidence of C4 Reaching Sink**:\n   - Line 56: `response := stub.InvokeChaincode(...)` (first query for \"a\")\n   - Line 62: `Aval, err = strconv.Atoi(string(response.Payload))` (parse response)\n   - Line 68: `response := stub.InvokeChaincode(...)` (second query for \"b\")\n   - Line 74: `Bval, err = strconv.Atoi(string(response.Payload))` (parse response)\n   - Line 76: `sumVal = Aval + Bval` (computation from non-revalidated queries)\n   - Line 78: `err = stub.PutState(sum, []byte(strconv.Itoa(sumVal)))` (write to ledger)\n   \n   The `invoke()` function (lines 45–87) directly chains non-revalidated cross-chaincode query results to a ledger write. The `query()` function (lines 89–165) performs the same queries but only returns the result without writing, so it is read-only.\n\n4. **Dead Code / Logging Check**: The C4 pattern in `invoke()` is active transaction logic, not logging or test code.\n\n---\n\n## Verdict\n\n**VULNERABLE**: The `invoke()` function performs cross-chaincode queries via `InvokeChaincode()` without revalidation and uses the results to compute a value written to the ledger via `PutState()`. If the remote chaincode returns different values across endorsers (due to nondeterminism in the remote chaincode or network timing), the local `sumVal` will diverge, causing endorsement failure.\n\n---\n\n## Output\n\n```\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C4\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L56-L76, L78\nRATIONALE: The invoke() function calls stub.InvokeChaincode() twice (lines 56, 68) to query remote chaincode state for \"a\" and \"b\", parses the responses without revalidation (lines 62, 74), computes sumVal from these non-deterministic sources (line 76), and writes the result to the ledger (line 78). If the remote chaincode or network conditions cause divergent responses across endorsers, the ledger write will be nondeterministic, violating consensus.\n```",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:53.860300",
+  "annotator": "2nd"
+}

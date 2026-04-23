@@ -1,0 +1,19 @@
+{
+  "file_id": "0835_vanchpuck_kuzmich-mcc",
+  "repo": "vanchpuck",
+  "filename": "kuzmich-mcc.go",
+  "elapsed_s": 13.18,
+  "input_tokens": 1613,
+  "output_tokens": 622,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains no nondeterministic patterns. It uses only deterministic operations: `GetState` for reads, `PutState` for writes, and `json.Marshal` on a struct (not a map). No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify HLF Transaction Entrypoints\n- `Init(stub shim.ChaincodeStubInterface)` - Line 28\n- `Invoke(stub shim.ChaincodeStubInterface)` - Line 32\n- These are valid shim-based entrypoints.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` anywhere in the file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `Asset` struct uses `json.Marshal()` but on a struct, not a map.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `stub.GetState()` is used in `getAsset()` (line 66) and `queryAsset()` (line 79)\n- `GetState` is NOT a rich query function (not `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`)\n- These are simple key-value lookups, which are deterministic and not C4 sources.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Only `const` declarations at package level (lines 11-14)\n- No mutable package-level `var` declarations\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Review Transaction Logic\n\n- `sendAsset`: Takes args, creates an Asset struct, marshals it, and writes via `PutState`. All operations are deterministic.\n- `queryAsset`: Reads state via `GetState` and returns it. Read-only, deterministic.\n- `getAsset`: Helper function that reads state. Not directly invoked but also deterministic.\n\nAll operations use deterministic inputs (function arguments, ledger state) and produce deterministic outputs.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains no nondeterministic patterns. It uses only deterministic operations: `GetState` for reads, `PutState` for writes, and `json.Marshal` on a struct (not a map). No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:03:06.130536",
+  "annotator": "2nd"
+}

@@ -1,0 +1,55 @@
+{
+  "repo": "AProkot",
+  "filename": "mycontract.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "ce849740c8e3319d",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'mycontract.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access control issues\n**Severity:** High\n**Affected Code Location:** `get_open_myCity`, `get_close_Phones`, `get_open_Phones`\n**Description:** The `get_open_myCity`, `get_close_Phones`, and `get_open_Phones` functions do not check if the caller is the creator of the data. This allows any user to read data that they should not have access to.\n**Recommended Fix:** Add access control checks to ensure that only the creator of the data can read it.\n\n```go\nfunc (ptr *myContract) get_open_myCity(stub shim.ChaincodeStubInterface, args []string) peer.Response {\n\tvar err error\n\tvar valAsbytes []byte\n\tif len(args) != 1 {\n\t\treturn Error(400, \"Incorrect number of arguments. Expecting 1\")\n\t}\n\tvar key = args[0]\n\tvalAsbytes, err = stub.GetState(key)\n\tif err != nil {\n\t\treturn Error(404, \"Not Found\")\n\t} else if valAsbytes == nil {\n\t\treturn Error(404, \"Not Found\")\n\t}\n\towner_id, err := stub.GetCreator()\n\tthis_id, err := cid.GetID(stub)\n\tif this_id != BytesToString(owner_id) {\n\t\treturn Error(403, \"Access to this method is only for creator\")\n\t}\n\tmyCity_JSON := myCity{}\n\tvalAsbytes, err = json.Marshal(myCity_JSON)\n\treturn Success(200, \"OK\", valAsbytes)\n}\n```\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input validation flaws\n**Severity:** High\n**Affected Code Location:** `set_close_Phones`, `set_close_myCity`\n**Description:** The `set_close_Phones` and `set_close_myCity` functions do not validate the input data. For example, they do not check if the input data is in the correct format or if the values are within acceptable ranges.\n**Recommended Fix:** Add input validation to ensure that the input data is in the correct format and within acceptable ranges.\n\n```go\nfunc (ptr *myContract) set_close_Phones(stub shim.ChaincodeStubInterface, args []string) peer.Response {\n\towner_id, err := stub.GetCreator()\n\tthis_id, err := cid.GetID(stub)\n\tif this_id != BytesToString(owner_id) {\n\t\treturn Error(403, \"Access to this method is only for creator\")\n\t}\n\tvar name string\n\tvar phone int\n\tif len(args) != 3 {\n\t\treturn Error(401, \"Incorrect number of arguments. Expecting 2\")\n\t}\n\tvar key = args[0]\n\tname = args[1]\n\tphone, err = strconv.Atoi(args[2])\n\tif err != nil {\n\t\treturn Error(402, \"Invalid phone number\")\n\t}\n\tPhones := &Phones{name, phone}\n\tPhonesJSONasBytes, err := json.Marshal(Phones)\n\tif err != nil {\n\t\treturn Error(402, \"Trouble while making JSON\")\n\t}\n\terr = stub.PutState(key, PhonesJSONasBytes)\n\tif err != nil {\n\t\treturn Error(500, \"Error\")\n\t}\n\treturn Success(201, \"Created\", nil)\n}\n```\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-after-write conflicts (phantom reads)\n**Severity:** Medium\n**Affected Code Location:** `get_open_myCity`, `get_close_Phones`, `get_open_Phones`\n**Description:** The `get_open_myCity`, `get_close_Phones`, and `get_open_Phones` functions do not ensure that the data they read is consistent. This can lead to phantom reads, where the same data is read multiple times and appears to have changed.\n**Recommended Fix:** Use transactions to ensure that the data read is consistent.\n\n```go\nfunc (ptr *myContract) get_open_myCity(stub shim.ChaincodeStubInterface, args []string) peer.Response {\n\tvar err error\n\tvar valAsbytes []byte\n\tif len(args) != 1 {\n\t\treturn Error(400, \"Incorrect number of arguments. Expecting 1\")\n\t}\n\tvar key = args[0]\n\tvalAsbytes, err = stub.GetState(key)\n\tif err != nil {\n\t\treturn Error(404, \"Not Found\")\n\t} else if valAsbytes == nil {\n\t\treturn Error(404, \"Not Found\")\n\t}\n\towner_id, err := stub.GetCreator()\n\tthis_id, err := cid.GetID(stub)\n\tif this_id != BytesToString(owner_id) {\n\t\treturn Error(403, \"Access to this method is only for creator\")\n\t}\n\tmyCity_JSON := myCity{}\n\tvalAsbytes, err = json.Marshal(myCity_JSON)\n\treturn Success(200, \"OK\", valAsbytes)\n}\n```\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private data leakage\n**Severity:** High\n**Affected Code Location:** `get_open_myCity`, `get_close_Phones`, `get_open_Phones`\n**Description:** The `get_open_myCity`, `get_close_Phones`, and `get_open_Phones` functions do not ensure that private data is not leaked. This can lead to private data being read by unauthorized users.\n**Recommended Fix:** Use access control to ensure that only authorized users can read private data.\n\n```go\nfunc (ptr *myContract) get_open_myCity(stub shim.ChaincodeStubInterface, args []string) peer.Response {\n\tvar err error\n\tvar valAsbytes []byte\n\tif len(args) != 1 {\n\t\treturn Error(400, \"Incorrect number of arguments. Expecting 1\")\n\t}\n\tvar key = args[0]\n\tvalAsbytes, err = stub.GetState(key)\n\tif err != nil {\n\t\treturn Error(404, \"Not Found\")\n\t} else if valAsbytes == nil {\n\t\treturn Error(404, \"Not Found\")\n\t}\n\towner_id, err := stub.GetCreator()\n\tthis_id, err := cid.GetID(stub)\n\tif this_id != BytesToString(owner_id) {\n\t\treturn Error(403, \"Access to this method is only for creator\")\n\t}\n\tmyCity_JSON := myCity{}\n\tvalAsbytes, err = json.Marshal(myCity_JSON)\n\treturn Success(200, \"OK\", valAsbytes)\n}\n```\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-deterministic operations\n**Severity:** Low\n**Affected Code Location:** `get_open_myCity`, `get_close_Phones`, `get_open_Phones`\n**Description:** The `get_open_myCity`, `get_close_Phones`, and `get_open_Phones` functions do not ensure that the operations they perform are deterministic. This can lead to unexpected behavior.\n**Recommended Fix:** Use deterministic operations to ensure that the operations performed are consistent.\n\n```go\nfunc (ptr *myContract) get_open_myCity(stub shim.ChaincodeStubInterface, args []string) peer.Response {\n\tvar err error\n\tvar valAsbytes []byte\n\tif len(args) != 1 {\n\t\treturn Error(400, \"Incorrect number of arguments. Expecting 1\")\n\t}\n\tvar key = args[0]\n\tvalAsbytes, err = stub.GetState(key)\n\tif err != nil {\n\t\treturn Error(404, \"Not Found\")\n\t} else if valAsbytes == nil {\n\t\treturn Error(404, \"Not Found\")\n\t}\n\towner_id, err := stub.GetCreator()\n\tthis_id, err := cid.GetID(stub)\n\tif this_id != BytesToString(owner_id) {\n\t\treturn Error(403, \"Access to this method is only for creator\")\n\t}\n\tmyCity_JSON := myCity{}\n\tvalAsbytes, err = json.Marshal(myCity_JSON)\n\treturn Success(200, \"OK\", valAsbytes)\n}\n```\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure key management\n**Severity:** High\n**Affected Code Location:** `get_open_myCity`, `get_close_Phones`, `get_open_Phones`\n**Description:** The `get_open_myCity`, `get_close_Phones`, and `get_open_Phones` functions do not ensure that the keys they use are secure. This can lead to insecure key management.\n**Recommended Fix:** Use secure key management practices to ensure that the keys used are secure.\n\n```go\nfunc (ptr *myContract) get_open_myCity(stub shim.ChaincodeStubInterface, args []string) peer.Response {\n\tvar err error\n\tvar valAsbytes []byte\n\tif len(args) != 1 {\n\t\treturn Error(400, \"Incorrect number of arguments. Expecting 1\")\n\t}\n\tvar key = args[0]\n\tvalAsbytes, err = stub.GetState(key)\n\tif err != nil {\n\t\treturn Error(404, \"Not Found\")\n\t} else if valAsbytes == nil {\n\t\treturn Error(404, \"Not Found\")\n\t}\n\towner_id, err := stub.GetCreator()\n\tthis_id, err := cid.GetID(stub)\n\tif this_id != BytesToString(owner_id) {\n\t\treturn Error(403, \"Access to this method is only for creator\")\n\t}\n\tmyCity_JSON := myCity{}\n\tvalAsbytes, err = json.Marshal(myCity_JSON)\n\treturn Success(200, \"OK\", valAsbytes)\n}\n```\n\n### Conclusion\nThe chaincode file 'mycontract.go' contains several security vulnerabilities, including access control",
+      "prediction": "vulnerable",
+      "elapsed_s": 20.58,
+      "finish_reason": "length",
+      "prompt_tokens": 2503,
+      "completion_tokens": 2048
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2503,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2503,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2503,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2503,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.8,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 4.15,
+  "total_elapsed_s": 20.76,
+  "any_truncated": true,
+  "timestamp": "2026-04-23T04:39:51.173468"
+}

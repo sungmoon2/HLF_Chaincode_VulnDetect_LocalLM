@@ -1,0 +1,19 @@
+{
+  "file_id": "0647_piyushkumar96_main",
+  "repo": "piyushkumar96",
+  "filename": "main.go",
+  "elapsed_s": 12.47,
+  "input_tokens": 1330,
+  "output_tokens": 638,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L12-L14",
+  "rationale": "The only package-level variable is a Logger used exclusively for logging purposes, which is explicitly SAFE. The Init function performs deterministic operations using only input arguments. The Invoke method routes to methods not defined in this file, and per scope rules, only intra-file evidence is considered.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on a struct implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls visible in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 12: `var Logger = shim.NewLogger(\"[NewChaincode: ]\")` - This is a package-level variable, but it's only used for logging (`Logger.Info` on line 14). Logger-only globals are explicitly SAFE per the taxonomy.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file (the methods `queryAllEmpInCompany`, `noofemployees`, etc. are called but not defined in this file).\n\n### Step 3: Sink Analysis\nThe file contains ledger writes:\n- Line 17: `stub.PutState(args[0], []byte(args[1]))` in `Init`\n\nHowever, none of the nondeterminism sources (C1-C4, C6) are present that could influence this write.\n\n### Step 4: Code Context\nThe `Invoke` method routes to various helper methods (`changeDetail`, `addMember`, etc.) that are NOT defined in this file. Per the scope rules, I must only analyze intra-file evidence and cannot speculate about cross-file calls.\n\nThe only complete transaction logic in this file is the `Init` function, which:\n1. Logs initialization (SAFE - logging only)\n2. Writes args directly to state (deterministic)\n3. Returns success\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L12-L14\nRATIONALE: The only package-level variable is a Logger used exclusively for logging purposes, which is explicitly SAFE. The Init function performs deterministic operations using only input arguments. The Invoke method routes to methods not defined in this file, and per scope rules, only intra-file evidence is considered.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:49:30.711304",
+  "annotator": "2nd"
+}

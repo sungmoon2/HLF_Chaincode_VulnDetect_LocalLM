@@ -1,0 +1,19 @@
+{
+  "file_id": "0865_whatisoop_map",
+  "repo": "whatisoop",
+  "filename": "map.go",
+  "elapsed_s": 4.69,
+  "input_tokens": 2367,
+  "output_tokens": 139,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L107-L122, L123-L148",
+  "rationale": "The file contains GetQueryResult (L107) and GetHistoryForKey (L124), but both are read-only operations that only return data via shim.Success without influencing any write decisions (PutState/DelState). The time.Sleep at L87 uses a client-provided duration and does not influence ledger writes or response content. All iterators are properly closed with defer statements.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L107-L122, L123-L148\nRATIONALE: The file contains GetQueryResult (L107) and GetHistoryForKey (L124), but both are read-only operations that only return data via shim.Success without influencing any write decisions (PutState/DelState). The time.Sleep at L87 uses a client-provided duration and does not influence ledger writes or response content. All iterators are properly closed with defer statements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:05:10.211714",
+  "annotator": "2nd"
+}

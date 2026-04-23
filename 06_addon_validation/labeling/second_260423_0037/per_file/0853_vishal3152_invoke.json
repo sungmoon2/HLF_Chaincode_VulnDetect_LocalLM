@@ -1,0 +1,19 @@
+{
+  "file_id": "0853_vishal3152_invoke",
+  "repo": "vishal3152",
+  "filename": "invoke.go",
+  "elapsed_s": 1.73,
+  "input_tokens": 1248,
+  "output_tokens": 125,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "This file contains only the Invoke dispatcher function with no transaction logic implementation. The actual write/read operations are delegated to external functions (validateProjectW, validateItemW, etc.) that are not defined in this file. Per scope rules, intra-file evidence is required; cross-file calls cannot be audited. The dispatcher itself contains no C1–C6 vulnerability patterns.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: This file contains only the Invoke dispatcher function with no transaction logic implementation. The actual write/read operations are delegated to external functions (validateProjectW, validateItemW, etc.) that are not defined in this file. Per scope rules, intra-file evidence is required; cross-file calls cannot be audited. The dispatcher itself contains no C1–C6 vulnerability patterns.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:21.268080",
+  "annotator": "2nd"
+}

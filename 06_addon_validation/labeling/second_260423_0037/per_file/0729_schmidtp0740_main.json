@@ -1,0 +1,19 @@
+{
+  "file_id": "0729_schmidtp0740_main",
+  "repo": "schmidtp0740",
+  "filename": "main.go",
+  "elapsed_s": 2.78,
+  "input_tokens": 1844,
+  "output_tokens": 163,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains HLF transaction entrypoints (Init and Invoke methods), but no consensus-critical nondeterminism sources are present. The Init method performs deterministic initialization with hardcoded arguments. The Invoke method dispatches to helper functions based on function name matching. The createIndex helper uses stub.CreateCompositeKey and stub.PutState with deterministic inputs. No time.Now(), goroutines, map iteration, non-revalidated queries, or mutable global state influencing writes or responses are present in this file.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains HLF transaction entrypoints (Init and Invoke methods), but no consensus-critical nondeterminism sources are present. The Init method performs deterministic initialization with hardcoded arguments. The Invoke method dispatches to helper functions based on function name matching. The createIndex helper uses stub.CreateCompositeKey and stub.PutState with deterministic inputs. No time.Now(), goroutines, map iteration, non-revalidated queries, or mutable global state influencing writes or responses are present in this file.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:52.539294",
+  "annotator": "2nd"
+}

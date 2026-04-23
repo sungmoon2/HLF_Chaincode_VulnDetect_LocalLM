@@ -1,0 +1,19 @@
+{
+  "file_id": "0555_mdarin_sacc",
+  "repo": "mdarin",
+  "filename": "sacc.go",
+  "elapsed_s": 2.74,
+  "input_tokens": 1446,
+  "output_tokens": 185,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods on SimpleAsset). However, no consensus-critical nondeterminism sources are present: there are no time.Now() calls (C1), goroutines (C2), map iterations (C3), non-revalidated queries (C4), or mutable package-level state (C6). All ledger writes (PutState at L18 and L47) depend only on deterministic function arguments (args from GetStringArgs/GetFunctionAndParameters). The get function performs a read-only GetState that is not used to determine a write decision.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods on SimpleAsset). However, no consensus-critical nondeterminism sources are present: there are no time.Now() calls (C1), goroutines (C2), map iterations (C3), non-revalidated queries (C4), or mutable package-level state (C6). All ledger writes (PutState at L18 and L47) depend only on deterministic function arguments (args from GetStringArgs/GetFunctionAndParameters). The get function performs a read-only GetState that is not used to determine a write decision.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:53:45.637152",
+  "annotator": "2nd"
+}

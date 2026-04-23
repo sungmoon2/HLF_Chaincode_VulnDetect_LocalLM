@@ -1,0 +1,19 @@
+{
+  "file_id": "0489_koakh_lscc",
+  "repo": "koakh",
+  "filename": "lscc.go",
+  "elapsed_s": 20.72,
+  "input_tokens": 11093,
+  "output_tokens": 872,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L227-L232, L241-L246, L253-L259",
+  "rationale": "Map iterations in checkCollectionMemberPolicy are membership checks that set a boolean `found` flag used only for warning logs, not for ledger writes or response determination. The iteration order does not affect the function's return value or any state modifications.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on the `SCC` struct that implement `shim.Chaincode` interface. This is a valid HLF transaction entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found in transaction logic.\n\n**C3 MAP_ITERATION**: \n- Lines 227-232: `for mspid := range msps` - iterating over map from `mspmgr.GetMSPs()`\n- Lines 241-246: `for mspid := range msps` - same pattern\n- Lines 253-259: `for _, msp := range msps` - iterating over map values\n\nHowever, examining the context: These iterations in `checkCollectionMemberPolicy` are used to check if an `orgID` exists in the MSP map (setting `found = true`). The iteration order doesn't affect the outcome - it's a membership check that sets a boolean. The function returns an error only if policy validation fails, not based on iteration order. The `found` variable is only used for a warning log message, not for ledger writes.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `stub.GetStateByRange(\"\", \"\")` at line 340 in `getChaincodes()` - this returns an iterator over all state. The results are marshaled and returned via `shim.Success()`. This is a read-only query returned to the client, NOT used to determine a write decision.\n\n**C6 GLOBAL_MUTABLE_STATE**:\n- Line 35: `logger = flogging.MustGetLogger(\"lscc\")` - Logger-only global, SAFE\n- Lines 37-38: `ChaincodeNameRegExp` and `ChaincodeVersionRegExp` - Read-only compiled regexps, deterministic initialization, SAFE\n\n**C5 ITERATOR_LEAK**: \n- Line 340-343: Iterator created with `stub.GetStateByRange(\"\", \"\")` and properly closed with `defer itr.Close()`.\n\n### Step 3: Detailed Analysis of Map Iterations\n\nLooking at `checkCollectionMemberPolicy` (lines 195-280):\n- The map iteration is used to find if an MSP ID exists in the channel's MSPs\n- The `found` boolean only affects a warning log message (line 264)\n- The function's return value (error or nil) depends on policy validation, not iteration order\n- This does NOT influence ledger writes or proposal responses based on iteration order\n\nThe map iterations are membership checks that produce the same result regardless of iteration order.\n\n### Step 4: Final Assessment\n\nNo patterns that would cause endorsement divergence were found:\n- Map iterations are for membership checks only, not affecting write decisions\n- No time-based operations\n- No goroutines in transaction logic\n- No rich queries used for write decisions\n- No mutable global state affecting transactions\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L227-L232, L241-L246, L253-L259\nRATIONALE: Map iterations in checkCollectionMemberPolicy are membership checks that set a boolean `found` flag used only for warning logs, not for ledger writes or response determination. The iteration order does not affect the function's return value or any state modifications.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:37:41.314630",
+  "annotator": "2nd"
+}

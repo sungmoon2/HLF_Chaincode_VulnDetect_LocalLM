@@ -1,0 +1,19 @@
+{
+  "file_id": "0687_ravinayag_chaincode",
+  "repo": "ravinayag",
+  "filename": "chaincode.go",
+  "elapsed_s": 4.09,
+  "input_tokens": 2741,
+  "output_tokens": 115,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode implements standard Init/Invoke entrypoints with deterministic operations. All state reads use GetState (not rich queries), all writes use PutState/DelState with deterministic values derived from function arguments. No time.Now(), goroutines, map iterations, rich queries, or mutable global state patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode implements standard Init/Invoke entrypoints with deterministic operations. All state reads use GetState (not rich queries), all writes use PutState/DelState with deterministic values derived from function arguments. No time.Now(), goroutines, map iterations, rich queries, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:52:43.495619",
+  "annotator": "2nd"
+}

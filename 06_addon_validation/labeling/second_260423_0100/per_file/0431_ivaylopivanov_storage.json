@@ -1,0 +1,19 @@
+{
+  "file_id": "0431_ivaylopivanov_storage",
+  "repo": "ivaylopivanov",
+  "filename": "storage.go",
+  "elapsed_s": 6.57,
+  "input_tokens": 3716,
+  "output_tokens": 177,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L10-L35, L37-L68",
+  "rationale": "This file contains HLF transaction entrypoints (Init and Invoke) but only performs routing logic. The Init method calls s.create() with hardcoded arguments, and Invoke dispatches to various methods based on function name. No C1-C4 or C6 vulnerability patterns (time.Now, goroutines, map iteration, rich queries, or mutable global state) are present in this file. The actual implementation methods (create, get, set, etc.) are not defined in this file, so any potential issues would be in other files outside the audit scope.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L10-L35, L37-L68\nRATIONALE: This file contains HLF transaction entrypoints (Init and Invoke) but only performs routing logic. The Init method calls s.create() with hardcoded arguments, and Invoke dispatches to various methods based on function name. No C1-C4 or C6 vulnerability patterns (time.Now, goroutines, map iteration, rich queries, or mutable global state) are present in this file. The actual implementation methods (create, get, set, etc.) are not defined in this file, so any potential issues would be in other files outside the audit scope.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:34:06.511420",
+  "annotator": "2nd"
+}

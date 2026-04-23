@@ -1,0 +1,55 @@
+{
+  "repo": "Running_Examples",
+  "filename": "GoRoutines.go",
+  "ground_truth": "VULNERABLE",
+  "primary_class": "C2",
+  "content_hash": "unknown",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.09,
+      "finish_reason": "stop",
+      "prompt_tokens": 301,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "### Analysis of 'GoRoutines.go' for Security Vulnerabilities\n\n#### 1. **Vulnerability Type:** Non-deterministic operations\n**Severity:** Medium\n**Affected Code Location:** `Invoke` function, lines 14-26\n**Description:** The code creates two goroutines that append characters to the string `s` concurrently. The order in which these goroutines complete and append to `s` is non-deterministic, leading to unpredictable results. This can cause issues such as data corruption or unexpected behavior.\n**Recommended Fix:** Use a mutex to synchronize access to the shared variable `s` to ensure that only one goroutine can modify it at a time.\n\n```go\nvar mu sync.Mutex\n\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\tstub.PutState(\"key\", []byte(s))\n}\n```\n\n#### 2. **Vulnerability Type:** Insecure key management\n**Severity:** Low\n**Affected Code Location:** `Invoke` function, line 29\n**Description:** The key \"key\" is hardcoded and used to store the concatenated string `s`. While this is not a critical security issue, it is good practice to avoid hardcoding keys and to use a more secure method for managing keys.\n**Recommended Fix:** Consider using a more secure method for managing keys, such as generating a unique key for each transaction or using a key management service.\n\n```go\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\tkey := \"unique_key_\" + stub.GetTxID()\n\tstub.PutState(key, []byte(s))\n}\n```\n\n### Summary\n- **Non-deterministic operations:** Medium severity, fixed by using a mutex.\n- **Insecure key management:** Low severity, fixed by using a unique key for each transaction.\n\nNo other vulnerabilities were detected in the provided code.",
+      "prediction": "vulnerable",
+      "elapsed_s": 5.45,
+      "finish_reason": "stop",
+      "prompt_tokens": 301,
+      "completion_tokens": 593
+    },
+    "3": {
+      "raw_response": "### Analysis of 'GoRoutines.go' for Security Vulnerabilities\n\n#### 1. **Vulnerability Type:** Non-deterministic operations\n**Severity:** High  \n**Affected Code Location:** `Invoke` function, lines 14-24  \n**Description:** The code creates two goroutines that append characters to the string `s` concurrently. The order in which these characters are appended is non-deterministic, leading to unpredictable results. This can cause issues such as data corruption or unexpected behavior.  \n**Recommended Fix:** Use a mutex to synchronize access to the shared variable `s`. This ensures that only one goroutine can modify `s` at a time, preventing race conditions.  \n```go\nvar mu sync.Mutex\n\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\tstub.PutState(\"key\", []byte(s))\n}\n```\n\n#### 2. **Vulnerability Type:** Insecure key management\n**Severity:** Medium  \n**Affected Code Location:** `Invoke` function, line 28  \n**Description:** The key \"key\" is hardcoded and used to store the concatenated string `s`. This key could be used by other chaincode or applications, potentially leading to data leakage or unauthorized access.  \n**Recommended Fix:** Use a more secure and unique key that is not easily guessable. Consider using a combination of the transaction ID or other unique identifiers.  \n```go\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\ttxID, _ := stub.GetTxID()\n\tstub.PutState(fmt.Sprintf(\"key_%s\", txID), []byte(s))\n}\n```\n\n#### 3. **Vulnerability Type:** No vulnerabilities detected.\n**Severity:** N/A  \n**Affected Code Location:** N/A  \n**Description:** After analyzing the provided code, no other security vulnerabilities were found. The code does not involve access control issues, input validation flaws, read-after-write conflicts, or private data leakage.",
+      "prediction": "safe",
+      "elapsed_s": 5.54,
+      "finish_reason": "stop",
+      "prompt_tokens": 301,
+      "completion_tokens": 613
+    },
+    "4": {
+      "raw_response": "### Analysis of 'GoRoutines.go'\n\n#### 1. **Vulnerability Type:** Non-deterministic operations\n**Severity:** High\n**Affected Code Location:** `Invoke` function, lines 17-28\n**Description:** The code creates two goroutines that append characters to the string `s` concurrently. Since the order of execution of these goroutines is non-deterministic, the final value of `s` will vary each time the function is executed. This can lead to unpredictable behavior and potential security vulnerabilities if the value of `s` is used for critical operations.\n**Recommended Fix:** Use a mutex to synchronize access to the shared variable `s` to ensure that the operations are performed in a deterministic order.\n```go\nvar mu sync.Mutex\n\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\tstub.PutState(\"key\", []byte(s))\n}\n```\n\n#### 2. **Vulnerability Type:** Insecure key management\n**Severity:** Medium\n**Affected Code Location:** `Invoke` function, line 31\n**Description:** The key \"key\" is hardcoded and used to store the state. This can lead to security vulnerabilities if the key is used for sensitive data and is not properly managed.\n**Recommended Fix:** Use a more secure key management strategy, such as generating a unique key for each transaction or using a key management service.\n```go\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\tkey := generateUniqueKey() // Function to generate a unique key\n\tstub.PutState(key, []byte(s))\n}\n```\n\n#### 3. **Vulnerability Type:** No vulnerabilities detected.\n**Severity:** N/A\n**Affected Code Location:** N/A\n**Description:** No vulnerabilities were detected in the provided code.",
+      "prediction": "safe",
+      "elapsed_s": 5.3,
+      "finish_reason": "stop",
+      "prompt_tokens": 301,
+      "completion_tokens": 581
+    },
+    "5": {
+      "raw_response": "### Analysis of 'GoRoutines.go'\n\n#### 1. **Vulnerability Type:** Non-deterministic operations\n#### 2. **Severity:** High\n#### 3. **Affected Code Location:** `Invoke` function, lines 14-24\n#### 4. **Description of the Issue:**\nThe `Invoke` function creates two goroutines that append characters to the string `s` concurrently. Since the order of execution of goroutines is non-deterministic, the final value of `s` is not predictable. This can lead to unexpected behavior and potential security vulnerabilities, especially if the value of `s` is used for cryptographic operations or other critical processes.\n\n#### 5. **Recommended Fix:**\nTo ensure deterministic behavior, you can use a mutex to synchronize access to the shared variable `s`. Here is the recommended fix:\n\n```go\npackage main\n\nimport (\n\t\"container/list\"\n\t\"fmt\"\n\t\"github.com/hyperledger/shim\"\n\t\"sync\"\n)\n\nvar wg sync.WaitGroup\nvar mu sync.Mutex\n\nfunc Invoke(stub shim.ChaincodeStubInterface) {\n\n\twg.Add(2)\n\ttotal := 10000\n\ts := \"\"\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"0\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\tgo func() {\n\t\tdefer wg.Done()\n\t\tfor idx := 1; idx <= total; idx++ {\n\t\t\tmu.Lock()\n\t\t\ts += \"1\"\n\t\t\tmu.Unlock()\n\t\t}\n\t}()\n\n\twg.Wait()\n\n\tstub.PutState(\"key\", []byte(s))\n}\n\nfunc main() {\n\n}\n```\n\n### Summary\n- **Vulnerability Type:** Non-deterministic operations\n- **Severity:** High\n- **Affected Code Location:** `Invoke` function, lines 14-24\n- **Description of the Issue:** The concurrent execution of goroutines leads to non-deterministic behavior.\n- **Recommended Fix:** Use a mutex to synchronize access to the shared variable `s`.\n\nNo other vulnerabilities were detected in the provided code.",
+      "prediction": "vulnerable",
+      "elapsed_s": 3.82,
+      "finish_reason": "stop",
+      "prompt_tokens": 301,
+      "completion_tokens": 444
+    }
+  },
+  "stability": 0.6,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 4.04,
+  "total_elapsed_s": 20.2,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T03:59:54.398384"
+}

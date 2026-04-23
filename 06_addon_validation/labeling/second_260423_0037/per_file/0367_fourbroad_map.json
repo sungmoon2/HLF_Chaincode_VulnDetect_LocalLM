@@ -1,0 +1,19 @@
+{
+  "file_id": "0367_fourbroad_map",
+  "repo": "fourbroad",
+  "filename": "map.go",
+  "elapsed_s": 3.54,
+  "input_tokens": 2349,
+  "output_tokens": 224,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L117-L140, L142-L165",
+  "rationale": "The \"query\" case (L117-L140) uses `stub.GetQueryResult()` at L120, a non-revalidated query source, and the result directly influences the response returned at L139 via `shim.Success(jsonKeys)`. Similarly, the \"history\" case (L142-L165) uses `stub.GetHistoryForKey()` at L145, another non-revalidated query source, whose result influences the response at L164. Both query results are collected into a slice and marshaled into the proposal response without any write operation, but C4 applies to responses that depend on non-revalidated query results. The deterministic ordering of results from these queries is not guaranteed across endorsers, making the responses consensus-critical and vulnerable to divergence.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L117-L140, L142-L165\n\nRATIONALE: The \"query\" case (L117-L140) uses `stub.GetQueryResult()` at L120, a non-revalidated query source, and the result directly influences the response returned at L139 via `shim.Success(jsonKeys)`. Similarly, the \"history\" case (L142-L165) uses `stub.GetHistoryForKey()` at L145, another non-revalidated query source, whose result influences the response at L164. Both query results are collected into a slice and marshaled into the proposal response without any write operation, but C4 applies to responses that depend on non-revalidated query results. The deterministic ordering of results from these queries is not guaranteed across endorsers, making the responses consensus-critical and vulnerable to divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:57.431100",
+  "annotator": "2nd"
+}

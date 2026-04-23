@@ -1,0 +1,55 @@
+{
+  "repo": "Anylsite",
+  "filename": "DeviceManager.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "624f5961783c922d",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.17,
+      "finish_reason": "stop",
+      "prompt_tokens": 719,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 719,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 719,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 719,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 719,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.07,
+  "total_elapsed_s": 0.35,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T04:37:10.461184"
+}

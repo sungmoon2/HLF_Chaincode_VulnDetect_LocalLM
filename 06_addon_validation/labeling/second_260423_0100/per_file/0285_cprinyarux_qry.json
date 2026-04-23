@@ -1,0 +1,19 @@
+{
+  "file_id": "0285_cprinyarux_qry",
+  "repo": "cprinyarux",
+  "filename": "qry.go",
+  "elapsed_s": 15.46,
+  "input_tokens": 1805,
+  "output_tokens": 687,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file uses `time.Parse()` to parse dates from transaction arguments (deterministic), not `time.Now()`. All data written to the ledger via `PutState` is derived deterministically from transaction inputs. The referenced functions without implementations (`ExecuteRichQuery`, etc.) are out of scope for intra-file analysis.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `CryptocoinChaincode` implementing the shim interface. This is a valid HLF chaincode. → Continue analysis.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: Scanning for `time.Now()`, `time.Since()`, `time.Until()`...\n- Line 63: `time.Parse(layout, txnDate)` - This parses a date from input arguments, NOT `time.Now()`. This is deterministic.\n- No `time.Now()` calls found.\n\n**C2 GOROUTINE**: Scanning for `go func()` or `go methodCall()`...\n- None found.\n\n**C3 MAP_ITERATION**: Scanning for `for...range` over maps...\n- None found.\n\n**C4 NON_REVALIDATED_QUERY**: Scanning for `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`...\n- The functions `ExecuteRichQuery`, `GetDatesByPrice`, `GetAveragesBetweenDates`, `GenerateVolumeReport` are referenced in the Invoke router (lines 47-52) but their implementations are NOT in this file. I cannot reason about cross-file calls.\n- `GetByDate` (line 87) uses `stub.GetState()` which is NOT a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: Scanning for package-level `var`...\n- None found.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Evidence Assessment\n\nThe only write operation is in `AddData`:\n- Line 76: `stub.PutState(txnDate, jsonData)`\n\nThe data written is derived from:\n- `args` (transaction input) - deterministic\n- `time.Parse()` which parses the input string - deterministic\n- `json.Marshal()` on a struct - deterministic\n\nNo nondeterministic sources (C1-C4, C6) influence any ledger writes or responses in this file.\n\n### Step 4: Logging/Test/Dead Code Check\nN/A - no vulnerable patterns found.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file uses `time.Parse()` to parse dates from transaction arguments (deterministic), not `time.Now()`. All data written to the ledger via `PutState` is derived deterministically from transaction inputs. The referenced functions without implementations (`ExecuteRichQuery`, etc.) are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:23:25.785903",
+  "annotator": "2nd"
+}

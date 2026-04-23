@@ -1,0 +1,19 @@
+{
+  "file_id": "0181_asararatnakar_newkeyperinvoke",
+  "repo": "asararatnakar",
+  "filename": "newkeyperinvoke.go",
+  "elapsed_s": 2.29,
+  "input_tokens": 1194,
+  "output_tokens": 148,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Invoke method on contractapi-compatible receiver). However, no C1–C6 vulnerability patterns are present. The code performs deterministic operations: argument parsing, conditional branching on function name, and direct PutState/GetState calls with arguments derived solely from the invocation args. No time.Now(), goroutines, map iteration, non-revalidated queries, or mutable global state influence ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains a valid HLF transaction entrypoint (Invoke method on contractapi-compatible receiver). However, no C1–C6 vulnerability patterns are present. The code performs deterministic operations: argument parsing, conditional branching on function name, and direct PutState/GetState calls with arguments derived solely from the invocation args. No time.Now(), goroutines, map iteration, non-revalidated queries, or mutable global state influence ledger writes or responses.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:42:48.423114",
+  "annotator": "2nd"
+}

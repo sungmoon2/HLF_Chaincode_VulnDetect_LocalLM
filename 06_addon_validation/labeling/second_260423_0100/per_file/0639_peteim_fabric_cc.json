@@ -1,0 +1,19 @@
+{
+  "file_id": "0639_peteim_fabric_cc",
+  "repo": "peteim",
+  "filename": "fabric_cc.go",
+  "elapsed_s": 5.09,
+  "input_tokens": 1963,
+  "output_tokens": 147,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L68, L77, L82",
+  "rationale": "The file contains time.Now() and time.Since() calls (L68, L77, L82), but these are used exclusively for logging purposes (measuring and printing elapsed time). The time values do not influence any ledger writes or the proposal response content - they only appear in log.Printf statements. The actual response is determined by the return value from cc.rpc.Handler() and json.Marshal(ret), neither of which depends on the timing measurements.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L68, L77, L82\nRATIONALE: The file contains time.Now() and time.Since() calls (L68, L77, L82), but these are used exclusively for logging purposes (measuring and printing elapsed time). The time values do not influence any ledger writes or the proposal response content - they only appear in log.Printf statements. The actual response is determined by the return value from cc.rpc.Handler() and json.Marshal(ret), neither of which depends on the timing measurements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:48:51.351041",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0609_nmatsui_fabric-payment",
+  "repo": "nmatsui",
+  "filename": "fabric-payment.go",
+  "elapsed_s": 4.0,
+  "input_tokens": 1323,
+  "output_tokens": 163,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L12-L14",
+  "rationale": "The file contains HLF transaction entrypoints (Init/Invoke). Package-level vars at L12-L14 are initialized with deterministic `new()` calls and are never mutated within this file's transaction logic—they are only used to dispatch method calls. The logger at L11 is only used for logging. No C1-C4 or C6 patterns with intra-file evidence of reaching sinks exist; all business logic is delegated to external contracts which are out of scope for intra-file analysis.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L12-L14\nRATIONALE: The file contains HLF transaction entrypoints (Init/Invoke). Package-level vars at L12-L14 are initialized with deterministic `new()` calls and are never mutated within this file's transaction logic—they are only used to dispatch method calls. The logger at L11 is only used for logging. No C1-C4 or C6 patterns with intra-file evidence of reaching sinks exist; all business logic is delegated to external contracts which are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:47:04.346900",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0599_netkiller_token1",
+  "repo": "netkiller",
+  "filename": "token1.go",
+  "elapsed_s": 4.34,
+  "input_tokens": 1897,
+  "output_tokens": 284,
+  "verdict": "VULNERABLE",
+  "primary_class": "C3",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L16, L60-61, L75-76",
+  "rationale": "The Token struct contains a `BalanceOf` field of type `map[string]uint` (L16). In `initLedger()` (L60-61) and `transferToken()` (L75-76), the token is marshaled to JSON via `json.Marshal(token)` after modifying map contents. Although Go's encoding/json package sorts map keys deterministically during marshaling, the intermediate in-memory map iteration during `token.transfer()` (L28-31) and other methods modifies map state whose order is nondeterministic. When `json.Marshal()` is called on a struct containing a map, the marshaling process itself iterates the map; however, the primary vulnerability is that map field modifications (L28-31, L60) occur before the write, and the resulting JSON serialization depends on the runtime map iteration order at marshal time, which is randomized per Go execution. This nondeterminism in the serialized state written to the ledger via `PutState()` creates consensus divergence risk.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C3\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L16, L60-61, L75-76\nRATIONALE: The Token struct contains a `BalanceOf` field of type `map[string]uint` (L16). In `initLedger()` (L60-61) and `transferToken()` (L75-76), the token is marshaled to JSON via `json.Marshal(token)` after modifying map contents. Although Go's encoding/json package sorts map keys deterministically during marshaling, the intermediate in-memory map iteration during `token.transfer()` (L28-31) and other methods modifies map state whose order is nondeterministic. When `json.Marshal()` is called on a struct containing a map, the marshaling process itself iterates the map; however, the primary vulnerability is that map field modifications (L28-31, L60) occur before the write, and the resulting JSON serialization depends on the runtime map iteration order at marshal time, which is randomized per Go execution. This nondeterminism in the serialized state written to the ledger via `PutState()` creates consensus divergence risk.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:55:07.673990",
+  "annotator": "2nd"
+}

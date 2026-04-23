@@ -1,0 +1,19 @@
+{
+  "file_id": "0197_BCEvanFang_abac",
+  "repo": "BCEvanFang",
+  "filename": "abac.go",
+  "elapsed_s": 2.4,
+  "input_tokens": 2311,
+  "output_tokens": 145,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains three transaction entrypoints (Init, Invoke, and helper methods invoke/delete/query) that perform deterministic ledger operations. All writes (PutState, DelState) depend solely on function arguments and GetState reads, with no time-based, goroutine-based, map-iteration, non-revalidated-query, or global-mutable-state sources influencing the ledger state or response. The code is consensus-safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains three transaction entrypoints (Init, Invoke, and helper methods invoke/delete/query) that perform deterministic ledger operations. All writes (PutState, DelState) depend solely on function arguments and GetState reads, with no time-based, goroutine-based, map-iteration, non-revalidated-query, or global-mutable-state sources influencing the ledger state or response. The code is consensus-safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:43:12.668396",
+  "annotator": "2nd"
+}

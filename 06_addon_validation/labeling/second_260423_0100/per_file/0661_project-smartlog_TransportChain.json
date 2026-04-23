@@ -1,0 +1,19 @@
+{
+  "file_id": "0661_project-smartlog_TransportChain",
+  "repo": "project-smartlog",
+  "filename": "TransportChain.go",
+  "elapsed_s": 13.14,
+  "input_tokens": 1757,
+  "output_tokens": 564,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode only uses slice iterations (not maps), standard GetState calls (not rich queries), and contains no time-based operations, goroutines, or global mutable state. All operations are deterministic across endorsing peers.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SmartContract` using `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Analysis\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 47-48: `for index, chain := range chains` - iterating over a slice (`[]Chain`), not a map.\n- Line 82-87: `for _, chain := range chains` - also iterating over a slice.\n- The `Chain` struct contains `Participants []string` (slice) and `Id string` - no maps.\n- `json.Marshal(chains)` marshals a slice of structs, not a map directly.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `APIstub.GetState(\"chains\")` is used (lines 40, 76), but `GetState` is NOT one of the C4 source patterns (GetQueryResult, GetPrivateDataQueryResult, GetQueryResultWithPagination, GetHistoryForKey).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators created (no `GetStateByRange`, `GetQueryResult`, etc. that return iterators).\n\n### Step 3: Evidence Review\n- All iterations are over slices (`[]Chain`), which have deterministic order.\n- `json.Marshal` on slices and structs is deterministic.\n- No C1-C4 or C6 source patterns are present.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode only uses slice iterations (not maps), standard GetState calls (not rich queries), and contains no time-based operations, goroutines, or global mutable state. All operations are deterministic across endorsing peers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:50:35.347077",
+  "annotator": "2nd"
+}

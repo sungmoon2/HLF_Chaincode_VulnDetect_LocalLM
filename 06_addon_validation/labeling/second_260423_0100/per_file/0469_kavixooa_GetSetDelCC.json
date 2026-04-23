@@ -1,0 +1,19 @@
+{
+  "file_id": "0469_kavixooa_GetSetDelCC",
+  "repo": "kavixooa",
+  "filename": "GetSetDelCC.go",
+  "elapsed_s": 6.29,
+  "input_tokens": 4138,
+  "output_tokens": 184,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L261-L262, L310-L311",
+  "rationale": "The file contains GetHistoryForKey (L261) and GetQueryResult (L310), both C4 source patterns. However, GetHistoryForKey is used in getHistory() which only returns data via shim.Success (read-only, no writes). The queryData() function using GetQueryResult is NOT exposed through the Invoke router (lines 37-52 only route \"set\", \"get\", \"del\", \"getHistory\"), making it dead code. Neither C4 source influences any ledger write decision. The logger global (L28) is only used for logging, not transaction logic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L261-L262, L310-L311\nRATIONALE: The file contains GetHistoryForKey (L261) and GetQueryResult (L310), both C4 source patterns. However, GetHistoryForKey is used in getHistory() which only returns data via shim.Success (read-only, no writes). The queryData() function using GetQueryResult is NOT exposed through the Invoke router (lines 37-52 only route \"set\", \"get\", \"del\", \"getHistory\"), making it dead code. Neither C4 source influences any ledger write decision. The logger global (L28) is only used for logging, not transaction logic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:36:23.770614",
+  "annotator": "2nd"
+}

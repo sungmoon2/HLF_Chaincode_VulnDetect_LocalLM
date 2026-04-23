@@ -1,0 +1,19 @@
+{
+  "file_id": "0505_lafenicecc_marbles_chaincode",
+  "repo": "lafenicecc",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 17.06,
+  "input_tokens": 5045,
+  "output_tokens": 814,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L275-L282, L285-L291",
+  "rationale": "The GetQueryResult calls in queryMarblesByOwner and queryMarbles are read-only queries that return results via shim.Success without influencing any ledger writes. GetStateByPartialCompositeKey and GetStateByRange are explicitly excluded from C4 sources. No other nondeterminism patterns (time.Now, goroutines, map iteration, global mutable state) are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 340: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history response, NOT `time.Now()`. This is deterministic as it converts existing data.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The `marble` struct uses `json.Marshal()` which is safe.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `GetQueryResult` is used in `getQueryResultForQueryString()` (L285) - called by `queryMarblesByOwner` and `queryMarbles`. These functions only return results via `shim.Success()` without making write decisions. This is read-only query returning data.\n- `GetHistoryForKey` is used in `getHistoryForMarble()` (L310) - also read-only, returns data via `shim.Success()`.\n- `GetStateByPartialCompositeKey` is used in `transferMarblesBasedOnColor()` (L233) - but per the rules, this is NOT a C4 source.\n- `GetStateByRange` is used in `getMarblesByRange()` (L199) - also NOT a C4 source per rules.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: All iterators have `defer resultsIterator.Close()` calls:\n- L203: `defer resultsIterator.Close()`\n- L238: `defer coloredMarbleResultsIterator.Close()`\n- L291: `defer resultsIterator.Close()`\n- L315: `defer resultsIterator.Close()`\n\n### Key Observations\n\nThe `queryMarblesByOwner` and `queryMarbles` functions use `GetQueryResult`, but they are **read-only** - they return query results directly via `shim.Success()` without using the results to make any write decisions (no `PutState`, `DelState`, etc. based on query results).\n\nThe `transferMarblesBasedOnColor` uses `GetStateByPartialCompositeKey` which is explicitly excluded from C4 sources per the rules.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L275-L282, L285-L291\nRATIONALE: The GetQueryResult calls in queryMarblesByOwner and queryMarbles are read-only queries that return results via shim.Success without influencing any ledger writes. GetStateByPartialCompositeKey and GetStateByRange are explicitly excluded from C4 sources. No other nondeterminism patterns (time.Now, goroutines, map iteration, global mutable state) are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:39:18.778955",
+  "annotator": "2nd"
+}

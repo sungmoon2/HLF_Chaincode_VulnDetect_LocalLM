@@ -1,0 +1,19 @@
+{
+  "file_id": "0539_lzb13612_example",
+  "repo": "lzb13612",
+  "filename": "example.go",
+  "elapsed_s": 5.15,
+  "input_tokens": 3436,
+  "output_tokens": 155,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L261-L285",
+  "rationale": "The file contains HLF transaction entrypoints (Init/Invoke). GetHistoryForKey is used in getHistoryForKey() but only for logging (fmt.Println) - no write decisions are made based on its results. GetStateByRange and GetStateByPartialCompositeKey are explicitly excluded from C4 sources per the taxonomy. No time.Now(), goroutines, map iteration, or mutable global state patterns are present. All iterators are properly closed via defer.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L261-L285\nRATIONALE: The file contains HLF transaction entrypoints (Init/Invoke). GetHistoryForKey is used in getHistoryForKey() but only for logging (fmt.Println) - no write decisions are made based on its results. GetStateByRange and GetStateByPartialCompositeKey are explicitly excluded from C4 sources per the taxonomy. No time.Now(), goroutines, map iteration, or mutable global state patterns are present. All iterators are properly closed via defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:42:13.836784",
+  "annotator": "2nd"
+}

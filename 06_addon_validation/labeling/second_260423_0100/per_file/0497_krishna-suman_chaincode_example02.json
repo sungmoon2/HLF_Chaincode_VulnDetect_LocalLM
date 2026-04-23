@@ -1,0 +1,19 @@
+{
+  "file_id": "0497_krishna-suman_chaincode_example02",
+  "repo": "krishna-suman",
+  "filename": "chaincode_example02.go",
+  "elapsed_s": 4.72,
+  "input_tokens": 3010,
+  "output_tokens": 134,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. No time.Now(), goroutines, map iteration, or rich queries (GetQueryResult) are present. GetStateByRange in getAll() is explicitly excluded from C4 per the taxonomy. The iterator is properly closed with defer. No package-level mutable state exists.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. No time.Now(), goroutines, map iteration, or rich queries (GetQueryResult) are present. GetStateByRange in getAll() is explicitly excluded from C4 per the taxonomy. The iterator is properly closed with defer. No package-level mutable state exists.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:38:35.825264",
+  "annotator": "2nd"
+}

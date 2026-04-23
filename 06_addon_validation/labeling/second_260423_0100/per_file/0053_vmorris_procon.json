@@ -1,0 +1,19 @@
+{
+  "file_id": "0053_vmorris_procon",
+  "repo": "vmorris",
+  "filename": "procon.go",
+  "elapsed_s": 5.08,
+  "input_tokens": 2989,
+  "output_tokens": 157,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L77-L82, L101-L108, L127-L133, L151-L160",
+  "rationale": "Multiple transaction functions use time.Now().Unix() to set date fields (ProducedDate, OfferedDate, TradedDate, ConsumedDate) that are then written to the ledger via stub.PutState(). Since time.Now() returns the local system time which can differ across endorsing peers, this causes endorsement divergence. The chaincode should use stub.GetTxTimestamp() instead.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L77-L82, L101-L108, L127-L133, L151-L160\nRATIONALE: Multiple transaction functions use time.Now().Unix() to set date fields (ProducedDate, OfferedDate, TradedDate, ConsumedDate) that are then written to the ledger via stub.PutState(). Since time.Now() returns the local system time which can differ across endorsing peers, this causes endorsement divergence. The chaincode should use stub.GetTxTimestamp() instead.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:54.714070",
+  "annotator": "2nd"
+}

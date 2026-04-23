@@ -1,0 +1,19 @@
+{
+  "file_id": "0741_Shuo93_router",
+  "repo": "Shuo93",
+  "filename": "router.go",
+  "elapsed_s": 12.71,
+  "input_tokens": 1554,
+  "output_tokens": 586,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file is a routing/dispatcher layer that contains no nondeterministic patterns (C1-C4, C6). All routing logic uses deterministic string operations and switch statements. The actual transaction logic is implemented in other files not visible here, so intra-file analysis shows no vulnerabilities.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains `Init` and `Invoke` methods on a struct implementing `shim.ChaincodeStubInterface` patterns. This is a valid HLF chaincode.\n\n### Step 2: Check for Core Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` in this file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps in this file.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file.\n\n### Step 3: Code Structure Analysis\n\nThis file is essentially a **router/dispatcher** that:\n1. `Init` - Returns success with a log message\n2. `Invoke` - Routes function calls to other methods based on function name\n3. `query` - Routes query function calls to specific query handlers\n\nAll the actual implementation methods (`register`, `login`, `confirmDate`, `measureCredit`, `like`, `unlike`, `modifyPersonInfo`, `uploadPersonInfo`, `replyDate`, `sendDate`, `replyPermession`, `sendPermission`, `queryPersonInfo`, etc.) are **not defined in this file**. They are presumably defined in other files of the same package.\n\nThe routing logic uses:\n- `strings.HasPrefix()` - deterministic\n- `switch` statements - deterministic\n- Direct method calls - deterministic\n\n### Step 4: Auxiliary Check (C5)\nNo iterators are created in this file.\n\n## Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file is a routing/dispatcher layer that contains no nondeterministic patterns (C1-C4, C6). All routing logic uses deterministic string operations and switch statements. The actual transaction logic is implemented in other files not visible here, so intra-file analysis shows no vulnerabilities.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:56:25.756722",
+  "annotator": "2nd"
+}

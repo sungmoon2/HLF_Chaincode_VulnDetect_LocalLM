@@ -1,0 +1,19 @@
+{
+  "file_id": "0717_sapcis_perishable-net",
+  "repo": "sapcis",
+  "filename": "perishable-net.go",
+  "elapsed_s": 5.73,
+  "input_tokens": 2671,
+  "output_tokens": 175,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L139-L157, L159-L180",
+  "rationale": "The `history` function uses `time.Unix()` to format timestamps from the ledger's `it.Timestamp` (deterministic ledger data), not `time.Now()`, so it's not C1. The `getall` function uses `GetQueryResult` (C4 source), but the results are only returned via `shim.Success` as read-only data—there are no write operations (PutState/DelState) based on the query results, making it a read-only query which is explicitly not C4 per the taxonomy.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L139-L157, L159-L180\nRATIONALE: The `history` function uses `time.Unix()` to format timestamps from the ledger's `it.Timestamp` (deterministic ledger data), not `time.Now()`, so it's not C1. The `getall` function uses `GetQueryResult` (C4 source), but the results are only returned via `shim.Success` as read-only data—there are no write operations (PutState/DelState) based on the query results, making it a read-only query which is explicitly not C4 per the taxonomy.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:54:50.628785",
+  "annotator": "2nd"
+}

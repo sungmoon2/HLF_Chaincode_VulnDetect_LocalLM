@@ -1,0 +1,19 @@
+{
+  "file_id": "0229_bugfrog1024_chaincode_AtoreAndAccess",
+  "repo": "bugfrog1024",
+  "filename": "chaincode_AtoreAndAccess.go",
+  "elapsed_s": 5.54,
+  "input_tokens": 2032,
+  "output_tokens": 167,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF transaction entrypoints (Init and Invoke methods). The code uses only deterministic operations: GetState, PutState, DelState with values derived directly from transaction arguments. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no mutable global state (C6). The code has compilation errors (undefined variables like Avalbytes, invalid syntax), but no consensus-critical nondeterminism patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF transaction entrypoints (Init and Invoke methods). The code uses only deterministic operations: GetState, PutState, DelState with values derived directly from transaction arguments. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no mutable global state (C6). The code has compilation errors (undefined variables like Avalbytes, invalid syntax), but no consensus-critical nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:18:55.096078",
+  "annotator": "2nd"
+}

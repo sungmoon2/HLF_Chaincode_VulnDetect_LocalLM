@@ -1,0 +1,19 @@
+{
+  "file_id": "0921_zerox12311_smart_contract_sample",
+  "repo": "zerox12311",
+  "filename": "smart_contract_sample.go",
+  "elapsed_s": 5.67,
+  "input_tokens": 2089,
+  "output_tokens": 160,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95-L103",
+  "rationale": "The file contains HLF transaction entrypoints (Init/Invoke). The getHistory function uses GetHistoryForKey (L95), which is a C4 source, but the result is only returned via shim.Success for read purposes—it does not influence any write decision (PutState/DelState). GetStateByRange in getRange (L49) is explicitly not a C4 source per the taxonomy. No time.Now(), goroutines, map iteration, or mutable global state patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L95-L103\nRATIONALE: The file contains HLF transaction entrypoints (Init/Invoke). The getHistory function uses GetHistoryForKey (L95), which is a C4 source, but the result is only returned via shim.Success for read purposes—it does not influence any write decision (PutState/DelState). GetStateByRange in getRange (L49) is explicitly not a C4 source per the taxonomy. No time.Now(), goroutines, map iteration, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:09:25.666678",
+  "annotator": "2nd"
+}

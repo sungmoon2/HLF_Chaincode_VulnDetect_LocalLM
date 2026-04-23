@@ -1,0 +1,19 @@
+{
+  "file_id": "0389_grishawh_new",
+  "repo": "grishawh",
+  "filename": "new.go",
+  "elapsed_s": 13.67,
+  "input_tokens": 2780,
+  "output_tokens": 579,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L152, L175",
+  "rationale": "The GetHistoryForKey result is only used for a read-only response (not influencing writes), and time.Unix() converts existing ledger timestamps rather than using time.Now(). All write operations are based on deterministic inputs.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains valid HLF transaction entrypoints: `Init` and `Invoke` methods on the `SCc` struct.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 175: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger history, NOT `time.Now()`. This is deterministic as it converts existing ledger data.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iterations found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 152: `stub.GetHistoryForKey(name)` - This is a C4 source. However, examining the `getAllHistoryKey` function (lines 145-196), the result is only used to build a JSON response that is returned via `shim.Success(buffer.Bytes())`. There are NO write operations (PutState, DelState, etc.) based on the query results. This is a read-only query returned to the client, which is explicitly NOT C4 per the taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 157: `defer resultIt.Close()` - The iterator is properly closed via defer.\n\n### Key Observations\n1. The `getAllHistoryKey` function uses `GetHistoryForKey` but only for read-only purposes - building a response to return to the client.\n2. The `time.Unix()` call converts an existing timestamp from ledger history, not the current time.\n3. All write operations (`PutState`, `DelState`) in `invoke`, `delete`, and `Init` are based on deterministic inputs (function arguments and existing state).\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L152, L175\nRATIONALE: The GetHistoryForKey result is only used for a read-only response (not influencing writes), and time.Unix() converts existing ledger timestamps rather than using time.Now(). All write operations are based on deterministic inputs.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:30:39.795522",
+  "annotator": "2nd"
+}

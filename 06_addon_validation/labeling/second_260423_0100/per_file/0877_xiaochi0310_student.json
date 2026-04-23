@@ -1,0 +1,19 @@
+{
+  "file_id": "0877_xiaochi0310_student",
+  "repo": "xiaochi0310",
+  "filename": "student.go",
+  "elapsed_s": 16.74,
+  "input_tokens": 3400,
+  "output_tokens": 667,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains standard CRUD operations. The rich query in queryStudentList is read-only, returning results to the client without influencing any ledger writes. All write operations (createStudentsInfo, updateStudentInfo, deleteStudentInfo) use deterministic key-based state access via utils package calls. No C1-C4 or C6 patterns that influence writes or responses are present in this file.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing the shim interface, so this is a valid chaincode file.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` in this file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over map types visible in this file.\n\n**C4 NON_REVALIDATED_QUERY**: \n- In `queryStudentList` (lines 79-122), there's a call to `utils.GetCounchdbIter()` which appears to wrap a rich query (based on the function name and parameters like `Bookmark`, `selectString`, `PageNo`, `PageSize`). \n- However, examining the usage: the results are iterated and returned via `utils.SUCCESS(repStudentInfo)` - this is a **read-only query** that returns data to the client.\n- No write operations (`PutState`, `DelState`) are performed based on the query results.\n- This is NOT a C4 violation since read-only queries returned via response are explicitly excluded.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- In `queryStudentList`, `StateQueryIterator` is created and `defer StateQueryIterator.Close()` is called at line 95.\n- However, there are multiple early returns before the defer is set up (lines 84, 89), but those are error paths before the iterator is created.\n- After the iterator is created, the defer is properly set. This appears correctly handled.\n\n### Conclusion\n\nThe chaincode delegates most operations to the `utils` package. Within this file:\n- No time-based nondeterminism\n- No goroutines\n- No map iteration\n- The rich query in `queryStudentList` is read-only (returns data, doesn't make write decisions)\n- No mutable global state\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains standard CRUD operations. The rich query in queryStudentList is read-only, returning results to the client without influencing any ledger writes. All write operations (createStudentsInfo, updateStudentInfo, deleteStudentInfo) use deterministic key-based state access via utils package calls. No C1-C4 or C6 patterns that influence writes or responses are present in this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:06:29.807415",
+  "annotator": "2nd"
+}

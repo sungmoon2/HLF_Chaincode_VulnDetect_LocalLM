@@ -1,0 +1,19 @@
+{
+  "file_id": "0745_sighttviewliu_main",
+  "repo": "sighttviewliu",
+  "filename": "main.go",
+  "elapsed_s": 3.28,
+  "input_tokens": 2582,
+  "output_tokens": 186,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L119-L125, L131-L137, L143-L149",
+  "rationale": "The file contains transaction entrypoints (Init, Invoke) that dispatch to queryBills and queryWaitBills. Both functions call getBillsByQueryString, which uses stub.GetQueryResult (L119) — a C4 NON_REVALIDATED_QUERY source. The query result is directly returned via shim.Success (L125, L137) without revalidation, and the iterator output influences the response payload. CouchDB query results are not deterministic across endorsers due to index state variations and timing, making this consensus-critical nondeterminism.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L119-L125, L131-L137, L143-L149\n\nRATIONALE: The file contains transaction entrypoints (Init, Invoke) that dispatch to queryBills and queryWaitBills. Both functions call getBillsByQueryString, which uses stub.GetQueryResult (L119) — a C4 NON_REVALIDATED_QUERY source. The query result is directly returned via shim.Success (L125, L137) without revalidation, and the iterator output influences the response payload. CouchDB query results are not deterministic across endorsers due to index state variations and timing, making this consensus-critical nondeterminism.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:59:15.071326",
+  "annotator": "2nd"
+}

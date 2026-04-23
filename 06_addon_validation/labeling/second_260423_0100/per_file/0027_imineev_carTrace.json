@@ -1,0 +1,19 @@
+{
+  "file_id": "0027_imineev_carTrace",
+  "repo": "imineev",
+  "filename": "carTrace.go",
+  "elapsed_s": 14.63,
+  "input_tokens": 7681,
+  "output_tokens": 645,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L558-L570",
+  "rationale": "In `setPartRecallState`, `time.Now().UTC().Unix()` is used to set `recallTime` which is then marshaled into the vehiclePart struct and written to state via `PutState`. Different endorsers will have different timestamps, causing endorsement divergence.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, so this is valid chaincode.\n\n### Scanning for Vulnerability Patterns\n\n**C1 TIME_NOW:**\nAt lines 558-562, in `setPartRecallState`:\n```go\nvar recallTime int\nif recall {\n    recallTime = int(time.Now().UTC().Unix())\n} else {\n    recallTime = 0\n}\n```\n\nThis `time.Now()` value is then used to create a `vehiclePart` struct (line 564), which is marshaled and written to state via `stub.PutState(serialNumber, vehiclePartJSONasBytes)` at line 570.\n\nDifferent endorsing peers will have slightly different system times, causing the `recallTime` field to differ, which means the marshaled JSON bytes will differ, leading to endorsement divergence.\n\n**C2 GOROUTINE:** No goroutines found.\n\n**C3 MAP_ITERATION:** No map iteration found. The structs use `json.Marshal` but on struct types, not maps.\n\n**C4 NON_REVALIDATED_QUERY:** \n- `GetHistoryForKey` is used at line 476, but the result is only returned via `shim.Success(buffer.Bytes())` - it's read-only, not influencing a write decision.\n- `GetStateByRange` at line 437 is explicitly excluded from C4 per the taxonomy.\n\n**C5 ITERATOR_LEAK:** \n- Line 440: `defer resultsIterator.Close()` - properly closed\n- Line 481: `defer resultsIterator.Close()` - properly closed\n\n**C6 GLOBAL_MUTABLE_STATE:**\n`carTraceLogger` at line 42 is a package-level var, but it's only used for logging, which is explicitly SAFE per the taxonomy.\n\n### Verdict\n\nThe `time.Now()` call in `setPartRecallState` directly influences data written to the ledger via `PutState`. This is a clear C1 violation causing consensus-critical nondeterminism.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L558-L570\nRATIONALE: In `setPartRecallState`, `time.Now().UTC().Unix()` is used to set `recallTime` which is then marshaled into the vehiclePart struct and written to state via `PutState`. Different endorsers will have different timestamps, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:48.952811",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0349_fishmc_test",
+  "repo": "fishmc",
+  "filename": "test.go",
+  "elapsed_s": 2.22,
+  "input_tokens": 1164,
+  "output_tokens": 169,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Init/Invoke methods on the Test struct). However, no consensus-critical nondeterminism sources are present. The `get` function performs a read-only query (GetState) returned via shim.Success without influencing writes. The `set` function writes a deterministic key-value pair directly from parameters without any time-dependent, goroutine-based, map-iteration, or non-revalidated-query logic. No global mutable state is accessed. All operations are deterministic across endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains a valid HLF transaction entrypoint (Init/Invoke methods on the Test struct). However, no consensus-critical nondeterminism sources are present. The `get` function performs a read-only query (GetState) returned via shim.Success without influencing writes. The `set` function writes a deterministic key-value pair directly from parameters without any time-dependent, goroutine-based, map-iteration, or non-revalidated-query logic. No global mutable state is accessed. All operations are deterministic across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:24.605497",
+  "annotator": "2nd"
+}

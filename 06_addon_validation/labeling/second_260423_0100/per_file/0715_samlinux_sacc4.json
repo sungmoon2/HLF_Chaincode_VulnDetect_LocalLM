@@ -1,0 +1,19 @@
+{
+  "file_id": "0715_samlinux_sacc4",
+  "repo": "samlinux",
+  "filename": "sacc4.go",
+  "elapsed_s": 14.71,
+  "input_tokens": 2436,
+  "output_tokens": 667,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L83-L95, L125-L160",
+  "rationale": "The GetQueryResult (L83) and GetHistoryForKey (L125) are used in read-only functions that return results via shim.Success without influencing any write decisions. The time.Unix() call converts existing ledger timestamps, not time.Now(). All iterators are properly closed with defer.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 147: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger history, NOT `time.Now()`. This is deterministic as it converts existing data.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iterations found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 83: `stub.GetQueryResult(queryString)` in `getQueryResultForQueryString()` - This is called by `getAll()` which returns the result via `shim.Success(queryResults)`. This is a **read-only query** that doesn't influence any write decision.\n- Line 125: `stub.GetHistoryForKey(keyName)` in `getAllTx()` - This returns history data via `shim.Success()`. This is also a **read-only query** that doesn't influence any write decision.\n\nPer the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\" Both `getAll` and `getAllTx` simply return query results without making any write decisions based on them.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables.\n\n**C5 ITERATOR_LEAK**: \n- Line 84-85: Iterator created and `defer resultsIterator.Close()` is called - properly closed.\n- Line 126-127: Iterator created and `defer resultsIterator.Close()` is called - properly closed.\n\n### Write Operations\n- `set()` function performs `PutState` but only based on input arguments, not on any nondeterministic source.\n- `Init()` performs `PutState` based on input arguments only.\n\nThe `GetQueryResult` and `GetHistoryForKey` calls are used purely for read operations that return data to the client - they don't influence any ledger writes.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L83-L95, L125-L160\nRATIONALE: The GetQueryResult (L83) and GetHistoryForKey (L125) are used in read-only functions that return results via shim.Success without influencing any write decisions. The time.Unix() call converts existing ledger timestamps, not time.Now(). All iterators are properly closed with defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:54:44.882152",
+  "annotator": "2nd"
+}

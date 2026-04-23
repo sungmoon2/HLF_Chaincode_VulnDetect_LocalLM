@@ -1,0 +1,19 @@
+{
+  "file_id": "0383_giou-k_votingAllinOne",
+  "repo": "giou-k",
+  "filename": "votingAllinOne.go",
+  "elapsed_s": 3.13,
+  "input_tokens": 5119,
+  "output_tokens": 170,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1 (time.Now patterns), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable package-level state influencing writes) vulnerabilities are present. The logger global is read-only and safe. All ledger writes (PutState, DelState) are driven by deterministic function arguments and state reads, with no nondeterministic sources influencing the decision path.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1 (time.Now patterns), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable package-level state influencing writes) vulnerabilities are present. The logger global is read-only and safe. All ledger writes (PutState, DelState) are driven by deterministic function arguments and state reads, with no nondeterministic sources influencing the decision path.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:21.103983",
+  "annotator": "2nd"
+}

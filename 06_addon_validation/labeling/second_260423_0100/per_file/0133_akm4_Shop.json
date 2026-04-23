@@ -1,0 +1,19 @@
+{
+  "file_id": "0133_akm4_Shop",
+  "repo": "akm4",
+  "filename": "Shop.go",
+  "elapsed_s": 13.96,
+  "input_tokens": 2181,
+  "output_tokens": 522,
+  "verdict": "VULNERABLE",
+  "primary_class": "C3",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L48-L50, L55-L62, L73-L86",
+  "rationale": "In `doActions`, the JSON is unmarshaled into `map[string]interface{}` at L48-50. At L55-62, iteration over `vv` (a map) accesses keys like \"address\", \"function\", \"key\", \"value\", \"channel\". While the direct access pattern `vv[\"key\"]` is deterministic, the `actions` slice iteration processes items that build a response buffer (L73-86) returned via `shim.Success(buffer.Bytes())` at L91. The map access order for `vv` fields is fixed by explicit key access, but the underlying `parsed` map at L48 is `map[string]interface{}` - if any code iterated over it, that would be nondeterministic. More critically, the type assertions on map values could fail in different orders across peers if the JSON structure varies, but the primary concern is that `vv` is typed as `map[string]interface{}` and accessed - while explicit key access is safe, the pattern represents a map iteration risk if the code were modified. However, upon closer review, the actual iteration is over `actions` (a slice), and map field access is by explicit keys, which is deterministic. Let me reconsider - the code does NOT iterate over maps with range, it only does explicit key lookups. This is actually SAFE for C3.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C3\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L48-L50, L55-L62, L73-L86\nRATIONALE: In `doActions`, the JSON is unmarshaled into `map[string]interface{}` at L48-50. At L55-62, iteration over `vv` (a map) accesses keys like \"address\", \"function\", \"key\", \"value\", \"channel\". While the direct access pattern `vv[\"key\"]` is deterministic, the `actions` slice iteration processes items that build a response buffer (L73-86) returned via `shim.Success(buffer.Bytes())` at L91. The map access order for `vv` fields is fixed by explicit key access, but the underlying `parsed` map at L48 is `map[string]interface{}` - if any code iterated over it, that would be nondeterministic. More critically, the type assertions on map values could fail in different orders across peers if the JSON structure varies, but the primary concern is that `vv` is typed as `map[string]interface{}` and accessed - while explicit key access is safe, the pattern represents a map iteration risk if the code were modified. However, upon closer review, the actual iteration is over `actions` (a slice), and map field access is by explicit keys, which is deterministic. Let me reconsider - the code does NOT iterate over maps with range, it only does explicit key lookups. This is actually SAFE for C3.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The code unmarshals JSON into `map[string]interface{}` but only accesses map values via explicit key lookups (e.g., `vv[\"address\"]`), not via `for...range` iteration. The iteration at L54 is over a slice (`actions`), not a map. No C1 (time), C2 (goroutines), C4 (rich queries), or C6 (global mutable state) patterns are present. All ledger operations (PutState, GetState) are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:12:31.789923",
+  "annotator": "2nd"
+}

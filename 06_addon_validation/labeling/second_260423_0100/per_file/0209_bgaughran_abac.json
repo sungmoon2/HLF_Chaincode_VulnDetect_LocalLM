@@ -1,0 +1,19 @@
+{
+  "file_id": "0209_bgaughran_abac",
+  "repo": "bgaughran",
+  "filename": "abac.go",
+  "elapsed_s": 4.75,
+  "input_tokens": 2314,
+  "output_tokens": 132,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF transaction entrypoints (Init and Invoke). The code uses only deterministic operations: GetState, PutState, DelState with values derived from transaction arguments. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All state operations use deterministic inputs from stub.GetFunctionAndParameters() and stub.GetState().",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF transaction entrypoints (Init and Invoke). The code uses only deterministic operations: GetState, PutState, DelState with values derived from transaction arguments. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All state operations use deterministic inputs from stub.GetFunctionAndParameters() and stub.GetState().",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:17:46.694736",
+  "annotator": "2nd"
+}

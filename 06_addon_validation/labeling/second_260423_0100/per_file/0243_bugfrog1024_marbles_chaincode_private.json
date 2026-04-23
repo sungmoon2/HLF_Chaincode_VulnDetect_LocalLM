@@ -1,0 +1,19 @@
+{
+  "file_id": "0243_bugfrog1024_marbles_chaincode_private",
+  "repo": "bugfrog1024",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 5.38,
+  "input_tokens": 5271,
+  "output_tokens": 152,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L347-L348, L295-L296",
+  "rationale": "The file uses GetPrivateDataQueryResult (L347) in queryMarblesByOwner and queryMarbles, but these are read-only queries that return results via shim.Success without influencing any ledger writes (PutState, DelState, PutPrivateData, DelPrivateData). Per the taxonomy, read-only queries returned via shim.Success are NOT C4 vulnerabilities. All iterators are properly closed with defer statements.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L347-L348, L295-L296\nRATIONALE: The file uses GetPrivateDataQueryResult (L347) in queryMarblesByOwner and queryMarbles, but these are read-only queries that return results via shim.Success without influencing any ledger writes (PutState, DelState, PutPrivateData, DelPrivateData). Per the taxonomy, read-only queries returned via shim.Success are NOT C4 vulnerabilities. All iterators are properly closed with defer statements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:20:12.225558",
+  "annotator": "2nd"
+}

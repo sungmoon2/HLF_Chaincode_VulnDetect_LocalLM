@@ -1,0 +1,19 @@
+{
+  "file_id": "0833_uhuchain_car-chaincode",
+  "repo": "uhuchain",
+  "filename": "car-chaincode.go",
+  "elapsed_s": 17.31,
+  "input_tokens": 1766,
+  "output_tokens": 758,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "No intra-file evidence of nondeterministic patterns (C1-C4, C6). The Init method uses deterministic PutState operations with args-derived values. The Invoke method delegates to external code which is out of scope for intra-file analysis. No time functions, goroutines, map iterations, rich queries, or mutable globals are present in this file.",
+  "raw_response": "I'll analyze this Hyperledger Fabric Go chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify HLF Transaction Entrypoints\n- `Init(stub shim.ChaincodeStubInterface) pb.Response` - YES, HLF entrypoint\n- `Invoke(stub shim.ChaincodeStubInterface) pb.Response` - YES, HLF entrypoint\n- `delete` and `query` are private methods (lowercase), not directly callable but could be invoked internally\n\n### Step 2: Check for Core Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` in this file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions found.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls found. Only `GetState` is used in the `query` method.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file that are read in transaction logic.\n\n### Step 3: External Dependencies Analysis\nThe `Invoke` function calls:\n```go\ncarProvider := NewHlfCarProvider(stub)\ncarController := controller.NewCarController(&carProvider)\nresult, err := carController.Run(function, args)\n```\n\nThese are cross-file calls to `NewHlfCarProvider` (likely in another file in this package) and `controller.NewCarController` (external package). Per the rules, I must use **strictly intra-file evidence only** and NOT reason about cross-file calls.\n\n### Step 4: Intra-file Evidence\nWithin this file:\n- `Init`: Uses deterministic operations - `GetFunctionAndParameters`, `strconv.Atoi`, `PutState` with deterministic values\n- `Invoke`: Delegates to external code (out of scope for intra-file analysis)\n- `delete`: Uses `DelState` with deterministic key from args\n- `query`: Uses `GetState` (not a C4 source) and returns via `shim.Success`\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Verdict\nBased on strictly intra-file evidence, there are no C1-C4 or C6 vulnerability patterns present in this file. The external calls in `Invoke` cannot be evaluated per the scope rules.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: No intra-file evidence of nondeterministic patterns (C1-C4, C6). The Init method uses deterministic PutState operations with args-derived values. The Invoke method delegates to external code which is out of scope for intra-file analysis. No time functions, goroutines, map iterations, rich queries, or mutable globals are present in this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:02:52.907952",
+  "annotator": "2nd"
+}

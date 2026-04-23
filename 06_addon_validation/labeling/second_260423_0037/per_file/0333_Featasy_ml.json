@@ -1,0 +1,19 @@
+{
+  "file_id": "0333_Featasy_ml",
+  "repo": "Featasy",
+  "filename": "ml.go",
+  "elapsed_s": 4.21,
+  "input_tokens": 2411,
+  "output_tokens": 242,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67, L69-L70, L180",
+  "rationale": "The `get()` function is invoked as a transaction entrypoint (called from `Invoke()` at L44) and contains `rand.Seed(44111342)` at L67 followed by machine learning operations that depend on randomness (RandomTree at L138, RandomForest at L153). The final return value at L180 includes `evaluation.GetSummary(cf)` which is derived from predictions influenced by the seeded random state. Although the seed is fixed, the subsequent random operations (tree training/prediction) are consensus-critical sources that influence the response returned via `shim.Success()` at L45, making this a C1 TIME_NOW equivalent (nondeterministic randomness affecting ledger/response). The function does not write to ledger state directly, but the response value is consensus-critical and influenced by random operations.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L67, L69-L70, L180\n\nRATIONALE: The `get()` function is invoked as a transaction entrypoint (called from `Invoke()` at L44) and contains `rand.Seed(44111342)` at L67 followed by machine learning operations that depend on randomness (RandomTree at L138, RandomForest at L153). The final return value at L180 includes `evaluation.GetSummary(cf)` which is derived from predictions influenced by the seeded random state. Although the seed is fixed, the subsequent random operations (tree training/prediction) are consensus-critical sources that influence the response returned via `shim.Success()` at L45, making this a C1 TIME_NOW equivalent (nondeterministic randomness affecting ledger/response). The function does not write to ledger state directly, but the response value is consensus-critical and influenced by random operations.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:00.867558",
+  "annotator": "2nd"
+}

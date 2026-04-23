@@ -1,0 +1,19 @@
+{
+  "file_id": "0453_JiSeungGu_chaincode",
+  "repo": "JiSeungGu",
+  "filename": "chaincode.go",
+  "elapsed_s": 12.85,
+  "input_tokens": 4310,
+  "output_tokens": 551,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The chaincode uses only deterministic operations (GetState, PutState, CreateCompositeKey) with no time-based logic, goroutines, map iteration, rich queries, or mutable global state. All json.Marshal calls are on structs, not maps.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing the shim interface - this is valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` anywhere in the file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The code uses structs and slices, not maps. The `json.Marshal` calls are on structs (`ERC20Metadata`, `TransferEvent`, `Approval`), not maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. The code only uses `GetState` and `CreateCompositeKey`, which are deterministic.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations. The only package-level declaration is the `Chaincode` struct type.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code (no `GetStateByRange`, `GetStateByPartialCompositeKey`, etc.).\n\n### Code Review Summary\nThe chaincode implements a basic ERC20-like token with:\n- `Init`: Creates token metadata and initial balance\n- `TotalSupply`, `BalanceOf`: Read operations\n- `Transfer`, `Approve`, `Allowance`: Standard token operations\n\nAll operations use deterministic state access (`GetState`, `PutState`, `CreateCompositeKey`) and deterministic serialization (`json.Marshal` on structs).\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The chaincode uses only deterministic operations (GetState, PutState, CreateCompositeKey) with no time-based logic, goroutines, map iteration, rich queries, or mutable global state. All json.Marshal calls are on structs, not maps.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:35:37.350226",
+  "annotator": "2nd"
+}

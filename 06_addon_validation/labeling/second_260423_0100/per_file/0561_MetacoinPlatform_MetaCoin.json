@@ -1,0 +1,19 @@
+{
+  "file_id": "0561_MetacoinPlatform_MetaCoin",
+  "repo": "MetacoinPlatform",
+  "filename": "MetaCoin.go",
+  "elapsed_s": 13.79,
+  "input_tokens": 8171,
+  "output_tokens": 582,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file is a routing layer that delegates to external package functions. Within this file, there are no time-based operations, goroutines, map iterations, rich queries, or mutable global state. All operations are deterministic argument parsing and delegation to external functions.",
+  "raw_response": "Looking at this chaincode file, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, so this is a valid HLF chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` in this file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps in this file. The code iterates over `args` which is a slice (`[]string`), not a map.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. The file uses `GetState` and `GetFunctionAndParameters` which are safe.\n\n**C6 GLOBAL_MUTABLE_STATE**: The only package-level type is `serverConfig` struct and `MetacoinChainCode` struct - no mutable package-level variables that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Code Flow Analysis\nThe `Invoke` method:\n1. Gets function and parameters from stub\n2. Trims whitespace from args (deterministic)\n3. Uses a switch statement to route to various handlers\n4. Most handlers delegate to `metacoin.*` package functions (cross-file, out of scope)\n5. Direct operations like `stub.PutState(\"DUMMY_IDX_\"+args[0], []byte(args[0]))` are deterministic\n6. `stub.GetState()` calls are deterministic reads\n\nThe file itself contains no nondeterministic patterns. All the business logic is delegated to the `metacoin` package which is out of scope for this intra-file analysis.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file is a routing layer that delegates to external package functions. Within this file, there are no time-based operations, goroutines, map iterations, rich queries, or mutable global state. All operations are deterministic argument parsing and delegation to external functions.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:43:21.944895",
+  "annotator": "2nd"
+}

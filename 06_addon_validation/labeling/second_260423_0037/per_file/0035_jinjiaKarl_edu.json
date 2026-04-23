@@ -1,0 +1,19 @@
+{
+  "file_id": "0035_jinjiaKarl_edu",
+  "repo": "jinjiaKarl",
+  "filename": "edu.go",
+  "elapsed_s": 4.08,
+  "input_tokens": 4806,
+  "output_tokens": 188,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "C6",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L22-L23, L155, L189, L245",
+  "rationale": "The file contains two package-level mutable globals (`BackGroundNo` and `RecordNo` at L22-L23) that are read and incremented in transaction functions (`enrollStudent` at L155, `updateDiploma` at L189 and L245), influencing ledger writes via `writeRecord` and `writeBackground`. Additionally, `time.Now().Unix()` is called at L155 and L189 to set `ModifyTime` and `ExitTime` fields in records written to the ledger, creating consensus-critical nondeterminism across endorsing peers.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: C6\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L22-L23, L155, L189, L245\nRATIONALE: The file contains two package-level mutable globals (`BackGroundNo` and `RecordNo` at L22-L23) that are read and incremented in transaction functions (`enrollStudent` at L155, `updateDiploma` at L189 and L245), influencing ledger writes via `writeRecord` and `writeBackground`. Additionally, `time.Now().Unix()` is called at L155 and L189 to set `ModifyTime` and `ExitTime` fields in records written to the ledger, creating consensus-critical nondeterminism across endorsing peers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:56.817375",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0479_kmiyachi_ledgersafe-chaincode",
+  "repo": "kmiyachi",
+  "filename": "ledgersafe-chaincode.go",
+  "elapsed_s": 3.19,
+  "input_tokens": 2775,
+  "output_tokens": 189,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke methods). All ledger writes (PutState calls in initLedger, recordCannabis, changeCannabisHolder) use deterministic inputs: hardcoded array iteration (initLedger), function arguments (recordCannabis), or GetState results (changeCannabisHolder). No time.Now(), goroutines, map iterations, non-revalidated queries, or mutable global state that influences writes are present. The queryAllCannabis function uses GetStateByRange (not C4) and returns results read-only via shim.Success.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke methods). All ledger writes (PutState calls in initLedger, recordCannabis, changeCannabisHolder) use deterministic inputs: hardcoded array iteration (initLedger), function arguments (recordCannabis), or GetState results (changeCannabisHolder). No time.Now(), goroutines, map iterations, non-revalidated queries, or mutable global state that influences writes are present. The queryAllCannabis function uses GetStateByRange (not C4) and returns results read-only via shim.Success.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:51:29.004628",
+  "annotator": "2nd"
+}

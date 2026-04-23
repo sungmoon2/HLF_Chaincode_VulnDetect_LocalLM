@@ -1,0 +1,19 @@
+{
+  "file_id": "0419_imran-iitp_chaincode",
+  "repo": "imran-iitp",
+  "filename": "chaincode.go",
+  "elapsed_s": 10.49,
+  "input_tokens": 3476,
+  "output_tokens": 900,
+  "verdict": "SAFE",
+  "primary_class": "** NONE",
+  "secondary_class": "** NONE",
+  "auxiliary_c5": "** NO",
+  "evidence_lines": "** N/A",
+  "rationale": "** The chaincode contains no C1–C6 vulnerability patterns. All ledger writes depend on deterministic inputs (function parameters, JSON deserialization, arithmetic). The `functions` map is read-only. No time-based, goroutine-based, map-iteration-based, or non-revalidated-query-based nondeterminism influences consensus-critical state changes.",
+  "raw_response": "# Audit Report: Interest Rate Swap Chaincode\n\n## Analysis\n\n### 1. Transaction Entrypoint Detection\n✓ File contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface)` (L67)\n- `Invoke(stub shim.ChaincodeStubInterface)` (L104)\n- Transaction functions: `createSwap`, `calculatePayment`, `settlePayment`, `setReferenceRate`\n\n### 2. Vulnerability Class Screening\n\n**C1 TIME_NOW**: \n- `time.Time` fields exist in `InterestRateSwap` struct (L12-13), but these are only used as data fields deserialized from JSON input parameters.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls influence ledger writes.\n- ✓ SAFE\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns detected.\n- ✓ SAFE\n\n**C3 MAP_ITERATION**: \n- `functions` map (L107-112) is iterated via `functions[funcName]` lookup (L101), not via `for...range`.\n- No map iteration order dependency.\n- ✓ SAFE\n\n**C4 NON_REVALIDATED_QUERY**: \n- `stub.GetState()` calls at L130, L155, L160, L165, L189, L195 retrieve data but:\n  - L130: `auditLimit` is read and converted to threshold for conditional logic (L131-134), then used in comparison (L145). This determines whether auditor is added to endorsement policy.\n  - L155-160: `irsJSON` retrieved and unmarshaled; used in calculation (L172-173).\n  - L165: `referenceRateBytes` retrieved and used in calculation (L172-173).\n  - These reads determine write decisions (L147-151 auditor addition, L173 payment calculation).\n  - However, `GetState()` is NOT listed as a C4 source in the taxonomy. C4 sources are: `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`.\n- ✓ SAFE (GetState is deterministic and revalidated per endorsement policy)\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `functions` map (L107-112) is package-level and read in `Invoke()` (L101).\n- However, this map is **read-only** (initialized with function pointers, never modified during transaction execution).\n- ✓ SAFE\n\n**C5 ITERATOR_LEAK**: \n- No iterator creation detected (no `GetStateByRange`, `GetQueryResult`, etc.).\n- N/A\n\n### 3. Concrete Evidence of Source-to-Sink Path\nAll ledger writes (`PutState`, `SetStateValidationParameter`) use deterministic inputs:\n- Function parameters from `GetFunctionAndParameters()`\n- Deterministic JSON unmarshaling\n- Arithmetic operations on fixed values\n- No nondeterministic sources reach any sink.\n\n---\n\n## Output\n\n**VERDICT:** SAFE\n\n**PRIMARY_CLASS:** NONE\n\n**SECONDARY_CLASS:** NONE\n\n**AUXILIARY_C5:** NO\n\n**EVIDENCE_LINES:** N/A\n\n**RATIONALE:** The chaincode contains no C1–C6 vulnerability patterns. All ledger writes depend on deterministic inputs (function parameters, JSON deserialization, arithmetic). The `functions` map is read-only. No time-based, goroutine-based, map-iteration-based, or non-revalidated-query-based nondeterminism influences consensus-critical state changes.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:49:28.208222",
+  "annotator": "2nd"
+}

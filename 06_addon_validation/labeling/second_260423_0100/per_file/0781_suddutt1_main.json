@@ -1,0 +1,19 @@
+{
+  "file_id": "0781_suddutt1_main",
+  "repo": "suddutt1",
+  "filename": "main.go",
+  "elapsed_s": 16.58,
+  "input_tokens": 3679,
+  "output_tokens": 837,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L163-L175",
+  "rationale": "The chaincode uses GetTxTimestamp() for timestamps (not time.Now()), json.Marshal for map serialization (deterministic), and GetHistoryForKey only for read-only responses without influencing writes. The iterator from GetHistoryForKey is not closed (C5), but this doesn't cause nondeterminism.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with multiple transaction functions: `probe`, `createCarEntry`, `modifyCarEntity`, `queryCar`, `queryCarHistory`, `registerOrg`.\n\n### C1 TIME_NOW Analysis\nExamining `getTrxnTS` (lines 186-194):\n```go\nfunc (sc *SmartContract) getTrxnTS(stub shim.ChaincodeStubInterface) string {\n    txTime, err := stub.GetTxTimestamp()\n    if err != nil {\n        return \"0000.00.00.00.00.000\"\n    }\n    var ts time.Time  // This is zero time\n    newTS := ts.Add(time.Duration(txTime.Seconds) * time.Second)\n    return newTS.Format(\"2006.01.02.15.04.05.000\")\n}\n```\nThis uses `GetTxTimestamp()` which is deterministic - it derives from the transaction timestamp, not `time.Now()`. The `time.Time` zero value and `Add` operations are deterministic.\n\n### C2 GOROUTINE Analysis\nNo goroutines found.\n\n### C3 MAP_ITERATION Analysis\nIn `queryCarHistory` (lines 159-175):\n```go\nrecordMap := make(map[string]interface{})\nif parseErr := json.Unmarshal(rslt.Value, &recordMap); parseErr == nil {\n    historyRecords = append(historyRecords, recordMap)\n}\n```\nMaps are created and appended to a slice, then marshaled with `json.Marshal(historyRecords)`. However, `json.Marshal` in Go's standard library sorts map keys deterministically, so this is SAFE.\n\n### C4 NON_REVALIDATED_QUERY Analysis\n`queryCarHistory` uses `GetHistoryForKey` (line 163). The result is only used for reading and returning via `shim.Success` - it does NOT influence any write decision (no PutState/DelState based on history results). This is a read-only query returned to the client, which is NOT C4.\n\n### C5 ITERATOR_LEAK Analysis\nIn `queryCarHistory`, the iterator `history` from `GetHistoryForKey` is never closed with `history.Close()`. This is an iterator leak.\n\n### C6 GLOBAL_MUTABLE_STATE Analysis\n`_MainLogger` is a package-level var, but it's only used for logging, not for influencing writes or responses.\n\n## Conclusion\n\n- No `time.Now()` usage - timestamps come from `GetTxTimestamp()`\n- No goroutines\n- Map iteration with `json.Marshal` is deterministic\n- `GetHistoryForKey` is only used for read-only response, not write decisions\n- Logger global is safe (logging only)\n- Iterator leak exists but doesn't affect consensus\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L163-L175\nRATIONALE: The chaincode uses GetTxTimestamp() for timestamps (not time.Now()), json.Marshal for map serialization (deterministic), and GetHistoryForKey only for read-only responses without influencing writes. The iterator from GetHistoryForKey is not closed (C5), but this doesn't cause nondeterminism.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:59:33.579532",
+  "annotator": "2nd"
+}

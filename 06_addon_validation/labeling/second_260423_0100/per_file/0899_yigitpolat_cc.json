@@ -1,0 +1,19 @@
+{
+  "file_id": "0899_yigitpolat_cc",
+  "repo": "yigitpolat",
+  "filename": "cc.go",
+  "elapsed_s": 5.97,
+  "input_tokens": 2159,
+  "output_tokens": 167,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L85-L97, L100-L115",
+  "rationale": "The file contains GetHistoryForKey (L103) which is a C4 source, but the result is only printed to console (L112) and not used to influence any ledger write or proposal response - it returns shim.Success(nil) unconditionally. Similarly, GetStateByRange results are only printed. No C1-C4 or C6 patterns influence writes or responses. Iterator Close() is called before iteration (L91, L108), which is a bug but only triggers C5 auxiliary label.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L85-L97, L100-L115\nRATIONALE: The file contains GetHistoryForKey (L103) which is a C4 source, but the result is only printed to console (L112) and not used to influence any ledger write or proposal response - it returns shim.Success(nil) unconditionally. Similarly, GetStateByRange results are only printed. No C1-C4 or C6 patterns influence writes or responses. Iterator Close() is called before iteration (L91, L108), which is a bug but only triggers C5 auxiliary label.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:56.441829",
+  "annotator": "2nd"
+}

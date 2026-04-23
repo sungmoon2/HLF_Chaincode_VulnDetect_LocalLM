@@ -1,0 +1,19 @@
+{
+  "file_id": "0273_code2understand_04_history_of_keys",
+  "repo": "code2understand",
+  "filename": "04_history_of_keys.go",
+  "elapsed_s": 3.8,
+  "input_tokens": 1665,
+  "output_tokens": 227,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67-L100",
+  "rationale": "The `get()` function calls `stub.GetHistoryForKey(startKey)` at L67, which is a C4 NON_REVALIDATED_QUERY source. The history iterator result is then processed in a loop (L75-L99) and formatted into a response buffer that is returned via `shim.Success(buffer.Bytes())` at L101. Although this is a read-only query returned to the caller (not a ledger write), the C4 classification applies because the query result determines the proposal response content. History ordering from `GetHistoryForKey` is not guaranteed to be deterministic across endorsers if the underlying state history differs, making this consensus-critical. The response influences what the client receives and could cause endorsement divergence if different peers have different transaction histories for the same key.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L67-L100\n\nRATIONALE: The `get()` function calls `stub.GetHistoryForKey(startKey)` at L67, which is a C4 NON_REVALIDATED_QUERY source. The history iterator result is then processed in a loop (L75-L99) and formatted into a response buffer that is returned via `shim.Success(buffer.Bytes())` at L101. Although this is a read-only query returned to the caller (not a ledger write), the C4 classification applies because the query result determines the proposal response content. History ordering from `GetHistoryForKey` is not guaranteed to be deterministic across endorsers if the underlying state history differs, making this consensus-critical. The response influences what the client receives and could cause endorsement divergence if different peers have different transaction histories for the same key.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:45:24.392605",
+  "annotator": "2nd"
+}

@@ -1,0 +1,55 @@
+{
+  "repo": "abegpatel",
+  "filename": "map_private.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "f0a813a2878310ba",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'map_private.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access Control Issues\n**Severity:** High\n**Affected Code Location:** `getPrivate`, `putPrivate`, `getPutPrivate`\n**Description:** The chaincode does not enforce any access control checks. Any user can call these functions and access or modify private data without any restrictions.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can access or modify private data. This can be done by checking the identity of the caller using `stub.GetCreator()` and comparing it against a list of authorized users or roles.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input Validation Flaws\n**Severity:** Medium\n**Affected Code Location:** `put`, `getPut`, `putPrivate`, `getPutPrivate`\n**Description:** The chaincode does not validate the input arguments. For example, it does not check if the key or value is empty or if the key is too long.\n**Recommended Fix:** Add input validation checks to ensure that the input arguments are valid. For example, check if the key or value is empty or if the key is too long.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)\n**Severity:** Low\n**Affected Code Location:** `getPut`, `getPutPrivate`\n**Description:** The chaincode first reads the state and then writes to it. If another transaction is modifying the same state in between, it can lead to phantom reads.\n**Recommended Fix:** Use transactions to ensure that the read and write operations are atomic. This can be done by wrapping the read and write operations in a transaction using `stub.GetTxID()` and `stub.GetTxTimestamp()`.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private Data Leakage\n**Severity:** High\n**Affected Code Location:** `getPrivate`, `getPutPrivate`\n**Description:** The chaincode does not enforce any access control checks. Any user can call these functions and access private data without any restrictions.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can access private data. This can be done by checking the identity of the caller using `stub.GetCreator()` and comparing it against a list of authorized users or roles.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-Deterministic Operations\n**Severity:** Low\n**Affected Code Location:** `get`, `getPrivate`\n**Description:** The chaincode does not guarantee that the read operations will return the same result every time. This can lead to non-deterministic behavior.\n**Recommended Fix:** Use transactions to ensure that the read operations are consistent. This can be done by wrapping the read operations in a transaction using `stub.GetTxID()` and `stub.GetTxTimestamp()`.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure Key Management\n**Severity:** Low\n**Affected Code Location:** `put`, `putPrivate`\n**Description:** The chaincode does not enforce any key management policies. Any user can use any key to store or retrieve data.\n**Recommended Fix:** Implement key management policies to ensure that only authorized keys are used to store or retrieve data. This can be done by checking the identity of the caller using `stub.GetCreator()` and comparing it against a list of authorized keys.\n\n### Summary\n- **Access Control Issues:** High\n- **Input Validation Flaws:** Medium\n- **Read-After-Write Conflicts (Phantom Reads):** Low\n- **Private Data Leakage:** High\n- **Non-Deterministic Operations:** Low\n- **Insecure Key Management:** Low\n\n**Recommendations:**\n1. Implement access control checks to ensure that only authorized users can access or modify private data.\n2. Add input validation checks to ensure that the input arguments are valid.\n3. Use transactions to ensure that the read and write operations are atomic and consistent.\n4. Implement key management policies to ensure that only authorized keys are used to store or retrieve data.",
+      "prediction": "vulnerable",
+      "elapsed_s": 8.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1022,
+      "completion_tokens": 861
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1022,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1022,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "### Analysis of 'map_private.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access Control Issues  \n**Severity:** High  \n**Affected Code Location:** `getPrivate`, `putPrivate`, `getPutPrivate` (Lines 111, 127, 143)  \n**Description:** The chaincode does not enforce any access control checks. Any user can call these functions to read or write private data. This can lead to unauthorized access and data leakage.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can read or write private data. This can be done by checking the identity of the caller using `stub.GetCreator()` and verifying it against a list of allowed users or roles.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input Validation Flaws  \n**Severity:** Medium  \n**Affected Code Location:** `putPrivate`, `getPrivate`, `getPutPrivate` (Lines 127, 143, 159)  \n**Description:** The chaincode does not validate the input arguments. For example, it does not check if the key or value is empty or if the key is too long. This can lead to unexpected behavior or potential security issues.  \n**Recommended Fix:** Add input validation checks to ensure that the key and value are valid and within acceptable limits. For example, check if the key is not empty and if the value is not too large.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  \n**Severity:** Low  \n**Affected Code Location:** `getPut`, `getPutPrivate` (Lines 81, 97)  \n**Description:** The chaincode performs a read operation followed by a write operation. If another transaction writes to the same key between the read and write operations, the read operation will return the old value, leading to a phantom read.  \n**Recommended Fix:** Use a transactional model that ensures that the read and write operations are atomic. This can be done by using the `stub.GetState` and `stub.PutState` methods within a transaction.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private Data Leakage  \n**Severity:** High  \n**Affected Code Location:** `getPrivate`, `getPutPrivate` (Lines 111, 143)  \n**Description:** The chaincode allows any user to read private data. This can lead to unauthorized access and data leakage.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can read private data. This can be done by checking the identity of the caller using `stub.GetCreator()` and verifying it against a list of allowed users or roles.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-Deterministic Operations  \n**Severity:** Low  \n**Affected Code Location:** `getPut`, `getPutPrivate` (Lines 81, 97)  \n**Description:** The chaincode performs a read operation followed by a write operation. If another transaction writes to the same key between the read and write operations, the read operation will return the old value, leading to a non-deterministic result.  \n**Recommended Fix:** Use a transactional model that ensures that the read and write operations are atomic. This can be done by using the `stub.GetState` and `stub.PutState` methods within a transaction.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure Key Management  \n**Severity:** Low  \n**Affected Code Location:** `putPrivate`, `getPrivate`, `getPutPrivate` (Lines 127, 143, 159)  \n**Description:** The chaincode does not manage keys securely. For example, it does not check if the key is already in use or if the key is too long. This can lead to unexpected behavior or potential security issues.  \n**Recommended Fix:** Add key management checks to ensure that the keys are unique and within acceptable limits. For example, check if the key is not already in use and if the key is not too long.\n\n### Summary\n- **Access Control Issues:** High\n- **Input Validation Flaws:** Medium\n- **Read-After-Write Conflicts (Phantom Reads):** Low\n- **Private Data Leakage:** High\n- **Non-Deterministic Operations:** Low\n- **Insecure Key Management:** Low\n\n**Recommendations:**\n1. Implement access control checks.\n2. Add input validation checks.\n3. Use a transactional model for read and write operations.\n4. Ensure secure key management.",
+      "prediction": "vulnerable",
+      "elapsed_s": 9.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 1022,
+      "completion_tokens": 983
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 1022,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.6,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 3.45,
+  "total_elapsed_s": 17.23,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T04:18:45.365256"
+}

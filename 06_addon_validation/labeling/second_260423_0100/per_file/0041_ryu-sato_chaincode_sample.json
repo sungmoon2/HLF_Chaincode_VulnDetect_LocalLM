@@ -1,0 +1,19 @@
+{
+  "file_id": "0041_ryu-sato_chaincode_sample",
+  "repo": "ryu-sato",
+  "filename": "chaincode_sample.go",
+  "elapsed_s": 12.94,
+  "input_tokens": 1343,
+  "output_tokens": 658,
+  "verdict": "VULNERABLE",
+  "primary_class": "C3",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L23-L24, L36-L37",
+  "rationale": "The `Invoke` function uses `reflect.ValueOf(cmdMap).MapKeys()` on a map to construct an error message returned via `shim.Error()`. Map key iteration order is nondeterministic in Go, causing different peers to potentially return different error messages for invalid commands, leading to endorsement divergence.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SmartContract` implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- Line 36: `keys := reflect.ValueOf(cmdMap).MapKeys()` - This retrieves map keys via reflection\n- The result is used in an error message returned via `shim.Error()` on line 37\n- `MapKeys()` returns keys in unspecified order, making the error message nondeterministic\n- This error message is part of the proposal response, which affects endorsement\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 14: `var logger = shim.NewLogger(...)` - This is a logger-only global, which is explicitly SAFE per the taxonomy.\n\n**C5 ITERATOR_LEAK**: No iterators created.\n\n### Step 3: Sink Analysis for C3\n\nThe map iteration at line 36 (`reflect.ValueOf(cmdMap).MapKeys()`) directly influences the proposal response:\n- `cmdMap` is a `map[string]interface{}` (line 23)\n- `MapKeys()` returns keys in nondeterministic order\n- The result is formatted into an error string and returned via `shim.Error()` (line 37)\n- Different peers could return different error messages for the same invalid command, causing endorsement divergence\n\n### Step 4: Dead Code/Logging Check\nThis is not logging-only code - it's in the main `Invoke` path and affects the actual response returned to clients.\n\n## Output\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C3\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L23-L24, L36-L37\nRATIONALE: The `Invoke` function uses `reflect.ValueOf(cmdMap).MapKeys()` on a map to construct an error message returned via `shim.Error()`. Map key iteration order is nondeterministic in Go, causing different peers to potentially return different error messages for invalid commands, leading to endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:24.899454",
+  "annotator": "2nd"
+}

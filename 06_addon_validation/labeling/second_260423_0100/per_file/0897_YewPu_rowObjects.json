@@ -1,0 +1,19 @@
+{
+  "file_id": "0897_YewPu_rowObjects",
+  "repo": "YewPu",
+  "filename": "rowObjects.go",
+  "elapsed_s": 16.03,
+  "input_tokens": 6423,
+  "output_tokens": 836,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L316-L332, L371-L426",
+  "rationale": "Rich query APIs (GetQueryResult, GetHistoryForKey) are used only for read-only operations returning results to clients via shim.Success(), not for making write decisions. The time.Unix() call formats a fixed timestamp from ledger history, not time.Now(). No C1-C4 or C6 patterns influence ledger writes.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: \n- Line 413: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to format a timestamp from the ledger history, NOT `time.Now()`. This is deterministic as it converts a fixed timestamp value.\n\n**C2 GOROUTINE**: No goroutines detected.\n\n**C3 MAP_ITERATION**: No map iteration detected.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (lines 316-332): Uses `stub.GetQueryResult()` and returns results via `shim.Success()` - this is read-only, not influencing writes.\n- `queryObjectsByProperties` (lines 284-299): Uses `GetQueryResult` indirectly, returns via `shim.Success()` - read-only.\n- `selectorObjects` (lines 301-313): Uses `GetQueryResult` indirectly, returns via `shim.Success()` - read-only.\n- `getHistoryForObject` (lines 371-426): Uses `GetHistoryForKey()` and returns via `shim.Success()` - read-only.\n- `queryObjectsWithPagination` (lines 356-369): Uses `GetQueryResultWithPagination` indirectly, returns via `shim.Success()` - read-only.\n\nAll rich query usages are read-only (returning data to client), not making write decisions based on query results.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### Step 3: C5 Iterator Leak Check\nAll iterators appear to have `defer resultsIterator.Close()` calls:\n- Line 262: `defer resultsIterator.Close()`\n- Line 275: `defer coloredMarbleResultsIterator.Close()`\n- Line 323: `defer resultsIterator.Close()`\n- Line 345: `defer resultsIterator.Close()`\n- Line 385: `defer resultsIterator.Close()`\n- Line 397: `defer resultsIterator.Close()`\n\nNo iterator leaks detected.\n\n### Step 4: Verdict\nThe `time.Unix()` usage on line 413 is NOT `time.Now()` - it's converting a deterministic timestamp from the ledger history. All rich queries (`GetQueryResult`, `GetHistoryForKey`, `GetQueryResultWithPagination`) are used for read-only operations returning data via `shim.Success()`, not for making write decisions.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L316-L332, L371-L426\nRATIONALE: Rich query APIs (GetQueryResult, GetHistoryForKey) are used only for read-only operations returning results to clients via shim.Success(), not for making write decisions. The time.Unix() call formats a fixed timestamp from ledger history, not time.Now(). No C1-C4 or C6 patterns influence ledger writes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:50.423243",
+  "annotator": "2nd"
+}

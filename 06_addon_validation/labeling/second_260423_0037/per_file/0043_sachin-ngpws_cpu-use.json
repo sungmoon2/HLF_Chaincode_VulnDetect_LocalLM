@@ -1,0 +1,19 @@
+{
+  "file_id": "0043_sachin-ngpws_cpu-use",
+  "repo": "sachin-ngpws",
+  "filename": "cpu-use.go",
+  "elapsed_s": 2.84,
+  "input_tokens": 2478,
+  "output_tokens": 162,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L75, L127",
+  "rationale": "The file contains two transaction entrypoints (Init and Invoke) that dispatch to chaincode functions. In AddCPU (L75) and AddUsage (L127), time.Now() is called and the result is directly assigned to the Time field of a Usage struct, which is then marshaled to JSON and written to the ledger via stub.PutState(). This creates consensus-critical nondeterminism because different endorsing peers will capture different wall-clock times, causing divergent ledger writes and endorsement failure.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L75, L127\n\nRATIONALE: The file contains two transaction entrypoints (Init and Invoke) that dispatch to chaincode functions. In AddCPU (L75) and AddUsage (L127), time.Now() is called and the result is directly assigned to the Time field of a Usage struct, which is then marshaled to JSON and written to the ledger via stub.PutState(). This creates consensus-critical nondeterminism because different endorsing peers will capture different wall-clock times, causing divergent ledger writes and endorsement failure.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:09.606471",
+  "annotator": "2nd"
+}

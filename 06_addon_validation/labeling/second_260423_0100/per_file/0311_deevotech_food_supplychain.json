@@ -1,0 +1,19 @@
+{
+  "file_id": "0311_deevotech_food_supplychain",
+  "repo": "deevotech",
+  "filename": "food_supplychain.go",
+  "elapsed_s": 17.24,
+  "input_tokens": 9647,
+  "output_tokens": 701,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L430-L470, L480-L520",
+  "rationale": "The GetQueryResult and GetHistoryForKey calls are used in read-only query functions that return results via shim.Success without influencing any ledger writes. The time.Unix() call converts existing ledger timestamps, not time.Now(). No other nondeterminism sources are present.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW:**\n- Line ~490: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger history, NOT `time.Now()`. This is deterministic as it converts an existing timestamp value.\n\n**C2 GOROUTINE:**\n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION:**\n- No `for...range` over maps found. The code iterates over slices (e.g., `newData.Traceable`, `newData.Auditors`).\n\n**C4 NON_REVALIDATED_QUERY:**\n- Line ~430-470: `getQueryResultForQueryString` uses `stub.GetQueryResult(queryString)` - this is a rich query. However, examining the function, it only reads data and returns it via `shim.Success(buffer.Bytes())`. There are NO writes (PutState/DelState) based on the query results. This is a read-only query function.\n- Line ~480-520: `getHistoryOfObject` uses `stub.GetHistoryForKey(ID)` - similarly, this only reads and returns data, no writes based on results.\n\n**C6 GLOBAL_MUTABLE_STATE:**\n- No package-level `var` declarations visible in this file that are read in transaction logic.\n\n**C5 ITERATOR_LEAK:**\n- All iterators appear to have `defer resultsIterator.Close()` calls (lines ~310, ~345, ~380, ~410, ~440, ~485).\n\n### Key Observations\n\n1. The `getQueryResultForQueryString` function uses `GetQueryResult` but only returns the results - it doesn't make any write decisions based on them.\n\n2. The `getHistoryOfObject` function uses `GetHistoryForKey` but similarly only returns results without making write decisions.\n\n3. The `time.Unix()` usage is converting an existing timestamp from history records, not generating a new timestamp.\n\n4. All write operations (`createObject`, `updateObject`, etc.) use deterministic inputs from function arguments.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L430-L470, L480-L520\nRATIONALE: The GetQueryResult and GetHistoryForKey calls are used in read-only query functions that return results via shim.Success without influencing any ledger writes. The time.Unix() call converts existing ledger timestamps, not time.Now(). No other nondeterminism sources are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:25:48.466019",
+  "annotator": "2nd"
+}

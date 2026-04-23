@@ -1,0 +1,28 @@
+{
+  "file_id": "0197_hyperledgendary_wasm_contract",
+  "repo": "hyperledgendary",
+  "filename": "wasm_contract.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hyperledgendary\\wasm_contract.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "MAP_ITERATION"
+  ],
+  "code_chars": 3333,
+  "stripped_chars": 2972,
+  "code_hash": "374255066e724b90",
+  "stripped_hash": "38ae6489656c9a79",
+  "elapsed_s": 4.45,
+  "input_tokens": 2165,
+  "output_tokens": 150,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L77-L82",
+  "rationale": "The transientMap (map[string][]byte) at L55 is passed to createInvokeTransactionArgs and assigned to the TransientArgs field of a protobuf message at L82. Protobuf's proto.Marshal serializes map fields in deterministic sorted order by default in Go, so this does not cause nondeterministic output. No other source patterns (C1, C2, C4, C6) are present in the transaction flow.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L77-L82\nRATIONALE: The transientMap (map[string][]byte) at L55 is passed to createInvokeTransactionArgs and assigned to the TransientArgs field of a protobuf message at L82. Protobuf's proto.Marshal serializes map fields in deterministic sorted order by default in Go, so this does not cause nondeterministic output. No other source patterns (C1, C2, C4, C6) are present in the transaction flow.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:18.098702"
+}

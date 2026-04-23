@@ -1,0 +1,55 @@
+{
+  "repo": "papandas",
+  "filename": "fabric-payment.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "55c6f69851ca53f1",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'fabric-payment.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The code appears to be structured and follows best practices for a Hyperledger Fabric chaincode, including proper logging and error handling. However, it's important to note that this analysis is based on the provided code snippet and does not cover the entire functionality or potential interactions with other components of the Hyperledger Fabric network.",
+      "prediction": "safe",
+      "elapsed_s": 1.03,
+      "finish_reason": "stop",
+      "prompt_tokens": 547,
+      "completion_tokens": 114
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 547,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 547,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 547,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 547,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.25,
+  "total_elapsed_s": 1.27,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:45:35.439468"
+}

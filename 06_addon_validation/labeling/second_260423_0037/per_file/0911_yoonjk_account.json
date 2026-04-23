@@ -1,0 +1,19 @@
+{
+  "file_id": "0911_yoonjk_account",
+  "repo": "yoonjk",
+  "filename": "account.go",
+  "elapsed_s": 3.95,
+  "input_tokens": 3183,
+  "output_tokens": 193,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L36-L40, L99-L101",
+  "rationale": "The `initAcc` function (L99-L101) calls `genUUIDv4()` which uses `uuid.NewV4()` to generate a non-deterministic UUID. This UUID is used to construct `vendorID` (L99), which is then passed to `stub.PutState(vendorID, vendorJSONBytes)` at L118. Since the UUID is generated fresh on each invocation without deterministic seeding, different endorsers will generate different UUIDs, causing them to write to different ledger keys and produce divergent state. This is a consensus-critical nondeterminism vulnerability.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L36-L40, L99-L101\n\nRATIONALE: The `initAcc` function (L99-L101) calls `genUUIDv4()` which uses `uuid.NewV4()` to generate a non-deterministic UUID. This UUID is used to construct `vendorID` (L99), which is then passed to `stub.PutState(vendorID, vendorJSONBytes)` at L118. Since the UUID is generated fresh on each invocation without deterministic seeding, different endorsers will generate different UUIDs, causing them to write to different ledger keys and produce divergent state. This is a consensus-critical nondeterminism vulnerability.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:04:00.298310",
+  "annotator": "2nd"
+}

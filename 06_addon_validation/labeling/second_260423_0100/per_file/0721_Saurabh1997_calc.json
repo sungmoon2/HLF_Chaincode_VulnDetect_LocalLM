@@ -1,0 +1,19 @@
+{
+  "file_id": "0721_Saurabh1997_calc",
+  "repo": "Saurabh1997",
+  "filename": "calc.go",
+  "elapsed_s": 3.52,
+  "input_tokens": 1416,
+  "output_tokens": 121,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode implements a simple calculator with Init and Invoke entrypoints. It uses only deterministic operations: GetState, PutState with deterministic values derived from transaction arguments. No time.Now(), goroutines, map iterations, rich queries, or mutable global state are present. All state transitions are purely based on input arguments and existing ledger state.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode implements a simple calculator with Init and Invoke entrypoints. It uses only deterministic operations: GetState, PutState with deterministic values derived from transaction arguments. No time.Now(), goroutines, map iterations, rich queries, or mutable global state are present. All state transitions are purely based on input arguments and existing ledger state.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:54:57.728038",
+  "annotator": "2nd"
+}

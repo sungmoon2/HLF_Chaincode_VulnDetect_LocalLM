@@ -1,0 +1,55 @@
+{
+  "repo": "whatisoop",
+  "filename": "map_experimental.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "f1a90d80d7d11f25",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'map_experimental.go'\n\n#### 1. **Vulnerability Type**: Access Control Issues\n**Severity**: High\n**Affected Code Location**: `putPrivate`, `removePrivate`, `getPrivate`, `keysPrivate`, `queryPrivate`, `put`, `remove`, `get`, `keys`, `query`, `history`\n**Description**: The chaincode does not implement any access control checks. Any user can perform any operation on any data, which can lead to unauthorized access and data tampering.\n**Recommended Fix**: Implement access control checks. For example, use Hyperledger Fabric's built-in capabilities to restrict access to specific users or roles.\n\n#### 2. **Vulnerability Type**: Input Validation Flaws\n**Severity**: High\n**Affected Code Location**: `putPrivate`, `removePrivate`, `getPrivate`, `keysPrivate`, `queryPrivate`, `put`, `remove`, `get`, `keys`, `query`, `history`\n**Description**: The chaincode does not validate the input parameters. For example, it does not check if the provided keys or values are valid or if the provided arguments are in the correct format.\n**Recommended Fix**: Add input validation checks to ensure that the provided parameters are valid and in the correct format.\n\n#### 3. **Vulnerability Type**: Read-After-Write Conflicts (Phantom Reads)\n**Severity**: Medium\n**Affected Code Location**: `keysPrivate`, `queryPrivate`\n**Description**: The chaincode uses `time.Sleep` to introduce a delay between iterations, which can lead to phantom reads. If a new transaction is added between the iterations, it may not be visible to the current transaction.\n**Recommended Fix**: Avoid using `time.Sleep` for introducing delays. Instead, use Hyperledger Fabric's built-in mechanisms to handle concurrency and consistency.\n\n#### 4. **Vulnerability Type**: Private Data Leakage\n**Severity**: High\n**Affected Code Location**: `getPrivate`, `queryPrivate`\n**Description**: The chaincode does not encrypt the private data before storing it. This can lead to private data leakage if the data is accessed by unauthorized users.\n**Recommended Fix**: Encrypt the private data before storing it. Use Hyperledger Fabric's built-in encryption capabilities or a third-party encryption library.\n\n#### 5. **Vulnerability Type**: Non-Deterministic Operations\n**Severity**: Medium\n**Affected Code Location**: `keysPrivate`, `queryPrivate`\n**Description**: The chaincode uses `time.Sleep` to introduce a delay between iterations, which can lead to non-deterministic behavior. The order of transactions may vary, which can lead to unexpected results.\n**Recommended Fix**: Avoid using `time.Sleep` for introducing delays. Instead, use Hyperledger Fabric's built-in mechanisms to handle concurrency and consistency.\n\n#### 6. **Vulnerability Type**: Insecure Key Management\n**Severity**: High\n**Affected Code Location**: `putPrivate`, `removePrivate`, `getPrivate`, `keysPrivate`, `queryPrivate`, `put`, `remove`, `get`, `keys`, `query`, `history`\n**Description**: The chaincode does not manage keys securely. For example, it does not use secure key storage or rotation mechanisms.\n**Recommended Fix**: Use secure key management practices. For example, use Hyperledger Fabric's built-in key management capabilities or a third-party key management library.\n\n### Summary\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. To improve the security of the chaincode, it is recommended to implement access control checks, input validation checks, avoid using `time.Sleep` for introducing delays, encrypt private data, use secure key management practices, and handle concurrency and consistency using Hyperledger Fabric's built-in mechanisms.",
+      "prediction": "vulnerable",
+      "elapsed_s": 7.68,
+      "finish_reason": "stop",
+      "prompt_tokens": 2245,
+      "completion_tokens": 788
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2245,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2245,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "### Analysis of 'map_experimental.go' for Security Vulnerabilities\n\n#### 1. **Access Control Issues**\n   - **Vulnerability Type:** Access Control\n   - **Severity:** High\n   - **Affected Code Location:** `putPrivate`, `removePrivate`, `getPrivate`, `keysPrivate`, `queryPrivate`, `put`, `remove`, `get`, `keys`, `query`, `history`\n   - **Description:** The chaincode does not implement any access control checks. Any user can perform any operation on any data, which can lead to unauthorized access and data tampering.\n   - **Recommended Fix:** Implement access control checks. For example, use Hyperledger Fabric's built-in access control features or implement custom access control logic within the chaincode.\n\n#### 2. **Input Validation Flaws**\n   - **Vulnerability Type:** Input Validation\n   - **Severity:** Medium\n   - **Affected Code Location:** `putPrivate`, `removePrivate`, `getPrivate`, `keysPrivate`, `queryPrivate`, `put`, `remove`, `get`, `keys`, `query`, `history`\n   - **Description:** While the chaincode checks the number of arguments, it does not validate the content of the arguments. For example, `putPrivate` does not validate if the `value` is a valid JSON or if the `key` is a valid string.\n   - **Recommended Fix:** Add input validation to ensure that the arguments are valid and meet the expected format.\n\n#### 3. **Read-After-Write Conflicts (Phantom Reads)**\n   - **Vulnerability Type:** Read-After-Write Conflict\n   - **Severity:** Low\n   - **Affected Code Location:** `keysPrivate`, `queryPrivate`, `keys`, `query`\n   - **Description:** The chaincode uses `time.Sleep` to introduce a delay between iterations, which can lead to phantom reads if the state is modified during the delay.\n   - **Recommended Fix:** Avoid using `time.Sleep` for introducing delays. Instead, use more reliable mechanisms to ensure consistency.\n\n#### 4. **Private Data Leakage**\n   - **Vulnerability Type:** Private Data Leakage\n   - **Severity:** High\n   - **Affected Code Location:** `getPrivate`, `queryPrivate`\n   - **Description:** The chaincode does not ensure that only authorized users can access private data. Any user can retrieve private data, which can lead to data leakage.\n   - **Recommended Fix:** Implement access control checks to ensure that only authorized users can access private data.\n\n#### 5. **Non-Deterministic Operations**\n   - **Vulnerability Type:** Non-Deterministic Operations\n   - **Severity:** Low\n   - **Affected Code Location:** `keysPrivate`, `queryPrivate`, `keys`, `query`\n   - **Description:** The chaincode uses `time.Sleep` to introduce a delay between iterations, which can lead to non-deterministic behavior.\n   - **Recommended Fix:** Avoid using `time.Sleep` for introducing delays. Instead, use more reliable mechanisms to ensure consistency.\n\n#### 6. **Insecure Key Management**\n   - **Vulnerability Type:** Insecure Key Management\n   - **Severity:** Low\n   - **Affected Code Location:** `put`, `remove`, `get`, `keys`, `query`, `history`\n   - **Description:** The chaincode does not manage keys securely. For example, it does not use secure key storage or encryption.\n   - **Recommended Fix:** Implement secure key management practices, such as using secure key storage and encryption.\n\n### Summary\n- **Access Control:** High\n- **Input Validation:** Medium\n- **Read-After-Write Conflicts:** Low\n- **Private Data Leakage:** High\n- **Non-Deterministic Operations:** Low\n- **Insecure Key Management:** Low\n\n**Recommendations:**\n1. Implement access control checks.\n2. Add input validation.\n3. Avoid using `time.Sleep` for introducing delays.\n4. Implement secure key management practices.",
+      "prediction": "vulnerable",
+      "elapsed_s": 7.6,
+      "finish_reason": "stop",
+      "prompt_tokens": 2245,
+      "completion_tokens": 834
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2245,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.6,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 3.08,
+  "total_elapsed_s": 15.42,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T07:51:04.934121"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0899_yigitpolat_cc",
+  "repo": "yigitpolat",
+  "filename": "cc.go",
+  "elapsed_s": 2.87,
+  "input_tokens": 2159,
+  "output_tokens": 163,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState, DelState) use deterministic inputs derived from function arguments or hardcoded values. No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable global state (C6) influence consensus-critical operations. GetStateByRange and GetHistoryForKey results are only logged, not used to determine write decisions.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState, DelState) use deterministic inputs derived from function arguments or hardcoded values. No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable global state (C6) influence consensus-critical operations. GetStateByRange and GetHistoryForKey results are only logged, not used to determine write decisions.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:38.089520",
+  "annotator": "2nd"
+}

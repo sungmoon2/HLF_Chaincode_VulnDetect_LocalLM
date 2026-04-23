@@ -1,0 +1,19 @@
+{
+  "file_id": "0055_xuansonha17031991_drug_information",
+  "repo": "xuansonha17031991",
+  "filename": "drug_information.go",
+  "elapsed_s": 13.37,
+  "input_tokens": 3722,
+  "output_tokens": 631,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L76, L90, L134, L145",
+  "rationale": "The `query` and `modifyDrugData` functions use `time.Now().String()` to populate the `Query.Time` field, which is then written to private data via `PutPrivateData`. Different endorsing peers will produce different timestamps, causing endorsement mismatch.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with three transaction functions: `createDrugInformation`, `modifyDrugData`, and `query`.\n\n### C1 TIME_NOW Analysis\n\n**In `query` function (L63-L113):**\n- L65: `start := time.Now()` - used only for logging\n- L76: `timeQuery := time.Now().String()` - **This is stored in the `Query` struct and written to ledger via `PutPrivateData` at L90**\n\n**In `modifyDrugData` function (L115-L181):**\n- L117: `start := time.Now()` - used only for logging\n- L134: `timeQuery := time.Now().String()` - **This is stored in the `Query` struct and written to ledger via `PutPrivateData` at L145**\n\n**In `createDrugInformation` function (L183-L230):**\n- L185: `start := time.Now()` - used only for logging at the end\n\n### Critical Finding\n\nIn both `query` and `modifyDrugData`:\n1. `time.Now().String()` is called (L76, L134)\n2. The result is stored in `Query.Time` field\n3. The `Query` struct is marshaled to JSON\n4. The JSON is written via `stub.PutPrivateData()` (L90, L145)\n\nThis means different endorsing peers will write different timestamp values to the ledger, causing endorsement divergence.\n\n### Other Patterns\n- **C2 GOROUTINE**: No goroutines found\n- **C3 MAP_ITERATION**: No map iterations found\n- **C4 NON_REVALIDATED_QUERY**: `GetPrivateData` calls exist but they don't use rich queries (GetQueryResult)\n- **C5 ITERATOR_LEAK**: No iterators created\n- **C6 GLOBAL_MUTABLE_STATE**: No mutable package-level variables\n\n## Verdict\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L76, L90, L134, L145\nRATIONALE: The `query` and `modifyDrugData` functions use `time.Now().String()` to populate the `Query.Time` field, which is then written to private data via `PutPrivateData`. Different endorsing peers will produce different timestamps, causing endorsement mismatch.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:06:08.185918",
+  "annotator": "2nd"
+}

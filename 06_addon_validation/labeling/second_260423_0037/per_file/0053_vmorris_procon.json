@@ -1,0 +1,19 @@
+{
+  "file_id": "0053_vmorris_procon",
+  "repo": "vmorris",
+  "filename": "procon.go",
+  "elapsed_s": 2.82,
+  "input_tokens": 2989,
+  "output_tokens": 169,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L73, L95, L119, L147",
+  "rationale": "The file contains multiple transaction functions (createProduct, offerProduct, tradeProduct, consumeProduct) that call time.Now().Unix() and directly use the result to populate timestamp fields (ProducedDate, OfferedDate, TradedDate, ConsumedDate) before writing the product state to the ledger via stub.PutState(). Since time.Now() is non-deterministic across endorsers, different endorsers will produce different timestamps, causing the serialized product bytes to differ and leading to endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L73, L95, L119, L147\nRATIONALE: The file contains multiple transaction functions (createProduct, offerProduct, tradeProduct, consumeProduct) that call time.Now().Unix() and directly use the result to populate timestamp fields (ProducedDate, OfferedDate, TradedDate, ConsumedDate) before writing the product state to the ledger via stub.PutState(). Since time.Now() is non-deterministic across endorsers, different endorsers will produce different timestamps, causing the serialized product bytes to differ and leading to endorsement divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:28.482215",
+  "annotator": "2nd"
+}

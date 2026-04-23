@@ -1,0 +1,19 @@
+{
+  "file_id": "0665_qiushaoxi_chaincode_union_loan",
+  "repo": "qiushaoxi",
+  "filename": "chaincode_union_loan.go",
+  "elapsed_s": 4.8,
+  "input_tokens": 2014,
+  "output_tokens": 154,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains valid HLF transaction entrypoints (Init/Invoke). There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no mutable package-level variables (C6). The `participants` variable is a fixed-size array [10]Participant, not a map, so iteration order is deterministic. All operations use deterministic data structures and standard ledger operations.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains valid HLF transaction entrypoints (Init/Invoke). There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no mutable package-level variables (C6). The `participants` variable is a fixed-size array [10]Participant, not a map, so iteration order is deterministic. All operations use deterministic data structures and standard ledger operations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:50:44.972005",
+  "annotator": "2nd"
+}

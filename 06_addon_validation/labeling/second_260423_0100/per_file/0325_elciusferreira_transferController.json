@@ -1,0 +1,19 @@
+{
+  "file_id": "0325_elciusferreira_transferController",
+  "repo": "elciusferreira",
+  "filename": "transferController.go",
+  "elapsed_s": 3.53,
+  "input_tokens": 1044,
+  "output_tokens": 147,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains HLF transaction entrypoints (Init/Invoke) but no C1-C4 or C6 vulnerability patterns within the file itself. The Init returns Success(nil) directly, and Invoke only routes to an external function (transfer.Money) or returns an error. No time.Now(), goroutines, map iterations, rich queries, or mutable global state are present in this file. Cross-file analysis of the transfer package is out of scope.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains HLF transaction entrypoints (Init/Invoke) but no C1-C4 or C6 vulnerability patterns within the file itself. The Init returns Success(nil) directly, and Invoke only routes to an external function (transfer.Money) or returns an error. No time.Now(), goroutines, map iterations, rich queries, or mutable global state are present in this file. Cross-file analysis of the transfer package is out of scope.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:26:43.234529",
+  "annotator": "2nd"
+}

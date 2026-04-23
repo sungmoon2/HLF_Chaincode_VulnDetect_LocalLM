@@ -1,0 +1,19 @@
+{
+  "file_id": "0231_bugfrog1024_chaincode_example02",
+  "repo": "bugfrog1024",
+  "filename": "chaincode_example02.go",
+  "elapsed_s": 2.61,
+  "input_tokens": 2237,
+  "output_tokens": 141,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState, DelState) are driven by deterministic inputs from function arguments and GetState queries, with no time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state influences. The code is a standard asset transfer example with no consensus-critical nondeterminism sources.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState, DelState) are driven by deterministic inputs from function arguments and GetState queries, with no time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state influences. The code is a standard asset transfer example with no consensus-critical nondeterminism sources.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:44:11.026380",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0309_debutdeveloper_debut_asset",
+  "repo": "debutdeveloper",
+  "filename": "debut_asset.go",
+  "elapsed_s": 4.21,
+  "input_tokens": 2487,
+  "output_tokens": 252,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "C5",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L67-L70, L72-L85, L87",
+  "rationale": "The `DashboardData` function (L66-L87) is a transaction entrypoint invoked via the `Invoke` dispatcher (L48). It executes four `GetQueryResult` calls (L67-L70) whose results determine the response payload (L87: `shim.Success(responseByte)`). These are C4 NON_REVALIDATED_QUERY sources—query results are not revalidated and directly influence the proposal response. Additionally, all four iterators are created but `Close()` is never called on any path (C5 ITERATOR_LEAK). The query results are read-only and returned via `shim.Success`, but the nondeterminism arises from the fact that CouchDB query results may vary across endorsers if the ledger state differs or if query execution is non-deterministic, making this a consensus-critical vulnerability.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: C5\n\nAUXILIARY_C5: YES\n\nEVIDENCE_LINES: L67-L70, L72-L85, L87\n\nRATIONALE: The `DashboardData` function (L66-L87) is a transaction entrypoint invoked via the `Invoke` dispatcher (L48). It executes four `GetQueryResult` calls (L67-L70) whose results determine the response payload (L87: `shim.Success(responseByte)`). These are C4 NON_REVALIDATED_QUERY sources—query results are not revalidated and directly influence the proposal response. Additionally, all four iterators are created but `Close()` is never called on any path (C5 ITERATOR_LEAK). The query results are read-only and returned via `shim.Success`, but the nondeterminism arises from the fact that CouchDB query results may vary across endorsers if the ledger state differs or if query execution is non-deterministic, making this a consensus-critical vulnerability.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:46:18.905429",
+  "annotator": "2nd"
+}

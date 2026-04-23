@@ -1,0 +1,19 @@
+{
+  "file_id": "0913_Z-Voting_device",
+  "repo": "Z-Voting",
+  "filename": "device.go",
+  "elapsed_s": 4.75,
+  "input_tokens": 1885,
+  "output_tokens": 141,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode implements Init and Invoke entrypoints with basic CRUD operations. The Invoke method dispatches to lowercase methods (create, get, delete) while the exported methods (Create, Get, Delete, Search) are not called from Invoke. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All operations use deterministic GetState/PutState/DelState with direct key access.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode implements Init and Invoke entrypoints with basic CRUD operations. The Invoke method dispatches to lowercase methods (create, get, delete) while the exported methods (Create, Get, Delete, Search) are not called from Invoke. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All operations use deterministic GetState/PutState/DelState with direct key access.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:08:54.806587",
+  "annotator": "2nd"
+}

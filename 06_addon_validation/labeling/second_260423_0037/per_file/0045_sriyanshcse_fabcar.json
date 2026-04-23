@@ -1,0 +1,19 @@
+{
+  "file_id": "0045_sriyanshcse_fabcar",
+  "repo": "sriyanshcse",
+  "filename": "fabcar.go",
+  "elapsed_s": 2.98,
+  "input_tokens": 3457,
+  "output_tokens": 193,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95, L127",
+  "rationale": "The file contains two instances of `time.Now()` that directly influence ledger writes via `PutState()`. Line 95 in `initLedger()` assigns `Timestamp: time.Now()` to Med objects that are subsequently serialized and written to state (L101). Line 127 in `getUpdatedObject()` assigns `Timestamp: time.Now()` to a Med object returned to `createMed()`, which then calls `PutState()` (L119). These time values are consensus-critical because different endorsing peers will capture different wall-clock times, causing the serialized Med objects to differ and endorsement to diverge.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L95, L127\n\nRATIONALE: The file contains two instances of `time.Now()` that directly influence ledger writes via `PutState()`. Line 95 in `initLedger()` assigns `Timestamp: time.Now()` to Med objects that are subsequently serialized and written to state (L101). Line 127 in `getUpdatedObject()` assigns `Timestamp: time.Now()` to a Med object returned to `createMed()`, which then calls `PutState()` (L119). These time values are consensus-critical because different endorsing peers will capture different wall-clock times, causing the serialized Med objects to differ and endorsement to diverge.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:12.638219",
+  "annotator": "2nd"
+}

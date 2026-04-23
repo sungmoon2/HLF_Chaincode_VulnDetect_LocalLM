@@ -1,0 +1,19 @@
+{
+  "file_id": "0645_piedup_pop",
+  "repo": "piedup",
+  "filename": "pop.go",
+  "elapsed_s": 16.6,
+  "input_tokens": 4143,
+  "output_tokens": 831,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L235, L266",
+  "rationale": "The GetQueryResult calls in FindSegments and GetMapIDs are read-only operations that return sorted results to clients via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are explicitly NOT C4 vulnerabilities. Iterator leaks exist but C5 alone does not make a file vulnerable.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with multiple transaction functions: `GetSegment`, `FindSegments`, `GetMapIDs`, `SaveSegment`, `DeleteSegment`, `SaveValue`, `GetValue`, `DeleteValue`.\n\n### C4 NON_REVALIDATED_QUERY Analysis\n\n**FindSegments (L229-L258):**\n- Uses `stub.GetQueryResult(queryString)` at L235\n- Iterates results and appends to `segments` slice\n- Calls `sort.Sort(segments)` at L249 before returning\n- Returns via `shim.Success(resultBytes)` - this is a **read-only query** returning data to the client\n- **No write operations** (PutState/DelState) based on query results\n- This is SAFE - read-only queries returned via shim.Success are explicitly NOT C4\n\n**GetMapIDs (L260-L281):**\n- Uses `stub.GetQueryResult(queryString)` at L266\n- Iterates results and appends to `mapIDs` slice\n- Calls `sort.Strings(mapIDs)` at L276 before returning\n- Returns via `shim.Success(resultBytes)` - this is a **read-only query**\n- **No write operations** based on query results\n- This is SAFE - read-only queries returned via shim.Success are explicitly NOT C4\n\n### C5 ITERATOR_LEAK Analysis\n\n**FindSegments (L229-L258):**\n- `resultsIterator` created at L235\n- `Close()` is never called\n- This is an iterator leak (C5)\n\n**GetMapIDs (L260-L281):**\n- `resultsIterator` created at L266\n- `Close()` is never called\n- This is an iterator leak (C5)\n\n### Other Vulnerability Classes\n\n**C1 TIME_NOW:** No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE:** No goroutine spawning.\n\n**C3 MAP_ITERATION:** \n- L175: `segment.SetEvidence(map[string]interface{}{...})` - this creates a map but doesn't iterate over it with for...range\n- No for...range over maps that influence writes\n\n**C6 GLOBAL_MUTABLE_STATE:** No package-level mutable variables.\n\n### Verdict\n\nThe `GetQueryResult` calls in `FindSegments` and `GetMapIDs` are used for **read-only operations** - they return data to the client via `shim.Success()` but do not influence any ledger writes. Per the taxonomy, \"Read-only queries returned via shim.Success are NOT C4.\"\n\nThe iterator leaks (C5) are present but C5 alone does not make a file VULNERABLE.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L235, L266\nRATIONALE: The GetQueryResult calls in FindSegments and GetMapIDs are read-only operations that return sorted results to clients via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are explicitly NOT C4 vulnerabilities. Iterator leaks exist but C5 alone does not make a file vulnerable.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:49:18.220149",
+  "annotator": "2nd"
+}

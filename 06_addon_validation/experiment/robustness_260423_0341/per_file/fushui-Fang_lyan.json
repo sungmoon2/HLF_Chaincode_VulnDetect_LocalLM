@@ -1,0 +1,55 @@
+{
+  "repo": "fushui-Fang",
+  "filename": "lyan.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "927ef75916b41866",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'lyan.go' does not contain any obvious security vulnerabilities based on the provided code snippet. The code appears to be structured and follows best practices for a Hyperledger Fabric chaincode, including proper error handling and function validation. However, without the implementation of the methods (`createContractAcount`, `queryAccount`, `transfer`, etc.), it's impossible to perform a thorough analysis for more specific vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management.",
+      "prediction": "safe",
+      "elapsed_s": 1.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 500,
+      "completion_tokens": 120
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 500,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 500,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 500,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 500,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.24,
+  "total_elapsed_s": 1.21,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:34:20.227957"
+}

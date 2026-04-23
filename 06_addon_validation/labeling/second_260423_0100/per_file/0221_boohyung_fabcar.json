@@ -1,0 +1,19 @@
+{
+  "file_id": "0221_boohyung_fabcar",
+  "repo": "boohyung",
+  "filename": "fabcar.go",
+  "elapsed_s": 5.26,
+  "input_tokens": 2382,
+  "output_tokens": 145,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). No C1-C4 or C6 patterns are present: no time.Now(), no goroutines, no map iteration, no rich queries (GetQueryResult/GetHistoryForKey), and no mutable package-level variables. GetStateByRange (L97) is explicitly excluded from C4 sources per the taxonomy. The iterator is properly closed via defer (L101).",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). No C1-C4 or C6 patterns are present: no time.Now(), no goroutines, no map iteration, no rich queries (GetQueryResult/GetHistoryForKey), and no mutable package-level variables. GetStateByRange (L97) is explicitly excluded from C4 sources per the taxonomy. The iterator is properly closed via defer (L101).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:18:26.860300",
+  "annotator": "2nd"
+}

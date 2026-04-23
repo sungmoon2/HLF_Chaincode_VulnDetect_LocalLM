@@ -1,0 +1,19 @@
+{
+  "file_id": "0047_tkalai25298_cpu-use",
+  "repo": "tkalai25298",
+  "filename": "cpu-use.go",
+  "elapsed_s": 2.79,
+  "input_tokens": 2595,
+  "output_tokens": 162,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95, L127",
+  "rationale": "The file contains two transaction entrypoints (Init and Invoke) that dispatch to chaincode functions. In AddCpu (L95) and AddUsage (L127), time.Now() is called and its result is directly assigned to the Time field of a Usage struct, which is then marshaled to JSON and written to the ledger via stub.PutState(). This creates consensus-critical nondeterminism because different endorsing peers will capture different wall-clock times, causing the serialized state to diverge across the network.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L95, L127\n\nRATIONALE: The file contains two transaction entrypoints (Init and Invoke) that dispatch to chaincode functions. In AddCpu (L95) and AddUsage (L127), time.Now() is called and its result is directly assigned to the Time field of a Usage struct, which is then marshaled to JSON and written to the ledger via stub.PutState(). This creates consensus-critical nondeterminism because different endorsing peers will capture different wall-clock times, causing the serialized state to diverge across the network.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:15.483115",
+  "annotator": "2nd"
+}

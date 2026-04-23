@@ -1,0 +1,19 @@
+{
+  "file_id": "0397_higyigma_hashChainCode",
+  "repo": "higyigma",
+  "filename": "hashChainCode.go",
+  "elapsed_s": 13.99,
+  "input_tokens": 1872,
+  "output_tokens": 577,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses only deterministic operations: slice iteration with index-based loop, GetStateByRange (explicitly safe per taxonomy) for read-only queries, and deterministic hashing. No time functions, goroutines, map iterations, or global mutable state are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has recognizable HLF transaction entrypoints:\n- `Init` (L18-20)\n- `Invoke` (L22-34) which routes to `addHash`, `initLedger`, and `getDatabase`\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` anywhere in the file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No map iteration (`for...range` over maps) found. The code iterates over:\n- A slice `hashes` in `initLedger` (L36-51) using index-based iteration\n- An iterator from `GetStateByRange` in `getDatabase` (L73-95)\n\nNeither of these are map iterations.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetStateByRange` is used in `getDatabase` (L66), but this is explicitly excluded from C4 sources per the taxonomy.\n- The result is only used for reading and returning via `shim.Success` - it's a read-only query, not determining a write decision.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file. The `SmartContract` struct is empty and stateless.\n\n**C5 ITERATOR_LEAK**: \n- In `getDatabase`, `resultsIterator` is created at L66 and `defer resultsIterator.Close()` is called at L70. Properly closed.\n\n### Summary\n- No time-based nondeterminism\n- No goroutines\n- No map iteration\n- No problematic rich queries (GetStateByRange is safe and used read-only)\n- No global mutable state\n- Iterator is properly closed\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses only deterministic operations: slice iteration with index-based loop, GetStateByRange (explicitly safe per taxonomy) for read-only queries, and deterministic hashing. No time functions, goroutines, map iterations, or global mutable state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:31:20.563744",
+  "annotator": "2nd"
+}

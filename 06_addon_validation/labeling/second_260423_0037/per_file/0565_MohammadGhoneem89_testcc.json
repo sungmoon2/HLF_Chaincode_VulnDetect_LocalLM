@@ -1,0 +1,19 @@
+{
+  "file_id": "0565_MohammadGhoneem89_testcc",
+  "repo": "MohammadGhoneem89",
+  "filename": "testcc.go",
+  "elapsed_s": 7.23,
+  "input_tokens": 2836,
+  "output_tokens": 556,
+  "verdict": "SAFE",
+  "primary_class": "",
+  "secondary_class": "",
+  "auxiliary_c5": "",
+  "evidence_lines": "",
+  "rationale": "",
+  "raw_response": "# Audit Report: SimpleChaincode\n\n## Decision Process\n\n1. **Entrypoint Check**: ✓ File contains `Init()` and `Invoke()` methods (shim interface implementation). INCLUDE.\n\n2. **Vulnerability Pattern Scan**:\n   - **C1 (TIME_NOW)**: No `time.Now()`, `time.Since()`, or `time.Until()` calls. ✓ SAFE\n   - **C2 (GOROUTINE)**: No `go func()` or `go methodCall()` statements. ✓ SAFE\n   - **C3 (MAP_ITERATION)**: No `for...range` over maps. ✓ SAFE\n   - **C4 (NON_REVALIDATED_QUERY)**: `stub.GetState()` calls (L95, L101, L107) are used to read participant data, but the results are validated before use and do not determine write decisions in a non-deterministic way. The writes are deterministic based on validated input parameters. ✓ SAFE\n   - **C6 (GLOBAL_MUTABLE_STATE)**: No package-level mutable variables influencing transaction logic. ✓ SAFE\n   - **C5 (ITERATOR_LEAK)**: No iterators created. N/A\n\n3. **Intra-file Evidence**: All `PutState()` calls (L82, L155, L161, L167) write deterministically serialized JSON objects derived from:\n   - Input parameters (`args`)\n   - Deterministic arithmetic operations\n   - Validated state reads with explicit error handling\n   \n   No nondeterministic sources influence the write decisions.\n\n4. **Dead Code / Logging**: All code paths are active transaction logic, not logging-only or dead code.\n\n---\n\n## Output\n\n**VERDICT**: SAFE\n\n**PRIMARY_CLASS**: NONE\n\n**SECONDARY_CLASS**: NONE\n\n**AUXILIARY_C5**: NO\n\n**EVIDENCE_LINES**: None (no vulnerabilities detected)\n\n**RATIONALE**: The chaincode contains three transaction functions (`initParty`, `readParty`, `transferPoints`) that perform deterministic state writes. All writes are derived from validated input parameters and deterministic arithmetic/string operations. No time-dependent, concurrent, map-iteration, or unvalidated-query sources influence ledger mutations or responses. The code is consensus-safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:04.911110",
+  "annotator": "2nd"
+}

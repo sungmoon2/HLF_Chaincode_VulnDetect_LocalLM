@@ -1,0 +1,19 @@
+{
+  "file_id": "0359_flybirdC_contract",
+  "repo": "flybirdC",
+  "filename": "contract.go",
+  "elapsed_s": 10.93,
+  "input_tokens": 1276,
+  "output_tokens": 545,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only the Init and Invoke dispatcher methods with no direct usage of nondeterministic patterns (time.Now, goroutines, map iteration, rich queries, or mutable globals). All actual transaction logic is delegated to methods defined in other files, which are out of scope for intra-file analysis.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains `Init` and `Invoke` methods on a struct that implements `shim.ChaincodeStubInterface` patterns - these are standard HLF chaincode entrypoints.\n\n### Step 2: Check for Core Vulnerability Patterns (C1-C4, C6)\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Evidence of Source-to-Sink Flow\nNo vulnerability source patterns are present in this file.\n\n### Step 4: Auxiliary Check (C5)\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Additional Observations\n- The `Invoke` method is a dispatcher that calls other methods (`DeleteContract`, `QueryContractState`, `querybyContractType`, etc.)\n- These methods are not defined in this file - they must be in other files\n- The analysis is strictly intra-file, so I cannot reason about what those methods do\n- The struct has a `ContractJson interface{}` field, but no map iteration or JSON marshaling occurs in this file\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only the Init and Invoke dispatcher methods with no direct usage of nondeterministic patterns (time.Now, goroutines, map iteration, rich queries, or mutable globals). All actual transaction logic is delegated to methods defined in other files, which are out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:28:31.508888",
+  "annotator": "2nd"
+}

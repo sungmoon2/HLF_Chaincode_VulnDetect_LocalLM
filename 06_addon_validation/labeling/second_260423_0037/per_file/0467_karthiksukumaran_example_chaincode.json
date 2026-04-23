@@ -1,0 +1,19 @@
+{
+  "file_id": "0467_karthiksukumaran_example_chaincode",
+  "repo": "karthiksukumaran",
+  "filename": "example_chaincode.go",
+  "elapsed_s": 2.33,
+  "input_tokens": 1388,
+  "output_tokens": 153,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries influencing writes, or mutable package-level state affecting transaction logic. The logger global is read-only and deterministic. All ledger writes (PutState, DelState) depend only on deterministic function parameters and GetState reads, which are safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries influencing writes, or mutable package-level state affecting transaction logic. The logger global is read-only and deterministic. All ledger writes (PutState, DelState) depend only on deterministic function parameters and GetState reads, which are safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:51:09.819504",
+  "annotator": "2nd"
+}

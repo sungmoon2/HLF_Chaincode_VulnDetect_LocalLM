@@ -1,0 +1,19 @@
+{
+  "file_id": "0819_TongjiUniversityStudent1_fundRaise",
+  "repo": "TongjiUniversityStudent1",
+  "filename": "fundRaise.go",
+  "elapsed_s": 2.87,
+  "input_tokens": 2427,
+  "output_tokens": 151,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L1-L180",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, no goroutines, no map iterations, no non-revalidated queries influencing writes, and no mutable package-level state affecting transaction logic. The logger global (L11) is read-only and deterministic. All ledger writes use deterministic input parameters derived from function arguments.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L1-L180\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, no goroutines, no map iterations, no non-revalidated queries influencing writes, and no mutable package-level state affecting transaction logic. The logger global (L11) is read-only and deterministic. All ledger writes use deterministic input parameters derived from function arguments.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:17.808399",
+  "annotator": "2nd"
+}

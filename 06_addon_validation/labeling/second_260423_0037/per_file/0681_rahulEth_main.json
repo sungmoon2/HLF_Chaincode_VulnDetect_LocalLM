@@ -1,0 +1,19 @@
+{
+  "file_id": "0681_rahulEth_main",
+  "repo": "rahulEth",
+  "filename": "main.go",
+  "elapsed_s": 2.3,
+  "input_tokens": 1171,
+  "output_tokens": 190,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains a recognizable HLF transaction entrypoint (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: (1) no time.Now() or time-dependent operations influencing writes, (2) no goroutines, (3) no map iterations, (4) no non-revalidated queries, (5) the only package-level mutable state is _mainLogger (a logger, which is explicitly SAFE per taxonomy). All transaction logic is delegated to external methods on sc.traceability, which are out of scope for intra-file analysis. The file itself contains no consensus-critical nondeterminism.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains a recognizable HLF transaction entrypoint (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: (1) no time.Now() or time-dependent operations influencing writes, (2) no goroutines, (3) no map iterations, (4) no non-revalidated queries, (5) the only package-level mutable state is _mainLogger (a logger, which is explicitly SAFE per taxonomy). All transaction logic is delegated to external methods on sc.traceability, which are out of scope for intra-file analysis. The file itself contains no consensus-critical nondeterminism.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:57:41.506974",
+  "annotator": "2nd"
+}

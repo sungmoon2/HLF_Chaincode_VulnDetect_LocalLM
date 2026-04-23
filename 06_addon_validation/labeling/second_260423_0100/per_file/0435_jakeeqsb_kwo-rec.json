@@ -1,0 +1,19 @@
+{
+  "file_id": "0435_jakeeqsb_kwo-rec",
+  "repo": "jakeeqsb",
+  "filename": "kwo-rec.go",
+  "elapsed_s": 3.77,
+  "input_tokens": 1586,
+  "output_tokens": 124,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). The only package-level var is `logger` which is used solely for logging and does not influence ledger writes or proposal responses. No time.Now(), goroutines, map iteration, or rich queries are present. All operations use deterministic GetState/PutState with client-provided keys.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). The only package-level var is `logger` which is used solely for logging and does not influence ledger writes or proposal responses. No time.Now(), goroutines, map iteration, or rich queries are present. All operations use deterministic GetState/PutState with client-provided keys.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:34:18.689697",
+  "annotator": "2nd"
+}

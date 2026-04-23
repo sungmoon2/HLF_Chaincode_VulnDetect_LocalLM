@@ -1,0 +1,19 @@
+{
+  "file_id": "0655_prabhu94_visitflow",
+  "repo": "prabhu94",
+  "filename": "visitflow.go",
+  "elapsed_s": 14.82,
+  "input_tokens": 5657,
+  "output_tokens": 708,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L147-193, L335-388",
+  "rationale": "The `GetHistoryForKey` and `GetQueryResult` calls are used only for read-only queries returned via `shim.Success`, not for making write decisions. The `time.Unix()` call formats a deterministic timestamp from the response, not `time.Now()`. No consensus-critical nondeterminism patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, so it's a valid HLF chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: \n- Line 175: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to format a timestamp from the response, NOT `time.Now()`. This is deterministic as it converts a fixed timestamp value.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iteration found.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getHistoryForRecord` (L147-193): Uses `GetHistoryForKey` but only returns data via `shim.Success` - read-only, no write decisions.\n- `queryVisitByDoctor` (L335-349): Uses `GetQueryResult` via helper function `getQueryResultForQueryString`. The result is only returned via `shim.Success` - read-only query, no write decisions based on the query result.\n- `getQueryResultForQueryString` (L351-388): Helper that calls `GetQueryResult` but only formats and returns data.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### C5 ITERATOR_LEAK Check\n- L157: `resultsIterator` has `defer resultsIterator.Close()` ✓\n- L275: `resultsIterator` has `defer resultsIterator.Close()` ✓\n- L307: `resultsIterator` has `defer resultsIterator.Close()` ✓\n- L359: `resultsIterator` has `defer resultsIterator.Close()` ✓\n\nAll iterators are properly closed.\n\n### Key Observations\n1. The `GetHistoryForKey` and `GetQueryResult` calls are used only for read-only queries that return data to the client via `shim.Success`.\n2. No write operations (`PutState`, `DelState`) are influenced by the results of these queries.\n3. The `time.Unix()` usage is deterministic - it converts a fixed timestamp from the blockchain response, not the current time.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L147-193, L335-388\nRATIONALE: The `GetHistoryForKey` and `GetQueryResult` calls are used only for read-only queries returned via `shim.Success`, not for making write decisions. The `time.Unix()` call formats a deterministic timestamp from the response, not `time.Now()`. No consensus-critical nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:50:13.434886",
+  "annotator": "2nd"
+}

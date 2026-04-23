@@ -1,0 +1,19 @@
+{
+  "file_id": "0371_freya-zhang_example_cc",
+  "repo": "freya-zhang",
+  "filename": "example_cc.go",
+  "elapsed_s": 2.73,
+  "input_tokens": 2249,
+  "output_tokens": 145,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState, DelState) are driven by deterministic inputs: function parameters parsed from args, GetState reads of existing ledger values, and arithmetic operations. No time-dependent operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence any write or response decision. The code is deterministic across all endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). All ledger writes (PutState, DelState) are driven by deterministic inputs: function parameters parsed from args, GetState reads of existing ledger values, and arithmetic operations. No time-dependent operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence any write or response decision. The code is deterministic across all endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:03.470319",
+  "annotator": "2nd"
+}

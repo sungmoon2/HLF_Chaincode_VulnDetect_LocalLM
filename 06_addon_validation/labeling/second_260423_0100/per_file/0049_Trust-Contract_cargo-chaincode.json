@@ -1,0 +1,19 @@
+{
+  "file_id": "0049_Trust-Contract_cargo-chaincode",
+  "repo": "Trust-Contract",
+  "filename": "cargo-chaincode.go",
+  "elapsed_s": 4.55,
+  "input_tokens": 2233,
+  "output_tokens": 153,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L82-L93",
+  "rationale": "The `initLedger` function uses `time.Now()` at L82 to generate date values that are directly incorporated into ledger keys (L91-L92 via `stub.PutState(\"CARGO\"+date+\"_1\", ...)` and `stub.PutState(\"CARGO\"+date, ...)`). Since `time.Now()` returns different values on different endorsing peers, the keys written to the ledger will differ, causing endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L82-L93\nRATIONALE: The `initLedger` function uses `time.Now()` at L82 to generate date values that are directly incorporated into ledger keys (L91-L92 via `stub.PutState(\"CARGO\"+date+\"_1\", ...)` and `stub.PutState(\"CARGO\"+date, ...)`). Since `time.Now()` returns different values on different endorsing peers, the keys written to the ledger will differ, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:44.430748",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0019_farmerrrrr_asset management",
+  "repo": "farmerrrrr",
+  "filename": "asset management.go",
+  "elapsed_s": 9.08,
+  "input_tokens": 2656,
+  "output_tokens": 768,
+  "verdict": "SAFE",
+  "primary_class": "** C6",
+  "secondary_class": "** NONE",
+  "auxiliary_c5": "** NO",
+  "evidence_lines": "** L16, L20, L53–54",
+  "rationale": "** Package-level mutable variable `userNumber` is read and written across transaction invocations without reset, directly influencing the ledger state keys written in `mint()` via `PutState(\"USER\"+strconv.Itoa(userNumber), ...)`. This causes endorsement divergence because different endorsers will have different `userNumber` values depending on prior execution history, violating consensus determinism.",
+  "raw_response": "# Audit Report: SimpleChaincode\n\n## Verdict Analysis\n\n### 1. Transaction Entrypoint Check\n✓ File contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface) pb.Response` (L18–21)\n- `Invoke(stub shim.ChaincodeStubInterface) pb.Response` (L23–37)\n\n### 2. Vulnerability Pattern Detection\n\n**C6 GLOBAL_MUTABLE_STATE identified:**\n- **Line 16**: `var userNumber int = 0` — package-level mutable variable\n- **Line 20**: `userNumber = 1` in `Init()` — write to global\n- **Line 54**: `userNumber++` in `mint()` — write to global\n- **Line 53**: `stub.PutState(\"USER\"+strconv.Itoa(userNumber), ...)` — global value influences ledger write\n\n**Consensus-Critical Path:**\n1. `mint()` is called via `Invoke()` (L25)\n2. `mint()` reads `userNumber` (L53, implicit in string concatenation)\n3. `mint()` writes to ledger using `userNumber` as part of the key: `\"USER\" + strconv.Itoa(userNumber)` (L53)\n4. `mint()` increments `userNumber` (L54)\n\n**Problem:** The global `userNumber` is not reset between endorsements. If two endorsers execute the same transaction sequence in different orders or with different prior state, `userNumber` will have different values, causing different state keys to be written. This breaks consensus because:\n- Endorser A might write `USER1` → `USER2` → `USER3`\n- Endorser B might write `USER1` → `USER2` → `USER3` (if reset) or diverge if execution order differs\n- The ledger key names themselves become nondeterministic across endorsements\n\n### 3. Intra-File Evidence\n✓ Concrete evidence that C6 source reaches sink:\n- Global `userNumber` (L16) is read in `mint()` (L53, via `strconv.Itoa(userNumber)`)\n- Result directly influences `PutState()` call (L53) — a consensus-critical sink\n- Global is also written (L54), creating state mutation across transactions\n\n### 4. Exclusion Checks\n- Not logging-only: `userNumber` directly affects ledger writes\n- Not dead code: `mint()` is reachable via `Invoke()` dispatcher\n- Not test code: This is production chaincode\n\n---\n\n## Output\n\n**VERDICT:** VULNERABLE\n\n**PRIMARY_CLASS:** C6\n\n**SECONDARY_CLASS:** NONE\n\n**AUXILIARY_C5:** NO\n\n**EVIDENCE_LINES:** L16, L20, L53–54\n\n**RATIONALE:** Package-level mutable variable `userNumber` is read and written across transaction invocations without reset, directly influencing the ledger state keys written in `mint()` via `PutState(\"USER\"+strconv.Itoa(userNumber), ...)`. This causes endorsement divergence because different endorsers will have different `userNumber` values depending on prior execution history, violating consensus determinism.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:24.136531",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0815_to7485_fabcar",
+  "repo": "to7485",
+  "filename": "fabcar.go",
+  "elapsed_s": 3.07,
+  "input_tokens": 2161,
+  "output_tokens": 171,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods). All state-modifying operations (PutState in initLedger, createPaper, changePaperOwner) use deterministic inputs derived from function arguments or fixed loop indices, not from time, goroutines, map iteration, or unvalidated queries. The queryAllPapers function uses GetStateByRange (not a C4 source) and returns results read-only via shim.Success without influencing any write decision. No C1–C6 vulnerability patterns are present.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods). All state-modifying operations (PutState in initLedger, createPaper, changePaperOwner) use deterministic inputs derived from function arguments or fixed loop indices, not from time, goroutines, map iteration, or unvalidated queries. The queryAllPapers function uses GetStateByRange (not a C4 source) and returns results read-only via shim.Success without influencing any write decision. No C1–C6 vulnerability patterns are present.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:11.862649",
+  "annotator": "2nd"
+}

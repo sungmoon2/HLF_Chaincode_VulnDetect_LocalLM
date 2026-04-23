@@ -1,0 +1,19 @@
+{
+  "file_id": "0361_fourbroad_chaincode",
+  "repo": "fourbroad",
+  "filename": "chaincode.go",
+  "elapsed_s": 14.25,
+  "input_tokens": 1510,
+  "output_tokens": 684,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "No nondeterminism patterns (C1-C4, C6) are present within this file. The chaincode delegates to external utility functions for UTXO operations, but intra-file analysis shows no time-based operations, goroutines, map iterations, rich queries, or mutable global state that could cause endorsement divergence.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on a struct implementing `shim.ChaincodeStubInterface` patterns - this is a valid HLF chaincode entrypoint. ✓\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps visible in this file.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Additional Observations\n\nThe code delegates to `util.MakeUTXO(MakeChaincodeStore(stub))` and calls `utxo.Execute(txData)` and `utxo.Query(args[0])`. These are cross-file calls to the `util` package. Per the rules, I must only consider intra-file evidence.\n\nWithin this file itself:\n- The `execute` case processes transaction data and returns `nil, nil` on success\n- The `getTran` case queries and returns transaction data\n- No direct ledger writes (`PutState`, `DelState`) are visible in this file\n- The actual ledger operations are abstracted behind `MakeChaincodeStore` and `util.MakeUTXO`\n\nNote: The return signatures `return nil, nil` and `return tx, nil` don't match `pb.Response` - this appears to be older chaincode style or has compilation issues, but that's not a nondeterminism concern.\n\n### Step 4: Verdict\n\nNo C1-C4 or C6 patterns are present within this file. Any potential issues would be in the `util` package or `MakeChaincodeStore` function, which are out of scope for intra-file analysis.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: No nondeterminism patterns (C1-C4, C6) are present within this file. The chaincode delegates to external utility functions for UTXO operations, but intra-file analysis shows no time-based operations, goroutines, map iterations, rich queries, or mutable global state that could cause endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:28:45.779751",
+  "annotator": "2nd"
+}

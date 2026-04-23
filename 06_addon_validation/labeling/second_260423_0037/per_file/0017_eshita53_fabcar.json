@@ -1,0 +1,19 @@
+{
+  "file_id": "0017_eshita53_fabcar",
+  "repo": "eshita53",
+  "filename": "fabcar.go",
+  "elapsed_s": 4.09,
+  "input_tokens": 8710,
+  "output_tokens": 216,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L165, L195, L230, L268, L305, L330",
+  "rationale": "The file contains multiple transaction entrypoints (Invoke dispatcher and public methods like EndorserTransaction, CertificateHolderTransaction, LendingTransaction, ReturnInstallment) that write to the ledger. Multiple instances of `time.Now()` are used to populate `TransactionTime` fields in structs (MoneyTransaction, TransactionTracker, LendingTracker) that are subsequently marshaled and written to state via `APIstub.PutState()`. Since `time.Now()` returns non-deterministic wall-clock time and directly influences the ledger state written by endorsers, this constitutes a C1 TIME_NOW vulnerability that will cause consensus divergence across endorsing peers.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L165, L195, L230, L268, L305, L330\n\nRATIONALE: The file contains multiple transaction entrypoints (Invoke dispatcher and public methods like EndorserTransaction, CertificateHolderTransaction, LendingTransaction, ReturnInstallment) that write to the ledger. Multiple instances of `time.Now()` are used to populate `TransactionTime` fields in structs (MoneyTransaction, TransactionTracker, LendingTracker) that are subsequently marshaled and written to state via `APIstub.PutState()`. Since `time.Now()` returns non-deterministic wall-clock time and directly influences the ledger state written by endorsers, this constitutes a C1 TIME_NOW vulnerability that will cause consensus divergence across endorsing peers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:14.984076",
+  "annotator": "2nd"
+}

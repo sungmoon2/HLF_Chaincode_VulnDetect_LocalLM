@@ -1,0 +1,13 @@
+{
+  "repo": "OneChainGeek",
+  "filename": "main.go",
+  "ground_truth": "SAFE",
+  "ground_truth_class": "NONE",
+  "qwen_prediction": "safe",
+  "qwen_elapsed_s": 0.25,
+  "qwen_raw_response": "No vulnerabilities detected.",
+  "semgrep_prediction": "safe",
+  "semgrep_rules_hit": "",
+  "semgrep_findings_count": 0,
+  "timestamp": "2026-04-23T01:46:14.052099"
+}

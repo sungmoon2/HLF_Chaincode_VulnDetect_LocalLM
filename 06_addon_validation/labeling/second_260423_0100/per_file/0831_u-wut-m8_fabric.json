@@ -1,0 +1,19 @@
+{
+  "file_id": "0831_u-wut-m8_fabric",
+  "repo": "u-wut-m8",
+  "filename": "fabric.go",
+  "elapsed_s": 5.74,
+  "input_tokens": 2684,
+  "output_tokens": 140,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains valid HLF transaction entrypoints (Init/Invoke). No C1-C4 or C6 vulnerability patterns are present. There is no use of time.Now(), goroutines, map iteration, or rich queries (GetQueryResult). GetStateByRange in queryAllTuna (L103) is explicitly excluded from C4 sources per the taxonomy. All iterators are properly closed with defer (L108).",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains valid HLF transaction entrypoints (Init/Invoke). No C1-C4 or C6 vulnerability patterns are present. There is no use of time.Now(), goroutines, map iteration, or rich queries (GetQueryResult). GetStateByRange in queryAllTuna (L103) is explicitly excluded from C4 sources per the taxonomy. All iterators are properly closed with defer (L108).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:02:35.546543",
+  "annotator": "2nd"
+}

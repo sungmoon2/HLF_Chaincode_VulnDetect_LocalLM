@@ -1,0 +1,19 @@
+{
+  "file_id": "0005_arthurmsouza_boleto",
+  "repo": "arthurmsouza",
+  "filename": "boleto.go",
+  "elapsed_s": 6.75,
+  "input_tokens": 3547,
+  "output_tokens": 185,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L87-L88, L107",
+  "rationale": "In `registrarBoleto`, `time.Now()` is used to set `objBoleto.DataVencimento` (L87-L88), and `rand.Intn()` generates `objBoleto.CodigoBarra` (L86). Both values are written to the ledger via `PutState` (L107). Since `time.Now()` and unseeded `rand` produce different results across peers, this causes endorsement divergence. The `rand` usage is also nondeterministic but C1 (TIME_NOW) is the primary class per taxonomy ordering.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L87-L88, L107\nRATIONALE: In `registrarBoleto`, `time.Now()` is used to set `objBoleto.DataVencimento` (L87-L88), and `rand.Intn()` generates `objBoleto.CodigoBarra` (L86). Both values are written to the ledger via `PutState` (L107). Since `time.Now()` and unseeded `rand` produce different results across peers, this causes endorsement divergence. The `rand` usage is also nondeterministic but C1 (TIME_NOW) is the primary class per taxonomy ordering.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:12.481379",
+  "annotator": "2nd"
+}

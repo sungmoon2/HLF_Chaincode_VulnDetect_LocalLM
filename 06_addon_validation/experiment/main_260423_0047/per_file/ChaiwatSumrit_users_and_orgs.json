@@ -1,0 +1,13 @@
+{
+  "repo": "ChaiwatSumrit",
+  "filename": "users_and_orgs.go",
+  "ground_truth": "SAFE",
+  "ground_truth_class": "NONE",
+  "qwen_prediction": "safe",
+  "qwen_elapsed_s": 1.22,
+  "qwen_raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'users_and_orgs.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The code appears to be a basic structure for a Hyperledger Fabric chaincode, defining data structures for `Organization`, `User`, and `IT_RPT`, and an empty `Init` function. However, without further context or implementation details, it's not possible to identify more specific vulnerabilities.",
+  "semgrep_prediction": "safe",
+  "semgrep_rules_hit": "",
+  "semgrep_findings_count": 0,
+  "timestamp": "2026-04-23T01:12:36.282232"
+}

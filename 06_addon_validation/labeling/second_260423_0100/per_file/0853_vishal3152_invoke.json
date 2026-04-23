@@ -1,0 +1,19 @@
+{
+  "file_id": "0853_vishal3152_invoke",
+  "repo": "vishal3152",
+  "filename": "invoke.go",
+  "elapsed_s": 9.88,
+  "input_tokens": 1248,
+  "output_tokens": 556,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only a routing/dispatch function for the Invoke entrypoint. It uses a logger for informational purposes only (SAFE per taxonomy) and delegates all business logic to external functions. No C1-C4 or C6 vulnerability patterns are present within this file.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains an `Invoke` method with signature `(t *AidChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response` - this is a recognizable HLF transaction entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: The code references `logger` which appears to be a package-level variable, but it's only used for logging (`logger.Info(...)`), which is explicitly SAFE per the taxonomy.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Evidence Assessment\nThe file is essentially a routing function that:\n1. Extracts function name and arguments from the stub\n2. Logs the invocation (using `logger` - safe)\n3. Delegates to various `validate*` functions based on the function name\n4. Returns an error for unknown functions\n\nAll the actual business logic is in external functions (`validateProjectW`, `validateItemW`, etc.) which are not defined in this file. Per the scope rules, I cannot reason about cross-file calls.\n\n### Step 4: Logging/Test/Dead Code Check\nThe only potentially concerning pattern (`logger`) is used exclusively for logging, which is explicitly SAFE.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only a routing/dispatch function for the Invoke entrypoint. It uses a logger for informational purposes only (SAFE per taxonomy) and delegates all business logic to external functions. No C1-C4 or C6 vulnerability patterns are present within this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:04:22.916464",
+  "annotator": "2nd"
+}

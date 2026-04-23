@@ -1,0 +1,19 @@
+{
+  "file_id": "0029_isheejong_carTrace",
+  "repo": "isheejong",
+  "filename": "carTrace.go",
+  "elapsed_s": 15.81,
+  "input_tokens": 7632,
+  "output_tokens": 805,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L519, L524-L530",
+  "rationale": "The `setPartRecallState` function uses `time.Now().UTC().Unix()` to compute `recallTime`, which is then marshaled into a vehiclePart struct and written to the ledger via `PutState`. Different peers will have different system times, causing endorsement divergence.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, so this is valid chaincode.\n\n### Scanning for Vulnerability Patterns\n\n**C1 TIME_NOW:**\n- Line 519: `recallTime = int(time.Now().UTC().Unix())` in `setPartRecallState`\n- This value is used to create a `vehiclePart` struct (line 524)\n- Line 525: `vehiclePartJSONasBytes, err := json.Marshal(vehiclePart)` \n- Line 530: `stub.PutState(serialNumber, vehiclePartJSONasBytes)` - **This writes the time.Now() value to the ledger**\n\nThis is a clear C1 violation: `time.Now()` directly influences data written via `PutState`.\n\n- Line 445: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to format a timestamp from the response, NOT `time.Now()`. This is deterministic (converting existing timestamp to string).\n\n**C2 GOROUTINE:**\nNo `go` keywords found.\n\n**C3 MAP_ITERATION:**\nNo `for...range` over maps. The structs use `json.Marshal` but on struct types, not maps.\n\n**C4 NON_REVALIDATED_QUERY:**\n- `GetHistoryForKey` at line 418 - but this is read-only, returned via `shim.Success(buffer.Bytes())` without influencing writes.\n- `GetStateByRange` at line 378 - also read-only query returned directly.\n\n**C5 ITERATOR_LEAK:**\n- Line 381: `defer resultsIterator.Close()` - properly closed\n- Line 421: `defer resultsIterator.Close()` - properly closed\n\n**C6 GLOBAL_MUTABLE_STATE:**\nNo package-level mutable variables that influence transaction logic.\n\n### Critical Finding\n\nIn `setPartRecallState` (lines 475-533):\n```go\nif recall {\n    recallTime = int(time.Now().UTC().Unix())  // Line 519 - NONDETERMINISTIC\n} else {\n    recallTime = 0\n}\n// ...\nvehiclePart := &vehiclePart{..., recallTime}  // Line 524\nvehiclePartJSONasBytes, err := json.Marshal(vehiclePart)  // Line 525\nerr = stub.PutState(serialNumber, vehiclePartJSONasBytes)  // Line 530 - SINK\n```\n\nDifferent endorsing peers will have slightly different system times, causing different `recallTime` values to be written, leading to endorsement divergence.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L519, L524-L530\nRATIONALE: The `setPartRecallState` function uses `time.Now().UTC().Unix()` to compute `recallTime`, which is then marshaled into a vehiclePart struct and written to the ledger via `PutState`. Different peers will have different system times, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:04:04.820929",
+  "annotator": "2nd"
+}

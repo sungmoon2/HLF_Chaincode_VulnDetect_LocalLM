@@ -1,0 +1,422 @@
+[
+  {
+    "repo": "2016Nishi",
+    "filename": "marbles_chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "Amit9887",
+    "filename": "marble.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "Avery7Li",
+    "filename": "chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "BadBaman",
+    "filename": "marbles_chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "C0rWin",
+    "filename": "person.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "DCoT-EL",
+    "filename": "dcotWorkflow.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "DappCampus",
+    "filename": "chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "FLombardi-PhD",
+    "filename": "governance.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "FeiyangTan",
+    "filename": "main.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "KTyrantOnly",
+    "filename": "crowdTest.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "Kayaanoosh",
+    "filename": "fabcar.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "LinkaKorea",
+    "filename": "linkatoken.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "MSaber9",
+    "filename": "diamonds.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "Pharmeum",
+    "filename": "chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "SipengXie",
+    "filename": "record.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "TigerWit",
+    "filename": "sealtx.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "YewPu",
+    "filename": "rowObjects.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "Z-Voting",
+    "filename": "rahasak.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "akm4",
+    "filename": "Person.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "allan-zhou",
+    "filename": "marble.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "boohyung",
+    "filename": "fabcar.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "chpwssn",
+    "filename": "redvblue.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "clydedacruz",
+    "filename": "simplechaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "code2understand",
+    "filename": "02_composite_asset_chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "dachrillz",
+    "filename": "chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "deevotech",
+    "filename": "food_supplychain.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "georgkoester",
+    "filename": "blacklist_chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "ggdranzor",
+    "filename": "chaincode_example02.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "grishawh",
+    "filename": "new.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "heixiongTT",
+    "filename": "simple.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "hhllii",
+    "filename": "trading.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "higyigma",
+    "filename": "hashChainCode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "hoke58",
+    "filename": "vendorpdc.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "idowuakinde",
+    "filename": "diamonds.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "inotnako",
+    "filename": "main.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "kavixooa",
+    "filename": "GetSetDelCC.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "kmazz",
+    "filename": "sample.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "komaldhiman112",
+    "filename": "material-trace.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "krishna-suman",
+    "filename": "chaincode_example02.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "lmj101910",
+    "filename": "car.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "lzb13612",
+    "filename": "example.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "malkani-kamal",
+    "filename": "autonomy_chain.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "martingdela",
+    "filename": "halley.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "murlionline",
+    "filename": "product_review.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "nagarajmanjunath",
+    "filename": "fileData.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "off-grid-block",
+    "filename": "chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "oneminutenotes",
+    "filename": "smartcontract.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "piedup",
+    "filename": "pop.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "prabhu94",
+    "filename": "healthcare_v1.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "qubing",
+    "filename": "chaincode-api-go.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "rfrabasile",
+    "filename": "cc_example_footballbet.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "rolivieri",
+    "filename": "removerCC.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "s7santosh",
+    "filename": "slachaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "samdwise1367",
+    "filename": "chaincode_example02.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "samlinux",
+    "filename": "sacc4.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "sapcis",
+    "filename": "perishable-net.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "shahazad999",
+    "filename": "medicalrecord.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "shubhamj25",
+    "filename": "fabcar-chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "skazska",
+    "filename": "main.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "skybat007",
+    "filename": "purchase_chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "suddutt1",
+    "filename": "main.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "tcd93",
+    "filename": "sample_token.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "to7485",
+    "filename": "fabcar.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "u-wut-m8",
+    "filename": "fabric.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "vasile-coste",
+    "filename": "MedChain.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "vitorduarte",
+    "filename": "basicChaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "xuansonha17031991",
+    "filename": "COD_chaincode.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "yigitpolat",
+    "filename": "voting.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "yokeshvs",
+    "filename": "hello_world.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  },
+  {
+    "repo": "zerox12311",
+    "filename": "smart_contract_sample.go",
+    "verification_status": "SAFE_CONFIRMED",
+    "verification_method": "agent_code_review + human_2nd_pass"
+  }
+]

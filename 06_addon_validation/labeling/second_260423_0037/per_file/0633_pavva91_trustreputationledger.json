@@ -1,0 +1,19 @@
+{
+  "file_id": "0633_pavva91_trustreputationledger",
+  "repo": "pavva91",
+  "filename": "trustreputationledger.go",
+  "elapsed_s": 3.71,
+  "input_tokens": 3289,
+  "output_tokens": 193,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file is a router/dispatcher that implements the HLF shim.Chaincode interface (Init, Invoke, Query methods). All transaction logic is delegated to external packages (in, a, gen). The only local code in Invoke is a switch statement that routes to cross-file function calls and one HelloWorld case that uses only deterministic operations (buffer writes, transient map reads, SetEvent with static payload). No C1–C6 vulnerabilities exist within this file's scope: no time.Now() influencing writes, no goroutines, no map iteration over dynamic data, no non-revalidated queries, and no mutable package-level state affecting transaction outcomes.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file is a router/dispatcher that implements the HLF shim.Chaincode interface (Init, Invoke, Query methods). All transaction logic is delegated to external packages (in, a, gen). The only local code in Invoke is a switch statement that routes to cross-file function calls and one HelloWorld case that uses only deterministic operations (buffer writes, transient map reads, SetEvent with static payload). No C1–C6 vulnerabilities exist within this file's scope: no time.Now() influencing writes, no goroutines, no map iteration over dynamic data, no non-revalidated queries, and no mutable package-level state affecting transaction outcomes.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:12.893531",
+  "annotator": "2nd"
+}

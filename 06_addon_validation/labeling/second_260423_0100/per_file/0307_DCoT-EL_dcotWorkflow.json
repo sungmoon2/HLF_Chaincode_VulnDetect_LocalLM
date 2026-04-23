@@ -1,0 +1,19 @@
+{
+  "file_id": "0307_DCoT-EL_dcotWorkflow",
+  "repo": "DCoT-EL",
+  "filename": "dcotWorkflow.go",
+  "elapsed_s": 19.78,
+  "input_tokens": 9369,
+  "output_tokens": 874,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L77-L79, L91, L113",
+  "rationale": "The `xid.New()` library generates IDs using timestamp and machine-specific data (similar to time.Now() nondeterminism). This ID is used as the key for PutState in `initNewChain()`, causing different endorsers to write to different keys, resulting in endorsement divergence. Additionally, the GetHistoryForKey iterator at L571 is never closed.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### 1. Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, making this a valid HLF chaincode.\n\n### 2. Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The code uses `json.Marshal` on structs, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 571-573: `stub.GetHistoryForKey(COCKey)` is used in `getChainOfEvents()`. However, examining the function:\n  - The results are only used to build a JSON response returned via `shim.Success()`\n  - No write decisions (PutState, DelState) are made based on the history query results\n  - This is a read-only query function\n\n**C5 ITERATOR_LEAK**: \n- Line 571: `historyResponse, err3 := stub.GetHistoryForKey(COCKey)` - The iterator `historyResponse` is created but `Close()` is never called. This is an iterator leak.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 10: `var logger = shim.NewLogger(\"dcot-chaincode-log\")` - This is a logger-only global, which is explicitly SAFE per the taxonomy.\n\n### 3. External Library Analysis\n- Line 7: `\"github.com/rs/xid\"` - Used at line 77: `guid := xid.New()`. The `xid` library generates globally unique IDs using machine ID, process ID, and timestamp. This could potentially be nondeterministic across different endorsing peers.\n\nLooking at line 77-79:\n```go\nguid := xid.New()\nCOCKey, err = getCOCKey(stub, guid.String())\n```\n\nAnd line 91: `chainOfCustody.Id = guid.String()`\n\nThen line 113: `err = stub.PutState(COCKey, byteCOC)` - The key used for PutState is derived from `xid.New()`, which generates IDs based on timestamp and machine-specific data. This means different endorsers could generate different XIDs, causing endorsement divergence.\n\nThis falls under **C1 TIME_NOW** conceptually (time-based nondeterminism affecting ledger writes), though the taxonomy specifically lists `time.Now()`. The `xid` library internally uses time, making this a time-based nondeterminism issue.\n\n**VERDICT**: The `xid.New()` usage at L77 generates a time-and-machine-dependent ID that directly influences the key used in `PutState` at L113, causing endorsement divergence.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L77-L79, L91, L113\nRATIONALE: The `xid.New()` library generates IDs using timestamp and machine-specific data (similar to time.Now() nondeterminism). This ID is used as the key for PutState in `initNewChain()`, causing different endorsers to write to different keys, resulting in endorsement divergence. Additionally, the GetHistoryForKey iterator at L571 is never closed.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:25:13.969421",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0503_lafenicecc_map",
+  "repo": "lafenicecc",
+  "filename": "map.go",
+  "elapsed_s": 3.19,
+  "input_tokens": 2349,
+  "output_tokens": 197,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L117-L140, L142-L165",
+  "rationale": "The \"query\" case (L117-L140) uses `stub.GetQueryResult()` at L120, a non-revalidated query source, and the result directly influences the response returned via `shim.Success(jsonKeys)` at L139. Similarly, the \"history\" case (L142-L165) uses `stub.GetHistoryForKey()` at L145, another non-revalidated query source, whose results are marshaled and returned at L164. Both patterns violate C4: query results that determine response content without revalidation can diverge across endorsers due to ledger state differences at query time, causing consensus failure.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L117-L140, L142-L165\n\nRATIONALE: The \"query\" case (L117-L140) uses `stub.GetQueryResult()` at L120, a non-revalidated query source, and the result directly influences the response returned via `shim.Success(jsonKeys)` at L139. Similarly, the \"history\" case (L142-L165) uses `stub.GetHistoryForKey()` at L145, another non-revalidated query source, whose results are marshaled and returned at L164. Both patterns violate C4: query results that determine response content without revalidation can diverge across endorsers due to ledger state differences at query time, causing consensus failure.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:21.837399",
+  "annotator": "2nd"
+}

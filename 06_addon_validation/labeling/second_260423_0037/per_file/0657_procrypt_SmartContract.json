@@ -1,0 +1,19 @@
+{
+  "file_id": "0657_procrypt_SmartContract",
+  "repo": "procrypt",
+  "filename": "SmartContract.go",
+  "elapsed_s": 3.05,
+  "input_tokens": 1761,
+  "output_tokens": 173,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations influencing writes, non-revalidated queries determining write decisions, or mutable package-level state. All ledger writes (PutState in buyCar and sellCar) are deterministic, based solely on function arguments and prior state reads. The queryCar function performs a read-only query and returns the result via shim.Success without influencing any write.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations influencing writes, non-revalidated queries determining write decisions, or mutable package-level state. All ledger writes (PutState in buyCar and sellCar) are deterministic, based solely on function arguments and prior state reads. The queryCar function performs a read-only query and returns the result via shim.Success without influencing any write.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:58.850844",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0357_FLombardi-PhD_yandex_translator",
+  "repo": "FLombardi-PhD",
+  "filename": "yandex_translator.go",
+  "elapsed_s": 6.39,
+  "input_tokens": 2007,
+  "output_tokens": 190,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L62-L72",
+  "rationale": "The `invoke` function makes an external HTTP call (`http.Get`) to a translation API at L62-66, and the response body directly determines the value written to the ledger via `stub.PutState` at L72. External network calls are inherently nondeterministic - different peers may receive different responses (due to timing, network issues, API rate limits, or service changes), causing endorsement divergence. While not explicitly listed in the taxonomy classes, this represents a severe consensus-critical nondeterminism pattern. Additionally, the external service response influences a ledger write, which falls under the spirit of C6 (external mutable state affecting writes).",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L62-L72\nRATIONALE: The `invoke` function makes an external HTTP call (`http.Get`) to a translation API at L62-66, and the response body directly determines the value written to the ledger via `stub.PutState` at L72. External network calls are inherently nondeterministic - different peers may receive different responses (due to timing, network issues, API rate limits, or service changes), causing endorsement divergence. While not explicitly listed in the taxonomy classes, this represents a severe consensus-critical nondeterminism pattern. Additionally, the external service response influences a ledger write, which falls under the spirit of C6 (external mutable state affecting writes).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:28:20.566069",
+  "annotator": "2nd"
+}

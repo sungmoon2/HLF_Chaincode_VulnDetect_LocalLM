@@ -1,0 +1,19 @@
+{
+  "file_id": "0783_suhyeon0911_chaincode",
+  "repo": "suhyeon0911",
+  "filename": "chaincode.go",
+  "elapsed_s": 4.98,
+  "input_tokens": 3144,
+  "output_tokens": 141,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF chaincode with Init/Invoke entrypoints. No C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (rich queries like GetQueryResult), or C6 (mutable global state) patterns are present. All state operations use deterministic keys from function arguments, and json.Marshal is called on structs (not maps), which is deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF chaincode with Init/Invoke entrypoints. No C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (rich queries like GetQueryResult), or C6 (mutable global state) patterns are present. All state operations use deterministic keys from function arguments, and json.Marshal is called on structs (not maps), which is deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:59:38.591946",
+  "annotator": "2nd"
+}

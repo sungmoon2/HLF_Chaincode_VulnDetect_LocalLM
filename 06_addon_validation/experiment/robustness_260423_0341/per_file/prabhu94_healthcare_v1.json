@@ -1,0 +1,55 @@
+{
+  "repo": "prabhu94",
+  "filename": "healthcare_v1.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "84f7ddd87c63e031",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'healthcare_v1.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access control issues\n**Severity:** Medium\n**Affected Code Location:** `initVisit`, `getHistoryForRecord`, `getVisitByRange`, `getVisitByDocCompostiteKey`, `queryVisitByDoctor`\n**Description:** The chaincode does not implement any access control mechanisms. Any user can invoke any function, which could lead to unauthorized access to patient data.\n**Recommended Fix:** Implement access control by checking the identity of the invoking user and ensuring they have the necessary permissions to perform the requested action. This can be done using Hyperledger Fabric's built-in capabilities for managing access control lists (ACLs) or by implementing custom logic within the chaincode.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input validation flaws\n**Severity:** Low\n**Affected Code Location:** `initVisit`\n**Description:** The chaincode checks if the input arguments are non-empty, but it does not validate the format of the `visitDate` argument. If the `visitDate` is not a valid integer, the chaincode will return an error. However, if the `visitDate` is a valid integer but not a valid date, it will still be accepted.\n**Recommended Fix:** Validate the format of the `visitDate` argument to ensure it is a valid integer representing a valid date.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-after-write conflicts (phantom reads)\n**Severity:** Low\n**Affected Code Location:** `initVisit`\n**Description:** The chaincode does not handle concurrent transactions properly. If two transactions are trying to create a visit with the same `visitId`, the second transaction will fail. However, if the first transaction is not yet committed, the second transaction will not see the first transaction's changes, leading to a phantom read.\n**Recommended Fix:** Use Hyperledger Fabric's built-in transaction ordering and consensus mechanism to ensure that transactions are processed in a consistent order.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private data leakage\n**Severity:** High\n**Affected Code Location:** `getHistoryForRecord`, `getVisitByRange`, `getVisitByDocCompostiteKey`, `queryVisitByDoctor`\n**Description:** The chaincode does not encrypt or anonymize sensitive data. Any user can retrieve the history of a visit, the details of a visit, or the details of a doctor's visits, which could lead to private data leakage.\n**Recommended Fix:** Encrypt or anonymize sensitive data before storing it in the blockchain. Use Hyperledger Fabric's built-in capabilities for encrypting data or use a third-party encryption library.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-deterministic operations\n**Severity:** Low\n**Affected Code Location:** `initVisit`\n**Description:** The chaincode uses the `strings.ToLower` function to convert input arguments to lowercase. However, this function is not deterministic, as it depends on the locale settings of the system. This could lead to unexpected behavior if the locale settings are not consistent across different systems.\n**Recommended Fix:** Use a deterministic function to convert input arguments to lowercase, such as a custom function that always converts characters to lowercase regardless of the locale settings.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure key management\n**Severity:** Low\n**Affected Code Location:** `initVisit`\n**Description:** The chaincode does not manage keys securely. The `visitId`, `doctorId`, `patientId`, and `rxId` are stored as plain text in the blockchain. This could lead to insecure key management.\n**Recommended Fix:** Use Hyperledger Fabric's built-in capabilities for managing keys securely, such as using the `stub.PutState` and `stub.GetState` functions to store and retrieve keys.\n\n### Summary\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. To improve the security of the chaincode, it is recommended to implement access control mechanisms, validate input arguments, handle concurrent transactions properly, encrypt or anonymize sensitive data, use deterministic functions, and manage keys securely.",
+      "prediction": "vulnerable",
+      "elapsed_s": 9.2,
+      "finish_reason": "stop",
+      "prompt_tokens": 2605,
+      "completion_tokens": 902
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2605,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2605,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2605,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2605,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.8,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 1.88,
+  "total_elapsed_s": 9.4,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:50:00.326461"
+}

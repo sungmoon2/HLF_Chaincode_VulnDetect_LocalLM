@@ -1,0 +1,19 @@
+{
+  "file_id": "0033_jbibodi_Invoice",
+  "repo": "jbibodi",
+  "filename": "Invoice.go",
+  "elapsed_s": 3.36,
+  "input_tokens": 2653,
+  "output_tokens": 210,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L117, L119, L121",
+  "rationale": "The `createInvoiceObject` function calls `time.Now()` at line 117 (`currDate := time.Now()`), which captures the current system time. This value is then formatted and used in date comparison logic (lines 119-121) that determines the `status`, `state`, and `delayPenalty` fields. These computed fields are written into the response buffer (lines 145-165) which is returned via `shim.Success()` at line 103 in `getInvoiceAmountById`. Since `time.Now()` is non-deterministic across endorsers and directly influences the proposal response payload, this constitutes a C1 TIME_NOW vulnerability that will cause endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L117, L119, L121\n\nRATIONALE: The `createInvoiceObject` function calls `time.Now()` at line 117 (`currDate := time.Now()`), which captures the current system time. This value is then formatted and used in date comparison logic (lines 119-121) that determines the `status`, `state`, and `delayPenalty` fields. These computed fields are written into the response buffer (lines 145-165) which is returned via `shim.Success()` at line 103 in `getInvoiceAmountById`. Since `time.Now()` is non-deterministic across endorsers and directly influences the proposal response payload, this constitutes a C1 TIME_NOW vulnerability that will cause endorsement divergence.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:52.690110",
+  "annotator": "2nd"
+}

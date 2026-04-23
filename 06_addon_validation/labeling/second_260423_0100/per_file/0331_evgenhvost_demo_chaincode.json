@@ -1,0 +1,19 @@
+{
+  "file_id": "0331_evgenhvost_demo_chaincode",
+  "repo": "evgenhvost",
+  "filename": "demo_chaincode.go",
+  "elapsed_s": 3.82,
+  "input_tokens": 1147,
+  "output_tokens": 146,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains valid HLF transaction entrypoints (Init and Invoke methods). However, the code only performs logging via fmt.Printf/Sprintln and returns shim.Success(nil) or shim.Error with static messages. There are no ledger writes (PutState, DelState), no time.Now() calls, no goroutines, no map iterations, no rich queries, and no mutable global state. The chaincode is deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains valid HLF transaction entrypoints (Init and Invoke methods). However, the code only performs logging via fmt.Printf/Sprintln and returns shim.Success(nil) or shim.Error with static messages. There are no ledger writes (PutState, DelState), no time.Now() calls, no goroutines, no map iterations, no rich queries, and no mutable global state. The chaincode is deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:26:55.133925",
+  "annotator": "2nd"
+}

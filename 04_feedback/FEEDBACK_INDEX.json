@@ -93,6 +93,19 @@
       "derived_issues": [],
       "severity": "major",
       "action_note": "교정본 원문 저장 완료. ISS_019~ISS_023에 귀속."
+    },
+    {
+      "id": "FB_260421_expert_review_aann",
+      "file": "incoming/FB_260421_expert_review_aann.md",
+      "analysis_file": "incoming/FB_260421_expert_review_aann_analysis.md",
+      "source": "reviewer",
+      "date": "2026-04-21",
+      "target_draft": "AANN_2026_v51.tex (AANN 제출본)",
+      "target_sections": ["meta", "I", "II", "III", "IV", "V", "VI"],
+      "summary": "AANN 2026 Expert Review. 긍정적 톤(promising) + 수정 요구 5건: C1 아키텍처 혁신 부재(기존 방어 있음), C2 파일 수준 분류 한계(Threats에 인정), C3 N=15 규모 부족(반복 지적), C4 Gemini 명명법 통일(actionable), C5 Go+LLM 참고문헌 추가(actionable). Showstopper 없음.",
+      "derived_issues": ["ISS_024", "ISS_025", "ISS_026"],
+      "severity": "moderate",
+      "review_verdict": "revision requested (not reject)"
     }
   ],
 
@@ -418,16 +431,16 @@
   ],
 
   "statistics": {
-    "total_feedback": 6,
-    "total_issues": 23,
+    "total_feedback": 7,
+    "total_issues": 26,
     "open_issues": 1,
-    "in_progress_issues": 3,
+    "in_progress_issues": 6,
     "resolved_issues": 19,
     "wontfix_issues": 0,
     "by_priority": {
       "critical": 10,
       "high": 11,
-      "medium": 2,
+      "medium": 5,
       "low": 0
     }
   },

@@ -1,0 +1,19 @@
+{
+  "file_id": "0861_whatisoop_chaincode_example04",
+  "repo": "whatisoop",
+  "filename": "chaincode_example04.go",
+  "elapsed_s": 15.0,
+  "input_tokens": 2137,
+  "output_tokens": 610,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains no nondeterministic patterns. It uses only deterministic operations: argument parsing, GetState (not a C4 source), PutState, and InvokeChaincode. No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface) pb.Response` \n- `Invoke(stub shim.ChaincodeStubInterface) pb.Response` which dispatches to `invoke()` and `query()`\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` anywhere in the file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The code uses slices (`[][]byte`, `[]string`) which have deterministic iteration order.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetState()` is used at line 87, but `GetState` is NOT a C4 source (only `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` are C4 sources).\n- No rich queries or history queries are present.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic. The only type declaration is `SimpleChaincode struct{}` which has no mutable state.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code (no `GetStateByRange`, `GetQueryResult`, etc. that return iterators).\n\n### Code Flow Summary\n- `Init`: Takes args, validates, writes to state with `PutState` - deterministic\n- `invoke`: Takes args, validates, calls another chaincode, writes to state - deterministic\n- `query`: Takes args, reads state with `GetState`, optionally calls another chaincode, returns response - deterministic (GetState is not a C4 source)\n\nAll operations use deterministic inputs (transaction arguments, stub methods that return consistent results across peers).\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains no nondeterministic patterns. It uses only deterministic operations: argument parsing, GetState (not a C4 source), PutState, and InvokeChaincode. No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:05:01.068537",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0135_akshay111meher_ex2",
+  "repo": "akshay111meher",
+  "filename": "ex2.go",
+  "elapsed_s": 3.1,
+  "input_tokens": 3399,
+  "output_tokens": 164,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init, Invoke, Query methods). All transaction functions use deterministic inputs (function arguments, GetState results, string operations, json.Marshal on structs with fixed fields). No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable package-level state (C6) are present. All ledger writes (PutState) depend solely on validated arguments and deterministic transformations.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init, Invoke, Query methods). All transaction functions use deterministic inputs (function arguments, GetState results, string operations, json.Marshal on structs with fixed fields). No time-dependent operations (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable package-level state (C6) are present. All ledger writes (PutState) depend solely on validated arguments and deterministic transformations.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:41:41.666251",
+  "annotator": "2nd"
+}

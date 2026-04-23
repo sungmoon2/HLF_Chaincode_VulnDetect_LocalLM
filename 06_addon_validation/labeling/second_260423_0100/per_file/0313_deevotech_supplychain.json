@@ -1,0 +1,19 @@
+{
+  "file_id": "0313_deevotech_supplychain",
+  "repo": "deevotech",
+  "filename": "supplychain.go",
+  "elapsed_s": 17.48,
+  "input_tokens": 11961,
+  "output_tokens": 727,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L330, L367, L423, L729, L782",
+  "rationale": "GetQueryResult and GetHistoryForKey are used only for read-only queries returned via shim.Success, not for write decisions. The time.Unix() calls convert deterministic ledger timestamps, not time.Now(). No map iteration, goroutines, or mutable global state patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW:**\n- `time.Unix()` is used in `getHistoryForOrg` (L389), `getHistoryForMaterial` (L445), `getHistoryForAgriProduct` (L755), and `getHistoryForProduct` (L808). However, `time.Unix()` converts a Unix timestamp to a time.Time - it does NOT call `time.Now()`. The timestamp comes from `response.Timestamp.Seconds` which is deterministic ledger data.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE:**\n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION:**\n- No `for...range` over maps found. The code uses structs and JSON marshaling of structs (not maps).\n\n**C4 NON_REVALIDATED_QUERY:**\n- `GetQueryResult` is used in `getQueryResultForQueryString` (L330).\n- This is called by `queryOrgsByType`, `queryOrgs`, `queryMaterialsByOwner`, `queryAgriProductByOwner`, and `queryProductByOwner`.\n- All these functions return the query results via `shim.Success(queryResults)` - they are **read-only queries** that don't influence any write decisions.\n- `GetHistoryForKey` is used in multiple `getHistoryFor*` functions, but again these are read-only, returning results via `shim.Success()`.\n\n**C6 GLOBAL_MUTABLE_STATE:**\n- No package-level `var` declarations that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK:**\n- All iterators have proper `defer resultsIterator.Close()` calls (L333, L367, L423, L729, L782).\n\n### Key Observations\n1. The `GetQueryResult` calls are used purely for read operations - the results are formatted and returned to the client, not used to make write decisions.\n2. The `time.Unix()` usage converts deterministic timestamp data from the ledger, not the current time.\n3. All write operations (`PutState`, `DelState`) are based on deterministic inputs (function arguments, existing state).\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L330, L367, L423, L729, L782\nRATIONALE: GetQueryResult and GetHistoryForKey are used only for read-only queries returned via shim.Success, not for write decisions. The time.Unix() calls convert deterministic ledger timestamps, not time.Now(). No map iteration, goroutines, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:26:06.038172",
+  "annotator": "2nd"
+}

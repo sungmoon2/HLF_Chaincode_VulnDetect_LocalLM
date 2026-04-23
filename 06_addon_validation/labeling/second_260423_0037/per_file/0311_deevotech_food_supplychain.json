@@ -1,0 +1,19 @@
+{
+  "file_id": "0311_deevotech_food_supplychain",
+  "repo": "deevotech",
+  "filename": "food_supplychain.go",
+  "elapsed_s": 8.93,
+  "input_tokens": 9647,
+  "output_tokens": 577,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "YES**",
+  "evidence_lines": "L565, L589, L613, L638, L667**",
+  "rationale": "",
+  "raw_response": "# Audit Report: Food Chaincode\n\n## Decision\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: YES**\n\n**EVIDENCE_LINES: L565, L589, L613, L638, L667**\n\n---\n\n## Rationale\n\nThis file contains multiple recognizable HLF transaction entrypoints (shim Init/Invoke pattern with dispatched transaction functions). However, a thorough intra-file analysis reveals **no consensus-critical nondeterminism**:\n\n1. **C1 (TIME_NOW)**: Line 640 uses `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` to format a timestamp from `GetHistoryForKey()` result. This timestamp is **read from the ledger history** (not generated locally via `time.Now()`), so it is deterministic across endorsers. The formatted string is returned via `shim.Success()` in a read-only query response, not used to influence a ledger write.\n\n2. **C2 (GOROUTINE)**: No goroutines (`go func()` or `go methodCall()`) are spawned.\n\n3. **C3 (MAP_ITERATION)**: No map-typed expressions are iterated in transaction logic. All iterations are over slices or iterator interfaces.\n\n4. **C4 (NON_REVALIDATED_QUERY)**: \n   - `GetStateByPartialCompositeKey()` (L565, L589, L613) results are iterated and used to fetch additional state, but the iteration order is deterministic (composite key ordering).\n   - `GetQueryResult()` (L638) and `GetHistoryForKey()` (L667) results are returned as read-only responses via `shim.Success()`, not used to determine write decisions.\n   - No write decision depends on query results.\n\n5. **C6 (GLOBAL_MUTABLE_STATE)**: No package-level mutable variables are declared or read in transaction logic.\n\n**C5 (ITERATOR_LEAK)**: Iterators are properly closed via `defer resultsIterator.Close()` on all paths (L565, L589, L613, L638, L667), so this auxiliary issue does not apply.\n\nAll ledger writes (`PutState`, `DelState`) are deterministic, driven by parsed JSON input and composite key operations with deterministic ordering.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:46:27.892747",
+  "annotator": "2nd"
+}

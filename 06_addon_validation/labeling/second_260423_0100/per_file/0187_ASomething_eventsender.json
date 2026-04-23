@@ -1,0 +1,19 @@
+{
+  "file_id": "0187_ASomething_eventsender",
+  "repo": "ASomething",
+  "filename": "eventsender.go",
+  "elapsed_s": 10.5,
+  "input_tokens": 1403,
+  "output_tokens": 485,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no nondeterministic patterns. It only uses GetState/PutState with deterministic keys and values, iterates over a slice (not a map), and has no time-based logic, goroutines, or global mutable state.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `EventSender` struct implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The only range is over `args []string` (a slice), which has deterministic iteration order.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used, which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Auxiliary Check\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Summary\nThe chaincode is straightforward:\n- `Init`: Writes initial state\n- `invoke`: Reads state, increments counter, writes state, sets event\n- `query`: Reads and returns state\n\nAll operations use deterministic inputs (function arguments, ledger state) and produce deterministic outputs.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no nondeterministic patterns. It only uses GetState/PutState with deterministic keys and values, iterates over a slice (not a map), and has no time-based logic, goroutines, or global mutable state.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:15:54.059135",
+  "annotator": "2nd"
+}

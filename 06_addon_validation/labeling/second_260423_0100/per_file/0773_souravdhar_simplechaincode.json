@@ -1,0 +1,19 @@
+{
+  "file_id": "0773_souravdhar_simplechaincode",
+  "repo": "souravdhar",
+  "filename": "simplechaincode.go",
+  "elapsed_s": 10.87,
+  "input_tokens": 1342,
+  "output_tokens": 551,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains no nondeterministic patterns. It only uses deterministic operations: reading state with GetState, marshaling a struct (not a map) with json.Marshal, and writing state with PutState. All data flows from transaction arguments to ledger writes without any C1-C4 or C6 sources.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Check for HLF Transaction Entrypoint\nThe file contains `Init` and `Invoke` methods on `SimpleChaincode` struct using `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `BankAccount` struct is marshaled with `json.Marshal()`, but it's a struct, not a map.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used (line 41), which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK (Auxiliary)**: No iterators are created in this code.\n\n### Step 3: Evidence Review\nThe chaincode performs:\n- `queryAccount`: Reads state with `GetState` and returns it via `shim.Success`\n- `createAccount`: Creates a `BankAccount` struct, marshals it to JSON, and writes with `PutState`\n\nAll operations are deterministic:\n- Input comes from transaction arguments\n- `json.Marshal` on a struct is deterministic\n- No nondeterministic sources influence writes or responses\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains no nondeterministic patterns. It only uses deterministic operations: reading state with GetState, marshaling a struct (not a map) with json.Marshal, and writing state with PutState. All data flows from transaction arguments to ledger writes without any C1-C4 or C6 sources.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:58:48.888572",
+  "annotator": "2nd"
+}

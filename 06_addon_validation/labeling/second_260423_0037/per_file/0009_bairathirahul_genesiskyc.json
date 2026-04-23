@@ -1,0 +1,19 @@
+{
+  "file_id": "0009_bairathirahul_genesiskyc",
+  "repo": "bairathirahul",
+  "filename": "genesiskyc.go",
+  "elapsed_s": 2.58,
+  "input_tokens": 6148,
+  "output_tokens": 143,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L545-L551",
+  "rationale": "The `updateCustomerStatus` function at L545-L551 uses `time.Now().UnixNano()` to set a comment timestamp that is subsequently written to the ledger via `stub.PutState()` at L558. This time-dependent value influences the ledger state and will diverge across endorsing peers, causing consensus failure. The timestamp is not derived from a deterministic source like `GetTxTimestamp()`.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L545-L551\n\nRATIONALE: The `updateCustomerStatus` function at L545-L551 uses `time.Now().UnixNano()` to set a comment timestamp that is subsequently written to the ledger via `stub.PutState()` at L558. This time-dependent value influences the ledger state and will diverge across endorsing peers, causing consensus failure. The timestamp is not derived from a deterministic source like `GetTxTimestamp()`.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:37:44.636554",
+  "annotator": "2nd"
+}

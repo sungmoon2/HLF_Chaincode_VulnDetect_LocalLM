@@ -1,0 +1,28 @@
+{
+  "file_id": "0205_payprotocol_main",
+  "repo": "payprotocol",
+  "filename": "main.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\payprotocol\\main.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "GLOBAL_MUTABLE_STATE"
+  ],
+  "code_chars": 7286,
+  "stripped_chars": 6730,
+  "code_hash": "bf83c181751b264f",
+  "stripped_hash": "1d20188f3f474ccf",
+  "elapsed_s": 4.8,
+  "input_tokens": 3553,
+  "output_tokens": 143,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L84-L85, L168-L169",
+  "rationale": "The code uses `txtime.GetTime(stub)` which is an external package call. Without intra-file evidence of what this function does, I cannot assume it uses `time.Now()`. The global `logger` variable is only used for diagnostic logging and does not influence ledger writes or proposal responses. The `routes` map is iterated via direct key lookup (`routes[fn]`), not range iteration.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L84-L85, L168-L169\nRATIONALE: The code uses `txtime.GetTime(stub)` which is an external package call. Without intra-file evidence of what this function does, I cannot assume it uses `time.Now()`. The global `logger` variable is only used for diagnostic logging and does not influence ledger writes or proposal responses. The `routes` map is iterated via direct key lookup (`routes[fn]`), not range iteration.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:35.484437"
+}

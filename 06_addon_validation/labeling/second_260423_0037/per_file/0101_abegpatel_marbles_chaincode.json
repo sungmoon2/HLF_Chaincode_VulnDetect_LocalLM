@@ -1,0 +1,19 @@
+{
+  "file_id": "0101_abegpatel_marbles_chaincode",
+  "repo": "abegpatel",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 3.74,
+  "input_tokens": 6285,
+  "output_tokens": 192,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains multiple HLF transaction entrypoints (Init, Invoke, and several public methods). However, no C1–C6 vulnerability patterns exist. The code uses only deterministic operations: string manipulation, JSON marshaling (which sorts keys deterministically in Go stdlib), composite key creation, and iterator-based queries. The `time.Unix()` call at L717 converts a provided timestamp to a string for response output only—it does not influence any ledger write. All queries (GetQueryResult, GetHistoryForKey, GetStateByRange) are used for read-only responses or to drive deterministic iteration, not as non-revalidated decision points for writes.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains multiple HLF transaction entrypoints (Init, Invoke, and several public methods). However, no C1–C6 vulnerability patterns exist. The code uses only deterministic operations: string manipulation, JSON marshaling (which sorts keys deterministically in Go stdlib), composite key creation, and iterator-based queries. The `time.Unix()` call at L717 converts a provided timestamp to a string for response output only—it does not influence any ledger write. All queries (GetQueryResult, GetHistoryForKey, GetStateByRange) are used for read-only responses or to drive deterministic iteration, not as non-revalidated decision points for writes.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:40:53.516141",
+  "annotator": "2nd"
+}

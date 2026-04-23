@@ -1,0 +1,13 @@
+{
+  "repo": "ryu-sato",
+  "filename": "chaincode_sample.go",
+  "ground_truth": "VULNERABLE",
+  "ground_truth_class": "C3",
+  "qwen_prediction": "safe",
+  "qwen_elapsed_s": 0.29,
+  "qwen_raw_response": "No vulnerabilities detected.",
+  "semgrep_prediction": "safe",
+  "semgrep_rules_hit": "",
+  "semgrep_findings_count": 0,
+  "timestamp": "2026-04-23T00:53:10.716153"
+}

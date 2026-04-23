@@ -1,0 +1,19 @@
+{
+  "file_id": "0243_bugfrog1024_marbles_chaincode_private",
+  "repo": "bugfrog1024",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 8.57,
+  "input_tokens": 5271,
+  "output_tokens": 761,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "N/A**",
+  "rationale": "The file contains valid HLF transaction entrypoints but exhibits no C1–C6 consensus-critical nondeterminism patterns. All state modifications are deterministic (transient map key lookups, JSON marshaling, composite keys). Query results are read-only and do not influence write decisions. Iterators are properly closed.**",
+  "raw_response": "# Audit Report\n\n## Summary\nThis file contains recognizable HLF transaction entrypoints (Init/Invoke methods) and multiple transaction functions. However, analysis reveals no consensus-critical nondeterminism patterns.\n\n## Detailed Analysis\n\n### C1 (TIME_NOW)\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n- `GetTxTimestamp()` is not used.\n- **Status: NOT PRESENT**\n\n### C2 (GOROUTINE)\n- No `go func()` or `go methodCall()` patterns.\n- **Status: NOT PRESENT**\n\n### C3 (MAP_ITERATION)\n- `transMap` (from `stub.GetTransient()`) is read via key lookups only: `transMap[\"marble\"]`, `transMap[\"marble_delete\"]`, `transMap[\"marble_owner\"]`.\n- No `for...range` iteration over maps.\n- **Status: NOT PRESENT**\n\n### C4 (NON_REVALIDATED_QUERY)\n- `queryMarblesByOwner()` and `queryMarbles()` call `GetPrivateDataQueryResult()` (line 447) via `getQueryResultForQueryString()`.\n- However, the query results are **only returned via `shim.Success()`** without influencing any write decision (PutState/DelState/PutPrivateData/DelPrivateData).\n- `getMarblesByRange()` uses `GetPrivateDataByRange()` (line 408), which is explicitly NOT a C4 source per taxonomy.\n- **Status: NOT VULNERABLE** (read-only queries)\n\n### C6 (GLOBAL_MUTABLE_STATE)\n- No package-level mutable variables declared in this file.\n- Only struct types and function definitions at package level.\n- **Status: NOT PRESENT**\n\n### C5 (ITERATOR_LEAK)\n- Line 410: `resultsIterator.Close()` is called via `defer` in `getMarblesByRange()`.\n- Line 447: `resultsIterator.Close()` is called via `defer` in `getQueryResultForQueryString()`.\n- All iterator paths properly closed.\n- **Status: NO**\n\n## Conclusion\nAll transaction functions (`initMarble`, `readMarble`, `readMarblePrivateDetails`, `transferMarble`, `delete`, `queryMarblesByOwner`, `queryMarbles`, `getMarblesByRange`) perform deterministic operations:\n- Transient map reads are key-based (deterministic).\n- JSON marshaling is deterministic (Go stdlib).\n- Composite key creation is deterministic.\n- Query results are returned without influencing writes.\n\n---\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: N/A**\n\n**RATIONALE: The file contains valid HLF transaction entrypoints but exhibits no C1–C6 consensus-critical nondeterminism patterns. All state modifications are deterministic (transient map key lookups, JSON marshaling, composite keys). Query results are read-only and do not influence write decisions. Iterators are properly closed.**",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:44:34.689706",
+  "annotator": "2nd"
+}

@@ -1,0 +1,52 @@
+file,tool,findings,classification,ground_truth,correct,error
+U01_LandRegistry.go,semgrep_auto,0,safe,safe,True,returncode=2
+U01_LandRegistry.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U01_LandRegistry.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U02_ethtxcc.go,semgrep_auto,0,safe,safe,True,returncode=2
+U02_ethtxcc.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U02_ethtxcc.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U03_election_code.go,semgrep_auto,0,safe,vulnerable,False,returncode=2
+U03_election_code.go,semgrep_security-audit,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U03_election_code.go,semgrep_hlf,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U07_ProductDetails.go,semgrep_auto,0,safe,safe,True,returncode=2
+U07_ProductDetails.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U07_ProductDetails.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U08_smartcontract.go,semgrep_auto,0,safe,safe,True,returncode=2
+U08_smartcontract.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U08_smartcontract.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U09_charity.go,semgrep_auto,0,safe,safe,True,returncode=2
+U09_charity.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U09_charity.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U10_carcert.go,semgrep_auto,0,safe,safe,True,returncode=2
+U10_carcert.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U10_carcert.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U11_sharebook.go,semgrep_auto,0,safe,safe,True,returncode=2
+U11_sharebook.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U11_sharebook.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U12_local_model_chaincode.go,semgrep_auto,0,safe,safe,True,returncode=2
+U12_local_model_chaincode.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U12_local_model_chaincode.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U13_security_manager.go,semgrep_auto,0,safe,vulnerable,False,returncode=2
+U13_security_manager.go,semgrep_security-audit,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U13_security_manager.go,semgrep_hlf,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U14_smartaicc.go,semgrep_auto,0,safe,safe,True,returncode=2
+U14_smartaicc.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U14_smartaicc.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U17_realty_chaincode.go,semgrep_auto,0,safe,safe,True,returncode=2
+U17_realty_chaincode.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U17_realty_chaincode.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U18_donation_chaincode.go,semgrep_auto,0,safe,vulnerable,False,returncode=2
+U18_donation_chaincode.go,semgrep_security-audit,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U18_donation_chaincode.go,semgrep_hlf,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U20_maintenance.go,semgrep_auto,0,safe,vulnerable,False,returncode=2
+U20_maintenance.go,semgrep_security-audit,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U20_maintenance.go,semgrep_hlf,0,safe,vulnerable,False,'NoneType' object has no attribute 'strip'
+U21_movies.go,semgrep_auto,0,safe,safe,True,returncode=2
+U21_movies.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U21_movies.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U22_voting.go,semgrep_auto,0,safe,safe,True,returncode=2
+U22_voting.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U22_voting.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U23_private_blockchain.go,semgrep_auto,0,safe,safe,True,returncode=2
+U23_private_blockchain.go,semgrep_security-audit,0,safe,safe,True,'NoneType' object has no attribute 'strip'
+U23_private_blockchain.go,semgrep_hlf,0,safe,safe,True,'NoneType' object has no attribute 'strip'

@@ -1,0 +1,19 @@
+{
+  "file_id": "0895_YewPu_jsonObjects",
+  "repo": "YewPu",
+  "filename": "jsonObjects.go",
+  "elapsed_s": 4.77,
+  "input_tokens": 5268,
+  "output_tokens": 128,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "",
+  "rationale": "The file contains GetQueryResult (L261) and GetHistoryForKey (L340), but these are used only for read-only queries returned via shim.Success without influencing any write decisions (PutState/DelState). The time package import is used only to format timestamps from response.Timestamp (L362), not time.Now(). No map iteration, goroutines, or mutable global state patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nRATIONALE: The file contains GetQueryResult (L261) and GetHistoryForKey (L340), but these are used only for read-only queries returned via shim.Success without influencing any write decisions (PutState/DelState). The time package import is used only to format timestamps from response.Timestamp (L362), not time.Now(). No map iteration, goroutines, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:34.340472",
+  "annotator": "2nd"
+}

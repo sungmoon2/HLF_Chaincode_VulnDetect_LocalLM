@@ -1,0 +1,55 @@
+{
+  "repo": "hlf-go",
+  "filename": "chaincode.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "b3886188f3c5851f",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.08,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file does not contain any of the security vulnerabilities mentioned in the question. The chaincode is minimal and does not perform any operations that could be prone to access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The `Init` and `Invoke` functions are simple and do not interact with the ledger in a way that could introduce these types of vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.8,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 96
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'chaincode.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is minimal and does not perform any operations that could introduce these types of vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.59,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 71
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'chaincode.go' does not contain any of the security vulnerabilities mentioned in the question. The chaincode is a minimal example with basic logging and does not perform any operations that could lead to access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management.",
+      "prediction": "safe",
+      "elapsed_s": 0.62,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 76
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.43,
+  "total_elapsed_s": 2.14,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:41:12.465205"
+}

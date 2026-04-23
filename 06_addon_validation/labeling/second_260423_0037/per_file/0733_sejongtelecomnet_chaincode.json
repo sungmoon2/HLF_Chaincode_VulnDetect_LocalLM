@@ -1,0 +1,19 @@
+{
+  "file_id": "0733_sejongtelecomnet_chaincode",
+  "repo": "sejongtelecomnet",
+  "filename": "chaincode.go",
+  "elapsed_s": 2.09,
+  "input_tokens": 1070,
+  "output_tokens": 175,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains a recognizable HLF transaction entrypoint (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries, or mutable global state influencing ledger writes or responses. The WalletTest function calls an external wallet.CallVaildWallet() function and logs output, but does not perform any ledger writes (PutState, DelState, etc.) or influence the response beyond shim.Success(nil). All transaction paths return deterministic responses.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains a recognizable HLF transaction entrypoint (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries, or mutable global state influencing ledger writes or responses. The WalletTest function calls an external wallet.CallVaildWallet() function and logs output, but does not perform any ledger writes (PutState, DelState, etc.) or influence the response beyond shim.Success(nil). All transaction paths return deterministic responses.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:57.470388",
+  "annotator": "2nd"
+}

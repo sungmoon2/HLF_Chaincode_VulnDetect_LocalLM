@@ -1,0 +1,19 @@
+{
+  "file_id": "0571_mrpuri_fashion",
+  "repo": "mrpuri",
+  "filename": "fashion.go",
+  "elapsed_s": 12.86,
+  "input_tokens": 1781,
+  "output_tokens": 567,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state within this file. All state operations use deterministic keys derived from transaction arguments. The external controller call is out of scope for intra-file analysis.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `FashionChaincode` implementing the shim interface. This is a valid HLF chaincode entrypoint. → Proceed with analysis.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. → Not present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns. → Not present.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `model.Cloth` struct is marshaled with `json.Marshal()`, but it's a struct, not a map. → Not present.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. The code uses `GetState()` which is not a C4 source. → Not present.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations in this file. The `FashionChaincode` struct is empty and stateless. → Not present.\n\n### Step 3: Auxiliary Check\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file. `GetState()` returns bytes directly, not an iterator. → Not present.\n\n### Additional Observations\n- The code imports `controller \"fashion/controller\"` and calls `controller.Get(stub)`, but per the rules, I only analyze intra-file evidence.\n- `json.Marshal(cloth)` is used on a struct (`*model.Cloth`), not a map, so it's deterministic.\n- All state operations use deterministic keys derived from function arguments.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state within this file. All state operations use deterministic keys derived from transaction arguments. The external controller call is out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:44:12.767968",
+  "annotator": "2nd"
+}

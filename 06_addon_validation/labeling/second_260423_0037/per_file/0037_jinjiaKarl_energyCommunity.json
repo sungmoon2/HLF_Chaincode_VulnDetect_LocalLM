@@ -1,0 +1,19 @@
+{
+  "file_id": "0037_jinjiaKarl_energyCommunity",
+  "repo": "jinjiaKarl",
+  "filename": "energyCommunity.go",
+  "elapsed_s": 3.61,
+  "input_tokens": 3774,
+  "output_tokens": 222,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "C6",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L155, L16-L17, L108-L109",
+  "rationale": "The file contains a consensus-critical nondeterminism vulnerability. At L155 in the `buyByAddress` function, `time.Now().Unix()` is used to set the `Time` field of a `Transaction` struct that is subsequently written to the ledger via `writeTransaction()` (L157), which calls `stub.PutState()` (L189). Additionally, package-level mutable globals `homeNo` (L16) and `transactionNo` (L17) are incremented after ledger writes (L109, L158), influencing the transaction ID written to state. These nondeterministic sources (wall-clock time and global counter state) can cause different endorsers to produce divergent ledger writes, violating consensus.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: C6\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L155, L16-L17, L108-L109\n\nRATIONALE: The file contains a consensus-critical nondeterminism vulnerability. At L155 in the `buyByAddress` function, `time.Now().Unix()` is used to set the `Time` field of a `Transaction` struct that is subsequently written to the ledger via `writeTransaction()` (L157), which calls `stub.PutState()` (L189). Additionally, package-level mutable globals `homeNo` (L16) and `transactionNo` (L17) are incremented after ledger writes (L109, L158), influencing the transaction ID written to state. These nondeterministic sources (wall-clock time and global counter state) can cause different endorsers to produce divergent ledger writes, violating consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:00.466780",
+  "annotator": "2nd"
+}

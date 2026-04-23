@@ -1,0 +1,19 @@
+{
+  "file_id": "0343_Ferwoo_finance",
+  "repo": "Ferwoo",
+  "filename": "finance.go",
+  "elapsed_s": 2.34,
+  "input_tokens": 1176,
+  "output_tokens": 177,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains recognizable HLF transaction entrypoints (Init and Invoke methods on the Finance struct), but all transaction logic is delegated to external packages (utils.GetCreator and bean.Loan). No C1–C6 vulnerability patterns exist within this file's scope: no time.Now(), goroutines, map iterations, non-revalidated queries, or mutable package-level state that influences ledger writes or responses. The file acts as a dispatcher and cannot be audited for consensus-critical nondeterminism without examining the called external functions, which is outside intra-file scope.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains recognizable HLF transaction entrypoints (Init and Invoke methods on the Finance struct), but all transaction logic is delegated to external packages (utils.GetCreator and bean.Loan). No C1–C6 vulnerability patterns exist within this file's scope: no time.Now(), goroutines, map iterations, non-revalidated queries, or mutable package-level state that influences ledger writes or responses. The file acts as a dispatcher and cannot be audited for consensus-critical nondeterminism without examining the called external functions, which is outside intra-file scope.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:17.526013",
+  "annotator": "2nd"
+}

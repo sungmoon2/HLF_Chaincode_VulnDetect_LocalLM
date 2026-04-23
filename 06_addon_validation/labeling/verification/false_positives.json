@@ -1,0 +1,106 @@
+[
+  {
+    "repo": "Noonefang",
+    "filename": "chaincode.go",
+    "original_class": "C3",
+    "reason": "Iterates over slices, not maps. No for...range over map-typed expression.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "richardfelkl",
+    "filename": "main.go",
+    "original_class": "C3",
+    "reason": "No for...range over any map. Iteration is over StateQueryIterator.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "netkiller",
+    "filename": "gasoline.go",
+    "original_class": "C3",
+    "reason": "Map field modified directly (no iteration). Only path to ledger is through json.Marshal (deterministic).",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "soodakshay",
+    "filename": "mycc.go",
+    "original_class": "C4",
+    "reason": "GetQueryResult HasNext gates entry; PutState is unconditional after gate passes.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "yoonjk",
+    "filename": "account.go",
+    "original_class": "C4",
+    "reason": "Read-only query returning via shim.Success; no write-decision logic.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "linqd1",
+    "filename": "chaincode.go",
+    "original_class": "C6",
+    "reason": "Globals modified but no PutState in invoke(). Hard negative.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "2016Nishi",
+    "filename": "chaincode_example01.go",
+    "original_class": "C6",
+    "reason": "PutState is commented out (block comment L56-68). Globals modified but never written to ledger.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "abegpatel",
+    "filename": "marbles_chaincode.go",
+    "original_class": "C4",
+    "reason": "GetQueryResult result only used for error check. PutState executes unconditionally regardless of query result.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "fourbroad",
+    "filename": "chaincode_example01.go",
+    "original_class": "C6",
+    "reason": "PutState calls are commented out in block comment. Globals modified but never written to ledger.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "koakh",
+    "filename": "lscc.go",
+    "original_class": "C3",
+    "reason": "GetMSPs() is cross-package call (mspmgr package). Violates intra-file scope rule.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "lcy1317",
+    "filename": "chaincode.go",
+    "original_class": "C6",
+    "reason": "time.Local is from the time package, not a file-level package var. Out of scope.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "qubing",
+    "filename": "relay_adapter.go",
+    "original_class": "C4",
+    "reason": "queryTopicsByOrg/querySessionByTopic are cross-package function calls. Violates intra-file scope rule.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  },
+  {
+    "repo": "whatisoop",
+    "filename": "chaincode_example01.go",
+    "original_class": "C6",
+    "reason": "PutState calls are commented out in block comment. Globals modified but never written to ledger.",
+    "original_verdict": "VULNERABLE",
+    "verified_verdict": "SAFE"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "file_id": "0201_nmatsui_fabric-payment",
+  "repo": "nmatsui",
+  "filename": "fabric-payment.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\nmatsui\\fabric-payment.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "GLOBAL_MUTABLE_STATE"
+  ],
+  "code_chars": 2028,
+  "stripped_chars": 1709,
+  "code_hash": "6556dfd5bb8e7cf6",
+  "stripped_hash": "e47a624cf6aab07a",
+  "elapsed_s": 4.64,
+  "input_tokens": 1672,
+  "output_tokens": 143,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file is an entry point dispatcher that delegates all transaction logic to external contract files (contracts.AccountContract, contracts.EventContract, contracts.HistoryContract). The package-level variables (logger, accountContract, eventContract, historyContract) are initialized deterministically at startup and are not mutated during transaction execution. No C1-C4 or C6 source patterns with intra-file sink evidence exist. Cross-file analysis is out of scope.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file is an entry point dispatcher that delegates all transaction logic to external contract files (contracts.AccountContract, contracts.EventContract, contracts.HistoryContract). The package-level variables (logger, accountContract, eventContract, historyContract) are initialized deterministically at startup and are not mutated during transaction execution. No C1-C4 or C6 source patterns with intra-file sink evidence exist. Cross-file analysis is out of scope.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:26.848786"
+}

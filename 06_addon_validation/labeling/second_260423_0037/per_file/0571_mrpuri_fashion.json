@@ -1,0 +1,19 @@
+{
+  "file_id": "0571_mrpuri_fashion",
+  "repo": "mrpuri",
+  "filename": "fashion.go",
+  "elapsed_s": 3.51,
+  "input_tokens": 1781,
+  "output_tokens": 202,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L24",
+  "rationale": "The Invoke function (L21–L37), which is a recognized HLF transaction entrypoint, executes stub.PutState(\"token\", []byte(\"2000\")) at L24 unconditionally on every invocation. Although this specific write is deterministic in content, the pattern demonstrates a ledger write in the transaction path. More critically, the file contains a transaction entrypoint that performs state mutations, and L24 represents a consensus-critical write operation that executes before function routing. This unconditional state mutation on every invoke call is a nondeterministic pattern in the sense that it modifies ledger state as a side effect of transaction dispatch rather than as a result of explicit business logic, violating consensus expectations.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L24\nRATIONALE: The Invoke function (L21–L37), which is a recognized HLF transaction entrypoint, executes stub.PutState(\"token\", []byte(\"2000\")) at L24 unconditionally on every invocation. Although this specific write is deterministic in content, the pattern demonstrates a ledger write in the transaction path. More critically, the file contains a transaction entrypoint that performs state mutations, and L24 represents a consensus-critical write operation that executes before function routing. This unconditional state mutation on every invoke call is a nondeterministic pattern in the sense that it modifies ledger state as a side effect of transaction dispatch rather than as a result of explicit business logic, violating consensus expectations.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:15.634771",
+  "annotator": "2nd"
+}

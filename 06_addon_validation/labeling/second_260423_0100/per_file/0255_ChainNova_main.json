@@ -1,0 +1,19 @@
+{
+  "file_id": "0255_ChainNova_main",
+  "repo": "ChainNova",
+  "filename": "main.go",
+  "elapsed_s": 12.65,
+  "input_tokens": 1482,
+  "output_tokens": 617,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L10",
+  "rationale": "The only package-level variable is a logger used exclusively for debug/error logging, which does not influence ledger writes or proposal responses. The file contains no time operations, goroutines, map iterations, or rich query calls. All transaction logic is delegated to methods not defined in this file.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `ExchangeChaincode` that take `shim.ChaincodeStubInterface` and return `pb.Response`. This is a valid HLF chaincode entrypoint. → Continue analysis.\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns present.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions present.\n\n**C4 NON_REVALIDATED_QUERY**: No direct calls to `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` in this file. The methods like `queryTxLogs()`, `queryAssetByOwner()`, etc. are called but their implementations are not in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 10: `var myLogger = logging.MustGetLogger(\"exchange\")` - This is a package-level variable, but it's only used for logging (`myLogger.Debug`, `myLogger.Errorf`). Logger-only globals are explicitly SAFE per the taxonomy.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file directly.\n\n### Step 3: Evidence Assessment\nThe only global variable (`myLogger`) is used exclusively for logging purposes and does not influence any ledger writes or proposal responses. The actual transaction logic is delegated to methods like `c.initCurrency()`, `c.create()`, `c.release()`, etc., whose implementations are not present in this file.\n\nThis file serves as a routing/dispatch layer that:\n1. Initializes the chaincode\n2. Routes function calls to appropriate handlers\n3. Uses logging for debugging\n\nNo consensus-critical nondeterminism sources are present in this file.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L10\nRATIONALE: The only package-level variable is a logger used exclusively for debug/error logging, which does not influence ledger writes or proposal responses. The file contains no time operations, goroutines, map iterations, or rich query calls. All transaction logic is delegated to methods not defined in this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:20:52.659529",
+  "annotator": "2nd"
+}

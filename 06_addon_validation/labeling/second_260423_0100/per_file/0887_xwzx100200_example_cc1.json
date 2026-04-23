@@ -1,0 +1,19 @@
+{
+  "file_id": "0887_xwzx100200_example_cc1",
+  "repo": "xwzx100200",
+  "filename": "example_cc1.go",
+  "elapsed_s": 4.87,
+  "input_tokens": 2486,
+  "output_tokens": 140,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. No time.Now(), goroutines, map iteration, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state are present. All state operations use deterministic GetState/PutState/DelState with key-based access. The transient map access is deterministic per-transaction.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. No time.Now(), goroutines, map iteration, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state are present. All state operations use deterministic GetState/PutState/DelState with key-based access. The transient map access is deterministic per-transaction.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:14.520455",
+  "annotator": "2nd"
+}

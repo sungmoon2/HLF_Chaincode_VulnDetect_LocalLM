@@ -1,0 +1,19 @@
+{
+  "file_id": "0335_FeiyangTan_main",
+  "repo": "FeiyangTan",
+  "filename": "main.go",
+  "elapsed_s": 4.82,
+  "input_tokens": 5274,
+  "output_tokens": 336,
+  "verdict": "VULNERABLE",
+  "primary_class": "C3",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L82-L95",
+  "rationale": "The `userDelete` function reads a User object from state (L82-L95), then iterates over `user.Assets` (a slice, not a map) to delete associated assets. However, the critical vulnerability is in the `assetRegister` function at L165: it appends asset IDs to `user.Assets` slice and writes back via `stub.PutState(\"user_\"+id, userBytes)`. The `queryAssetExchangeRecord` function (L428-L460) uses `GetStateByPartialCompositeKey` to retrieve history records and marshals them into a slice via `json.Marshal(histories)`. While the slice iteration itself is deterministic, the underlying issue is that `assetRegister` at L165 writes `\"user_\"+id` (using the asset ID instead of the owner ID), creating a state write with non-deterministic key selection based on transaction argument ordering. More critically, in `assetDelete` (L195-L230), the loop over `user.Assets` determines which asset to remove, and the subsequent `stub.PutState(\"user_\"+id, userBytes)` at L227 uses the asset ID rather than the user ID, creating consensus divergence if multiple endorsers process transactions with different asset orderings in the user's asset list.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C3\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L82-L95\n\nRATIONALE: The `userDelete` function reads a User object from state (L82-L95), then iterates over `user.Assets` (a slice, not a map) to delete associated assets. However, the critical vulnerability is in the `assetRegister` function at L165: it appends asset IDs to `user.Assets` slice and writes back via `stub.PutState(\"user_\"+id, userBytes)`. The `queryAssetExchangeRecord` function (L428-L460) uses `GetStateByPartialCompositeKey` to retrieve history records and marshals them into a slice via `json.Marshal(histories)`. While the slice iteration itself is deterministic, the underlying issue is that `assetRegister` at L165 writes `\"user_\"+id` (using the asset ID instead of the owner ID), creating a state write with non-deterministic key selection based on transaction argument ordering. More critically, in `assetDelete` (L195-L230), the loop over `user.Assets` determines which asset to remove, and the subsequent `stub.PutState(\"user_\"+id, userBytes)` at L227 uses the asset ID rather than the user ID, creating consensus divergence if multiple endorsers process transactions with different asset orderings in the user's asset list.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:05.771274",
+  "annotator": "2nd"
+}

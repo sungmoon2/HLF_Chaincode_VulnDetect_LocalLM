@@ -1,0 +1,19 @@
+{
+  "file_id": "0103_abegpatel_marbles_chaincode_private",
+  "repo": "abegpatel",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 17.82,
+  "input_tokens": 5260,
+  "output_tokens": 784,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L378-L405",
+  "rationale": "The GetPrivateDataQueryResult usage in queryMarblesByOwner and queryMarbles only returns results via shim.Success without influencing any ledger writes. All other operations use deterministic key-based lookups (GetPrivateData) or range queries (GetPrivateDataByRange, which is excluded from C4). No map iteration, time functions, goroutines, or global mutable state are present.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, making it a valid HLF chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 85: `transMap, err := stub.GetTransient()` returns a map\n- Line 213: `transMap, err := stub.GetTransient()` returns a map\n- Line 275: `transMap, err := stub.GetTransient()` returns a map\n\nHowever, in all cases, the code accesses specific keys from the map (`transMap[\"marble\"]`, `transMap[\"marble_delete\"]`, `transMap[\"marble_owner\"]`) rather than iterating over the map with `for...range`. No map iteration occurs.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 378: `stub.GetPrivateDataQueryResult(\"collectionMarbles\", queryString)` - This is called in `getQueryResultForQueryString()` which is used by `queryMarblesByOwner` and `queryMarbles`. The results are returned via `shim.Success(queryResults)` - this is a **read-only query** that doesn't influence any write decisions.\n\n- Line 330: `stub.GetPrivateDataByRange` in `getMarblesByRange` - This is NOT a C4 source per the taxonomy (GetStateByRange variants are explicitly excluded).\n\nThe `GetPrivateDataQueryResult` results are only used to build a response buffer and returned via `shim.Success()`. They do NOT determine any write decisions (PutState, DelState, etc.).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables declared in this file.\n\n**C5 ITERATOR_LEAK**: \n- Line 333: `resultsIterator` has `defer resultsIterator.Close()` ✓\n- Line 380: `resultsIterator` has `defer resultsIterator.Close()` ✓\n\nAll iterators are properly closed.\n\n### Key Observation\nThe `GetPrivateDataQueryResult` usage in `getQueryResultForQueryString` (lines 378-405) only returns query results to the client. The results are serialized and returned via `shim.Success()`. There are no writes based on these query results. Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L378-L405\nRATIONALE: The GetPrivateDataQueryResult usage in queryMarblesByOwner and queryMarbles only returns results via shim.Success without influencing any ledger writes. All other operations use deterministic key-based lookups (GetPrivateData) or range queries (GetPrivateDataByRange, which is excluded from C4). No map iteration, time functions, goroutines, or global mutable state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:10:09.541569",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0233_bugfrog1024_charity_contract",
+  "repo": "bugfrog1024",
+  "filename": "charity_contract.go",
+  "elapsed_s": 3.48,
+  "input_tokens": 4209,
+  "output_tokens": 219,
+  "verdict": "VULNERABLE",
+  "primary_class": "C2",
+  "secondary_class": "C1",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L267-L290",
+  "rationale": "The `modelRandom` function (L267-L290) uses `rand.Intn(3)` at L279 to select a charity direction from a list, and this random value directly influences the `Direction` field of a `CharityNote` that is subsequently written to the ledger via `s.set(api, cNoteKey, cNoteBytes)` at L285. Since `rand.Intn()` produces non-deterministic output across endorsers without a seeded, transaction-specific source, different endorsers will select different directions and write different state, causing endorsement divergence. Additionally, the code imports `math/rand` (L7) but does not seed it with a deterministic value derived from the transaction context, making this a consensus-critical vulnerability.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C2\n\nSECONDARY_CLASS: C1\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L267-L290\n\nRATIONALE: The `modelRandom` function (L267-L290) uses `rand.Intn(3)` at L279 to select a charity direction from a list, and this random value directly influences the `Direction` field of a `CharityNote` that is subsequently written to the ledger via `s.set(api, cNoteKey, cNoteBytes)` at L285. Since `rand.Intn()` produces non-deterministic output across endorsers without a seeded, transaction-specific source, different endorsers will select different directions and write different state, causing endorsement divergence. Additionally, the code imports `math/rand` (L7) but does not seed it with a deterministic value derived from the transaction context, making this a consensus-critical vulnerability.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:44:14.563102",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0787_sunny4767_firstcc",
+  "repo": "sunny4767",
+  "filename": "firstcc.go",
+  "elapsed_s": 3.52,
+  "input_tokens": 1358,
+  "output_tokens": 141,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This is a simple key-value chaincode with Init and Invoke entrypoints. It uses only deterministic operations: GetStringArgs, GetFunctionAndParameters, PutState, and GetState. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries (C4), and no mutable global state (C6). All operations are fully deterministic across peers.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This is a simple key-value chaincode with Init and Invoke entrypoints. It uses only deterministic operations: GetStringArgs, GetFunctionAndParameters, PutState, and GetState. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries (C4), and no mutable global state (C6). All operations are fully deterministic across peers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:00:00.394315",
+  "annotator": "2nd"
+}

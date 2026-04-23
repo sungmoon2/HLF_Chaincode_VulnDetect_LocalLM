@@ -1,0 +1,19 @@
+{
+  "file_id": "0841_vasile-coste_newMed",
+  "repo": "vasile-coste",
+  "filename": "newMed.go",
+  "elapsed_s": 9.97,
+  "input_tokens": 11821,
+  "output_tokens": 832,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "L169, L176, L189, L379, L386, L399, L589, L596, L609, L779, L786, L799, L919, L926, L939, L1088–L1098**",
+  "rationale": "** The file uses `GetTxTimestampChannel()` to obtain a timestamp, converts it to a string via `time.Time.String()`, and concatenates it with user input to generate state keys via `ComputeHashKey()`. These keys are then written to the ledger via `PutState()`. Since `time.Time.String()` produces nondeterministic output across endorsers (due to local clock representation), different endorsers will generate different state keys for the same transaction, causing endorsement divergence and consensus failure.",
+  "raw_response": "# Audit Report\n\n## Summary\nThis file contains **consensus-critical nondeterminism** via the **C1 TIME_NOW** vulnerability class.\n\n## Detailed Analysis\n\n### Transaction Entrypoint\n✓ File contains valid HLF transaction entrypoint: `Invoke()` method (line 95) dispatches to multiple transaction functions.\n\n### Vulnerability Detection\n\n**C1 TIME_NOW - CRITICAL**\n\nThe file calls `GetTxTimestamp()` via the helper method `GetTxTimestampChannel()` (lines 1088–1098) in multiple transaction functions:\n- `addPatient()` (line 169)\n- `addDoctor()` (line 379)\n- `addRecords()` (line 589)\n- `addRequestAccess()` (line 779)\n- `addAccessControl()` (line 919)\n\nThe timestamp is converted to a string and concatenated with user input to create a hash key:\n```go\ntxTimeAsPtr, errTx := t.GetTxTimestampChannel(stub)  // L169, L379, L589, L779, L919\nobj.Patient_ID = ComputeHashKey(args[0] + (txTimeAsPtr.String()))  // L176\n```\n\nThis hash is then used as the **state key** in `PutState()` calls (L189, L399, L609, L799, L939), which is a **ledger write sink**.\n\n**Evidence of Nondeterminism:**\n- `time.Time.String()` produces different outputs across endorsing peers due to local clock skew, even when `GetTxTimestamp()` returns the same protobuf timestamp.\n- Different string representations → different hash values → different state keys → divergent ledger writes.\n- This violates consensus because different endorsers will write to different keys for the same transaction.\n\n### Other Observations\n- `getHistory()` (L1040) uses `time.Unix()` to format timestamps for **read-only** response output (not a write), so this is SAFE.\n- `getQueryResultForQueryString()` and related query functions return results via `shim.Success()` without influencing writes, so they are SAFE.\n- No C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (global mutable state) issues detected.\n- C5 iterator leak: `resultsIterator.Close()` is properly called in `getHistory()` (L1032) and `getQueryResultForQueryString()` (L1062).\n\n---\n\n## VERDICT\n\n**VERDICT: VULNERABLE**\n\n**PRIMARY_CLASS: C1**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: L169, L176, L189, L379, L386, L399, L589, L596, L609, L779, L786, L799, L919, L926, L939, L1088–L1098**\n\n**RATIONALE:** The file uses `GetTxTimestampChannel()` to obtain a timestamp, converts it to a string via `time.Time.String()`, and concatenates it with user input to generate state keys via `ComputeHashKey()`. These keys are then written to the ledger via `PutState()`. Since `time.Time.String()` produces nondeterministic output across endorsers (due to local clock representation), different endorsers will generate different state keys for the same transaction, causing endorsement divergence and consensus failure.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:05.535137",
+  "annotator": "2nd"
+}

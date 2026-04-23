@@ -1,0 +1,19 @@
+{
+  "file_id": "0117_acloudfan_qry",
+  "repo": "acloudfan",
+  "filename": "qry.go",
+  "elapsed_s": 15.95,
+  "input_tokens": 1802,
+  "output_tokens": 724,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L63",
+  "rationale": "The file uses `time.Parse()` to parse dates from transaction arguments, which is deterministic. No `time.Now()`, goroutines, map iterations, rich queries with write decisions, or mutable global state are present in the analyzed code. Functions referenced but not defined in this file cannot be evaluated per intra-file scope rules.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `CryptocoinChaincode` implementing the shim interface. This is a valid HLF chaincode. → Continue analysis.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: Scanning for `time.Now()`, `time.Since()`, `time.Until()`...\n- Line 63: `time.Parse(layout, txnDate)` - This parses a date from input arguments, NOT `time.Now()`. This is deterministic.\n- No `time.Now()` calls found.\n\n**C2 GOROUTINE**: Scanning for `go func()` or `go methodCall()`...\n- None found.\n\n**C3 MAP_ITERATION**: Scanning for `for...range` over maps...\n- None found.\n\n**C4 NON_REVALIDATED_QUERY**: Scanning for `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`...\n- The functions `ExecuteRichQuery`, `GetDatesByPrice`, `GetAveragesBetweenDates`, `GenerateVolumeReport` are referenced in `Invoke` but their implementations are NOT in this file. I cannot analyze cross-file calls.\n- `GetByDate` uses `stub.GetState()` which is NOT a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: Scanning for package-level `var`...\n- None found.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Evidence Assessment\n\nThe only potentially concerning patterns would be in the functions called from `Invoke` that are not defined in this file (`ExecuteRichQuery`, `GetDatesByPrice`, `GetAveragesBetweenDates`, `GenerateVolumeReport`). However, per the rules, I must use strictly intra-file evidence only.\n\nWithin this file:\n- `AddData`: Uses `time.Parse()` on input argument (deterministic), then `PutState()` - SAFE\n- `GetByDate`: Uses `GetState()` and returns via `shim.Success()` - SAFE (read-only)\n- `Init`: Returns success - SAFE\n\nThe `time` package import is used only for `time.Parse()` and the `time.Time` type in the struct, both of which are deterministic operations.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L63\nRATIONALE: The file uses `time.Parse()` to parse dates from transaction arguments, which is deterministic. No `time.Now()`, goroutines, map iterations, rich queries with write decisions, or mutable global state are present in the analyzed code. Functions referenced but not defined in this file cannot be evaluated per intra-file scope rules.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:11:06.997162",
+  "annotator": "2nd"
+}

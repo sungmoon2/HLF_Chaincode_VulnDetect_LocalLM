@@ -1,0 +1,19 @@
+{
+  "file_id": "0765_skybat007_store_chaincode",
+  "repo": "skybat007",
+  "filename": "store_chaincode.go",
+  "elapsed_s": 15.62,
+  "input_tokens": 3296,
+  "output_tokens": 688,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L213",
+  "rationale": "The `time.Unix().String()` call in `getHistory` (L213) is only used in a read-only query response via `shim.Success()`. No ledger writes depend on this value, and `GetHistoryForKey` results are not used to make write decisions. All write operations use deterministic inputs.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with transaction functions: `create`, `update`, `delete`, `query`, and `getHistory`.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 213: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` which converts a Unix timestamp to a `time.Time` object, then calls `.String()`. The `.String()` method formats the time including the **local timezone**, which can vary between peers. However, this is only used in `getHistory` which returns data via `shim.Success()` - it's a read-only query that doesn't influence any ledger writes.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iterations found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 192: `stub.GetHistoryForKey(key)` - This is used in `getHistory`, but the results are only returned via `shim.Success()` for reading. There are no write decisions (PutState/DelState) based on this query result.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 194: `defer resultsIterator.Close()` - The iterator is properly closed.\n\n### Key Observations\n\n1. The `time.Unix().String()` in `getHistory` (line 213) could theoretically cause different string representations across peers due to timezone differences in the `.String()` output format. However, this is in a **read-only** function that only returns data - it doesn't influence any ledger writes.\n\n2. `GetHistoryForKey` is used only for reading history and returning it to the client - no write decisions are made based on its results.\n\n3. All write operations (`create`, `update`, `delete`) use deterministic inputs from transaction arguments and `GetState` results.\n\nThe `time.Unix().String()` in a read-only query response does not constitute a consensus-critical vulnerability because endorsement results for read-only queries don't need to match exactly for consensus - the ledger state remains consistent.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L213\nRATIONALE: The `time.Unix().String()` call in `getHistory` (L213) is only used in a read-only query response via `shim.Success()`. No ledger writes depend on this value, and `GetHistoryForKey` results are not used to make write decisions. All write operations use deterministic inputs.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:58:13.358351",
+  "annotator": "2nd"
+}

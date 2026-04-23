@@ -1,0 +1,19 @@
+{
+  "file_id": "0091_abegpatel_chaincode",
+  "repo": "abegpatel",
+  "filename": "chaincode.go",
+  "elapsed_s": 16.43,
+  "input_tokens": 1793,
+  "output_tokens": 702,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The code contains no nondeterministic patterns. The `functions` map is only used for lookup (not iteration), all state operations use simple key-based access (not rich queries), and there are no time-based operations, goroutines, or mutable global state affecting transaction logic.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `EndorsementCC` implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 34-36: `var functions = map[string]func(...)` - This map is used for lookup (`functions[funcName]`) at line 28, NOT iterated with `for...range`. Map lookup is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetState` (line 95) - This is a simple key-value lookup, NOT a rich query. Not a C4 source.\n- `GetStateValidationParameter` (line 87) - This is also a simple key lookup, not a rich query.\n- No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 34-38: `var functions = map[string]func(...)` - This is a package-level variable, but it's initialized once at package load time and never modified during transaction execution. It's a read-only lookup table, making it deterministic and SAFE.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Sink Analysis\n- `PutState` at line 56 - inputs come from transaction parameters, deterministic\n- `SetStateValidationParameter` at line 76 - inputs come from transaction parameters, deterministic\n- `shim.Success` returns - all data comes from deterministic sources (ledger state, parameters)\n\n### Step 4: Additional Considerations\n- `ep.ListOrgs()` at line 101 returns organizations - this comes from the endorsement policy stored in the ledger, which is deterministic per peer\n- `json.Marshal(r)` at line 106 - The `Record` struct has a slice `Orgs []string`, and JSON marshaling of slices preserves order (deterministic)\n\n## Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The code contains no nondeterministic patterns. The `functions` map is only used for lookup (not iteration), all state operations use simple key-based access (not rich queries), and there are no time-based operations, goroutines, or mutable global state affecting transaction logic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:08:42.306027",
+  "annotator": "2nd"
+}

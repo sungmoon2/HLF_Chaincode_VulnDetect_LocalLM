@@ -1,0 +1,19 @@
+{
+  "file_id": "0759_skazska_main",
+  "repo": "skazska",
+  "filename": "main.go",
+  "elapsed_s": 3.41,
+  "input_tokens": 2900,
+  "output_tokens": 192,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls influencing writes, no goroutines, no map iterations, no non-revalidated queries determining write decisions, and no mutable package-level globals. The GetStateByRange call in rangedList is not a C4 source (it is explicitly excluded from C4 scope). All ledger writes (PutState in saveItem) are driven by deterministic argument parsing and JSON unmarshaling, with no nondeterministic sources influencing the decision to write or the write content.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls influencing writes, no goroutines, no map iterations, no non-revalidated queries determining write decisions, and no mutable package-level globals. The GetStateByRange call in rangedList is not a C4 source (it is explicitly excluded from C4 scope). All ledger writes (PutState in saveItem) are driven by deterministic argument parsing and JSON unmarshaling, with no nondeterministic sources influencing the decision to write or the write content.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:59:37.170896",
+  "annotator": "2nd"
+}

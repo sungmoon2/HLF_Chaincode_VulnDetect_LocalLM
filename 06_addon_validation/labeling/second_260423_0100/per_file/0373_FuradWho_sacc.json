@@ -1,0 +1,19 @@
+{
+  "file_id": "0373_FuradWho_sacc",
+  "repo": "FuradWho",
+  "filename": "sacc.go",
+  "elapsed_s": 3.79,
+  "input_tokens": 1386,
+  "output_tokens": 138,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init and Invoke). It uses only deterministic operations: GetStringArgs, GetFunctionAndParameters, PutState with client-provided arguments, and GetState for reads. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state. The fmt.Printf is only for logging and does not influence ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init and Invoke). It uses only deterministic operations: GetStringArgs, GetFunctionAndParameters, PutState with client-provided arguments, and GetState for reads. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state. The fmt.Printf is only for logging and does not influence ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:29:26.191221",
+  "annotator": "2nd"
+}

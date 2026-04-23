@@ -1,0 +1,19 @@
+{
+  "file_id": "0365_fourbroad_chaincode_example05",
+  "repo": "fourbroad",
+  "filename": "chaincode_example05.go",
+  "elapsed_s": 4.72,
+  "input_tokens": 2502,
+  "output_tokens": 138,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF transaction entrypoints (Init, Invoke). No C1-C4 or C6 vulnerability patterns are present: no time.Now(), no goroutines, no map iteration, no GetQueryResult/GetHistoryForKey calls, and no mutable package-level variables. The InvokeChaincode calls are deterministic cross-chaincode invocations, not rich query sources.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF transaction entrypoints (Init, Invoke). No C1-C4 or C6 vulnerability patterns are present: no time.Now(), no goroutines, no map iteration, no GetQueryResult/GetHistoryForKey calls, and no mutable package-level variables. The InvokeChaincode calls are deterministic cross-chaincode invocations, not rich query sources.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:28:55.303446",
+  "annotator": "2nd"
+}

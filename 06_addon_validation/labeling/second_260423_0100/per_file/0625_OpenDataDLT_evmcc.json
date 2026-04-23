@@ -1,0 +1,19 @@
+{
+  "file_id": "0625_OpenDataDLT_evmcc",
+  "repo": "OpenDataDLT",
+  "filename": "evmcc.go",
+  "elapsed_s": 5.19,
+  "input_tokens": 3235,
+  "output_tokens": 149,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L21-L22",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). The package-level variables `logger` and `evmLogger` (L21-L22) are only used for logging purposes and do not influence ledger writes or proposal responses. No time.Now(), goroutines, map iterations affecting writes, or non-revalidated queries are present. The EVM execution uses deterministic parameters (newParams() returns fixed values at L130-L136).",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L21-L22\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). The package-level variables `logger` and `evmLogger` (L21-L22) are only used for logging purposes and do not influence ledger writes or proposal responses. No time.Now(), goroutines, map iterations affecting writes, or non-revalidated queries are present. The EVM execution uses deterministic parameters (newParams() returns fixed values at L130-L136).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:48:09.690373",
+  "annotator": "2nd"
+}

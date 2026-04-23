@@ -1,0 +1,19 @@
+{
+  "file_id": "0663_project-smartlog_UBL",
+  "repo": "project-smartlog",
+  "filename": "UBL.go",
+  "elapsed_s": 4.79,
+  "input_tokens": 1871,
+  "output_tokens": 127,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). The `logger` variable at package level (L42) is only used for logging and does not influence ledger writes or proposal responses. No time.Now(), goroutines, map iterations, or rich queries are present. The addMessage function writes deterministic input data to state, and getMessage performs a simple read.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). The `logger` variable at package level (L42) is only used for logging and does not influence ledger writes or proposal responses. No time.Now(), goroutines, map iterations, or rich queries are present. The addMessage function writes deterministic input data to state, and getMessage performs a simple read.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:50:40.155445",
+  "annotator": "2nd"
+}

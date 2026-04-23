@@ -1,0 +1,19 @@
+{
+  "file_id": "0695_RohanShrothrium_hackidf",
+  "repo": "RohanShrothrium",
+  "filename": "hackidf.go",
+  "elapsed_s": 5.01,
+  "input_tokens": 2792,
+  "output_tokens": 133,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L10-L12",
+  "rationale": "The file contains valid HLF chaincode with Init/Invoke entrypoints. The package-level variable `fileName` (L10-12) is declared but never read in any transaction logic, so it does not constitute C6. No time.Now(), goroutines, map iterations, or rich queries are present. All operations use deterministic GetState/PutState with explicit keys from arguments.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L10-L12\nRATIONALE: The file contains valid HLF chaincode with Init/Invoke entrypoints. The package-level variable `fileName` (L10-12) is declared but never read in any transaction logic, so it does not constitute C6. No time.Now(), goroutines, map iterations, or rich queries are present. All operations use deterministic GetState/PutState with explicit keys from arguments.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:53:17.457077",
+  "annotator": "2nd"
+}

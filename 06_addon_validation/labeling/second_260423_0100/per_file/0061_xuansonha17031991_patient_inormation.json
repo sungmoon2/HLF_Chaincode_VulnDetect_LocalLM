@@ -1,0 +1,19 @@
+{
+  "file_id": "0061_xuansonha17031991_patient_inormation",
+  "repo": "xuansonha17031991",
+  "filename": "patient_inormation.go",
+  "elapsed_s": 4.7,
+  "input_tokens": 3692,
+  "output_tokens": 171,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L119-L127, L183-L191",
+  "rationale": "In the `query` function (L119), `time.Now().String()` is assigned to `timeQuery` which is embedded in a `Query` struct and written to the ledger via `stub.PutPrivateData` (L127). Similarly in `modifyPatientInformation` (L183), `time.Now().String()` flows into `timeQuery`, then into a `Query` struct written via `PutPrivateData` (L191). Different endorsing peers will capture different timestamps, causing endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L119-L127, L183-L191\nRATIONALE: In the `query` function (L119), `time.Now().String()` is assigned to `timeQuery` which is embedded in a `Query` struct and written to the ledger via `stub.PutPrivateData` (L127). Similarly in `modifyPatientInformation` (L183), `time.Now().String()` flows into `timeQuery`, then into a `Query` struct written via `PutPrivateData` (L191). Different endorsing peers will capture different timestamps, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:06:32.232203",
+  "annotator": "2nd"
+}

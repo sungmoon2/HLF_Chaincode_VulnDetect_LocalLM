@@ -1,0 +1,19 @@
+{
+  "file_id": "0519_linqd1_map",
+  "repo": "linqd1",
+  "filename": "map.go",
+  "elapsed_s": 16.44,
+  "input_tokens": 3446,
+  "output_tokens": 721,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L103-L120, L222-L238, L244-L262",
+  "rationale": "The chaincode uses GetQueryResult, GetPrivateDataQueryResult, and GetHistoryForKey, but all results are only returned via shim.Success() as read-only responses. No query results influence write decisions (PutState/DelState). The time.Sleep calls use deterministic durations from arguments, not time.Now().",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoint\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: \n- Lines 79-81 and 188-190 use `time.Sleep()` - this is NOT `time.Now()`, `time.Since()`, or `time.Until()`. Sleep introduces timing delays but doesn't produce nondeterministic values that influence ledger writes. The sleep duration is deterministic (from args).\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- Lines 89-91, 197-199, 241-243 iterate over slices (`keys []string`), not maps. The `for key, value := range keys` syntax here is iterating over a slice (deterministic order).\n\n**C4 NON_REVALIDATED_QUERY**:\n- Line 103: `GetPrivateDataQueryResult` - results are only read and returned via `shim.Success(jsonKeys)` at line 120. No write decision based on results.\n- Line 222: `GetQueryResult` - results are only read and returned via `shim.Success(jsonKeys)` at line 238. No write decision based on results.\n- Line 244: `GetHistoryForKey` - results are only read and returned via `shim.Success(jsonKeys)` at line 262. No write decision based on results.\n\nAll these query results are returned as read-only responses, not used to determine write decisions (PutState/DelState).\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level variables declared in this file.\n\n**C5 ITERATOR_LEAK**:\n- All iterators have proper `defer keysIter.Close()` calls (lines 73, 107, 183, 226, 248).\n\n### Conclusion\n\nThe chaincode uses `GetQueryResult`, `GetPrivateDataQueryResult`, and `GetHistoryForKey`, but their results are only returned to the client via `shim.Success()` - they do not influence any ledger writes (PutState, DelState, etc.). This is a read-only query pattern, which is explicitly stated as NOT C4 in the taxonomy.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L103-L120, L222-L238, L244-L262\nRATIONALE: The chaincode uses GetQueryResult, GetPrivateDataQueryResult, and GetHistoryForKey, but all results are only returned via shim.Success() as read-only responses. No query results influence write decisions (PutState/DelState). The time.Sleep calls use deterministic durations from arguments, not time.Now().",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:40:32.984555",
+  "annotator": "2nd"
+}

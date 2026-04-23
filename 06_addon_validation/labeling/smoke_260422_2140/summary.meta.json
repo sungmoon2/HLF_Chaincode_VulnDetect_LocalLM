@@ -1,0 +1,36 @@
+{
+  "script": "24_run_golisa_labeling.py",
+  "version": "2.0",
+  "run_dir": "smoke_260422_2140",
+  "is_smoke": true,
+  "smoke_count": 3,
+  "timestamp_start": "2026-04-22T21:40:54.988830",
+  "timestamp_end": "2026-04-22T21:41:42.935444",
+  "duration_s": 47.49,
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "max_tokens": 2048,
+  "backend": "Vertex AI (AnthropicVertex)",
+  "vertex_project_id": "hyperscale-ai-442809",
+  "vertex_region": "us-east5",
+  "rubric_version": "GOLISA_TAXONOMY_RUBRIC_v2.md",
+  "candidates": {
+    "positive": 101,
+    "safe": 112,
+    "hard_negative": 13
+  },
+  "dev_excluded": 7,
+  "active": 3,
+  "labeled": 3,
+  "errors": 0,
+  "strip_failures": 0,
+  "tokens": {
+    "input": 20909,
+    "output": 1840
+  },
+  "verdicts": {
+    "SAFE": 3
+  },
+  "primary_classes": {},
+  "auxiliary_c5_count": 0
+}

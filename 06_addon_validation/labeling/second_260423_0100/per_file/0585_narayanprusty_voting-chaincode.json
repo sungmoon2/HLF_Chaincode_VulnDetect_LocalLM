@@ -1,0 +1,19 @@
+{
+  "file_id": "0585_narayanprusty_voting-chaincode",
+  "repo": "narayanprusty",
+  "filename": "voting-chaincode.go",
+  "elapsed_s": 14.12,
+  "input_tokens": 2507,
+  "output_tokens": 578,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses only deterministic operations. The transient map is accessed via direct key lookup (not iteration), state queries use GetState (not rich queries), and no time, goroutine, or global mutable state patterns are present.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 97: `tMap, err := stub.GetTransient()` returns a `map[string][]byte`\n- Line 99: `to := string(tMap[\"to\"])` - This is a direct key access, NOT iteration over the map\n- No `for...range` over any map is present in this code\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetState` calls are used (lines 66, 85, 117, 121, 127) - these are NOT C4 sources per the taxonomy\n- `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey` are NOT used\n- `stub.InvokeChaincode` (line 143) is a cross-chaincode call, not a C4 query source\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Auxiliary Check (C5)\nNo iterators are created in this code (no `GetStateByRange`, `GetQueryResult`, etc. that return iterators).\n\n### Conclusion\nThe code does not contain any of the core vulnerability patterns (C1-C4, C6). The transient map access is a direct key lookup, not an iteration. All state operations use deterministic `GetState`/`PutState` patterns.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses only deterministic operations. The transient map is accessed via direct key lookup (not iteration), state queries use GetState (not rich queries), and no time, goroutine, or global mutable state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:44:57.019046",
+  "annotator": "2nd"
+}

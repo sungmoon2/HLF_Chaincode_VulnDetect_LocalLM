@@ -1,0 +1,55 @@
+{
+  "repo": "koakh",
+  "filename": "chaincode.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "79d2a985e3a716b6",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.07,
+      "finish_reason": "stop",
+      "prompt_tokens": 286,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'chaincode.go' does not contain any explicit code that could lead to the security vulnerabilities mentioned. The chaincode is a basic template with no business logic, state manipulation, or access control mechanisms. Therefore, it is not possible to identify any access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management based on the given code snippet.",
+      "prediction": "safe",
+      "elapsed_s": 0.92,
+      "finish_reason": "stop",
+      "prompt_tokens": 286,
+      "completion_tokens": 93
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is minimal and does not perform any operations that could introduce these types of vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.56,
+      "finish_reason": "stop",
+      "prompt_tokens": 286,
+      "completion_tokens": 66
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is minimal and does not perform any operations that could introduce these types of vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.58,
+      "finish_reason": "stop",
+      "prompt_tokens": 286,
+      "completion_tokens": 66
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 286,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.43,
+  "total_elapsed_s": 2.17,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:04:57.617105"
+}

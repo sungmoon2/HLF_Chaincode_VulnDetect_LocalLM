@@ -1,0 +1,19 @@
+{
+  "file_id": "0099_abegpatel_mapkeys",
+  "repo": "abegpatel",
+  "filename": "mapkeys.go",
+  "elapsed_s": 3.67,
+  "input_tokens": 3377,
+  "output_tokens": 207,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Invoke method) but does not exhibit any C1–C6 vulnerability patterns. All time.Sleep() calls (lines 107, 251) are used only for artificial delays in iteration and do not influence ledger writes or responses—they occur before data collection, not in decision logic. All json.Marshal() calls operate on deterministic slices (not maps), and all ledger operations (PutState, DelState, PutPrivateData, DelPrivateData) depend only on explicit function arguments or deterministic range queries, not on nondeterministic sources. No goroutines, map iterations affecting writes, non-revalidated query decisions, or mutable global state are present.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains a valid HLF transaction entrypoint (Invoke method) but does not exhibit any C1–C6 vulnerability patterns. All time.Sleep() calls (lines 107, 251) are used only for artificial delays in iteration and do not influence ledger writes or responses—they occur before data collection, not in decision logic. All json.Marshal() calls operate on deterministic slices (not maps), and all ledger operations (PutState, DelState, PutPrivateData, DelPrivateData) depend only on explicit function arguments or deterministic range queries, not on nondeterministic sources. No goroutines, map iterations affecting writes, non-revalidated query decisions, or mutable global state are present.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:40:49.711639",
+  "annotator": "2nd"
+}

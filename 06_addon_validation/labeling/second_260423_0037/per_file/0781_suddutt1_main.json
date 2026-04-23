@@ -1,0 +1,19 @@
+{
+  "file_id": "0781_suddutt1_main",
+  "repo": "suddutt1",
+  "filename": "main.go",
+  "elapsed_s": 9.77,
+  "input_tokens": 3679,
+  "output_tokens": 907,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "L75-78, L104-117, L243-250**",
+  "rationale": "** The chaincode uses `stub.GetTxTimestamp()` exclusively for timestamp generation, which is consensus-provided and deterministic across all endorsers. No C1 (time.Now()), C2 (goroutines), C3 (map iteration), C4 (unvalidated queries), or C6 (mutable globals) vulnerabilities exist. All ledger writes are deterministic.",
+  "raw_response": "# Audit Report: CarTrack Chaincode\n\n## Analysis\n\n### 1. Transaction Entrypoint Check\n✓ File contains recognizable HLF transaction entrypoints:\n- `Init()` method (L13-16)\n- `Invoke()` method (L217-233)\n- Multiple public methods callable via Invoke dispatcher\n\n### 2. Vulnerability Pattern Scan\n\n#### C1 TIME_NOW Analysis\n- **L48**: `stub.GetTxTimestamp()` in `probe()` → returns to response only (read-only, SAFE)\n- **L75**: `sc.getTrxnTS(stub)` called in `createCarEntry()` → result stored in `carDetails.UpdateTs`\n- **L76**: `json.Marshal(carDetails)` → marshaled struct written to ledger via `stub.PutState()` at L78\n- **L104**: `sc.getTrxnTS(stub)` called in `modifyCarEntity()` → result stored in `existingEntity.UpdateTs`\n- **L115**: `json.Marshal(existingEntity)` → marshaled struct written to ledger via `stub.PutState()` at L117\n\n**Critical Finding**: `getTrxnTS()` (L243-250) uses `stub.GetTxTimestamp()` which is **SAFE** (deterministic, consensus-provided). However, the timestamp is formatted and stored in the ledger state, making it consensus-safe.\n\n#### C2 GOROUTINE Analysis\n- No `go func()` or `go methodCall()` patterns detected.\n\n#### C3 MAP_ITERATION Analysis\n- **L165**: `historyRecords := make([]map[string]interface{}, 0)` creates a slice of maps\n- **L166-171**: Loop iterates over history iterator (not a map range), appends to slice\n- **L172**: `json.Marshal(historyRecords)` on slice of maps → Go stdlib deterministically sorts JSON keys (SAFE)\n- No direct `for...range map` iteration detected\n\n#### C4 NON_REVALIDATED_QUERY Analysis\n- **L195**: `stub.GetHistoryForKey(key)` in `queryCarHistory()` → result iterated and returned via `shim.Success()` (read-only, NOT C4)\n- **L209**: `stub.GetState(key)` in `queryCar()` → result returned via `shim.Success()` (read-only, NOT C4)\n- No query results determine write decisions\n\n#### C6 GLOBAL_MUTABLE_STATE Analysis\n- **L13**: `var _MainLogger = shim.NewLogger(\"CarTrackLogger\")` → logger-only global (SAFE)\n\n### 3. Intra-File Evidence Chain\nAll timestamp values written to ledger originate from `stub.GetTxTimestamp()`, which is consensus-provided and deterministic across endorsers. No nondeterministic sources (time.Now(), goroutines, map iteration, or unvalidated queries) influence ledger writes.\n\n### 4. Dead Code / Logging Check\nAll identified patterns are in active transaction logic, not logging-only or dead code.\n\n---\n\n## VERDICT\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: L75-78, L104-117, L243-250**\n\n**RATIONALE:** The chaincode uses `stub.GetTxTimestamp()` exclusively for timestamp generation, which is consensus-provided and deterministic across all endorsers. No C1 (time.Now()), C2 (goroutines), C3 (map iteration), C4 (unvalidated queries), or C6 (mutable globals) vulnerabilities exist. All ledger writes are deterministic.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:00:20.138977",
+  "annotator": "2nd"
+}

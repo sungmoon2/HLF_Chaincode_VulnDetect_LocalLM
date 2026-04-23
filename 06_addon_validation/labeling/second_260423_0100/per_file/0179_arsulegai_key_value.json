@@ -1,0 +1,19 @@
+{
+  "file_id": "0179_arsulegai_key_value",
+  "repo": "arsulegai",
+  "filename": "key_value.go",
+  "elapsed_s": 3.57,
+  "input_tokens": 1593,
+  "output_tokens": 123,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not use any nondeterministic patterns. It only uses GetState, PutState, and DelState with deterministic key-value operations derived from transaction arguments. No time.Now(), goroutines, map iteration, rich queries, or mutable global state are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not use any nondeterministic patterns. It only uses GetState, PutState, and DelState with deterministic key-value operations derived from transaction arguments. No time.Now(), goroutines, map iteration, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:15:16.349521",
+  "annotator": "2nd"
+}

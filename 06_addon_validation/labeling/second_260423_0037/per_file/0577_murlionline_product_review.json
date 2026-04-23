@@ -1,0 +1,19 @@
+{
+  "file_id": "0577_murlionline_product_review",
+  "repo": "murlionline",
+  "filename": "product_review.go",
+  "elapsed_s": 3.37,
+  "input_tokens": 2218,
+  "output_tokens": 182,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L106-L130",
+  "rationale": "The `search` function (L106-L130) calls `stub.GetQueryResult()` at L113, which is a non-revalidated query source (C4). The iterator result directly influences the response payload returned via `Success()` at L129. Although this is a read-only query returned to the caller rather than a ledger write, C4 applies because the query result determines the proposal response content. CouchDB query results can vary across endorsers due to index state, timing, or consistency issues, causing endorsement divergence. The iterator is properly closed (L114), so C5 does not apply.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L106-L130\n\nRATIONALE: The `search` function (L106-L130) calls `stub.GetQueryResult()` at L113, which is a non-revalidated query source (C4). The iterator result directly influences the response payload returned via `Success()` at L129. Although this is a read-only query returned to the caller rather than a ledger write, C4 applies because the query result determines the proposal response content. CouchDB query results can vary across endorsers due to index state, timing, or consistency issues, causing endorsement divergence. The iterator is properly closed (L114), so C5 does not apply.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:24.492314",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0873_WuEcho_hello",
+  "repo": "WuEcho",
+  "filename": "hello.go",
+  "elapsed_s": 2.33,
+  "input_tokens": 1205,
+  "output_tokens": 152,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains two HLF transaction entrypoints (Init and Invoke methods). Init performs a PutState write (L18) but only uses stub.GetStringArgs() and string literals—no time-dependent, goroutine-based, map-iterated, or non-revalidated-query sources. Invoke performs only a read (GetState, L28) and returns the result without any write. No package-level mutable state is accessed. All operations are deterministic across endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains two HLF transaction entrypoints (Init and Invoke methods). Init performs a PutState write (L18) but only uses stub.GetStringArgs() and string literals—no time-dependent, goroutine-based, map-iterated, or non-revalidated-query sources. Invoke performs only a read (GetState, L28) and returns the result without any write. No package-level mutable state is accessed. All operations are deterministic across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:56.135130",
+  "annotator": "2nd"
+}

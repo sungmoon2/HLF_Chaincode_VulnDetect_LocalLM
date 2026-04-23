@@ -1,0 +1,19 @@
+{
+  "file_id": "0059_xuansonha17031991_medical_record",
+  "repo": "xuansonha17031991",
+  "filename": "medical_record.go",
+  "elapsed_s": 13.74,
+  "input_tokens": 3879,
+  "output_tokens": 678,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L125, L133-139, L179, L187-193",
+  "rationale": "Both `query` and `modifyMedicalData` functions use `time.Now().String()` to populate the `Time` field of a Query struct that is then written to private data via `PutPrivateData`. Different endorsers will capture different timestamps, causing endorsement divergence.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, with three transaction functions: `createMedicalRecord`, `query`, and `modifyMedicalData`.\n\n### C1 TIME_NOW Analysis\n\n**In `query` function (lines 113-157):**\n- Line 125: `timeQuery := time.Now().String()`\n- Line 133-134: `query := &Query{..., timeQuery, \"query\"}` - timeQuery is embedded in the Query struct\n- Line 139: `stub.PutPrivateData(\"queryCollection\", userid, queryAsByte)` - The Query struct containing `time.Now()` is written to the ledger\n\n**In `modifyMedicalData` function (lines 159-221):**\n- Line 179: `timeQuery := time.Now().String()`\n- Line 187-188: `query := &Query{..., timeQuery, \"modify\"}` - timeQuery embedded in Query struct\n- Line 193: `stub.PutPrivateData(\"modifyCollection\", userid, queryAsByte)` - Written to ledger\n\nBoth functions use `time.Now()` to generate a timestamp that becomes part of data written via `PutPrivateData`. Since different endorsing peers execute at slightly different times, they will produce different `timeQuery` values, leading to different data being written to the ledger. This causes endorsement divergence.\n\nThe `time.Now()` calls in `createMedicalRecord` (lines 66, 103-105) are only used for logging/timing metrics and don't influence ledger writes - those are SAFE.\n\n### Other Patterns\n- **C2 GOROUTINE**: No goroutines found\n- **C3 MAP_ITERATION**: No map iterations found\n- **C4 NON_REVALIDATED_QUERY**: No GetQueryResult or similar calls\n- **C5 ITERATOR_LEAK**: No iterators created\n- **C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables\n\n## Conclusion\n\nThe `query` and `modifyMedicalData` functions both use `time.Now()` to generate timestamps that are written to private data collections, causing consensus-critical nondeterminism.\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L125, L133-139, L179, L187-193\nRATIONALE: Both `query` and `modifyMedicalData` functions use `time.Now().String()` to populate the `Time` field of a Query struct that is then written to private data via `PutPrivateData`. Different endorsers will capture different timestamps, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:06:27.478437",
+  "annotator": "2nd"
+}

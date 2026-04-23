@@ -1,0 +1,19 @@
+{
+  "file_id": "0527_liuhuanyuxcx_e2e",
+  "repo": "liuhuanyuxcx",
+  "filename": "e2e.go",
+  "elapsed_s": 2.96,
+  "input_tokens": 2343,
+  "output_tokens": 158,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init, Invoke, and helper methods invoke, delete, query). All ledger writes (PutState, DelState at L43, L46, L95, L96, L108) are driven by deterministic sources: parsed arguments, GetState reads, and arithmetic operations. No time-dependent operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence write decisions or responses. The code is deterministic across all endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init, Invoke, and helper methods invoke, delete, query). All ledger writes (PutState, DelState at L43, L46, L95, L96, L108) are driven by deterministic sources: parsed arguments, GetState reads, and arithmetic operations. No time-dependent operations, goroutines, map iterations, non-revalidated queries, or mutable global state influence write decisions or responses. The code is deterministic across all endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:59.981080",
+  "annotator": "2nd"
+}

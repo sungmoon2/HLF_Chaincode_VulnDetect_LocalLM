@@ -1,0 +1,19 @@
+{
+  "file_id": "0059_xuansonha17031991_medical_record",
+  "repo": "xuansonha17031991",
+  "filename": "medical_record.go",
+  "elapsed_s": 3.97,
+  "input_tokens": 3879,
+  "output_tokens": 294,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L57-L58, L127, L189",
+  "rationale": "The file contains three transaction functions (Init, Invoke, and their callees createMedicalRecord, query, modifyMedicalData) that are HLF chaincode entrypoints. In createMedicalRecord (L57-L58), query (L127), and modifyMedicalData (L189), time.Now().String() is called and the result is stored in variables (start, timeQuery, end) that directly influence ledger writes via PutPrivateData. Specifically, in query() at L127, timeQuery := time.Now().String() is assigned to the Query struct's Time field, which is then marshaled and written to state via stub.PutPrivateData(\"queryCollection\", userid, queryAsByte) at L135. Similarly, in modifyMedicalData() at L189, timeQuery := time.Now().String() is assigned to the Query struct and written via PutPrivateData at L217. These time.Now() calls are consensus-critical sources (C1) that reach ledger write sinks, causing endorsement divergence across peers.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L57-L58, L127, L189\n\nRATIONALE: The file contains three transaction functions (Init, Invoke, and their callees createMedicalRecord, query, modifyMedicalData) that are HLF chaincode entrypoints. In createMedicalRecord (L57-L58), query (L127), and modifyMedicalData (L189), time.Now().String() is called and the result is stored in variables (start, timeQuery, end) that directly influence ledger writes via PutPrivateData. Specifically, in query() at L127, timeQuery := time.Now().String() is assigned to the Query struct's Time field, which is then marshaled and written to state via stub.PutPrivateData(\"queryCollection\", userid, queryAsByte) at L135. Similarly, in modifyMedicalData() at L189, timeQuery := time.Now().String() is assigned to the Query struct and written via PutPrivateData at L217. These time.Now() calls are consensus-critical sources (C1) that reach ledger write sinks, causing endorsement divergence across peers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:45.277184",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0299_DappCampus_controller",
+  "repo": "DappCampus",
+  "filename": "controller.go",
+  "elapsed_s": 3.5,
+  "input_tokens": 1136,
+  "output_tokens": 132,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains a recognizable HLF transaction entrypoint (Init method on Controller). The code performs deterministic operations: parameter validation, string parsing, and calls to repository functions for saving state. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state. All operations are deterministic and the ledger writes are delegated to repository functions with deterministic inputs.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains a recognizable HLF transaction entrypoint (Init method on Controller). The code performs deterministic operations: parameter validation, string parsing, and calls to repository functions for saving state. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state. All operations are deterministic and the ledger writes are delegated to repository functions with deterministic inputs.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:24:26.997781",
+  "annotator": "2nd"
+}

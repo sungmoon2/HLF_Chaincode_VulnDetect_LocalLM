@@ -1,0 +1,19 @@
+{
+  "file_id": "0099_abegpatel_mapkeys",
+  "repo": "abegpatel",
+  "filename": "mapkeys.go",
+  "elapsed_s": 16.87,
+  "input_tokens": 3377,
+  "output_tokens": 687,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L107-L123, L207-L222, L224-L244",
+  "rationale": "The file uses GetQueryResult, GetPrivateDataQueryResult, and GetHistoryForKey, but all results are only returned to the client via shim.Success() without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are NOT C4 violations.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoint\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: \n- `time.Sleep()` is used at lines 79-81 and 181-183, but `time.Sleep` only introduces delay, not nondeterministic values. It doesn't use `time.Now()` to influence writes or responses.\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- Lines 88-90, 192-194, 237-239 iterate over `keys []string` (a slice, not a map) - SAFE.\n- No map iteration that influences writes or responses.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `GetPrivateDataQueryResult` at line 107: Results are collected into `keys` slice and returned via `shim.Success(jsonKeys)` - this is a **read-only query** returned to client, NOT used to determine a write decision.\n- `GetQueryResult` at line 207: Same pattern - results returned via `shim.Success(jsonKeys)` - read-only, no write decision.\n- `GetHistoryForKey` at line 224: Same pattern - results returned via `shim.Success(jsonKeys)` - read-only, no write decision.\n\nPer the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level variables declared in this file.\n\n**C5 ITERATOR_LEAK**:\n- All iterators have `defer keysIter.Close()` - properly closed.\n\n### Key Observation\nThe `query`, `queryPrivate`, and `history` cases use potentially nondeterministic query APIs, but they only:\n1. Collect results into a slice\n2. Return the results via `shim.Success()`\n\nThey do NOT use the query results to make write decisions (no `PutState`, `DelState`, etc. based on query results). This is explicitly excluded from C4 per the taxonomy.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L107-L123, L207-L222, L224-L244\nRATIONALE: The file uses GetQueryResult, GetPrivateDataQueryResult, and GetHistoryForKey, but all results are only returned to the client via shim.Success() without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are NOT C4 violations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:09:33.442769",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0599_netkiller_token1",
+  "repo": "netkiller",
+  "filename": "token1.go",
+  "elapsed_s": 15.52,
+  "input_tokens": 1897,
+  "output_tokens": 663,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. The map `BalanceOf` is only accessed by direct key lookup and serialized via `json.Marshal`, which provides deterministic key ordering in Go's standard library.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with `Invoke` routing to `initLedger`, `transferToken`, and `balanceToken`. This is a valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning.\n\n**C3 MAP_ITERATION**: The `Token` struct contains `BalanceOf map[string]uint`. Let me check if there's iteration over this map:\n- `initialSupply()` - direct key access, no iteration\n- `transfer()` - direct key access, no iteration\n- `balance()` - direct key access, no iteration\n- `burn()` - direct key access, no iteration\n- `burnFrom()` - direct key access, no iteration\n- `mint()` - direct key access, no iteration\n\nThe map is serialized via `json.Marshal(token)` in `initLedger` (L74) and `transferToken` (L88). In Go's standard library `encoding/json`, map serialization sorts keys alphabetically, making it deterministic. This is SAFE.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Additional Observations\nThere's a bug at L85 where `args[3]` is accessed but only 3 arguments are expected (indices 0-2), and `transfer` expects a `uint` but `args[3]` is a string. However, this is a logic bug, not a nondeterminism issue.\n\nThe `balanceToken` function at L99 has a type mismatch (`shim.Success(amount)` where `amount` is `uint`, not `[]byte`), but again this is a compilation/logic error, not nondeterminism.\n\n## Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. The map `BalanceOf` is only accessed by direct key lookup and serialized via `json.Marshal`, which provides deterministic key ordering in Go's standard library.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:46:14.760796",
+  "annotator": "2nd"
+}

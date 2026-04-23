@@ -1,0 +1,19 @@
+{
+  "file_id": "0419_imran-iitp_chaincode",
+  "repo": "imran-iitp",
+  "filename": "chaincode.go",
+  "elapsed_s": 15.24,
+  "input_tokens": 3476,
+  "output_tokens": 579,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The time package is imported but only used for struct field types, not for time.Now() or similar calls. The global `functions` map is read-only and accessed by key lookup only, not iterated. All state operations use deterministic GetState/PutState with explicit keys.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has valid HLF entrypoints: `Init` and `Invoke` methods on `SwapManager`, which dispatch to functions via the `functions` map.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: The `time` package is imported, but I only see `time.Time` and `time.Duration` used as struct field types in `InterestRateSwap`. There are no calls to `time.Now()`, `time.Since()`, or `time.Until()` in the transaction logic.\n\n**C2 GOROUTINE**: No `go` statements found in the code.\n\n**C3 MAP_ITERATION**: There is a package-level map `functions` at line 68-73. However, this map is only accessed via direct key lookup (`functions[funcName]`) in the `Invoke` method at line 63. There is no `for...range` iteration over this map.\n\n**C4 NON_REVALIDATED_QUERY**: The code uses `GetState()` calls, which are key-based lookups, not rich queries. `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, and `GetHistoryForKey` are not used.\n\n**C6 GLOBAL_MUTABLE_STATE**: The `functions` map is a package-level variable, but it is:\n1. Initialized at declaration time with constant values\n2. Never modified after initialization\n3. Only read via direct key access\n\nThis is a read-only/deterministic-init global, which is SAFE per the taxonomy.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Conclusion\n\nThe code imports `time` but only uses it for type definitions in the struct, not for any time-based operations in transaction logic. The global map is read-only and accessed by key, not iterated. All state operations use deterministic key-based access.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The time package is imported but only used for struct field types, not for time.Now() or similar calls. The global `functions` map is read-only and accessed by key lookup only, not iterated. All state operations use deterministic GetState/PutState with explicit keys.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:33:02.225764",
+  "annotator": "2nd"
+}

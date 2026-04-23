@@ -1,0 +1,19 @@
+{
+  "file_id": "0201_BCEvanFang_marbles_chaincode_private",
+  "repo": "BCEvanFang",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 15.74,
+  "input_tokens": 5094,
+  "output_tokens": 763,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L310-L343, L283-L295",
+  "rationale": "The GetPrivateDataQueryResult calls in getQueryResultForQueryString are used only for read-only queries returned via shim.Success, not for write decisions. GetPrivateDataByPartialCompositeKey in transferMarblesBasedOnColor is explicitly excluded from C4 sources per the taxonomy. No other nondeterminism patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, so it's a valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The structs use `json.Marshal()` which is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `getQueryResultForQueryString` (L310-343) uses `stub.GetPrivateDataQueryResult()` - this is a rich query.\n- `queryMarblesByOwner` (L283-295) calls `getQueryResultForQueryString` and returns results via `shim.Success(queryResults)` - this is **read-only**, no write decision based on query results.\n- `queryMarbles` (L297-308) similarly is read-only.\n\nThe key question for C4: Are query results used to make **write decisions**?\n\nLooking at `transferMarblesBasedOnColor` (L261-281):\n- Uses `stub.GetPrivateDataByPartialCompositeKey()` at L270 - this is **NOT** a C4 source per the taxonomy (GetStateByPartialCompositeKey and GetStateByRange are explicitly excluded).\n\nThe `GetPrivateDataQueryResult` calls in `getQueryResultForQueryString` are only used for read-only queries returned via `shim.Success` - they don't influence any write decisions.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- L246: `resultsIterator` has `defer resultsIterator.Close()` ✓\n- L270: `coloredMarbleResultsIterator` has `defer coloredMarbleResultsIterator.Close()` ✓\n- L316: `resultsIterator` has `defer resultsIterator.Close()` ✓\n\nAll iterators are properly closed.\n\n### Conclusion\n\nThe `GetPrivateDataQueryResult` usage is only for read-only queries that return data to the client - they don't determine any write decisions. The `GetPrivateDataByPartialCompositeKey` is explicitly excluded from C4 sources per the taxonomy. No other vulnerability patterns are present.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L310-L343, L283-L295\nRATIONALE: The GetPrivateDataQueryResult calls in getQueryResultForQueryString are used only for read-only queries returned via shim.Success, not for write decisions. GetPrivateDataByPartialCompositeKey in transferMarblesBasedOnColor is explicitly excluded from C4 sources per the taxonomy. No other nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:17:22.515886",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0055_xuansonha17031991_drug_information",
+  "repo": "xuansonha17031991",
+  "filename": "drug_information.go",
+  "elapsed_s": 3.86,
+  "input_tokens": 3722,
+  "output_tokens": 246,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67, L68, L127, L128, L189, L190",
+  "rationale": "The file contains three transaction functions (query, modifyDrugData, createDrugInformation) that all invoke time.Now().String() and assign the result to timeQuery or use it in logging. In the query function (L67) and modifyDrugData function (L127), timeQuery is directly embedded into a Query struct that is marshaled and written to the ledger via stub.PutPrivateData() (L76, L136). This creates consensus-critical nondeterminism because time.Now() produces different values across endorsing peers, causing divergent ledger writes. The createDrugInformation function also calls time.Now() (L189, L190) but only uses it for logging output, which does not influence ledger state. However, since the file contains at least one vulnerable transaction function, the file is VULNERABLE.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L67, L68, L127, L128, L189, L190\n\nRATIONALE: The file contains three transaction functions (query, modifyDrugData, createDrugInformation) that all invoke time.Now().String() and assign the result to timeQuery or use it in logging. In the query function (L67) and modifyDrugData function (L127), timeQuery is directly embedded into a Query struct that is marshaled and written to the ledger via stub.PutPrivateData() (L76, L136). This creates consensus-critical nondeterminism because time.Now() produces different values across endorsing peers, causing divergent ledger writes. The createDrugInformation function also calls time.Now() (L189, L190) but only uses it for logging output, which does not influence ledger state. However, since the file contains at least one vulnerable transaction function, the file is VULNERABLE.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:32.398368",
+  "annotator": "2nd"
+}

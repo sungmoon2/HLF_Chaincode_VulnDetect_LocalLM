@@ -1,0 +1,19 @@
+{
+  "file_id": "0175_anzalbeg_marbles_chaincode",
+  "repo": "anzalbeg",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 16.18,
+  "input_tokens": 5072,
+  "output_tokens": 788,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L340",
+  "rationale": "The `time` package is used only with `time.Unix()` to format existing timestamp data from history responses, not `time.Now()`. Rich queries (`GetQueryResult`, `GetHistoryForKey`) are used only for read-only responses, not write decisions. `GetStateByPartialCompositeKey` is explicitly excluded from C4 sources.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Line 340: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history response, NOT `time.Now()`. This is deterministic as it converts existing data.\n- The `time` import exists but `time.Now()`, `time.Since()`, `time.Until()` are not called.\n\n**C2 GOROUTINE**: No `go` keyword usage found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `marble` struct uses `json.Marshal()` which is safe.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (L280-314) uses `stub.GetQueryResult()` - this is a rich query. The results are returned via `shim.Success()` in `queryMarblesByOwner` and `queryMarbles` - these are **read-only queries** that don't influence writes.\n- `getHistoryForMarble` (L316-358) uses `stub.GetHistoryForKey()` - results are returned via `shim.Success()` - **read-only**, no write decisions.\n- `getMarblesByRange` uses `stub.GetStateByRange()` - explicitly NOT a C4 source per the taxonomy.\n- `transferMarblesBasedOnColor` uses `stub.GetStateByPartialCompositeKey()` - explicitly NOT a C4 source per the taxonomy.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: All iterators have `defer resultsIterator.Close()` calls:\n- L218: `defer resultsIterator.Close()`\n- L253: `defer coloredMarbleResultsIterator.Close()`\n- L291: `defer resultsIterator.Close()`\n- L325: `defer resultsIterator.Close()`\n\n### Key Observations\n1. The `time` package import is used only for `time.Unix()` which converts existing timestamp data - this is deterministic.\n2. Rich queries (`GetQueryResult`, `GetHistoryForKey`) are used only for read-only operations returned directly to the client, not for making write decisions.\n3. `GetStateByPartialCompositeKey` and `GetStateByRange` are explicitly excluded from C4 per the taxonomy.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L340\nRATIONALE: The `time` package is used only with `time.Unix()` to format existing timestamp data from history responses, not `time.Now()`. Rich queries (`GetQueryResult`, `GetHistoryForKey`) are used only for read-only responses, not write decisions. `GetStateByPartialCompositeKey` is explicitly excluded from C4 sources.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:15:07.489956",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0713_samlinux_sacc3",
+  "repo": "samlinux",
+  "filename": "sacc3.go",
+  "elapsed_s": 3.31,
+  "input_tokens": 1906,
+  "output_tokens": 201,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L89-L105, L77-L87",
+  "rationale": "The `getAll()` function (L77-L87) calls `getQueryResultForQueryString()` (L89-L105), which invokes `stub.GetQueryResult()` (L92) — a non-revalidated query source. The results are directly serialized and returned via `shim.Success(queryResults)` (L86), influencing the proposal response. CouchDB query results are not deterministic across endorsers due to potential state divergence, index inconsistencies, or timing differences, making this a C4 vulnerability. Although the query is read-only, it determines the response payload without revalidation, violating consensus-critical determinism.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L89-L105, L77-L87\n\nRATIONALE: The `getAll()` function (L77-L87) calls `getQueryResultForQueryString()` (L89-L105), which invokes `stub.GetQueryResult()` (L92) — a non-revalidated query source. The results are directly serialized and returned via `shim.Success(queryResults)` (L86), influencing the proposal response. CouchDB query results are not deterministic across endorsers due to potential state divergence, index inconsistencies, or timing differences, making this a C4 vulnerability. Although the query is read-only, it determines the response payload without revalidation, violating consensus-critical determinism.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:28.380474",
+  "annotator": "2nd"
+}

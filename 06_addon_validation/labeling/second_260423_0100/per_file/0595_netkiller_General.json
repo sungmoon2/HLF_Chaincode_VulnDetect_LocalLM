@@ -1,0 +1,19 @@
+{
+  "file_id": "0595_netkiller_General",
+  "repo": "netkiller",
+  "filename": "General.go",
+  "elapsed_s": 4.43,
+  "input_tokens": 1812,
+  "output_tokens": 137,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains standard HLF chaincode with Init/Invoke entrypoints. It performs basic CRUD operations using GetState, PutState, and DelState. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no package-level mutable state (C6). All operations are deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains standard HLF chaincode with Init/Invoke entrypoints. It performs basic CRUD operations using GetState, PutState, and DelState. There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no rich queries like GetQueryResult (C4), and no package-level mutable state (C6). All operations are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:45:54.445048",
+  "annotator": "2nd"
+}

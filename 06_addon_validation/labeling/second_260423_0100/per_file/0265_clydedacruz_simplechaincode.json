@@ -1,0 +1,19 @@
+{
+  "file_id": "0265_clydedacruz_simplechaincode",
+  "repo": "clydedacruz",
+  "filename": "simplechaincode.go",
+  "elapsed_s": 17.14,
+  "input_tokens": 5045,
+  "output_tokens": 778,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L280-L299, L308-L352",
+  "rationale": "The GetQueryResult calls in queryMarblesByOwner and queryMarbles are read-only (results returned via shim.Success without influencing writes). GetStateByPartialCompositeKey is explicitly not a C4 source. The time.Unix() call converts existing ledger timestamps, not time.Now(). All iterators are properly closed.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 340: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history response, NOT `time.Now()`. This is deterministic as it converts existing data.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The `marble` struct uses `json.Marshal()` which is safe.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `GetQueryResult` is used in `getQueryResultForQueryString()` (L280) - but this function only returns data via `shim.Success()`, it doesn't make write decisions based on the query results.\n- `GetHistoryForKey` is used in `getHistoryForMarble()` (L308) - similarly, only returns data, no writes.\n- `queryMarblesByOwner` and `queryMarbles` call `getQueryResultForQueryString` and return results - read-only.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: All iterators have `defer resultsIterator.Close()` calls:\n- L210: `defer resultsIterator.Close()`\n- L241: `defer coloredMarbleResultsIterator.Close()`\n- L287: `defer resultsIterator.Close()`\n- L315: `defer resultsIterator.Close()`\n\n### Key Observations\n\n1. The `transferMarblesBasedOnColor` function (L229-268) uses `GetStateByPartialCompositeKey` which is explicitly NOT a C4 source per the taxonomy. It iterates and performs writes, but composite key queries return deterministic ordered results.\n\n2. The rich queries (`queryMarblesByOwner`, `queryMarbles`) using `GetQueryResult` are read-only - they return results via `shim.Success()` without making any write decisions based on the query results.\n\n3. The `time.Unix()` usage in `getHistoryForMarble` is converting an existing timestamp from the ledger history, not generating a new timestamp - this is deterministic.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L280-L299, L308-L352\nRATIONALE: The GetQueryResult calls in queryMarblesByOwner and queryMarbles are read-only (results returned via shim.Success without influencing writes). GetStateByPartialCompositeKey is explicitly not a C4 source. The time.Unix() call converts existing ledger timestamps, not time.Now(). All iterators are properly closed.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:21:42.131789",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0119_acloudfan_token",
+  "repo": "acloudfan",
+  "filename": "token.go",
+  "elapsed_s": 12.4,
+  "input_tokens": 1114,
+  "output_tokens": 696,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The chaincode uses `GetTxTimestamp()` (consensus-safe) converted via `time.Unix()` (deterministic), not `time.Now()`. All `fmt.Print*` calls are logging only and do not influence the `shim.Success(nil)` return value. No ledger writes occur, and no nondeterministic patterns affect the proposal response.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains `Init` and `Invoke` methods on `TokenChaincode` that implement the `shim.ChaincodeStubInterface` pattern (lines 16-18 and 22-36).\n\n### Step 2: Check for Source Patterns (C1-C4, C6)\n\n**C1 TIME_NOW**: \n- Line 29: `time.Unix(TxTimestamp.GetSeconds(), 0)` - This uses `time.Unix()` which is a deterministic conversion function, NOT `time.Now()`. The timestamp comes from `stub.GetTxTimestamp()` which is consensus-safe.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- No map iteration patterns found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Sink Analysis\n- The `Invoke` function returns `shim.Success(nil)` (line 35)\n- No `PutState`, `DelState`, or other ledger writes\n- All `fmt.Println`/`fmt.Printf` calls are logging only, not influencing the response\n- `PrintSignedProposalInfo` and `PrintCreatorInfo` are external function calls - but per scope rules, I only analyze intra-file evidence. The return value is `shim.Success(nil)` regardless of what those functions do.\n\n### Step 4: Auxiliary C5 Check\n- No iterators created in this file.\n\n### Conclusion\nThe file uses `time.Unix()` with `GetTxTimestamp()` which is the correct, deterministic approach. There are no nondeterministic patterns that influence ledger writes or proposal responses. All output is logging-only via `fmt.Print*` calls.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The chaincode uses `GetTxTimestamp()` (consensus-safe) converted via `time.Unix()` (deterministic), not `time.Now()`. All `fmt.Print*` calls are logging only and do not influence the `shim.Success(nil)` return value. No ledger writes occur, and no nondeterministic patterns affect the proposal response.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:11:19.415545",
+  "annotator": "2nd"
+}

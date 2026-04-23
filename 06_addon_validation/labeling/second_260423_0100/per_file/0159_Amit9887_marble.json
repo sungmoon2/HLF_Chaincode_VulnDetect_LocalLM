@@ -1,0 +1,19 @@
+{
+  "file_id": "0159_Amit9887_marble",
+  "repo": "Amit9887",
+  "filename": "marble.go",
+  "elapsed_s": 17.1,
+  "input_tokens": 5952,
+  "output_tokens": 763,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L267-L292, L295-L310, L362-L406",
+  "rationale": "The file contains rich query APIs (GetQueryResult, GetHistoryForKey) but all results are returned directly via shim.Success() for read-only purposes. No query results influence write decisions (PutState/DelState). The time.Unix() usage converts existing timestamp data deterministically, not time.Now().",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Line 380: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts existing data.\n- The `time` import is used, but only for `time.Unix()` which is deterministic.\n\n**C2 GOROUTINE**: No `go` keywords found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `marble` struct uses `json.Marshal()` which is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (L295-310): Uses `stub.GetQueryResult()` - this is a rich query. The result is returned via `shim.Success()` (read-only), NOT used for write decisions.\n- `queryMarblesByOwner` (L267-278): Calls `getQueryResultForQueryString`, returns result via `shim.Success()` - read-only.\n- `queryMarbles` (L280-292): Same pattern - read-only.\n- `getQueryResultForQueryStringWithPagination` (L340-360): Uses `GetQueryResultWithPagination`, returns via buffer - read-only.\n- `getHistoryForMarble` (L362-406): Uses `GetHistoryForKey`, returns via `shim.Success()` - read-only.\n\nAll rich query results are returned directly to the client, not used to make write decisions.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- All iterators have `defer resultsIterator.Close()` calls (L232, L248, L304, L323, L345, L369).\n\n### Key Observations\n- `transferMarblesBasedOnColor` (L236-265) uses `GetStateByPartialCompositeKey` which is explicitly NOT a C4 source per the taxonomy.\n- The rich queries (`GetQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`) are all read-only - their results go directly to `shim.Success()` without influencing any `PutState` or `DelState` calls.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L267-L292, L295-L310, L362-L406\nRATIONALE: The file contains rich query APIs (GetQueryResult, GetHistoryForKey) but all results are returned directly via shim.Success() for read-only purposes. No query results influence write decisions (PutState/DelState). The time.Unix() usage converts existing timestamp data deterministically, not time.Now().",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:14:14.698639",
+  "annotator": "2nd"
+}

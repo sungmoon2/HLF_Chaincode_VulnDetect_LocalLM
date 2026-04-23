@@ -1,0 +1,19 @@
+{
+  "file_id": "0569_Mr-lay_contract_chaincode",
+  "repo": "Mr-lay",
+  "filename": "contract_chaincode.go",
+  "elapsed_s": 3.93,
+  "input_tokens": 3887,
+  "output_tokens": 198,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file is a framework/infrastructure component that implements the Hyperledger Fabric chaincode lifecycle (Init/Invoke entry points). While it contains transaction routing logic, it does not itself perform ledger writes (PutState, DelState, etc.) or directly influence proposal responses based on nondeterministic sources. All ledger operations are delegated to user-defined contract methods invoked via reflection. The file uses deterministic operations (string parsing, reflection, sorted metadata compilation) and does not contain C1 (time.Now), C2 (goroutines), C3 (map iteration influencing writes), C4 (unvalidated queries), or C6 (mutable global state affecting transactions).",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file is a framework/infrastructure component that implements the Hyperledger Fabric chaincode lifecycle (Init/Invoke entry points). While it contains transaction routing logic, it does not itself perform ledger writes (PutState, DelState, etc.) or directly influence proposal responses based on nondeterministic sources. All ledger operations are delegated to user-defined contract methods invoked via reflection. The file uses deterministic operations (string parsing, reflection, sorted metadata compilation) and does not contain C1 (time.Now), C2 (goroutines), C3 (map iteration influencing writes), C4 (unvalidated queries), or C6 (mutable global state affecting transactions).",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:12.090927",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0511_lcy1317_chaincode",
+  "repo": "lcy1317",
+  "filename": "chaincode.go",
+  "elapsed_s": 3.75,
+  "input_tokens": 1533,
+  "output_tokens": 266,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L5, L16-17, L19-20",
+  "rationale": "The file contains a recognizable HLF transaction entrypoint (Init method at L16). At L5, `time` is imported and at L17, `time.LoadLocation()` is called. At L19, `time.Local = timeLocal` modifies the global time.Local variable, which affects all subsequent time operations in the process. Although the Init function itself does not directly call time.Now() or time.Since(), the modification of time.Local at L19 is a consensus-critical side effect that persists across transactions and could influence time-dependent logic in downstream routers (e.g., routers.CreateSelling, routers.RefreshSelling) that may call time.Now(). This global mutable state modification in a transaction entrypoint creates nondeterminism because different endorsers may have different system time zones or the operation may race with concurrent invocations, causing divergent behavior in ledger writes triggered by time-dependent decisions in called functions.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L5, L16-17, L19-20\n\nRATIONALE: The file contains a recognizable HLF transaction entrypoint (Init method at L16). At L5, `time` is imported and at L17, `time.LoadLocation()` is called. At L19, `time.Local = timeLocal` modifies the global time.Local variable, which affects all subsequent time operations in the process. Although the Init function itself does not directly call time.Now() or time.Since(), the modification of time.Local at L19 is a consensus-critical side effect that persists across transactions and could influence time-dependent logic in downstream routers (e.g., routers.CreateSelling, routers.RefreshSelling) that may call time.Now(). This global mutable state modification in a transaction entrypoint creates nondeterminism because different endorsers may have different system time zones or the operation may race with concurrent invocations, causing divergent behavior in ledger writes triggered by time-dependent decisions in called functions.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:34.161030",
+  "annotator": "2nd"
+}

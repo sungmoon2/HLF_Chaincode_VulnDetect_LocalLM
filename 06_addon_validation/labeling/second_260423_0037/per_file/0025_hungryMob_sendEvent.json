@@ -1,0 +1,19 @@
+{
+  "file_id": "0025_hungryMob_sendEvent",
+  "repo": "hungryMob",
+  "filename": "sendEvent.go",
+  "elapsed_s": 9.56,
+  "input_tokens": 4358,
+  "output_tokens": 731,
+  "verdict": "SAFE",
+  "primary_class": "** C4",
+  "secondary_class": "** C1",
+  "auxiliary_c5": "** YES",
+  "evidence_lines": "** L118–L145, L147–L175, L177–L210, L212–L250, L252–L280, L282–L310",
+  "rationale": "",
+  "raw_response": "# Audit Report: Hyperledger Fabric Chaincode\n\n## Verdict: VULNERABLE\n\n**PRIMARY_CLASS:** C4  \n**SECONDARY_CLASS:** C1  \n**AUXILIARY_C5:** YES  \n**EVIDENCE_LINES:** L118–L145, L147–L175, L177–L210, L212–L250, L252–L280, L282–L310\n\n---\n\n## Rationale\n\nThis file contains a recognizable HLF transaction entrypoint (`Invoke` and `Init` methods on `SimpleAsset`). Multiple transaction functions (`sendEvent`, `sendRealValue`, `setRandom`, `getHistory`) use **C4 NON_REVALIDATED_QUERY** patterns that directly influence ledger writes:\n\n1. **`getHistory()` (L118–L145):** Calls `stub.GetHistoryForKey()` and iterates results to build a response string. While this is read-only output, the function is invoked as a transaction.\n\n2. **`sendEvent()` (L147–L175):** Calls `getPeers()` which uses `stub.GetHistoryForKey()` (L103–L115) to count history entries. The count result (`prog`) directly influences the state transition logic and `stub.PutState()` calls (L160, L163, L169, L172). The history query result determines whether to advance the state machine.\n\n3. **`computeRandom()` (L77–L98):** Called from `sendEvent()` at L171. Uses `stub.GetHistoryForKey()` to retrieve and XOR values from history. The computed result is returned and influences the response payload.\n\n4. **`controllaStringa()` (L212–L250):** Uses `stub.GetHistoryForKey()` to iterate and find a matching organization, then performs SHA256 computation and writes debug state via `stub.PutState()` (L237–L241). The history query result determines the write decision.\n\n5. **`getOrgIn()` (L59–L73):** Uses `stub.GetHistoryForKey()` to check if an org exists. Result influences the write decision in `setRandom()` (L282–L310).\n\n**C4 Vulnerability:** History queries are not deterministic across endorsers if the ledger state differs or if concurrent transactions affect history ordering. The iteration order and content of `GetHistoryForKey()` results can diverge, causing different endorsers to make different write decisions.\n\n**C1 Secondary:** `controllaStringa()` uses `sha256.Sum256()` (L236) which is deterministic, but the input (`r + s`) comes from non-revalidated history queries.\n\n**C5 Iterator Leak:** Multiple functions call `GetHistoryForKey()` and iterate without explicit `Close()` calls on the iterator (L64, L104, L119, L213, L78).\n\n---\n\n## Summary\n\nThe chaincode relies on `GetHistoryForKey()` results to make consensus-critical decisions (state transitions and ledger writes). History queries are not guaranteed to return identical results across endorsers, violating consensus requirements.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:40.027358",
+  "annotator": "2nd"
+}

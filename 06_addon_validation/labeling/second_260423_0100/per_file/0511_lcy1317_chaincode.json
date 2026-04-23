@@ -1,0 +1,19 @@
+{
+  "file_id": "0511_lcy1317_chaincode",
+  "repo": "lcy1317",
+  "filename": "chaincode.go",
+  "elapsed_s": 4.88,
+  "input_tokens": 1533,
+  "output_tokens": 163,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L19-L23",
+  "rationale": "The Init function modifies the global variable `time.Local` (a package-level variable in the time package) via `time.LoadLocation` and assignment. This global state modification occurs within a transaction entrypoint and affects how time operations behave across the process. While the immediate Init writes use array iteration (deterministic), modifying global state in chaincode is a consensus-critical issue as different peers may have different timezone database states, causing `time.LoadLocation` to fail on some peers but succeed on others, leading to endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L19-L23\nRATIONALE: The Init function modifies the global variable `time.Local` (a package-level variable in the time package) via `time.LoadLocation` and assignment. This global state modification occurs within a transaction entrypoint and affects how time operations behave across the process. While the immediate Init writes use array iteration (deterministic), modifying global state in chaincode is a consensus-critical issue as different peers may have different timezone database states, causing `time.LoadLocation` to fail on some peers but succeed on others, leading to endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:39:41.307446",
+  "annotator": "2nd"
+}

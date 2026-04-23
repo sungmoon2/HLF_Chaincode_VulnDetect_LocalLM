@@ -1,0 +1,19 @@
+{
+  "file_id": "0369_fourbroad_marbles_chaincode",
+  "repo": "fourbroad",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 17.16,
+  "input_tokens": 5045,
+  "output_tokens": 759,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L261-L268, L273-L278, L280-L310",
+  "rationale": "The `GetQueryResult` and `GetHistoryForKey` calls are used only for read-only queries that return data via `shim.Success()` without influencing any ledger writes. The `time.Unix()` call converts stored timestamps deterministically, not using `time.Now()`. `GetStateByPartialCompositeKey` is explicitly excluded from C4 sources.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is valid HLF chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 340: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the response, NOT `time.Now()`. This is deterministic as it converts existing data.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The `marble` struct uses `json.Marshal()` which is safe.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `GetQueryResult` is used in `getQueryResultForQueryString()` (L280)\n- This function is called by `queryMarblesByOwner` (L261) and `queryMarbles` (L273)\n- Both of these return the results via `shim.Success(queryResults)` - they are **read-only queries** that don't influence any writes\n- `GetHistoryForKey` is used in `getHistoryForMarble` (L310) - also read-only, returns via `shim.Success`\n- `GetStateByPartialCompositeKey` is explicitly NOT a C4 source per the taxonomy\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Key Observations\n\n1. The `queryMarblesByOwner` and `queryMarbles` functions use `GetQueryResult` but only return the data - they don't make write decisions based on the query results.\n\n2. `getHistoryForMarble` uses `GetHistoryForKey` but only returns the history data - no writes.\n\n3. `transferMarblesBasedOnColor` uses `GetStateByPartialCompositeKey` which is explicitly excluded from C4 per the taxonomy.\n\n4. The `time.Unix()` call in `getHistoryForMarble` converts the blockchain's stored timestamp to a string - this is deterministic conversion of existing data, not using current time.\n\n**C5 ITERATOR_LEAK**: All iterators have `defer resultsIterator.Close()` - no leaks.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L261-L268, L273-L278, L280-L310\nRATIONALE: The `GetQueryResult` and `GetHistoryForKey` calls are used only for read-only queries that return data via `shim.Success()` without influencing any ledger writes. The `time.Unix()` call converts stored timestamps deterministically, not using `time.Now()`. `GetStateByPartialCompositeKey` is explicitly excluded from C4 sources.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:29:17.772031",
+  "annotator": "2nd"
+}

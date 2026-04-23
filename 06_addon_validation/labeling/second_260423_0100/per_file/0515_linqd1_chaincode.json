@@ -1,0 +1,19 @@
+{
+  "file_id": "0515_linqd1_chaincode",
+  "repo": "linqd1",
+  "filename": "chaincode.go",
+  "elapsed_s": 12.18,
+  "input_tokens": 1407,
+  "output_tokens": 680,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L14-L15, L21-L28, L37-L40",
+  "rationale": "Package-level variables `A`, `B`, `Aval`, `Bval` are written in Init and read/modified in invoke. These globals influence transaction logic (Aval-X, Bval+X calculations) and will have different values across peers, causing endorsement divergence since state is stored in memory rather than the ledger.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\n- `Init(stub shim.ChaincodeStubInterface)` - HLF Init entrypoint ✓\n- `Invoke(stub shim.ChaincodeStubInterface)` - HLF Invoke entrypoint ✓\n\n### C6 GLOBAL_MUTABLE_STATE Analysis\n\n**Package-level variables declared in this file (Lines 14-15):**\n```go\nvar A, B string\nvar Aval, Bval, X int\n```\n\n**Usage in Init (Lines 21-28):**\n- `A = args[0]` - writes to global\n- `Aval, err = strconv.Atoi(args[1])` - writes to global\n- `B = args[2]` - writes to global\n- `Bval, err = strconv.Atoi(args[3])` - writes to global\n\n**Usage in invoke (Lines 37-40):**\n- `Aval = Aval - X` - reads AND writes global\n- `Bval = Bval + X` - reads AND writes global\n\n**Impact on Response:**\n- Line 45: `return shim.Success(nil)` - The computation uses `Aval` and `Bval` which are global mutable state\n- The values of `Aval` and `Bval` persist across transactions in memory, but different peers may have processed different transaction histories, leading to divergent in-memory state\n\nThis is a classic C6 vulnerability. The chaincode stores state in package-level variables instead of the ledger. Different endorsing peers could have different values for `Aval` and `Bval` based on:\n1. Previous transactions they endorsed\n2. Peer restarts (values reset to 0)\n3. Different initialization sequences\n\n### Other Checks\n- **C1 TIME_NOW**: Uses `GetTxTimestamp()` which is SAFE (deterministic)\n- **C2 GOROUTINE**: None present\n- **C3 MAP_ITERATION**: None present\n- **C4 NON_REVALIDATED_QUERY**: No rich queries present\n- **C5 ITERATOR_LEAK**: No iterators created\n\n## Verdict\n\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L14-L15, L21-L28, L37-L40\nRATIONALE: Package-level variables `A`, `B`, `Aval`, `Bval` are written in Init and read/modified in invoke. These globals influence transaction logic (Aval-X, Bval+X calculations) and will have different values across peers, causing endorsement divergence since state is stored in memory rather than the ledger.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:40:12.417777",
+  "annotator": "2nd"
+}

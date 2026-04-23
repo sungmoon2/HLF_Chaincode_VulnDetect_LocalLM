@@ -1,0 +1,19 @@
+{
+  "file_id": "0583_narayanprusty_property_chaincode",
+  "repo": "narayanprusty",
+  "filename": "property_chaincode.go",
+  "elapsed_s": 4.86,
+  "input_tokens": 2894,
+  "output_tokens": 128,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L117-L118",
+  "rationale": "The chaincode uses stub.GetTxTimestamp() at L117-L118 for timestamps, which is deterministic across endorsers. No time.Now(), goroutines, map iterations affecting writes, non-revalidated queries (GetQueryResult etc.), or mutable global state are present. All state operations use deterministic inputs derived from transaction arguments and ledger state.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L117-L118\nRATIONALE: The chaincode uses stub.GetTxTimestamp() at L117-L118 for timestamps, which is deterministic across endorsers. No time.Now(), goroutines, map iterations affecting writes, non-revalidated queries (GetQueryResult etc.), or mutable global state are present. All state operations use deterministic inputs derived from transaction arguments and ledger state.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:44:42.880503",
+  "annotator": "2nd"
+}

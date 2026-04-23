@@ -1,0 +1,19 @@
+{
+  "file_id": "0129_akkagao_citizensChain",
+  "repo": "akkagao",
+  "filename": "citizensChain.go",
+  "elapsed_s": 13.1,
+  "input_tokens": 1729,
+  "output_tokens": 575,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard Init/Invoke entrypoints with deterministic operations. It uses only GetState and PutState for ledger access, processes input arguments deterministically, and contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface) peer.Response` at L36\n- `Invoke(stub shim.ChaincodeStubInterface) peer.Response` at L52\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `People` and `Location` structs use slices and strings, not maps. `json.Unmarshal` into a struct and `json.Marshal` are not C3 issues.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used (L73), which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Review Transaction Logic\n\n- `Init`: Validates arguments and returns success/error - deterministic\n- `Invoke`: Routes to `register` or `query` based on function name - deterministic\n- `query`: Uses `GetState` and returns result - deterministic\n- `register`: Unmarshals JSON, calls `PutState` with provided key/value - deterministic\n\nAll operations are based on transaction inputs and ledger state, with no sources of nondeterminism.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard Init/Invoke entrypoints with deterministic operations. It uses only GetState and PutState for ledger access, processes input arguments deterministically, and contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:11:57.238186",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0779_suddutt1_InvokersIdentity",
+  "repo": "suddutt1",
+  "filename": "InvokersIdentity.go",
+  "elapsed_s": 3.32,
+  "input_tokens": 2309,
+  "output_tokens": 216,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L24-L31, L35-L37, L56-L62, L99-L105",
+  "rationale": "The `writeTransaction` function (L99-L105) calls `encryptAndDecrypt` (L56-L62), which invokes `GenAESKey` (L35-L37) that calls `GetRandomBytes` (L24-L31). `GetRandomBytes` uses `crypto/rand.Read` to generate random bytes that are then encrypted and written to the ledger via `stub.PutState(args[0], cryptoArg)` at L103. Since the random key is generated fresh on each invocation without deterministic seeding, the encrypted ciphertext will differ across endorsers, causing the same input to produce different ledger writes and thus consensus failure.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L24-L31, L35-L37, L56-L62, L99-L105\n\nRATIONALE: The `writeTransaction` function (L99-L105) calls `encryptAndDecrypt` (L56-L62), which invokes `GenAESKey` (L35-L37) that calls `GetRandomBytes` (L24-L31). `GetRandomBytes` uses `crypto/rand.Read` to generate random bytes that are then encrypted and written to the ledger via `stub.PutState(args[0], cryptoArg)` at L103. Since the random key is generated fresh on each invocation without deterministic seeding, the encrypted ciphertext will differ across endorsers, causing the same input to produce different ledger writes and thus consensus failure.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:00:10.326880",
+  "annotator": "2nd"
+}

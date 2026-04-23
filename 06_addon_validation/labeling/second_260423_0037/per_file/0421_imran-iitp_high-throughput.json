@@ -1,0 +1,19 @@
+{
+  "file_id": "0421_imran-iitp_high-throughput",
+  "repo": "imran-iitp",
+  "filename": "high-throughput.go",
+  "elapsed_s": 8.06,
+  "input_tokens": 3556,
+  "output_tokens": 686,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "None**",
+  "rationale": "** The file contains valid HLF transaction entrypoints but exhibits no C1–C4 or C6 vulnerability patterns. All state modifications are deterministic, based on composite keys and iterator order. Iterator cleanup is proper. No consensus-critical nondeterminism detected.",
+  "raw_response": "# Audit Report\n\n## Summary\nThis file contains a recognizable HLF transaction entrypoint (`Init` and `Invoke` methods) and multiple transaction functions. Analysis reveals **no consensus-critical nondeterminism patterns**.\n\n## Detailed Analysis\n\n### C1 (TIME_NOW)\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n- `GetTxTimestamp()` is not used.\n- **Status: SAFE**\n\n### C2 (GOROUTINE)\n- No `go func()` or `go methodCall()` patterns.\n- **Status: SAFE**\n\n### C3 (MAP_ITERATION)\n- No `for...range` over map-typed expressions.\n- No `encoding/json.Marshal(map)` calls.\n- **Status: SAFE**\n\n### C4 (NON_REVALIDATED_QUERY)\n- `GetStateByPartialCompositeKey()` is used in `get()` (L95), `prune()` (L130), and `delete()` (L185).\n- Per taxonomy: **GetStateByPartialCompositeKey is NOT a C4 source** (explicitly excluded).\n- `GetState()` is used in `putStandard()` (L245) and `getStandard()` (L258) but only for reads returned via `shim.Success`, not for write decisions.\n- **Status: SAFE**\n\n### C6 (GLOBAL_MUTABLE_STATE)\n- Only package-level declarations are constants `OK` and `ERROR` (L13–14), which are read-only.\n- No mutable package-level variables.\n- **Status: SAFE**\n\n### C5 (ITERATOR_LEAK)\n- All iterator instances (`deltaResultsIterator`) are properly closed via `defer Close()` on all paths (L97, L132, L187).\n- **Status: NO**\n\n## Conclusion\nAll transaction functions (`update`, `get`, `prune`, `delete`, `putStandard`, `getStandard`, `delStandard`) use deterministic operations:\n- Composite key construction with deterministic inputs (name, operation, value, txID).\n- Iterator traversal in composite key order (deterministic by ledger state).\n- Arithmetic operations on parsed floats (deterministic).\n- No time-dependent, concurrency-dependent, or non-revalidated query logic.\n\n---\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: None**\n\n**RATIONALE:** The file contains valid HLF transaction entrypoints but exhibits no C1–C4 or C6 vulnerability patterns. All state modifications are deterministic, based on composite keys and iterator order. Iterator cleanup is proper. No consensus-critical nondeterminism detected.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:49:36.332591",
+  "annotator": "2nd"
+}

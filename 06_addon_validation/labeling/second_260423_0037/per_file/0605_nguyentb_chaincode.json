@@ -1,0 +1,19 @@
+{
+  "file_id": "0605_nguyentb_chaincode",
+  "repo": "nguyentb",
+  "filename": "chaincode.go",
+  "elapsed_s": 1.75,
+  "input_tokens": 926,
+  "output_tokens": 143,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only a thin wrapper around a router object. The `Init` and `Invoke` methods delegate immediately to `cc.router.HandleInit()` and `cc.router.Handle()` respectively without any local logic. Since the actual transaction logic resides in the `Group` type (defined in another file), intra-file evidence of consensus-critical nondeterminism cannot be established. Per scope rules, cross-file reasoning is excluded.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only a thin wrapper around a router object. The `Init` and `Invoke` methods delegate immediately to `cc.router.HandleInit()` and `cc.router.Handle()` respectively without any local logic. Since the actual transaction logic resides in the `Group` type (defined in another file), intra-file evidence of consensus-critical nondeterminism cannot be established. Per scope rules, cross-file reasoning is excluded.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:55:29.349885",
+  "annotator": "2nd"
+}

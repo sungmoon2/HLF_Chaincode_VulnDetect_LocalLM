@@ -1,0 +1,19 @@
+{
+  "file_id": "0513_LinkaKorea_linkatoken",
+  "repo": "LinkaKorea",
+  "filename": "linkatoken.go",
+  "elapsed_s": 3.24,
+  "input_tokens": 3964,
+  "output_tokens": 179,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present. All ledger writes (PutState, DelState) use deterministic inputs derived from function parameters, parsed signatures, and state queries—not from time.Now(), goroutines, map iteration order, or unvalidated query results. The global variable `m` (majorfunc type) is used only as a receiver for method calls and does not represent mutable state influencing writes. No time-dependent, concurrency-based, or non-deterministic iteration patterns reach any sink.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present. All ledger writes (PutState, DelState) use deterministic inputs derived from function parameters, parsed signatures, and state queries—not from time.Now(), goroutines, map iteration order, or unvalidated query results. The global variable `m` (majorfunc type) is used only as a receiver for method calls and does not represent mutable state influencing writes. No time-dependent, concurrency-based, or non-deterministic iteration patterns reach any sink.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:37.447194",
+  "annotator": "2nd"
+}

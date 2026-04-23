@@ -1,0 +1,19 @@
+{
+  "file_id": "0253_chainHero_main",
+  "repo": "chainHero",
+  "filename": "main.go",
+  "elapsed_s": 3.83,
+  "input_tokens": 1253,
+  "output_tokens": 158,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains HLF transaction entrypoints (Init and Invoke methods). The code calls external functions `updateInLedger`, `t.query`, and `t.update` which are not defined in this file. Within this file itself, there are no C1-C4 or C6 vulnerability patterns - no time.Now(), no goroutines, no map iteration, no rich queries, and no mutable global state. The fmt.Println calls are logging only and do not influence ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains HLF transaction entrypoints (Init and Invoke methods). The code calls external functions `updateInLedger`, `t.query`, and `t.update` which are not defined in this file. Within this file itself, there are no C1-C4 or C6 vulnerability patterns - no time.Now(), no goroutines, no map iteration, no rich queries, and no mutable global state. The fmt.Println calls are logging only and do not influence ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:20:39.994337",
+  "annotator": "2nd"
+}

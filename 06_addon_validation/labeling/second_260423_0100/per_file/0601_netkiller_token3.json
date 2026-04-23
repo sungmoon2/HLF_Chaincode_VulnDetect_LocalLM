@@ -1,0 +1,19 @@
+{
+  "file_id": "0601_netkiller_token3",
+  "repo": "netkiller",
+  "filename": "token3.go",
+  "elapsed_s": 14.63,
+  "input_tokens": 6470,
+  "output_tokens": 627,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "RATIONALE: The chaincode uses maps but only accesses them via direct key lookup, not iteration. All json.Marshal calls on maps are deterministic in Go's standard library. No time operations, goroutines, rich queries, or mutable global state are present.",
+  "rationale": "The chaincode uses maps but only accesses them via direct key lookup, not iteration. All json.Marshal calls on maps are deterministic in Go's standard library. No time operations, goroutines, rich queries, or mutable global state are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`, so this is valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: I need to check for `for...range` over maps that influence writes.\n- Looking at the code, there are maps used (`map[string]Currency`, `map[string]float64`), but I don't see any `for...range` iteration over these maps.\n- The `json.Marshal()` calls on maps are SAFE per the taxonomy (Go's encoding/json sorts keys deterministically).\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `const TokenKey = \"Token\"` - This is a constant, not mutable state.\n- No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Detailed Review of Data Flow\n\nThe chaincode uses:\n- `stub.GetState()` and `stub.PutState()` for state operations\n- `json.Marshal()` on structs and maps\n- Maps are used for `Currency` and `BalanceOf` fields\n\nWhen `json.Marshal()` is called on structs containing maps (like `Token` with `Currency map[string]Currency` or `Account` with `BalanceOf map[string]float64`), Go's standard library `encoding/json` sorts map keys alphabetically, making serialization deterministic.\n\nThere are no patterns that would cause endorsement divergence:\n- No time-based operations\n- No goroutines\n- No map iteration in code logic\n- No rich queries\n- No mutable global state\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: \nRATIONALE: The chaincode uses maps but only accesses them via direct key lookup, not iteration. All json.Marshal calls on maps are deterministic in Go's standard library. No time operations, goroutines, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:46:29.437627",
+  "annotator": "2nd"
+}

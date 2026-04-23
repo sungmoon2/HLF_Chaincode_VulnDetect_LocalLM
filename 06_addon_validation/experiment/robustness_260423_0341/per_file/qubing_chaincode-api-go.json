@@ -1,0 +1,55 @@
+{
+  "repo": "qubing",
+  "filename": "chaincode-api-go.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "ae18a81074922151",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 1.34,
+      "finish_reason": "stop",
+      "prompt_tokens": 4964,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 4964,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.07,
+      "finish_reason": "stop",
+      "prompt_tokens": 4964,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.08,
+      "finish_reason": "stop",
+      "prompt_tokens": 4964,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.08,
+      "finish_reason": "stop",
+      "prompt_tokens": 4964,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.32,
+  "total_elapsed_s": 1.62,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:54:49.762510"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0669_qubing_chaincode-api-go",
+  "repo": "qubing",
+  "filename": "chaincode-api-go.go",
+  "elapsed_s": 16.19,
+  "input_tokens": 7672,
+  "output_tokens": 755,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L17-L19",
+  "rationale": "The Invoke method returns immediately without executing any business logic. Helper methods containing GetQueryResult/GetHistoryForKey are read-only (return data via shim.Success) and don't influence write decisions. No C1-C4 or C6 patterns that reach sinks are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `MyChaincode` implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode. However, the `Invoke` method simply returns `shim.Success(nil)` without routing to any of the helper methods. The helper methods (doGetState, doPutState, etc.) are defined but never called from `Invoke`.\n\n### Step 2: Source Pattern Analysis\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `doGetQueryResult` (L213-237): Uses `GetQueryResult` but only returns data via `shim.Success` - read-only, no write decision.\n- `doGetQueryResultWithPagination` (L239-266): Uses `GetQueryResultWithPagination` but only returns data - read-only.\n- `doGetHistoryForKey` (L268-296): Uses `GetHistoryForKey` but only returns data - read-only.\n- `doGetPrivateDataQueryResult` (L358-382): Uses `GetPrivateDataQueryResult` but only returns data - read-only.\n\nAll these query methods are read-only - they don't use query results to make write decisions.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### Step 3: Sink Reachability\nThe `Invoke` method returns immediately without calling any helper methods. The helper methods that contain writes (`doPutState`, `doDelState`, `doPutPrivateData`, `doDelPrivateData`, `doCreateCompositeKey`) are never invoked from the transaction entrypoint.\n\nEven if the helper methods were called, the query methods (GetQueryResult, GetHistoryForKey, GetPrivateDataQueryResult) only return data and don't influence write decisions.\n\n### Step 4: C5 Iterator Leak Check\nAll iterators appear to have `defer resultIt.Close()` or `defer queryIt.Close()` calls. No iterator leaks detected.\n\n### Conclusion\nThe chaincode has no active transaction logic (Invoke does nothing), and even the helper methods don't exhibit consensus-critical nondeterminism patterns. The query methods are read-only and don't influence writes.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L17-L19\nRATIONALE: The Invoke method returns immediately without executing any business logic. Helper methods containing GetQueryResult/GetHistoryForKey are read-only (return data via shim.Success) and don't influence write decisions. No C1-C4 or C6 patterns that reach sinks are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:51:16.097896",
+  "annotator": "2nd"
+}

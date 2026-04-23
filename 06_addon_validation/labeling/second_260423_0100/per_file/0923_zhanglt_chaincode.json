@@ -1,0 +1,19 @@
+{
+  "file_id": "0923_zhanglt_chaincode",
+  "repo": "zhanglt",
+  "filename": "chaincode.go",
+  "elapsed_s": 14.08,
+  "input_tokens": 2017,
+  "output_tokens": 641,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L103-L108",
+  "rationale": "The time.Local modification occurs in main() during chaincode startup, not during transaction execution. The Init/InitLedger/Invoke functions contain no nondeterministic patterns - they iterate over fixed arrays with deterministic indices and delegate to external packages without introducing local nondeterminism.",
+  "raw_response": "Looking at this chaincode file, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `InitLedger` (contractapi method)\n- `Init` (shim.ChaincodeStubInterface)\n- `Invoke` (shim.ChaincodeStubInterface)\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Lines 103-108 in `main()`: `time.LoadLocation(\"Asia/Shanghai\")` and `time.Local = timeLocal`\n- This modifies the global `time.Local` variable, which affects how `time.Now()` behaves\n- However, this is in `main()`, which runs once during chaincode startup, not during transaction execution\n- The `Init`, `InitLedger`, and `Invoke` functions don't use `time.Now()` or any time-dependent operations that would affect ledger writes\n\n**C2 GOROUTINE**: No goroutines spawned in transaction logic.\n\n**C3 MAP_ITERATION**: No map iteration in this file. The iterations are over arrays with fixed indices.\n\n**C4 NON_REVALIDATED_QUERY**: No query operations in this file (queries are delegated to `api` package).\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- The `time.Local` modification in `main()` is a global state change, but:\n  - It happens in `main()` before `shim.Start()`, not during transaction execution\n  - The transaction functions (`Init`, `InitLedger`, `Invoke`) don't read `time.Local` or use time-dependent operations\n  - This is initialization code, not transaction logic\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Key Observations\n1. The `Init` and `InitLedger` functions iterate over fixed-size arrays (not maps) with deterministic indices\n2. The `Invoke` function is a simple switch statement delegating to external `api` package functions\n3. The `time.Local` modification is in startup code (`main()`), not transaction execution paths\n4. All ledger writes use deterministic data from hardcoded arrays\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L103-L108\nRATIONALE: The time.Local modification occurs in main() during chaincode startup, not during transaction execution. The Init/InitLedger/Invoke functions contain no nondeterministic patterns - they iterate over fixed arrays with deterministic indices and delegate to external packages without introducing local nondeterminism.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:09:39.806208",
+  "annotator": "2nd"
+}

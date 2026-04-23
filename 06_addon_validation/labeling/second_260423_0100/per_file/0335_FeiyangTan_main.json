@@ -1,0 +1,19 @@
+{
+  "file_id": "0335_FeiyangTan_main",
+  "repo": "FeiyangTan",
+  "filename": "main.go",
+  "elapsed_s": 5.38,
+  "input_tokens": 5274,
+  "output_tokens": 162,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "",
+  "rationale": "This chaincode contains recognizable HLF transaction entrypoints (Init/Invoke). It uses only GetState, PutState, DelState, and GetStateByPartialCompositeKey (which is explicitly NOT a C4 source per the taxonomy). There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no GetQueryResult/GetHistoryForKey calls (C4), and no package-level mutable state (C6). The queryAssetExchangeRecord function properly closes its iterator with defer.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nRATIONALE: This chaincode contains recognizable HLF transaction entrypoints (Init/Invoke). It uses only GetState, PutState, DelState, and GetStateByPartialCompositeKey (which is explicitly NOT a C4 source per the taxonomy). There are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no GetQueryResult/GetHistoryForKey calls (C4), and no package-level mutable state (C6). The queryAssetExchangeRecord function properly closes its iterator with defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:27:07.408427",
+  "annotator": "2nd"
+}

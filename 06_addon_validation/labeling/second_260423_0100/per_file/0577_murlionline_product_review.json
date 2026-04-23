@@ -1,0 +1,19 @@
+{
+  "file_id": "0577_murlionline_product_review",
+  "repo": "murlionline",
+  "filename": "product_review.go",
+  "elapsed_s": 5.64,
+  "input_tokens": 2218,
+  "output_tokens": 150,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L107-L130",
+  "rationale": "The file contains GetQueryResult (L107) which is a potential C4 source, but the search function only reads data and returns it via Success - it does not use the query results to determine any ledger writes (PutState/DelState). The query result is purely returned as a read-only response, which does not constitute C4 (non-revalidated query influencing write decisions). The global logger variable is only used for logging purposes, not influencing transaction outcomes.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L107-L130\nRATIONALE: The file contains GetQueryResult (L107) which is a potential C4 source, but the search function only reads data and returns it via Success - it does not use the query results to determine any ledger writes (PutState/DelState). The query result is purely returned as a read-only response, which does not constitute C4 (non-revalidated query influencing write decisions). The global logger variable is only used for logging purposes, not influencing transaction outcomes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:44:27.193853",
+  "annotator": "2nd"
+}

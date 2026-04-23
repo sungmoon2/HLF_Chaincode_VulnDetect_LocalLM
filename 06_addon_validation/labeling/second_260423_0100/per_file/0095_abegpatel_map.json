@@ -1,0 +1,19 @@
+{
+  "file_id": "0095_abegpatel_map",
+  "repo": "abegpatel",
+  "filename": "map.go",
+  "elapsed_s": 5.73,
+  "input_tokens": 2357,
+  "output_tokens": 169,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L104-L121, L122-L148",
+  "rationale": "The file contains GetQueryResult (L104) and GetHistoryForKey (L123), which are potential C4 sources. However, both are used in read-only operations that only return data via shim.Success without influencing any ledger writes (PutState/DelState). The time.Sleep at L85 uses a user-provided parameter, not time.Now(), so it's not C1. The for...range over slices (not maps) at L95 and L140 are not C3 issues.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L104-L121, L122-L148\nRATIONALE: The file contains GetQueryResult (L104) and GetHistoryForKey (L123), which are potential C4 sources. However, both are used in read-only operations that only return data via shim.Success without influencing any ledger writes (PutState/DelState). The time.Sleep at L85 uses a user-provided parameter, not time.Now(), so it's not C1. The for...range over slices (not maps) at L95 and L140 are not C3 issues.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:09:12.105342",
+  "annotator": "2nd"
+}

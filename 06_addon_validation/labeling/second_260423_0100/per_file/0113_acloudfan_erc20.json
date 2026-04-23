@@ -1,0 +1,19 @@
+{
+  "file_id": "0113_acloudfan_erc20",
+  "repo": "acloudfan",
+  "filename": "erc20.go",
+  "elapsed_s": 6.19,
+  "input_tokens": 2376,
+  "output_tokens": 130,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains valid HLF transaction entrypoints (Init and Invoke methods). The code uses only deterministic operations: GetState, PutState, SetEvent with deterministic string construction, and json.Marshal on a struct (not a map). There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state that influences ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains valid HLF transaction entrypoints (Init and Invoke methods). The code uses only deterministic operations: GetState, PutState, SetEvent with deterministic string construction, and json.Marshal on a struct (not a map). There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state that influences ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:10:39.570295",
+  "annotator": "2nd"
+}

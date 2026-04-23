@@ -1,0 +1,55 @@
+{
+  "repo": "KTyrantOnly",
+  "filename": "crowdTest.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "e196917eab6f0acf",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'crowdTest.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access Control Issues  \n**Severity:** Medium  \n**Affected Code Location:** `save`, `delete`, `history` functions  \n**Description:** The chaincode does not enforce any access control checks. Any user can call the `save`, `delete`, and `history` functions, which could lead to unauthorized modifications or data leakage.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `APIstub.GetCreator()` and comparing it against a list of authorized users or roles.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input Validation Flaws  \n**Severity:** High  \n**Affected Code Location:** `save` function  \n**Description:** The `save` function does not validate the input arguments. For example, it does not check if the `doctype` is a valid type or if the required fields are present. This can lead to invalid data being stored in the ledger, which could cause issues when querying or processing the data.  \n**Recommended Fix:** Add input validation checks to ensure that the input arguments are valid and complete. For example, check if the `doctype` is one of the expected values and if all required fields are present.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-After-Write Conflicts (Phantom Reads)  \n**Severity:** Low  \n**Affected Code Location:** `history` function  \n**Description:** The `history` function retrieves the history of a key using `stub.GetHistoryForKey(key)`. However, it does not ensure that the key exists before retrieving its history. If the key does not exist, the function will return an empty history, which could be misleading.  \n**Recommended Fix:** Add a check to ensure that the key exists before retrieving its history. For example, use `stub.GetState(key)` to check if the key exists and return an error if it does not.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private Data Leakage  \n**Severity:** High  \n**Affected Code Location:** `findOne`, `query`, `queryWithPagination` functions  \n**Description:** The chaincode does not enforce any access control checks when retrieving data. Any user can call these functions and retrieve any data from the ledger, which could lead to private data leakage.  \n**Recommended Fix:** Implement access control checks to ensure that only authorized users can retrieve data. This can be done by checking the identity of the caller using `APIstub.GetCreator()` and comparing it against a list of authorized users or roles.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-Deterministic Operations  \n**Severity:** Low  \n**Affected Code Location:** `history` function  \n**Description:** The `history` function retrieves the history of a key using `stub.GetHistoryForKey(key)`. However, it does not ensure that the history is retrieved in a deterministic order. This could lead to issues when processing the history, especially if the order of the history is important.  \n**Recommended Fix:** Ensure that the history is retrieved in a deterministic order. For example, use `stub.GetState(key)` to retrieve the current state of the key and then use `stub.GetHistoryForKey(key)` to retrieve the history of the key.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure Key Management  \n**Severity:** Low  \n**Affected Code Location:** `save`, `delete` functions  \n**Description:** The chaincode does not use any secure key management practices. For example, it does not use a secure key to encrypt the data before storing it in the ledger. This could lead to data leakage if the data is intercepted.  \n**Recommended Fix:** Use a secure key to encrypt the data before storing it in the ledger. This can be done using a symmetric encryption algorithm such as AES.\n\n### Summary\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. These vulnerabilities could lead to unauthorized modifications, data leakage, and other issues. To mitigate these vulnerabilities, the chaincode should implement access control checks, input validation checks, and secure key management practices.",
+      "prediction": "vulnerable",
+      "elapsed_s": 9.3,
+      "finish_reason": "stop",
+      "prompt_tokens": 2769,
+      "completion_tokens": 911
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2769,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2769,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "### Analysis of 'crowdTest.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access control issues\n**Severity:** High\n**Affected Code Location:** `save`, `delete`, `history`\n**Description:** The chaincode does not enforce any access control checks. Any user can call the `save`, `delete`, and `history` functions, which can lead to unauthorized modifications and data leakage.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can perform these operations. This can be done by checking the identity of the caller using `APIstub.GetCreator()` and comparing it against a list of authorized users or roles.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input validation flaws\n**Severity:** High\n**Affected Code Location:** `save`\n**Description:** The `save` function does not validate the input arguments. For example, it does not check if the `doctype` is a valid type or if the required fields are present. This can lead to invalid data being stored in the ledger.\n**Recommended Fix:** Add input validation checks to ensure that the input arguments are valid and complete. For example, check if the `doctype` is one of the expected values and if all required fields are present.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-after-write conflicts (phantom reads)\n**Severity:** Medium\n**Affected Code Location:** `queryWithPagination`\n**Description:** The `queryWithPagination` function does not handle phantom reads. If a new transaction is added to the ledger while the query is being executed, the query may return different results.\n**Recommended Fix:** Use a consistent read model to avoid phantom reads. This can be done by using the `GetStateByPartialCompositeKey` function to query the ledger in a consistent manner.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private data leakage\n**Severity:** High\n**Affected Code Location:** `findOne`, `query`, `queryWithPagination`, `history`\n**Description:** The chaincode does not enforce any access control checks on the data being returned. Any user can call these functions and retrieve data that may be private or sensitive.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can retrieve data. This can be done by checking the identity of the caller and comparing it against a list of authorized users or roles.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-deterministic operations\n**Severity:** Medium\n**Affected Code Location:** `queryWithPagination`\n**Description:** The `queryWithPagination` function uses a bookmark to paginate the results. However, the bookmark is not guaranteed to be consistent across different transactions, which can lead to non-deterministic results.\n**Recommended Fix:** Use a consistent read model to avoid non-deterministic operations. This can be done by using the `GetStateByPartialCompositeKey` function to query the ledger in a consistent manner.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure key management\n**Severity:** Low\n**Affected Code Location:** `save`\n**Description:** The `save` function does not use any encryption or hashing to secure the data being stored. This can lead to data leakage if the data is intercepted.\n**Recommended Fix:** Use encryption or hashing to secure the data being stored. This can be done by using a secure encryption algorithm to encrypt the data before storing it in the ledger.\n\n### Summary\nThe chaincode has several security vulnerabilities, including access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, and insecure key management. These vulnerabilities can lead to unauthorized modifications, data leakage, and other security issues. To mitigate these vulnerabilities, access control checks, input validation, consistent read models, encryption, and hashing should be implemented.",
+      "prediction": "vulnerable",
+      "elapsed_s": 7.58,
+      "finish_reason": "stop",
+      "prompt_tokens": 2769,
+      "completion_tokens": 812
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 2769,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.6,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 3.41,
+  "total_elapsed_s": 17.03,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:10:13.516087"
+}

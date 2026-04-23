@@ -1,0 +1,19 @@
+{
+  "file_id": "0307_DCoT-EL_dcotWorkflow",
+  "repo": "DCoT-EL",
+  "filename": "dcotWorkflow.go",
+  "elapsed_s": 5.77,
+  "input_tokens": 9369,
+  "output_tokens": 423,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1**",
+  "secondary_class": "C4**",
+  "auxiliary_c5": "YES**",
+  "evidence_lines": "**",
+  "rationale": "",
+  "raw_response": "# Audit Report: DcotWorkflowChaincode\n\n## Decision\n\n**VERDICT: VULNERABLE**\n\n**PRIMARY_CLASS: C1**\n\n**SECONDARY_CLASS: C4**\n\n**AUXILIARY_C5: YES**\n\n---\n\n## Evidence\n\n**EVIDENCE_LINES:**\n- L95–L98: `guid := xid.New()` generates a random GUID that is written to ledger via `stub.PutState(COCKey, byteCOC)` at L127\n- L1006–L1040: `stub.GetHistoryForKey(COCKey)` result (C4 source) determines response content returned via `shim.Success()` at L1039, but this is read-only query response (not a write decision)\n- L1006: Iterator created from `stub.GetHistoryForKey()` but `historyResponse.Close()` never called (C5)\n\n---\n\n## Rationale\n\nThe file contains a recognizable HLF transaction entrypoint (`Init` and `Invoke` methods implementing the shim.Chaincode interface). The `initNewChain()` function (L95–L128) uses `xid.New()` to generate a random GUID that is directly embedded into the `ChainOfCustody` struct and persisted to the ledger via `stub.PutState()` at L127. Since `xid.New()` produces non-deterministic output across endorsers, this creates consensus-critical nondeterminism (C1). Additionally, `getChainOfEvents()` uses `stub.GetHistoryForKey()` (a C4 source) to construct the response, though this is a read-only query and does not influence a write decision. The history iterator is never explicitly closed (C5), though this alone does not cause the VULNERABLE verdict.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:46:14.669016",
+  "annotator": "2nd"
+}

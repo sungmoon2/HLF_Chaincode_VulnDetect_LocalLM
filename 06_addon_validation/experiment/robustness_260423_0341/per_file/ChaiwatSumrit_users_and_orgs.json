@@ -1,0 +1,55 @@
+{
+  "repo": "ChaiwatSumrit",
+  "filename": "users_and_orgs.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "fa1c70fd04a3e786",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.08,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'users_and_orgs.go' does not contain any obvious security vulnerabilities based on the provided code snippet. The code defines structures for `Organization`, `User`, `IT_RPT`, and a `UsersAndOrgs` chaincode. However, the `Init` function does not perform any operations that could introduce security issues such as access control, input validation, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management.\n\nTo ensure comprehensive security analysis, it would be necessary to review the entire chaincode, including all functions and interactions with the ledger. Additionally, it's important to consider the context in which this chaincode will be deployed and the specific requirements and constraints of the application it supports.",
+      "prediction": "safe",
+      "elapsed_s": 1.35,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 158
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.06,
+      "finish_reason": "stop",
+      "prompt_tokens": 309,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.32,
+  "total_elapsed_s": 1.6,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:01:45.798684"
+}

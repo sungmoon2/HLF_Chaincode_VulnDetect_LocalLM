@@ -1,0 +1,19 @@
+{
+  "file_id": "0701_s7techlab_chaincode",
+  "repo": "s7techlab",
+  "filename": "chaincode.go",
+  "elapsed_s": 3.19,
+  "input_tokens": 928,
+  "output_tokens": 126,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains HLF transaction entrypoints (Init and Invoke methods implementing shim.Chaincode interface), but the file itself contains no nondeterministic patterns. It simply delegates to cc.router.HandleInit and cc.router.Handle. Any potential issues would be in the router package (cross-file), which is out of scope for intra-file analysis.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains HLF transaction entrypoints (Init and Invoke methods implementing shim.Chaincode interface), but the file itself contains no nondeterministic patterns. It simply delegates to cc.router.HandleInit and cc.router.Handle. Any potential issues would be in the router package (cross-file), which is out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:53:40.943164",
+  "annotator": "2nd"
+}

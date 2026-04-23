@@ -1,0 +1,19 @@
+{
+  "file_id": "0357_FLombardi-PhD_yandex_translator",
+  "repo": "FLombardi-PhD",
+  "filename": "yandex_translator.go",
+  "elapsed_s": 3.15,
+  "input_tokens": 2007,
+  "output_tokens": 179,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67-L85",
+  "rationale": "The `invoke` function (L67-L85) makes an external HTTP call to `http.Get(url)` at L75, whose response body is parsed and written to ledger state via `stub.PutState(wordIta, []byte(wordEng))` at L84. The external API response is non-deterministic across endorsers—different nodes may receive different translations, network timeouts, or API failures—causing divergent ledger writes and endorsement failure. This is a consensus-critical nondeterminism vulnerability (C1 category: external input influencing a ledger write).",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L67-L85\n\nRATIONALE: The `invoke` function (L67-L85) makes an external HTTP call to `http.Get(url)` at L75, whose response body is parsed and written to ledger state via `stub.PutState(wordIta, []byte(wordEng))` at L84. The external API response is non-deterministic across endorsers—different nodes may receive different translations, network timeouts, or API failures—causing divergent ledger writes and endorsement failure. This is a consensus-critical nondeterminism vulnerability (C1 category: external input influencing a ledger write).",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:36.379339",
+  "annotator": "2nd"
+}

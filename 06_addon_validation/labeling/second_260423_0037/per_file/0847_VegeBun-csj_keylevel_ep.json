@@ -1,0 +1,19 @@
+{
+  "file_id": "0847_VegeBun-csj_keylevel_ep",
+  "repo": "VegeBun-csj",
+  "filename": "keylevel_ep.go",
+  "elapsed_s": 3.19,
+  "input_tokens": 2893,
+  "output_tokens": 195,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init and Invoke methods) and multiple transaction functions. However, no C1 (time-based), C2 (goroutine), C3 (map iteration), C4 (non-revalidated query), or C6 (global mutable state) vulnerabilities are present. All ledger writes (PutState, SetEvent, SetStateValidationParameter) are driven by deterministic inputs (function arguments, hardcoded values, or state reads), and GetStateByRange in queryAllCars is read-only (returned via shim.Success, not used to determine a write decision). The code is consensus-safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains valid HLF transaction entrypoints (Init and Invoke methods) and multiple transaction functions. However, no C1 (time-based), C2 (goroutine), C3 (map iteration), C4 (non-revalidated query), or C6 (global mutable state) vulnerabilities are present. All ledger writes (PutState, SetEvent, SetStateValidationParameter) are driven by deterministic inputs (function arguments, hardcoded values, or state reads), and GetStateByRange in queryAllCars is read-only (returned via shim.Success, not used to determine a write decision). The code is consensus-safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:14.225374",
+  "annotator": "2nd"
+}

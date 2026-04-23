@@ -1,0 +1,19 @@
+{
+  "file_id": "0629_papandas_fabric-payment",
+  "repo": "papandas",
+  "filename": "fabric-payment.go",
+  "elapsed_s": 4.54,
+  "input_tokens": 1319,
+  "output_tokens": 161,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L12-L14",
+  "rationale": "The file contains HLF transaction entrypoints (Init/Invoke). The package-level vars (L12-L14) are initialized with deterministic `new()` calls creating empty struct pointers - they are not mutated during transaction execution within this file. The logger global is only used for logging. All transaction logic is delegated to external contract methods which cannot be analyzed intra-file, but no nondeterministic patterns (time.Now, goroutines, map iteration, rich queries) exist in this file itself.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L12-L14\nRATIONALE: The file contains HLF transaction entrypoints (Init/Invoke). The package-level vars (L12-L14) are initialized with deterministic `new()` calls creating empty struct pointers - they are not mutated during transaction execution within this file. The logger global is only used for logging. All transaction logic is delegated to external contract methods which cannot be analyzed intra-file, but no nondeterministic patterns (time.Now, goroutines, map iteration, rich queries) exist in this file itself.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:48:17.851831",
+  "annotator": "2nd"
+}

@@ -1,0 +1,34 @@
+{
+  "version": "2.0",
+  "phase": "Phase 7 Robustness",
+  "run_start": "2026-04-23T03:41:47.636989",
+  "run_end": "2026-04-23T08:06:47.666745",
+  "temperature": 0.1,
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+  "inference_params": {
+    "n_gpu_layers": -1,
+    "n_ctx": 16384,
+    "max_tokens": 2048,
+    "temperature": 0.1
+  },
+  "benchmark_freeze_sha256": "51a261decdc15e1cd50170af3ebeebfcc2f4e916c8652d1ababd98447e29c48f",
+  "benchmark_total": 464,
+  "benchmark_vulnerable": 32,
+  "benchmark_safe": 432,
+  "classifier_note": "Identical to Phase 6 (26_run_main_experiment.py). Superset of INFERENCE_CONTRACT simplified spec.",
+  "total_files": 464,
+  "avg_stability": 0.8086,
+  "perfect_stability": 171,
+  "total_inference_s": 15877.0,
+  "errors": 0,
+  "processed_this_session": 464,
+  "path_issues": [],
+  "avg_per_file_s": 34.2
+}

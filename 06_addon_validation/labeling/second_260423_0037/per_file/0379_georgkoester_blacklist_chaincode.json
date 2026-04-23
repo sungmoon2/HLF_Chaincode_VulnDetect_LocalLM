@@ -1,0 +1,19 @@
+{
+  "file_id": "0379_georgkoester_blacklist_chaincode",
+  "repo": "georgkoester",
+  "filename": "blacklist_chaincode.go",
+  "elapsed_s": 3.39,
+  "input_tokens": 3291,
+  "output_tokens": 203,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L57-L75",
+  "rationale": "The Init function calls getTimestampString() at L57, which invokes stub.GetTxTimestamp() and converts it to a formatted string. This timestamp is then stored in the BlacklistRootEntry.Created field (L68-L70) and written to the ledger via stub.PutState(\"root\", newEntryBytes) at L75. Although GetTxTimestamp() is deterministic within a single endorsement, the timestamp value itself varies across transactions and endorsement rounds. When multiple endorsers execute Init with different wall-clock times (even microseconds apart), they will produce different \"Created\" values, causing the marshaled JSON to differ and leading to endorsement divergence on the PutState write.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L57-L75\n\nRATIONALE: The Init function calls getTimestampString() at L57, which invokes stub.GetTxTimestamp() and converts it to a formatted string. This timestamp is then stored in the BlacklistRootEntry.Created field (L68-L70) and written to the ledger via stub.PutState(\"root\", newEntryBytes) at L75. Although GetTxTimestamp() is deterministic within a single endorsement, the timestamp value itself varies across transactions and endorsement rounds. When multiple endorsers execute Init with different wall-clock times (even microseconds apart), they will produce different \"Created\" values, causing the marshaled JSON to differ and leading to endorsement divergence on the PutState write.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:14.760999",
+  "annotator": "2nd"
+}

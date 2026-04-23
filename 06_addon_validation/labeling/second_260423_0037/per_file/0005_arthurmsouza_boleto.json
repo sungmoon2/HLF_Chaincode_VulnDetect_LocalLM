@@ -1,0 +1,19 @@
+{
+  "file_id": "0005_arthurmsouza_boleto",
+  "repo": "arthurmsouza",
+  "filename": "boleto.go",
+  "elapsed_s": 3.88,
+  "input_tokens": 3547,
+  "output_tokens": 247,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L73-L74, L75",
+  "rationale": "The `registrarBoleto` function (L57–L104) contains a C1 TIME_NOW vulnerability. At L73, `time.Now()` is called and assigned to `notExpiredDate`, then at L74 the current time is formatted and written to `objBoleto.DataVencimento`. This value is subsequently marshaled and written to the ledger via `APIstub.PutState(args[0], boletoAsBytes)` at L103. Since `time.Now()` returns different values across endorsing peers (even microseconds apart), different peers will write different `DataVencimento` values for the same transaction, causing endorsement divergence. Additionally, L72 uses `rand.Intn()` multiple times to generate `CodigoBarra`, which is also nondeterministic and written to the ledger, compounding the consensus failure.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L73-L74, L75\n\nRATIONALE: The `registrarBoleto` function (L57–L104) contains a C1 TIME_NOW vulnerability. At L73, `time.Now()` is called and assigned to `notExpiredDate`, then at L74 the current time is formatted and written to `objBoleto.DataVencimento`. This value is subsequently marshaled and written to the ledger via `APIstub.PutState(args[0], boletoAsBytes)` at L103. Since `time.Now()` returns different values across endorsing peers (even microseconds apart), different peers will write different `DataVencimento` values for the same transaction, causing endorsement divergence. Additionally, L72 uses `rand.Intn()` multiple times to generate `CodigoBarra`, which is also nondeterministic and written to the ledger, compounding the consensus failure.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:37:31.737718",
+  "annotator": "2nd"
+}

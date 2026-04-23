@@ -1,0 +1,19 @@
+{
+  "file_id": "0271_code2understand_03_range_keys_chaincode",
+  "repo": "code2understand",
+  "filename": "03_range_keys_chaincode.go",
+  "elapsed_s": 13.84,
+  "input_tokens": 1546,
+  "output_tokens": 653,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses `GetStateByRange` which is explicitly excluded from C4 per the taxonomy. The only global variable is a logger (safe). No time functions, goroutines, or map iterations are present. The code follows deterministic patterns for ledger operations.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SimpleChaincode` implementing the shim interface. This is a valid HLF chaincode. → Continue analysis.\n\n### Step 2: Check for Source Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over map types.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 64: `stub.GetStateByRange(startKey, endKey)` - This is explicitly listed as NOT a C4 source per the taxonomy (\"GetStateByPartialCompositeKey and GetStateByRange are NOT C4 sources\").\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Line 14: `var logger = shim.NewLogger(\"SimpleChaincode\")` - This is a logger-only global, which is explicitly SAFE per the taxonomy.\n\n### Step 3: Auxiliary Check (C5)\n\n**C5 ITERATOR_LEAK**: \n- Line 65: `defer resultsIterator.Close()` is called immediately after creating the iterator.\n- However, if `err != nil` on line 67, the function returns with `shim.Error()` but `resultsIterator` could be nil, causing a panic on the deferred Close(). This is a potential bug but not a C5 leak in the traditional sense since `defer` is present.\n\nActually, looking more carefully: the `defer` is placed before the error check. If `GetStateByRange` returns an error, `resultsIterator` might be nil, and `defer resultsIterator.Close()` would panic. But this is a runtime error, not an iterator leak pattern. The Close() is properly deferred for successful paths.\n\n### Step 4: Verdict\n\nNo C1-C4 or C6 vulnerability patterns are present:\n- `GetStateByRange` is explicitly excluded from C4\n- The logger global is explicitly safe\n- No time, goroutine, or map iteration issues\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses `GetStateByRange` which is explicitly excluded from C4 per the taxonomy. The only global variable is a logger (safe). No time functions, goroutines, or map iterations are present. The code follows deterministic patterns for ledger operations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:22:15.033944",
+  "annotator": "2nd"
+}

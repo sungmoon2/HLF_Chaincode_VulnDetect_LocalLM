@@ -1,0 +1,19 @@
+{
+  "file_id": "0725_Saurabh1997_token_endorse",
+  "repo": "Saurabh1997",
+  "filename": "token_endorse.go",
+  "elapsed_s": 13.27,
+  "input_tokens": 1839,
+  "output_tokens": 580,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode uses only deterministic operations: direct GetState/PutState calls, SetStateValidationParameter, and SetEvent. No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface) peer.Response` (L14)\n- `Invoke(stub shim.ChaincodeStubInterface) peer.Response` (L30)\n\nThis is valid chaincode, so I proceed with analysis.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions found.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. The code uses `GetState` which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic. The `TokenChaincode` struct is empty and used only as a method receiver.\n\n### Step 3: Check for C5 (Auxiliary)\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code. The code uses direct `GetState` calls, not range queries.\n\n### Summary of Findings\n\nThe chaincode performs:\n- Direct state reads via `GetState` (L73-74)\n- Direct state writes via `PutState` (L18-19, L55)\n- State validation parameter operations (L21, L91, L99)\n- Event emission via `SetEvent` (L63)\n\nAll operations are deterministic:\n- No time-based operations\n- No concurrent execution\n- No map iteration\n- No rich queries\n- No mutable global state\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode uses only deterministic operations: direct GetState/PutState calls, SetStateValidationParameter, and SetEvent. No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:55:24.415204",
+  "annotator": "2nd"
+}

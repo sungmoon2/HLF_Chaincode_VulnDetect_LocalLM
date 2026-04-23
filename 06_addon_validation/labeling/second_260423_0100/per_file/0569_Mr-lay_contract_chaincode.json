@@ -1,0 +1,19 @@
+{
+  "file_id": "0569_Mr-lay_contract_chaincode",
+  "repo": "Mr-lay",
+  "filename": "contract_chaincode.go",
+  "elapsed_s": 20.56,
+  "input_tokens": 3887,
+  "output_tokens": 864,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L263-L278",
+  "rationale": "Map iterations in reflectMetadata() occur only during chaincode initialization (NewChaincode), not during transaction execution. The Invoke method uses only deterministic map lookups and sorted slice iterations. Transaction metadata slice is explicitly sorted (L276-278) ensuring deterministic order.",
+  "raw_response": "Looking at this file, I need to determine if it contains consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Is this a HLF transaction entrypoint?\nYes - this file contains `Init` and `Invoke` methods on `ContractChaincode` that implement the `shim.Chaincode` interface (lines 72-79 and 81-148).\n\n### Step 2: Check for vulnerability patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: I need to examine map iterations carefully.\n\nLooking at `reflectMetadata()` (lines 250-284):\n- Line 263: `for key, contract := range cc.contracts` - iterates over a map\n- Line 272: `for key, fn := range contract.functions` - iterates over a map\n\nThe iteration over `contract.functions` (line 272) appends to `contractMetadata.Transactions` slice. However, immediately after (lines 276-278), there's a `sort.Slice` that sorts the transactions by name, making the final order deterministic.\n\nThe iteration over `cc.contracts` (line 263) populates `reflectedMetadata.Contracts` which is itself a map. This is used in `augmentMetadata()` which sets `cc.metadata`.\n\nIn `Invoke()` (lines 81-148):\n- Line 127-132: Iterates over `cc.metadata.Contracts[ns].Transactions` - this is a slice, not a map, so order is deterministic.\n- Line 134: Calls `nsContract.functions[fn].Call()` - this is a map lookup, not iteration.\n\nThe `reflectMetadata()` function is called during `NewChaincode()` initialization (via `augmentMetadata()`), not during transaction execution. The metadata is built once at startup.\n\n**C4 NON_REVALIDATED_QUERY**: No GetQueryResult, GetPrivateDataQueryResult, GetQueryResultWithPagination, or GetHistoryForKey calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `SystemContractName` is a const, not a var - SAFE.\n- No package-level `var` declarations in this file.\n\n### Step 3: Deeper analysis of map iteration\n\nThe map iterations in `reflectMetadata()` occur during chaincode initialization (`NewChaincode()`), not during transaction execution (`Init`/`Invoke`). The metadata is computed once and stored. During `Invoke`, only deterministic operations occur:\n- Map lookups (not iterations)\n- Slice iterations (deterministic order)\n\nThe `Invoke` method does access `cc.contracts[ns]` and `nsContract.functions[fn]` but these are lookups, not range iterations.\n\n**C5 ITERATOR_LEAK**: No shim iterators are created in this file.\n\n## Conclusion\n\nThe map iterations exist but occur only during initialization (before any transactions), not during transaction processing. The `Invoke` method uses only map lookups and slice iterations, which are deterministic.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L263-L278\nRATIONALE: Map iterations in reflectMetadata() occur only during chaincode initialization (NewChaincode), not during transaction execution. The Invoke method uses only deterministic map lookups and sorted slice iterations. Transaction metadata slice is explicitly sorted (L276-278) ensuring deterministic order.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:43:59.892680",
+  "annotator": "2nd"
+}

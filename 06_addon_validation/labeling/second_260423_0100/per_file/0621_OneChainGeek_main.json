@@ -1,0 +1,19 @@
+{
+  "file_id": "0621_OneChainGeek_main",
+  "repo": "OneChainGeek",
+  "filename": "main.go",
+  "elapsed_s": 4.07,
+  "input_tokens": 1103,
+  "output_tokens": 147,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L14-L18, L25",
+  "rationale": "The file contains a map `wcFunctions` (L14-L18), but it is only accessed via direct key lookup (`wcFunctions[function]` at L25), not iterated with for...range. The package-level vars are a logger (SAFE) and a read-only function dispatch map initialized deterministically at package load time. No C1-C4 or C6 patterns are present that influence ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L14-L18, L25\nRATIONALE: The file contains a map `wcFunctions` (L14-L18), but it is only accessed via direct key lookup (`wcFunctions[function]` at L25), not iterated with for...range. The package-level vars are a logger (SAFE) and a read-only function dispatch map initialized deterministically at package load time. No C1-C4 or C6 patterns are present that influence ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:47:47.969717",
+  "annotator": "2nd"
+}

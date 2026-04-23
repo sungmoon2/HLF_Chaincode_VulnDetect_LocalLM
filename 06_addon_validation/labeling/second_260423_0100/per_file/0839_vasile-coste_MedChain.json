@@ -1,0 +1,19 @@
+{
+  "file_id": "0839_vasile-coste_MedChain",
+  "repo": "vasile-coste",
+  "filename": "MedChain.go",
+  "elapsed_s": 15.92,
+  "input_tokens": 5314,
+  "output_tokens": 732,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L147-159, L221-233, L249-261, L263-280",
+  "rationale": "The GetQueryResult and GetHistoryForKey calls are used only for read-only operations that return data via shim.Success without influencing any ledger writes. Time operations use the deterministic GetTxTimestamp() API. No other nondeterminism sources are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- The code uses `GetTxTimestamp()` via `GetTxTimestampChannel()` helper (lines 340-350), which is deterministic and SAFE.\n- `time.Unix()` is used to convert timestamps from `GetTxTimestamp()` - this is deterministic.\n- No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No goroutine spawning found.\n\n**C3 MAP_ITERATION**: No map iteration found.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getAllHospital` (L147-159): Uses `GetQueryResult` via `getQueryResultForQueryString`, returns results via `shim.Success` - read-only, no write decision.\n- `getAllHospitalToPatient` (L221-233): Same pattern - read-only.\n- `getAll` (L249-261): Same pattern - read-only.\n- `getHistoryForRecord` (L263-280): Uses `GetHistoryForKey` via `getHistory`, returns results via `shim.Success` - read-only.\n\nAll query results are returned directly to the client without influencing any write operations (PutState/DelState). These are read-only queries.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- `getHistory` (L282-330): Iterator created at L286, `defer resultsIterator.Close()` at L291 - properly closed.\n- `getQueryResultForQueryString` (L332-360): Iterator created at L336, `defer resultsIterator.Close()` at L340 - properly closed.\n\n### Key Observations\n\n1. The `GetQueryResult` calls in `getAllHospital`, `getAllHospitalToPatient`, and `getAll` only return data to the client - they don't make write decisions based on query results.\n\n2. The `GetHistoryForKey` in `getHistory` similarly only returns historical data without influencing writes.\n\n3. Time handling uses the deterministic `GetTxTimestamp()` API.\n\n4. All iterators are properly closed with defer statements.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L147-159, L221-233, L249-261, L263-280\nRATIONALE: The GetQueryResult and GetHistoryForKey calls are used only for read-only operations that return data via shim.Success without influencing any ledger writes. Time operations use the deterministic GetTxTimestamp() API. No other nondeterminism sources are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:03:25.404210",
+  "annotator": "2nd"
+}

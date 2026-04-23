@@ -1,0 +1,19 @@
+{
+  "file_id": "0809_TigerWit_sealtxnew",
+  "repo": "TigerWit",
+  "filename": "sealtxnew.go",
+  "elapsed_s": 4.15,
+  "input_tokens": 2236,
+  "output_tokens": 262,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L47-L67",
+  "rationale": "The `history()` function (L47-L67) calls `stub.GetHistoryForKey(key)` at L50, which is a C4 NON_REVALIDATED_QUERY source. The iterator result directly influences the response returned via `shim.Success(bytes)` at L66, where the accumulated history values are marshaled and returned. Although this is a read-only query response (not a write), the C4 classification applies because GetHistoryForKey results can diverge across endorsers if the ledger state differs, causing endorsement divergence in the proposal response. The `gettxidspec()` function (L69-L95) similarly uses `stub.GetHistoryForKey(key)` at L75 to determine control flow (L82-L84 returns early if a match is found), making the query result influence the response. Both functions demonstrate C4 vulnerability where non-revalidated history queries determine the chaincode response.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L47-L67\n\nRATIONALE: The `history()` function (L47-L67) calls `stub.GetHistoryForKey(key)` at L50, which is a C4 NON_REVALIDATED_QUERY source. The iterator result directly influences the response returned via `shim.Success(bytes)` at L66, where the accumulated history values are marshaled and returned. Although this is a read-only query response (not a write), the C4 classification applies because GetHistoryForKey results can diverge across endorsers if the ledger state differs, causing endorsement divergence in the proposal response. The `gettxidspec()` function (L69-L95) similarly uses `stub.GetHistoryForKey(key)` at L75 to determine control flow (L82-L84 returns early if a match is found), making the query result influence the response. Both functions demonstrate C4 vulnerability where non-revalidated history queries determine the chaincode response.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:02.531078",
+  "annotator": "2nd"
+}

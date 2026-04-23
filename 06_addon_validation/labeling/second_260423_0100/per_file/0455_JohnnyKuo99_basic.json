@@ -1,0 +1,19 @@
+{
+  "file_id": "0455_JohnnyKuo99_basic",
+  "repo": "JohnnyKuo99",
+  "filename": "basic.go",
+  "elapsed_s": 3.51,
+  "input_tokens": 1416,
+  "output_tokens": 116,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This is a simple chaincode with Init and Invoke entrypoints. It uses only deterministic operations: GetStringArgs, GetFunctionAndParameters, PutState with client-provided arguments, and GetState for reads. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This is a simple chaincode with Init and Invoke entrypoints. It uses only deterministic operations: GetStringArgs, GetFunctionAndParameters, PutState with client-provided arguments, and GetState for reads. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:35:40.881404",
+  "annotator": "2nd"
+}

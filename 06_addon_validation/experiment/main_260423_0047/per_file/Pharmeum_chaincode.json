@@ -1,0 +1,13 @@
+{
+  "repo": "Pharmeum",
+  "filename": "chaincode.go",
+  "ground_truth": "SAFE",
+  "ground_truth_class": "NONE",
+  "qwen_prediction": "safe",
+  "qwen_elapsed_s": 0.72,
+  "qwen_raw_response": "No vulnerabilities detected.",
+  "semgrep_prediction": "vulnerable",
+  "semgrep_rules_hit": "hlf-time-now-in-chaincode",
+  "semgrep_findings_count": 1,
+  "timestamp": "2026-04-23T01:47:33.309408"
+}

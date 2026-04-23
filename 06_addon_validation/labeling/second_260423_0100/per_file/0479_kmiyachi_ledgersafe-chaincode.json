@@ -1,0 +1,19 @@
+{
+  "file_id": "0479_kmiyachi_ledgersafe-chaincode",
+  "repo": "kmiyachi",
+  "filename": "ledgersafe-chaincode.go",
+  "elapsed_s": 14.2,
+  "input_tokens": 2775,
+  "output_tokens": 638,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no nondeterministic patterns. Slice iteration is index-based (deterministic), GetStateByRange is explicitly excluded as a C4 source, no time.Now() usage, no goroutines, no map iteration, and no mutable global state. Iterator is properly closed with defer.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods on `SmartContract` using `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. The `Timestamp` field is passed as an argument, not generated.\n\n**C2 GOROUTINE**: No `go` statements found.\n\n**C3 MAP_ITERATION**: No map iteration. The code iterates over a slice (`cannabis := []Cannabis{...}`) using index-based iteration (`for i < len(cannabis)`), which is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetStateByRange` is used in `queryAllCannabis` (L95-96), but this is explicitly excluded as a C4 source per the taxonomy.\n- No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Auxiliary Check (C5)\n\n**C5 ITERATOR_LEAK**: In `queryAllCannabis` (L95-96), an iterator is created via `GetStateByRange` and `defer resultsIterator.Close()` is properly called at L100. No leak.\n\n### Observations\n\nThe code has a compilation issue (the `Cannabis` struct doesn't have `Strain` or `THC` fields, but they're used in `initLedger` and `recordCannabis`). However, this is a code quality issue, not a nondeterminism issue.\n\nThe iteration in `initLedger` uses a slice with index-based access (`cannabis[i]`), which is deterministic. The `queryAllCannabis` uses `GetStateByRange` which returns results in lexicographic key order (deterministic).\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no nondeterministic patterns. Slice iteration is index-based (deterministic), GetStateByRange is explicitly excluded as a C4 source, no time.Now() usage, no goroutines, no map iteration, and no mutable global state. Iterator is properly closed with defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:36:55.481260",
+  "annotator": "2nd"
+}

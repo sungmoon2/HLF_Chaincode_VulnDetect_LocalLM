@@ -1,0 +1,19 @@
+{
+  "file_id": "0279_cprinyarux_caller",
+  "repo": "cprinyarux",
+  "filename": "caller.go",
+  "elapsed_s": 3.67,
+  "input_tokens": 1238,
+  "output_tokens": 146,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains valid HLF transaction entrypoints (Init and Invoke). The code does not use time.Now(), goroutines, map iteration, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state that influences ledger writes or responses. The package-level constants (Channel, TargetChaincode) are immutable and deterministic. The InvokeChaincode calls are deterministic cross-chaincode invocations.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains valid HLF transaction entrypoints (Init and Invoke). The code does not use time.Now(), goroutines, map iteration, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state that influences ledger writes or responses. The package-level constants (Channel, TargetChaincode) are immutable and deterministic. The InvokeChaincode calls are deterministic cross-chaincode invocations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:22:52.980797",
+  "annotator": "2nd"
+}

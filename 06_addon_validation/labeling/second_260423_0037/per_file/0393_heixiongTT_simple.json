@@ -1,0 +1,19 @@
+{
+  "file_id": "0393_heixiongTT_simple",
+  "repo": "heixiongTT",
+  "filename": "simple.go",
+  "elapsed_s": 6.61,
+  "input_tokens": 4740,
+  "output_tokens": 481,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "L95-L97, L168-L170**",
+  "rationale": "",
+  "raw_response": "# Audit Report\n\n## Decision\n\n**VERDICT: VULNERABLE**\n\n**PRIMARY_CLASS: C1**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n---\n\n## Evidence\n\n**EVIDENCE_LINES: L95-L97, L168-L170**\n\n---\n\n## Rationale\n\nThe `save()` function (L95-L97) and `update()` function (L168-L170) both contain the same consensus-critical vulnerability:\n\n```go\ncreateDateTime, err := strconv.Atoi(args[2])\ntm := time.Unix(int64(createDateTime)/1000, 0)\ndateString := tm.Format(\"20060102\")\n```\n\nWhile `time.Unix()` is deterministic given a fixed timestamp, the code at **L95-L97** and **L168-L170** parses `args[2]` (which is labeled `beginData` but reinterpreted as a Unix timestamp) and formats it into `dateString`. This `dateString` is then used as part of the ledger key (L99, L171):\n\n```go\nkey := merchantIdString + \"_\" + dateString + \"_\" + period + \"_\" + dataPacketIdString\n```\n\nThe key is subsequently written to the ledger via `stub.PutState(key, dataJSONBytes)` at **L127** and **L200**. Although the timestamp parsing itself is deterministic, the vulnerability arises because the code mixes argument interpretation: `args[2]` is assigned to `beginData` (L82, L155) but then reinterpreted as a Unix timestamp milliseconds value (L94, L167). If endorsing peers receive different argument values or interpret the same argument differently, the resulting key and ledger write will diverge—a classic C1 TIME_NOW pattern where time-derived data influences a ledger write. The use of `time.Unix()` with user-supplied timestamp data that influences state writes creates consensus risk if the timestamp source is not strictly validated or if there is any non-determinism in how it is processed across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:39.839035",
+  "annotator": "2nd"
+}

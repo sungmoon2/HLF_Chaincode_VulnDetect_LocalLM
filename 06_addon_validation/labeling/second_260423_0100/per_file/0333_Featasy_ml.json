@@ -1,0 +1,19 @@
+{
+  "file_id": "0333_Featasy_ml",
+  "repo": "Featasy",
+  "filename": "ml.go",
+  "elapsed_s": 6.83,
+  "input_tokens": 2411,
+  "output_tokens": 214,
+  "verdict": "VULNERABLE",
+  "primary_class": "C2",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67-L68, L71, L73, L158",
+  "rationale": "The `get` function (called from Invoke) uses `rand.Seed(44111342)` followed by `base.InstancesTrainTestSplit` which relies on the global random source. While the seed is fixed, the golearn library's RandomTree and RandomForest implementations (L131, L145) internally use goroutines or random sampling that can produce nondeterministic results across different peers. Additionally, the train/test split and tree building operations may have internal nondeterminism. The result of `evaluation.GetSummary(cf)` at L158 is returned via shim.Success, making this a consensus-critical path where ML library nondeterminism affects the proposal response.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C2\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L67-L68, L71, L73, L158\nRATIONALE: The `get` function (called from Invoke) uses `rand.Seed(44111342)` followed by `base.InstancesTrainTestSplit` which relies on the global random source. While the seed is fixed, the golearn library's RandomTree and RandomForest implementations (L131, L145) internally use goroutines or random sampling that can produce nondeterministic results across different peers. Additionally, the train/test split and tree building operations may have internal nondeterminism. The result of `evaluation.GetSummary(cf)` at L158 is returned via shim.Success, making this a consensus-critical path where ML library nondeterminism affects the proposal response.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:27:01.987750",
+  "annotator": "2nd"
+}

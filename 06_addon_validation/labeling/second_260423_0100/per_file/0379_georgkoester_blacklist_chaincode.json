@@ -1,0 +1,19 @@
+{
+  "file_id": "0379_georgkoester_blacklist_chaincode",
+  "repo": "georgkoester",
+  "filename": "blacklist_chaincode.go",
+  "elapsed_s": 5.41,
+  "input_tokens": 3291,
+  "output_tokens": 175,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L207-L212",
+  "rationale": "The file imports `time` but only uses it in `getTimestampString()` (L207-L212) to format a timestamp obtained from `stub.GetTxTimestamp()`, which is the deterministic transaction timestamp. There is no `time.Now()`, no goroutines, no map iteration affecting writes, no rich queries (GetQueryResult), and the package-level `logger` variable is only used for logging. The `countEntries` function uses `GetStateByPartialCompositeKey` which is explicitly excluded from C4, and the iterator is properly closed.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L207-L212\nRATIONALE: The file imports `time` but only uses it in `getTimestampString()` (L207-L212) to format a timestamp obtained from `stub.GetTxTimestamp()`, which is the deterministic transaction timestamp. There is no `time.Now()`, no goroutines, no map iteration affecting writes, no rich queries (GetQueryResult), and the package-level `logger` variable is only used for logging. The `countEntries` function uses `GetStateByPartialCompositeKey` which is explicitly excluded from C4, and the iterator is properly closed.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:29:40.661609",
+  "annotator": "2nd"
+}

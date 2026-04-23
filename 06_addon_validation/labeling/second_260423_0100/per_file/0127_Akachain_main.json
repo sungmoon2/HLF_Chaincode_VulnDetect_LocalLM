@@ -1,0 +1,19 @@
+{
+  "file_id": "0127_Akachain_main",
+  "repo": "Akachain",
+  "filename": "main.go",
+  "elapsed_s": 12.16,
+  "input_tokens": 1527,
+  "output_tokens": 572,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints but no intra-file evidence of nondeterministic patterns (C1-C4, C6). All transaction logic uses deterministic argument extraction and delegates to external utility functions. The only package-level declaration is a const, not a mutable var.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, the file contains `Init` and `Invoke` methods on the `Chaincode` struct implementing `shim.ChaincodeStubInterface` patterns (lines 23-25 and 27-37).\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` in this file.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions. The `Data` struct uses string fields, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `DATATABLE` is a `const`, not a mutable `var` - SAFE\n- No package-level `var` declarations that are read in transaction logic\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Step 3: External Dependencies\nThe code calls `util.Createdata` and `util.UpdateExistingData` from an external package (`github.com/Akachain/akc-go-sdk/util`). However, per the audit rules, I must only consider **intra-file evidence**. I cannot speculate about what happens in external packages.\n\nWithin this file, the logic is straightforward:\n- Extract arguments from `args[]`\n- Pass them to external utility functions\n- Return success or error based on the result\n\nNo nondeterministic patterns are present within this file itself.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints but no intra-file evidence of nondeterministic patterns (C1-C4, C6). All transaction logic uses deterministic argument extraction and delegates to external utility functions. The only package-level declaration is a const, not a mutable var.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:11:44.119184",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0393_heixiongTT_simple",
+  "repo": "heixiongTT",
+  "filename": "simple.go",
+  "elapsed_s": 16.86,
+  "input_tokens": 4740,
+  "output_tokens": 717,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L275-L278, L296-L340",
+  "rationale": "The GetQueryResult and GetHistoryForKey calls are used only for read-only queries that return data via shim.Success without influencing any ledger writes. The time.Unix() calls use deterministic input timestamps, not time.Now(). No other nondeterminism sources are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with functions: `save`, `update`, `delete`, `query`, and `getHistoryByKey`.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Lines 136-137 and 222-223 use `time.Unix()` with input arguments (converting client-provided timestamp), NOT `time.Now()`. This is deterministic.\n- Line 330: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses the blockchain's recorded timestamp from the history response, not `time.Now()`. This is deterministic.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iteration found. The structs use `json.Marshal()` on struct types, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Lines 275-276: `stub.GetQueryResult(queryString)` is called in `getQueryResultForQueryString()`. The results are only used to build a response buffer and returned via `shim.Success()` (line 277 calls the helper, line 278 returns success). This is a **read-only query** - no write decisions are made based on the results.\n- Lines 296-297: `stub.GetHistoryForKey(key)` is called. Results are formatted and returned via `shim.Success()` (line 340). This is also **read-only** - no writes depend on it.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 280: `defer resultsIterator.Close()` - properly closed\n- Line 302: `defer resultsIterator.Close()` - properly closed\n\n### Key Observations\n\nThe `query` function (lines 265-278) uses `GetQueryResult` but:\n1. It only reads data and formats it into a JSON response\n2. It does NOT make any write decisions (no PutState/DelState based on query results)\n3. The result is returned directly via `shim.Success()`\n\nPer the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n\nThe `getHistoryByKey` function similarly only reads and returns data without making write decisions.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L275-L278, L296-L340\nRATIONALE: The GetQueryResult and GetHistoryForKey calls are used only for read-only queries that return data via shim.Success without influencing any ledger writes. The time.Unix() calls use deterministic input timestamps, not time.Now(). No other nondeterminism sources are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:31:01.357214",
+  "annotator": "2nd"
+}

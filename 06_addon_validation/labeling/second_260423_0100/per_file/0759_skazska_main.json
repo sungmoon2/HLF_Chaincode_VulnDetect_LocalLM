@@ -1,0 +1,19 @@
+{
+  "file_id": "0759_skazska_main",
+  "repo": "skazska",
+  "filename": "main.go",
+  "elapsed_s": 5.09,
+  "input_tokens": 2900,
+  "output_tokens": 159,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF transaction entrypoints (Init/Invoke). No time.Now() calls (C1), no goroutines (C2), no map iteration (C3), no rich queries like GetQueryResult (C4 - GetStateByRange is explicitly excluded per taxonomy), and no mutable global state (C6). The rangedList function uses GetStateByRange which returns results in deterministic lexicographic order and is explicitly not a C4 source. All iterators are properly closed with defer.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF transaction entrypoints (Init/Invoke). No time.Now() calls (C1), no goroutines (C2), no map iteration (C3), no rich queries like GetQueryResult (C4 - GetStateByRange is explicitly excluded per taxonomy), and no mutable global state (C6). The rangedList function uses GetStateByRange which returns results in deterministic lexicographic order and is explicitly not a C4 source. All iterators are properly closed with defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:57:22.102956",
+  "annotator": "2nd"
+}

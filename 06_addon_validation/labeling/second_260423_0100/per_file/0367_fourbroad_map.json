@@ -1,0 +1,19 @@
+{
+  "file_id": "0367_fourbroad_map",
+  "repo": "fourbroad",
+  "filename": "map.go",
+  "elapsed_s": 5.24,
+  "input_tokens": 2349,
+  "output_tokens": 160,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L85-L87, L101-L115, L116-L140",
+  "rationale": "The file contains GetQueryResult (L101) and GetHistoryForKey (L117), but both are read-only operations that only return data via shim.Success without influencing any ledger writes (PutState/DelState). The time.Sleep at L85 does not use time.Now() and does not influence ledger state. All iterators are properly closed with defer. Since the query results do not determine write decisions, C4 does not apply.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L85-L87, L101-L115, L116-L140\nRATIONALE: The file contains GetQueryResult (L101) and GetHistoryForKey (L117), but both are read-only operations that only return data via shim.Success without influencing any ledger writes (PutState/DelState). The time.Sleep at L85 does not use time.Now() and does not influence ledger state. All iterators are properly closed with defer. Since the query results do not determine write decisions, C4 does not apply.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:29:00.556998",
+  "annotator": "2nd"
+}

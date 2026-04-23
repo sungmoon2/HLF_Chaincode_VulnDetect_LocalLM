@@ -1,0 +1,19 @@
+{
+  "file_id": "0051_vivianLL_mychaincode",
+  "repo": "vivianLL",
+  "filename": "mychaincode.go",
+  "elapsed_s": 7.0,
+  "input_tokens": 7090,
+  "output_tokens": 680,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "L267-269, L318-320, L397-399, L449-451**",
+  "rationale": "",
+  "raw_response": "# Audit Report: Bill Chaincode\n\n## Decision Process\n\n1. **Entrypoint Recognition**: ✓ File contains `Init()` and `Invoke()` methods (shim interface implementation) and `main()` with `shim.Start()`.\n\n2. **Vulnerability Scan**:\n   - **C1 TIME_NOW**: Multiple instances of `time.Now()` used to derive `timestamp` that influences ledger writes via `PutState()`.\n   - **C2 GOROUTINE**: No goroutines detected.\n   - **C3 MAP_ITERATION**: No map iterations detected.\n   - **C4 NON_REVALIDATED_QUERY**: `GetHistoryForKey()` result (L445) determines filtering logic that influences response content, but does not determine a write decision.\n   - **C6 GLOBAL_MUTABLE_STATE**: No package-level mutable state detected.\n\n3. **Intra-file Evidence of C1 Reaching Sink**:\n   - **L267-269** (LinkContractCreate): `time.Now()` → `timestamp` → `bill.VersionTime` → `putBill()` → `stub.PutState()` ✓\n   - **L318-320** (LinkContractBiding): `time.Now()` → `timestamp` → `bill.VersionTime` → `putBill()` → `stub.PutState()` ✓\n   - **L397-399** (LinkContractDeal): `time.Now()` → `timestamp` → `bill.VersionTime` → `putBill()` → `stub.PutState()` ✓\n   - **L449-451** (LinkContractClose): `time.Now()` → `timestamp` → `bill.VersionTime` → `putBill()` → `stub.PutState()` ✓\n\n4. **Dead Code / Logging Check**: The `time.Now()` calls are not in logging-only contexts; they directly influence the `VersionTime` field that is persisted to the ledger.\n\n---\n\n## Verdict\n\n**VERDICT: VULNERABLE**\n\n**PRIMARY_CLASS: C1**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: L267-269, L318-320, L397-399, L449-451**\n\n**RATIONALE**: The chaincode calls `time.Now()` in four transaction functions (LinkContractCreate, LinkContractBiding, LinkContractDeal, LinkContractClose) and converts the result to Unix timestamp, which is stored in the `bill.VersionTime` field and persisted via `stub.PutState()`. Since `time.Now()` is non-deterministic across endorsing peers, different peers may assign different timestamps to the same transaction, causing the ledger state to diverge and breaking consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:25.617480",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0023_haydencoinprima_wallet_chaincode",
+  "repo": "haydencoinprima",
+  "filename": "wallet_chaincode.go",
+  "elapsed_s": 3.0,
+  "input_tokens": 3443,
+  "output_tokens": 184,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L155, L189",
+  "rationale": "The file contains two transaction functions (`Deposit` at L155 and `Withdraw` at L189) that both call `time.Now().String()` and assign the result to `tx.Timestamp`. This timestamp is then marshaled into JSON and written to the ledger via `stub.PutState()` at L169 and L203 respectively. Since `time.Now()` returns non-deterministic wall-clock time that varies across endorsing peers, different endorsers will produce different ledger writes, causing consensus failure. This is a direct C1 TIME_NOW vulnerability where the time source influences a ledger write.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L155, L189\n\nRATIONALE: The file contains two transaction functions (`Deposit` at L155 and `Withdraw` at L189) that both call `time.Now().String()` and assign the result to `tx.Timestamp`. This timestamp is then marshaled into JSON and written to the ledger via `stub.PutState()` at L169 and L203 respectively. Since `time.Now()` returns non-deterministic wall-clock time that varies across endorsing peers, different endorsers will produce different ledger writes, causing consensus failure. This is a direct C1 TIME_NOW vulnerability where the time source influences a ledger write.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:30.420419",
+  "annotator": "2nd"
+}

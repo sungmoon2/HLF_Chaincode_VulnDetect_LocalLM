@@ -1,0 +1,19 @@
+{
+  "file_id": "0431_ivaylopivanov_storage",
+  "repo": "ivaylopivanov",
+  "filename": "storage.go",
+  "elapsed_s": 2.49,
+  "input_tokens": 3716,
+  "output_tokens": 123,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only the Init and Invoke dispatcher methods with no transaction logic implementation. All actual transaction functions (ping, get, set, create, etc.) are called but not defined in this file. Per the scope rules, intra-file evidence is required; cross-file calls cannot be audited. The dispatcher itself contains no C1–C6 vulnerability patterns.",
+  "raw_response": "VERDICT: EXCLUDE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only the Init and Invoke dispatcher methods with no transaction logic implementation. All actual transaction functions (ping, get, set, create, etc.) are called but not defined in this file. Per the scope rules, intra-file evidence is required; cross-file calls cannot be audited. The dispatcher itself contains no C1–C6 vulnerability patterns.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:49:51.459968",
+  "annotator": "2nd"
+}

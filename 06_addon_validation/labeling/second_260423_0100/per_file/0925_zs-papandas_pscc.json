@@ -1,0 +1,19 @@
+{
+  "file_id": "0925_zs-papandas_pscc",
+  "repo": "zs-papandas",
+  "filename": "pscc.go",
+  "elapsed_s": 3.88,
+  "input_tokens": 1354,
+  "output_tokens": 139,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file is a routing entrypoint that delegates all transaction logic to external contract packages. The package-level variables (L12-15) are initialized once with deterministic `new()` calls and are not mutated during transaction execution. The logger (L11) is only used for logging, not for influencing ledger writes or responses. No C1-C4 or C6 patterns exist within this file's intra-file scope.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file is a routing entrypoint that delegates all transaction logic to external contract packages. The package-level variables (L12-15) are initialized once with deterministic `new()` calls and are not mutated during transaction execution. The logger (L11) is only used for logging, not for influencing ledger writes or responses. No C1-C4 or C6 patterns exist within this file's intra-file scope.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:09:43.730376",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0195_BadBaman_odschaincode",
+  "repo": "BadBaman",
+  "filename": "odschaincode.go",
+  "elapsed_s": 3.55,
+  "input_tokens": 3177,
+  "output_tokens": 217,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L155-L180",
+  "rationale": "The `queryApplicationRecordByApplicant` function (L155-L165) calls `getQueryResultForQueryString` (L167-L180), which invokes `stub.GetQueryResult(queryString)` at L172. This is a C4 NON_REVALIDATED_QUERY source—GetQueryResult returns results from a rich query that may vary across endorsers due to state divergence or ordering differences. The query result is directly serialized and returned via `shim.Success(queryResults)` at L165, influencing the proposal response without revalidation. Although this particular function does not write to the ledger, the nondeterministic query result directly influences the response returned to the client, which is consensus-critical in Fabric endorsement.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L155-L180\n\nRATIONALE: The `queryApplicationRecordByApplicant` function (L155-L165) calls `getQueryResultForQueryString` (L167-L180), which invokes `stub.GetQueryResult(queryString)` at L172. This is a C4 NON_REVALIDATED_QUERY source—GetQueryResult returns results from a rich query that may vary across endorsers due to state divergence or ordering differences. The query result is directly serialized and returned via `shim.Success(queryResults)` at L165, influencing the proposal response without revalidation. Although this particular function does not write to the ledger, the nondeterministic query result directly influences the response returned to the client, which is consensus-critical in Fabric endorsement.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:43:10.245074",
+  "annotator": "2nd"
+}

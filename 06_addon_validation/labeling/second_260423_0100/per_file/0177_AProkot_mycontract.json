@@ -1,0 +1,19 @@
+{
+  "file_id": "0177_AProkot_mycontract",
+  "repo": "AProkot",
+  "filename": "mycontract.go",
+  "elapsed_s": 5.23,
+  "input_tokens": 3753,
+  "output_tokens": 151,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF chaincode with Init/Invoke entrypoints. No C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (rich queries like GetQueryResult), or C6 (mutable global state) patterns are present. All operations use deterministic GetState/PutState/DelState with explicit keys from arguments. The json.Marshal calls are on structs, not maps, so they are deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF chaincode with Init/Invoke entrypoints. No C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (rich queries like GetQueryResult), or C6 (mutable global state) patterns are present. All operations use deterministic GetState/PutState/DelState with explicit keys from arguments. The json.Marshal calls are on structs, not maps, so they are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:15:12.758170",
+  "annotator": "2nd"
+}

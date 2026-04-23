@@ -1,0 +1,19 @@
+{
+  "file_id": "0587_neelbanker_marbles_chaincode_private",
+  "repo": "neelbanker",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 17.15,
+  "input_tokens": 5119,
+  "output_tokens": 773,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L295-L320, L322-L358",
+  "rationale": "The GetPrivateDataQueryResult calls in queryMarblesByOwner and queryMarbles are read-only queries that return results via shim.Success without influencing any write decisions. GetPrivateDataByPartialCompositeKey in transferMarblesBasedOnColor is explicitly excluded from C4 per the taxonomy. No other nondeterminism patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with multiple transaction functions.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or goroutine spawning found.\n\n**C3 MAP_ITERATION**: \n- Line 87: `transMap, err := stub.GetTransient()` returns a `map[string][]byte`\n- Line 92: `priceString := string(transMap[\"price\"])` - This is a direct key access, NOT iteration\n- No `for...range` over maps found in the file.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `queryMarblesByOwner` (L295-307) and `queryMarbles` (L309-320) call `getQueryResultForQueryString`\n- `getQueryResultForQueryString` (L322-358) uses `stub.GetPrivateDataQueryResult` (L327)\n- These functions only return query results via `shim.Success(queryResults)` - they are **read-only queries**\n- No write decisions (PutState, DelState, etc.) are made based on these query results\n- Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4\"\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### Examining transferMarblesBasedOnColor (L247-291)\nThis function uses `GetPrivateDataByPartialCompositeKey` which is explicitly stated as \"NOT C4 sources\" in the taxonomy. The iteration order of `GetPrivateDataByPartialCompositeKey` is deterministic (lexicographic key order), so this is safe.\n\n### C5 Iterator Leak Check\n- L261: `coloredMarbleResultsIterator` has `defer Close()` ✓\n- L232: `resultsIterator` has `defer Close()` ✓  \n- L329: `resultsIterator` has `defer Close()` ✓\n\nAll iterators are properly closed.\n\n## Conclusion\n\nThe query functions (`queryMarblesByOwner`, `queryMarbles`) use `GetPrivateDataQueryResult` but only for read-only responses - they don't make write decisions based on the results. The `transferMarblesBasedOnColor` uses `GetPrivateDataByPartialCompositeKey` which is explicitly excluded from C4 per the taxonomy.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L295-L320, L322-L358\nRATIONALE: The GetPrivateDataQueryResult calls in queryMarblesByOwner and queryMarbles are read-only queries that return results via shim.Success without influencing any write decisions. GetPrivateDataByPartialCompositeKey in transferMarblesBasedOnColor is explicitly excluded from C4 per the taxonomy. No other nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:45:14.221664",
+  "annotator": "2nd"
+}

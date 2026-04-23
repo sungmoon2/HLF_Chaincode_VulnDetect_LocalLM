@@ -1,0 +1,19 @@
+{
+  "file_id": "0441_jastisriradheshyam_custom",
+  "repo": "jastisriradheshyam",
+  "filename": "custom.go",
+  "elapsed_s": 4.71,
+  "input_tokens": 2121,
+  "output_tokens": 141,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not use any nondeterministic patterns. It uses GetState/PutState for ledger operations, json.Marshal on a struct (not a map), and derives the invoker address deterministically from the certificate in stub.GetCreator(). No time.Now(), goroutines, map iteration, rich queries, or mutable global state are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not use any nondeterministic patterns. It uses GetState/PutState for ledger operations, json.Marshal on a struct (not a map), and derives the invoker address deterministically from the certificate in stub.GetCreator(). No time.Now(), goroutines, map iteration, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:34:32.780388",
+  "annotator": "2nd"
+}

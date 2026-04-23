@@ -1,0 +1,19 @@
+{
+  "file_id": "0717_sapcis_perishable-net",
+  "repo": "sapcis",
+  "filename": "perishable-net.go",
+  "elapsed_s": 3.2,
+  "input_tokens": 2671,
+  "output_tokens": 173,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L145-L175",
+  "rationale": "The `getall()` function uses `stub.GetQueryResult()` (L145), a non-revalidated query source, whose results determine the construction of a response payload (L150-L157: iteration over query results, appending to `results.Shipments`, then marshaling and returning via `shim.Success`). Although this is a read-only response rather than a ledger write, C4 applies to query results that influence proposal responses. The query result iteration order is non-deterministic across endorsers, causing the response payload to diverge and fail consensus.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L145-L175\n\nRATIONALE: The `getall()` function uses `stub.GetQueryResult()` (L145), a non-revalidated query source, whose results determine the construction of a response payload (L150-L157: iteration over query results, appending to `results.Shipments`, then marshaling and returning via `shim.Success`). Although this is a read-only response rather than a ledger write, C4 applies to query results that influence proposal responses. The query result iteration order is non-deterministic across endorsers, causing the response payload to diverge and fail consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:58:34.538741",
+  "annotator": "2nd"
+}

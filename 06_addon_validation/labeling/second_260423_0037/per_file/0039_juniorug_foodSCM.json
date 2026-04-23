@@ -1,0 +1,19 @@
+{
+  "file_id": "0039_juniorug_foodSCM",
+  "repo": "juniorug",
+  "filename": "foodSCM.go",
+  "elapsed_s": 3.51,
+  "input_tokens": 3276,
+  "output_tokens": 223,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L57-L62, L80-L84, L103-L107, L126-L130, L149-L153, L172-L176",
+  "rationale": "The file contains multiple transaction entrypoints (Init, Invoke with six transaction functions). In each of createRawFood, manufactureProcessing, wholesalerDistribute, initiateShipment, deliverToRetail, and completeOrder, time.Now() is called and its result is formatted into a timestamp string that is stored in the food struct and written to the ledger via stub.PutState(). Since time.Now() returns nondeterministic wall-clock time that will differ across endorsing peers, these timestamp values will diverge, causing the marshaled JSON to differ and leading to endorsement failure. This is a consensus-critical C1 vulnerability.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L57-L62, L80-L84, L103-L107, L126-L130, L149-L153, L172-L176\n\nRATIONALE: The file contains multiple transaction entrypoints (Init, Invoke with six transaction functions). In each of createRawFood, manufactureProcessing, wholesalerDistribute, initiateShipment, deliverToRetail, and completeOrder, time.Now() is called and its result is formatted into a timestamp string that is stored in the food struct and written to the ledger via stub.PutState(). Since time.Now() returns nondeterministic wall-clock time that will differ across endorsing peers, these timestamp values will diverge, causing the marshaled JSON to differ and leading to endorsement failure. This is a consensus-critical C1 vulnerability.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:39:04.009611",
+  "annotator": "2nd"
+}

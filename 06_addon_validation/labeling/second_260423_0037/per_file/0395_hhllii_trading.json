@@ -1,0 +1,19 @@
+{
+  "file_id": "0395_hhllii_trading",
+  "repo": "hhllii",
+  "filename": "trading.go",
+  "elapsed_s": 6.74,
+  "input_tokens": 4299,
+  "output_tokens": 463,
+  "verdict": "SAFE",
+  "primary_class": "** NONE",
+  "secondary_class": "** NONE",
+  "auxiliary_c5": "** NO",
+  "evidence_lines": "** N/A",
+  "rationale": "",
+  "raw_response": "# Audit Report: Hyperledger Fabric Chaincode\n\n## Verdict: SAFE\n\n**PRIMARY_CLASS:** NONE  \n**SECONDARY_CLASS:** NONE  \n**AUXILIARY_C5:** NO  \n**EVIDENCE_LINES:** N/A\n\n---\n\n## Rationale\n\nThis file contains a valid HLF transaction entrypoint (`Init` and `Invoke` methods on `SmartContract`), so it is not excluded. However, a comprehensive scan for consensus-critical nondeterminism patterns yields no violations:\n\n1. **C1 (TIME_NOW):** No `time.Now()`, `time.Since()`, or `time.Until()` calls exist anywhere in the code. All ledger writes (`PutState`, `DelState`) are driven by deterministic function arguments and state reads, not timestamps.\n\n2. **C2 (GOROUTINE):** No `go func()` or `go methodCall()` statements are present. All operations are synchronous.\n\n3. **C3 (MAP_ITERATION):** No `for...range` loops over map-typed expressions. The code uses only slices (`[]Item`) and iterators from `GetStateByRange()`, both of which are deterministic.\n\n4. **C4 (NON_REVALIDATED_QUERY):** `GetStateByRange()` is used in `queryAllItems()` and `queryAllUsers()`, but these results are only serialized and returned via `shim.Success()` without influencing any write decision. The iterator results are read-only outputs, not decision drivers.\n\n5. **C6 (GLOBAL_MUTABLE_STATE):** No package-level mutable variables are declared or used in transaction logic.\n\n6. **C5 (ITERATOR_LEAK):** Both `GetStateByRange()` iterators are properly closed via `defer resultsIterator.Close()` (lines 108 and 244).\n\nAll ledger modifications are deterministic, driven by validated arguments and consistent state reads.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:48:46.631321",
+  "annotator": "2nd"
+}

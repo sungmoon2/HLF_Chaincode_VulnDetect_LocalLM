@@ -1,0 +1,55 @@
+{
+  "repo": "koakh",
+  "filename": "init_private_data.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "f1abd49cd9a45dee",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'init_private_data.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is very basic and only includes an `Init` function that stores a dummy value in private data and an `Invoke` function that does nothing. There are no operations that could lead to the issues mentioned.",
+      "prediction": "safe",
+      "elapsed_s": 1.01,
+      "finish_reason": "stop",
+      "prompt_tokens": 335,
+      "completion_tokens": 97
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.05,
+      "finish_reason": "stop",
+      "prompt_tokens": 335,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 335,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 335,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'init_private_data.go' does not contain any of the security vulnerabilities mentioned in the question. The chaincode is very basic and only includes an `Init` function that stores a dummy value in private data and an `Invoke` function that does nothing. There are no access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management issues present in this code.",
+      "prediction": "safe",
+      "elapsed_s": 0.83,
+      "finish_reason": "stop",
+      "prompt_tokens": 335,
+      "completion_tokens": 97
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.4,
+  "total_elapsed_s": 1.98,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T06:05:09.276267"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0893_yangjaejae_taxrefund",
+  "repo": "yangjaejae",
+  "filename": "taxrefund.go",
+  "elapsed_s": 4.41,
+  "input_tokens": 2403,
+  "output_tokens": 122,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. All operations use deterministic inputs from transaction arguments (args[]) and stub methods (GetState, PutState). No time.Now(), goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init, Invoke) but does not use any nondeterministic patterns. All operations use deterministic inputs from transaction arguments (args[]) and stub methods (GetState, PutState). No time.Now(), goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:29.531346",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0275_code2understand_05_issue_events",
+  "repo": "code2understand",
+  "filename": "05_issue_events.go",
+  "elapsed_s": 3.23,
+  "input_tokens": 1708,
+  "output_tokens": 198,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains HLF transaction entrypoints (Init, Invoke, set, get). The `set` function uses `stub.PutState()` and `stub.SetEvent()`, but neither is influenced by time.Now(), goroutines, map iteration, non-revalidated queries, or mutable globals. The `get` function calls `stub.GetHistoryForKey()` (a C4 source), but the result is only read and formatted for display via `shim.Success()` without influencing any write decision. The timestamp conversion uses `Result.Timestamp` (deterministic ledger data), not `time.Now()`. No consensus-critical nondeterminism is present.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The file contains HLF transaction entrypoints (Init, Invoke, set, get). The `set` function uses `stub.PutState()` and `stub.SetEvent()`, but neither is influenced by time.Now(), goroutines, map iteration, non-revalidated queries, or mutable globals. The `get` function calls `stub.GetHistoryForKey()` (a C4 source), but the result is only read and formatted for display via `shim.Success()` without influencing any write decision. The timestamp conversion uses `Result.Timestamp` (deterministic ledger data), not `time.Now()`. No consensus-critical nondeterminism is present.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:45:27.645235",
+  "annotator": "2nd"
+}

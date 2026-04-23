@@ -1,0 +1,19 @@
+{
+  "file_id": "0465_jyotku48_PurchaseOrder",
+  "repo": "jyotku48",
+  "filename": "PurchaseOrder.go",
+  "elapsed_s": 5.08,
+  "input_tokens": 4133,
+  "output_tokens": 166,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L47, L68, L117, L152, L187, L222",
+  "rationale": "The code uses `map[string]interface{}` types and calls `json.Marshal()` on them (e.g., lines 68, 117, 152, 187, 222). However, Go's standard library `encoding/json.Marshal` sorts map keys deterministically, making this SAFE per the taxonomy. There are no `for...range` iterations over maps, no time.Now(), no goroutines, no rich queries, and no mutable global state affecting transaction logic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L47, L68, L117, L152, L187, L222\nRATIONALE: The code uses `map[string]interface{}` types and calls `json.Marshal()` on them (e.g., lines 68, 117, 152, 187, 222). However, Go's standard library `encoding/json.Marshal` sorts map keys deterministically, making this SAFE per the taxonomy. There are no `for...range` iterations over maps, no time.Now(), no goroutines, no rich queries, and no mutable global state affecting transaction logic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:36:05.423636",
+  "annotator": "2nd"
+}

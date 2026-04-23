@@ -1,0 +1,19 @@
+{
+  "file_id": "0507_lafenicecc_passthru",
+  "repo": "lafenicecc",
+  "filename": "passthru.go",
+  "elapsed_s": 1.77,
+  "input_tokens": 1197,
+  "output_tokens": 143,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains HLF transaction entrypoints (Init and Invoke methods), but no consensus-critical nondeterminism sources are present. The code performs string operations, parameter parsing, and delegates to InvokeChaincode without any time-dependent logic (C1), goroutines (C2), map iteration (C3), non-revalidated queries (C4), or mutable global state (C6). All operations are deterministic.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains HLF transaction entrypoints (Init and Invoke methods), but no consensus-critical nondeterminism sources are present. The code performs string operations, parameter parsing, and delegates to InvokeChaincode without any time-dependent logic (C1), goroutines (C2), map iteration (C3), non-revalidated queries (C4), or mutable global state (C6). All operations are deterministic.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:27.342105",
+  "annotator": "2nd"
+}

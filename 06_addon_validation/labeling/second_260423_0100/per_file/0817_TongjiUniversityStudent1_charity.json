@@ -1,0 +1,19 @@
+{
+  "file_id": "0817_TongjiUniversityStudent1_charity",
+  "repo": "TongjiUniversityStudent1",
+  "filename": "charity.go",
+  "elapsed_s": 5.28,
+  "input_tokens": 2641,
+  "output_tokens": 137,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). The only package-level var is `logger` (L9), which is a shim.Logger used only for logging (L44) and does not influence ledger writes or proposal responses. No time.Now(), goroutines, map iterations, or rich queries are present. All operations use deterministic GetState/PutState with client-provided arguments.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). The only package-level var is `logger` (L9), which is a shim.Logger used only for logging (L44) and does not influence ledger writes or proposal responses. No time.Now(), goroutines, map iterations, or rich queries are present. All operations use deterministic GetState/PutState with client-provided arguments.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:01:59.144612",
+  "annotator": "2nd"
+}

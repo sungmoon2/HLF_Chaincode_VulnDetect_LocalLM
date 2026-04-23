@@ -1,0 +1,19 @@
+{
+  "file_id": "0723_Saurabh1997_caller_sa",
+  "repo": "Saurabh1997",
+  "filename": "caller_sa.go",
+  "elapsed_s": 13.39,
+  "input_tokens": 1777,
+  "output_tokens": 591,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. All state operations use fixed keys and deterministic logic. Cross-chaincode invocation is handled deterministically by Fabric's endorsement mechanism.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `CallerChaincode` implementing the shim interface. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. The code uses `GetState` which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `const Channel = \"airlinechannel\"` - constant, not mutable\n- `const TargetChaincode = \"token_rit\"` - constant, not mutable\n- No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Step 3: Code Flow Analysis\n\nThe chaincode performs:\n- `Init`: Writes a fixed value to state (`PutState(\"Saurabh\", []byte(\"4000\"))`)\n- `Invoke`: Routes to different functions based on function name\n- `SetToken`: Reads state, increments by fixed value (10), writes back - deterministic\n- `GetToken`: Reads and returns state - deterministic\n- `DeleteToken`: Deletes state based on existence check - deterministic\n- Cross-chaincode invocation via `InvokeChaincode` - this is handled by Fabric's endorsement system and is deterministic\n\nAll operations use deterministic inputs (fixed keys, fixed increment values) and standard state operations.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. All state operations use fixed keys and deterministic logic. Cross-chaincode invocation is handled deterministically by Fabric's endorsement mechanism.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:55:11.131701",
+  "annotator": "2nd"
+}

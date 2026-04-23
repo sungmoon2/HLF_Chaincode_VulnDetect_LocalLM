@@ -1,0 +1,19 @@
+{
+  "file_id": "0261_chintanr97_marbles_chaincode_private",
+  "repo": "chintanr97",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 5.6,
+  "input_tokens": 5271,
+  "output_tokens": 175,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L357-L358, L319-L320",
+  "rationale": "The file uses GetPrivateDataQueryResult (L357) in queryMarblesByOwner and queryMarbles functions, but these are read-only queries that return results via shim.Success without influencing any ledger writes (PutState, DelState, PutPrivateData, DelPrivateData). Per the taxonomy, read-only queries returned via shim.Success are NOT C4 violations. All write operations (initMarble, delete, transferMarble) use deterministic key-based lookups (GetPrivateData) rather than rich queries.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L357-L358, L319-L320\nRATIONALE: The file uses GetPrivateDataQueryResult (L357) in queryMarblesByOwner and queryMarbles functions, but these are read-only queries that return results via shim.Success without influencing any ledger writes (PutState, DelState, PutPrivateData, DelPrivateData). Per the taxonomy, read-only queries returned via shim.Success are NOT C4 violations. All write operations (initMarble, delete, transferMarble) use deterministic key-based lookups (GetPrivateData) rather than rich queries.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:21:11.842488",
+  "annotator": "2nd"
+}

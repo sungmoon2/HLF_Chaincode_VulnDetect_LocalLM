@@ -1,0 +1,19 @@
+{
+  "file_id": "0513_LinkaKorea_linkatoken",
+  "repo": "LinkaKorea",
+  "filename": "linkatoken.go",
+  "elapsed_s": 18.85,
+  "input_tokens": 3964,
+  "output_tokens": 789,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L73",
+  "rationale": "The package-level `var m majorfunc` is used only for method dispatch on what appears to be a stateless struct - no mutation or peer-varying state is read from it. No time-based, goroutine, map iteration, or rich query patterns that could cause nondeterminism are present in the transaction logic.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `linkatoken` struct implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls found in this file. The `getHistory` function is called but its implementation is in `m.getHistory` which is not in this file.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `var tokenLogger = shim.NewLogger(\"LinkaToken\")` - Logger-only global, SAFE\n- `var m majorfunc` - This is a package-level variable of type `majorfunc`. It's used in transaction logic (e.g., `m.parsingSignature`, `m.setTransfer`, etc.). However, `m` is declared but never assigned/modified in this file - it's a zero-value struct. The methods are called on it but there's no evidence of mutation that would cause nondeterminism. The struct appears to be stateless (methods are called but no state is read from `m` that could vary between peers).\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Detailed Review\n\nLooking at the global `var m majorfunc`:\n- It's declared at package level (L73)\n- Used throughout `Init` and `Invoke` for method calls like `m.parsingSignature`, `m.parsingTransaction`, `m.setTransfer`, etc.\n- The variable `m` itself is never modified after initialization (zero-value)\n- The methods called on `m` are deterministic method calls on what appears to be a stateless receiver\n- No evidence that `m` holds mutable state that varies between peers\n\nThe `majorfunc` type is not defined in this file, but the usage pattern shows it's used as a method namespace rather than stateful storage. Without evidence of mutable state being read from `m`, this is not a C6 violation.\n\n### Step 4: Final Assessment\n\nNo concrete evidence of C1-C4 or C6 vulnerabilities that would cause endorsement divergence. The global `m` is used for method dispatch but shows no mutable state pattern.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L73\nRATIONALE: The package-level `var m majorfunc` is used only for method dispatch on what appears to be a stateless struct - no mutation or peer-varying state is read from it. No time-based, goroutine, map iteration, or rich query patterns that could cause nondeterminism are present in the transaction logic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:40:00.213681",
+  "annotator": "2nd"
+}

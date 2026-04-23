@@ -1,0 +1,19 @@
+{
+  "file_id": "0515_linqd1_chaincode",
+  "repo": "linqd1",
+  "filename": "chaincode.go",
+  "elapsed_s": 2.73,
+  "input_tokens": 1407,
+  "output_tokens": 192,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L11-12, L35-36",
+  "rationale": "Package-level mutable variables `Aval` and `Bval` are declared at L11-12, initialized in the `Init` function, and then read and modified in the `invoke` function (L35-36) which influences the response via `shim.Success`. These globals are not deterministically initialized per-transaction and their state persists across invocations, creating consensus divergence risk if endorsing peers execute transactions in different orders or with different initialization states. The `invoke` function modifies these globals without any ledger write (PutState), meaning the state change is not persisted to the ledger and will diverge across endorsers.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L11-12, L35-36\nRATIONALE: Package-level mutable variables `Aval` and `Bval` are declared at L11-12, initialized in the `Init` function, and then read and modified in the `invoke` function (L35-36) which influences the response via `shim.Success`. These globals are not deterministically initialized per-transaction and their state persists across invocations, creating consensus divergence risk if endorsing peers execute transactions in different orders or with different initialization states. The `invoke` function modifies these globals without any ledger write (PutState), meaning the state change is not persisted to the ledger and will diverge across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:52:40.208038",
+  "annotator": "2nd"
+}

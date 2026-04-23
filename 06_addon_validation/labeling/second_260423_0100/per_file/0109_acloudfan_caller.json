@@ -1,0 +1,19 @@
+{
+  "file_id": "0109_acloudfan_caller",
+  "repo": "acloudfan",
+  "filename": "caller.go",
+  "elapsed_s": 10.46,
+  "input_tokens": 1235,
+  "output_tokens": 568,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This chaincode contains no nondeterministic patterns. It uses only constants for cross-chaincode invocation parameters, performs no time-based operations, no goroutines, no map iterations, no rich queries, and has no mutable global state. All operations are deterministic across endorsers.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains `Init` and `Invoke` methods on `CallerChaincode` that implement the `shim.ChaincodeStubInterface` pattern. This is a valid chaincode.\n\n### Step 2: Check for Source Patterns (C1-C4, C6)\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- `const Channel = \"airlinechannel\"` - This is a constant, not mutable.\n- `const TargetChaincode = \"token\"` - This is a constant, not mutable.\n- No package-level `var` declarations that are read and influence writes/responses.\n\n### Step 3: Auxiliary Check (C5)\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Code Flow Summary\nThe chaincode:\n1. In `Init`: Returns a success response with static data.\n2. In `Invoke`: Based on function name, invokes another chaincode (`token`) with deterministic arguments and returns the response.\n\nThe `InvokeChaincode` calls use constant channel and chaincode names, and the arguments are deterministically constructed. The function routing is based on `funcName` from `GetFunctionAndParameters()`, which is deterministic across endorsers.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This chaincode contains no nondeterministic patterns. It uses only constants for cross-chaincode invocation parameters, performs no time-based operations, no goroutines, no map iterations, no rich queries, and has no mutable global state. All operations are deterministic across endorsers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:10:29.005340",
+  "annotator": "2nd"
+}

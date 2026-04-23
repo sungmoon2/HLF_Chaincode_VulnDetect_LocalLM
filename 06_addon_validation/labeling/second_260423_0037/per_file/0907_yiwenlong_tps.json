@@ -1,0 +1,19 @@
+{
+  "file_id": "0907_yiwenlong_tps",
+  "repo": "yiwenlong",
+  "filename": "tps.go",
+  "elapsed_s": 1.95,
+  "input_tokens": 1047,
+  "output_tokens": 174,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Init and Invoke methods on shim.ChaincodeStubInterface). However, no consensus-critical nondeterminism patterns are present: there are no time.Now() calls (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable package-level state affecting transaction logic (C6). The chaincode performs deterministic state operations (PutState, GetState) based on function parameters, with all logging confined to non-critical paths.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains a valid HLF transaction entrypoint (Init and Invoke methods on shim.ChaincodeStubInterface). However, no consensus-critical nondeterminism patterns are present: there are no time.Now() calls (C1), goroutines (C2), map iterations (C3), non-revalidated queries influencing writes (C4), or mutable package-level state affecting transaction logic (C6). The chaincode performs deterministic state operations (PutState, GetState) based on function parameters, with all logging confined to non-critical paths.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:52.834692",
+  "annotator": "2nd"
+}

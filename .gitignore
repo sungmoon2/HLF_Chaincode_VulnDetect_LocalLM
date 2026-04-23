@@ -15,6 +15,9 @@
 01_contexts/exports/*.jsonl
 01_contexts/snapshots/
 
+# ---- Compiled Binaries ----
+*.exe
+
 # ---- Python ----
 __pycache__/
 *.pyc

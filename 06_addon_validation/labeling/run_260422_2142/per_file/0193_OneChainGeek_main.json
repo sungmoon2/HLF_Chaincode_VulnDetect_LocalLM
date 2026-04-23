@@ -1,0 +1,28 @@
+{
+  "file_id": "0193_OneChainGeek_main",
+  "repo": "OneChainGeek",
+  "filename": "main.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\OneChainGeek\\main.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "GLOBAL_MUTABLE_STATE"
+  ],
+  "code_chars": 1297,
+  "stripped_chars": 870,
+  "code_hash": "7822a04884798309",
+  "stripped_hash": "b9592db08de2aa62",
+  "elapsed_s": 4.95,
+  "input_tokens": 1452,
+  "output_tokens": 148,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L14-L18, L25",
+  "rationale": "The map `wcFunctions` at L14-L18 is used for lookup by key at L25 (`wcFunctions[function]`), not iterated with range. Package-level logger and function map are read-only after initialization. No C1-C4 or C6 source patterns with sink evidence exist within this file; actual transaction logic is in external `sced` package which is out of scope for intra-file analysis.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L14-L18, L25\nRATIONALE: The map `wcFunctions` at L14-L18 is used for lookup by key at L25 (`wcFunctions[function]`), not iterated with range. Package-level logger and function map are read-only after initialization. No C1-C4 or C6 source patterns with sink evidence exist within this file; actual transaction logic is in external `sced` package which is out of scope for intra-file analysis.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:18:55.449037"
+}

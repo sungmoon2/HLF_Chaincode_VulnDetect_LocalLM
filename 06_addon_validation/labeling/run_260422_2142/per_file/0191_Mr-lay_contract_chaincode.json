@@ -1,0 +1,28 @@
+{
+  "file_id": "0191_Mr-lay_contract_chaincode",
+  "repo": "Mr-lay",
+  "filename": "contract_chaincode.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Mr-lay\\contract_chaincode.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "MAP_ITERATION"
+  ],
+  "code_chars": 13341,
+  "stripped_chars": 9561,
+  "code_hash": "a00b2f69641d6216",
+  "stripped_hash": "47aff779dbb7570e",
+  "elapsed_s": 21.31,
+  "input_tokens": 4236,
+  "output_tokens": 801,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L283-290, L295-299, L301-303",
+  "rationale": "Map iterations in reflectMetadata() are either followed by sort.Slice (L301-303) or serialized via json.Marshal which sorts map keys. These occur during initialization, not transaction execution, and results are deterministically ordered.",
+  "raw_response": "Looking at this code, I need to determine if it's a Hyperledger Fabric chaincode transaction entrypoint and check for consensus-critical nondeterminism.\n\n## Analysis\n\n**Step 1: Is this an HLF transaction entrypoint?**\nYes - this file implements `shim.ChaincodeStubInterface` with `Init()` (L72-79) and `Invoke()` (L81-148) methods. This is the contractapi framework's chaincode implementation.\n\n**Step 2: Check for C1-C4, C6 source patterns**\n\n**C3 - MAP_ITERATION:**\n- L283-290: `for key, contract := range cc.contracts` - iterates over `cc.contracts` map\n- L295-299: `for key, fn := range contract.functions` - iterates over `contract.functions` map\n\n**Step 3: Do these sources reach sinks?**\n\nLooking at the `reflectMetadata()` function (L269-311):\n- L283: Iterates over `cc.contracts` map\n- L295: Iterates over `contract.functions` map  \n- L297: `contractMetadata.Transactions = append(contractMetadata.Transactions, fnMetadata)` - appends in map iteration order\n\nHowever, L301-303 shows:\n```go\nsort.Slice(contractMetadata.Transactions, func(i, j int) bool {\n    return contractMetadata.Transactions[i].Name < contractMetadata.Transactions[j].Name\n})\n```\n\nThe transactions are sorted after map iteration, making that iteration deterministic.\n\nBut the outer loop `for key, contract := range cc.contracts` at L283 populates `reflectedMetadata.Contracts[key]` (L309), and this map is later used. The `reflectMetadata()` is called from `augmentMetadata()` (L315), which is called from `NewChaincode()` (L57).\n\nThe metadata is serialized at L63: `metadataJSON, _ := json.Marshal(cc.metadata)` - and `json.Marshal` on maps in Go 1.x sorts keys alphabetically, making this SAFE.\n\n**C6 - GLOBAL_MUTABLE_STATE:**\nNo package-level mutable variables that influence transaction logic.\n\n**C5 - ITERATOR_LEAK:**\nNo Fabric iterators (GetStateByRange, etc.) are created in this file.\n\n**Step 4: Usage context**\nThe map iterations in `reflectMetadata()` are used for metadata generation during chaincode initialization (`NewChaincode`), not during transaction execution. The `Invoke()` method at L81-148 does access `cc.contracts[ns]` and `nsContract.functions[fn]` but these are direct key lookups, not iterations.\n\nThe map iterations don't directly influence ledger writes or proposal responses during transaction execution - they're used for metadata setup at initialization time, and the results are sorted or serialized deterministically.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L283-290, L295-299, L301-303\nRATIONALE: Map iterations in reflectMetadata() are either followed by sort.Slice (L301-303) or serialized via json.Marshal which sorts map keys. These occur during initialization, not transaction execution, and results are deterministically ordered.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:18:50.458670"
+}

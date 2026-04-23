@@ -1,0 +1,19 @@
+{
+  "file_id": "0885_xwzx100200_example_cc",
+  "repo": "xwzx100200",
+  "filename": "example_cc.go",
+  "elapsed_s": 3.01,
+  "input_tokens": 3087,
+  "output_tokens": 158,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init, Invoke, and helper methods). All ledger writes (PutState, DelState) and responses use deterministic inputs derived from function arguments, GetState queries, or GetTxID(). No time.Now(), goroutines, map iteration over unordered maps, non-revalidated queries influencing writes, or mutable package-level state affecting transaction logic are present. The transient data access is read-only and does not influence write decisions.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init, Invoke, and helper methods). All ledger writes (PutState, DelState) and responses use deterministic inputs derived from function arguments, GetState queries, or GetTxID(). No time.Now(), goroutines, map iteration over unordered maps, non-revalidated queries influencing writes, or mutable package-level state affecting transaction logic are present. The transient data access is read-only and does not influence write decisions.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:03:16.345056",
+  "annotator": "2nd"
+}

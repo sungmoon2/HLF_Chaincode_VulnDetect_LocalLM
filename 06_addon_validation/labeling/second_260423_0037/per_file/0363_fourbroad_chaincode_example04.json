@@ -1,0 +1,19 @@
+{
+  "file_id": "0363_fourbroad_chaincode_example04",
+  "repo": "fourbroad",
+  "filename": "chaincode_example04.go",
+  "elapsed_s": 2.85,
+  "input_tokens": 2093,
+  "output_tokens": 152,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries influencing writes, or mutable package-level state. All ledger writes (PutState calls at L29 and L62) depend only on deterministic argument parsing and conditional logic based on parsed values. The code is consensus-safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries influencing writes, or mutable package-level state. All ledger writes (PutState calls at L29 and L62) depend only on deterministic argument parsing and conditional logic based on parsed values. The code is consensus-safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:47:44.562404",
+  "annotator": "2nd"
+}

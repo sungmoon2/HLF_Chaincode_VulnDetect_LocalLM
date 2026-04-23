@@ -1,0 +1,19 @@
+{
+  "file_id": "0391_harishtreddy_wabco",
+  "repo": "harishtreddy",
+  "filename": "wabco.go",
+  "elapsed_s": 4.63,
+  "input_tokens": 1745,
+  "output_tokens": 160,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L16-L17, L28-L29",
+  "rationale": "The `time.Time` fields in the Product struct (DeliveryDate, GoodsRreceiptDate) are populated from JSON input provided by the client (args[0]), not from time.Now() or any nondeterministic source. The code does not call time.Now(), does not use goroutines, does not iterate over maps, does not use rich queries, and has no mutable global state. All data written to the ledger is deterministically derived from transaction inputs.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L16-L17, L28-L29\nRATIONALE: The `time.Time` fields in the Product struct (DeliveryDate, GoodsRreceiptDate) are populated from JSON input provided by the client (args[0]), not from time.Now() or any nondeterministic source. The code does not call time.Now(), does not use goroutines, does not iterate over maps, does not use rich queries, and has no mutable global state. All data written to the ledger is deterministically derived from transaction inputs.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:30:44.449645",
+  "annotator": "2nd"
+}

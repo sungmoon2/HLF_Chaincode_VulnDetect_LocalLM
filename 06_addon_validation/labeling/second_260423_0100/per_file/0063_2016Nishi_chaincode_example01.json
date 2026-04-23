@@ -1,0 +1,19 @@
+{
+  "file_id": "0063_2016Nishi_chaincode_example01",
+  "repo": "2016Nishi",
+  "filename": "chaincode_example01.go",
+  "elapsed_s": 3.79,
+  "input_tokens": 1458,
+  "output_tokens": 148,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L16-L17, L30-L31, L40-L42",
+  "rationale": "Package-level variables A, B, Aval, Bval, X are declared at L16-L17, written during Init (L30-L31) and modified during invoke (L40-L42). These mutable globals persist across transactions within a peer process, causing different peers to have different values based on their transaction history, leading to endorsement divergence when the response includes values derived from these globals.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L16-L17, L30-L31, L40-L42\nRATIONALE: Package-level variables A, B, Aval, Bval, X are declared at L16-L17, written during Init (L30-L31) and modified during invoke (L40-L42). These mutable globals persist across transactions within a peer process, causing different peers to have different values based on their transaction history, leading to endorsement divergence when the response includes values derived from these globals.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:06:36.040983",
+  "annotator": "2nd"
+}

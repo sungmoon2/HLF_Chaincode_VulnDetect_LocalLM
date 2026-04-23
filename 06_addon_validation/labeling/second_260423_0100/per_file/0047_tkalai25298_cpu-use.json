@@ -1,0 +1,19 @@
+{
+  "file_id": "0047_tkalai25298_cpu-use",
+  "repo": "tkalai25298",
+  "filename": "cpu-use.go",
+  "elapsed_s": 5.26,
+  "input_tokens": 2595,
+  "output_tokens": 154,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L97-L107, L143-L155",
+  "rationale": "In AddCpu (L97-L107), time.Now() is assigned to Usage.Time and then marshaled and written via PutState. In AddUsage (L143-L155), time.Now() is similarly assigned to usageVal.Time before PutState. Different endorsing peers will capture different timestamps, causing endorsement divergence. GetHistory only reads and returns data without making write decisions based on the iterator results, so it is not C4.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L97-L107, L143-L155\nRATIONALE: In AddCpu (L97-L107), time.Now() is assigned to Usage.Time and then marshaled and written via PutState. In AddUsage (L143-L155), time.Now() is similarly assigned to usageVal.Time before PutState. Different endorsing peers will capture different timestamps, causing endorsement divergence. GetHistory only reads and returns data without making write decisions based on the iterator results, so it is not C4.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:39.855095",
+  "annotator": "2nd"
+}

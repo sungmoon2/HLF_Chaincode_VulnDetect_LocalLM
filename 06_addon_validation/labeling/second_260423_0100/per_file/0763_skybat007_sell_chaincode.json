@@ -1,0 +1,19 @@
+{
+  "file_id": "0763_skybat007_sell_chaincode",
+  "repo": "skybat007",
+  "filename": "sell_chaincode.go",
+  "elapsed_s": 18.09,
+  "input_tokens": 3379,
+  "output_tokens": 749,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L47-L55",
+  "rationale": "The only active transaction paths (create, query) are deterministic. The `getHistory` function using `GetHistoryForKey` is dead code (not routed in Invoke). The `time.Unix()` call converts an existing timestamp deterministically, not `time.Now()`. No maps are iterated, no goroutines, no mutable globals.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface. The `Invoke` method routes to `create` and `query` functions. Other methods (`modifyClient`, `delete`, `getHistory`) exist but are not routed through `Invoke` - they are dead code from the routing perspective.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 218: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` which converts a timestamp to a time object, NOT `time.Now()`. This is deterministic as it's converting the blockchain-provided timestamp from the history iterator.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: \n- The `selling` struct contains `Items []subSelling` which is a slice, not a map.\n- `json.Marshal(s)` at line 130 marshals a struct, not a map directly. The struct has no map fields.\n\n**C4 NON_REVALIDATED_QUERY**:\n- Line 195: `stub.GetHistoryForKey(key)` is used in `getHistory`. However, examining the code flow:\n  - The `getHistory` function is NOT reachable through `Invoke` (lines 47-55 only route to \"create\" and \"query\")\n  - Even if it were reachable, the result is only used for reading and returning via `shim.Success` - there's no write decision based on the query result.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**:\n- Line 200: `defer resultsIterator.Close()` - properly closed.\n\n### Key Observations\n1. The `getHistory` function uses `GetHistoryForKey` but it's dead code (not routed in `Invoke`)\n2. Even if `getHistory` were reachable, it only reads and returns data - no writes are influenced by the query results\n3. The `time.Unix()` usage is deterministic (converts existing timestamp, doesn't get current time)\n4. `modifyClient` and `delete` are also dead code (not routed)\n\nThe active transaction paths (`create`, `query`) are deterministic:\n- `create`: Uses `GetState` for existence check, then `PutState` with input data\n- `query`: Simple `GetState` and return\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L47-L55\nRATIONALE: The only active transaction paths (create, query) are deterministic. The `getHistory` function using `GetHistoryForKey` is dead code (not routed in Invoke). The `time.Unix()` call converts an existing timestamp deterministically, not `time.Now()`. No maps are iterated, no goroutines, no mutable globals.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:57:57.709764",
+  "annotator": "2nd"
+}

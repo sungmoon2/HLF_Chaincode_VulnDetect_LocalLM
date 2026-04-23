@@ -1,0 +1,19 @@
+{
+  "file_id": "0415_IBM-Blockchain-Edu-Credit_voucher_cc",
+  "repo": "IBM-Blockchain-Edu-Credit",
+  "filename": "voucher_cc.go",
+  "elapsed_s": 4.69,
+  "input_tokens": 1637,
+  "output_tokens": 155,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains Init and Invoke entrypoints but has no instances of time.Now() (C1), goroutines (C2), map iteration (C3), rich queries (C4), or mutable global state (C6). The code uses only GetState and PutState with deterministic key-value operations. Note: The code has compilation errors (undefined `err` variable, `strconv.Atoi` returns two values), but no consensus-critical nondeterminism patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains Init and Invoke entrypoints but has no instances of time.Now() (C1), goroutines (C2), map iteration (C3), rich queries (C4), or mutable global state (C6). The code uses only GetState and PutState with deterministic key-value operations. Note: The code has compilation errors (undefined `err` variable, `strconv.Atoi` returns two values), but no consensus-critical nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:32:30.442971",
+  "annotator": "2nd"
+}

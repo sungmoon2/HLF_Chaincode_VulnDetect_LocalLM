@@ -1,0 +1,19 @@
+{
+  "file_id": "0865_whatisoop_map",
+  "repo": "whatisoop",
+  "filename": "map.go",
+  "elapsed_s": 7.85,
+  "input_tokens": 2367,
+  "output_tokens": 654,
+  "verdict": "SAFE",
+  "primary_class": "NONE**",
+  "secondary_class": "NONE**",
+  "auxiliary_c5": "NO**",
+  "evidence_lines": "None**",
+  "rationale": "",
+  "raw_response": "# Audit Report: SimpleChaincode\n\n## Decision Process\n\n1. **Entrypoint Check**: ✓ File contains `Init()` and `Invoke()` methods implementing `shim.ChaincodeStubInterface`. INCLUDE.\n\n2. **Vulnerability Pattern Scan**:\n   - **C1 (TIME_NOW)**: `time.Sleep()` at L95 uses `time.Duration` but does NOT influence ledger writes or response values—it only delays iteration. No C1 sink.\n   - **C2 (GOROUTINE)**: No `go func()` or `go methodCall()` patterns. No C2.\n   - **C3 (MAP_ITERATION)**: No `for...range` over map-typed expressions. The `for...range keys` loops (L108, L155) iterate over slices, not maps. No C3.\n   - **C4 (NON_REVALIDATED_QUERY)**: \n     - L117: `stub.GetQueryResult(query)` result is collected into `keys` slice and returned via `json.Marshal(keys)` → `shim.Success()` at L131. This is a **read-only query returned to caller**, not a write decision. Per taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n     - L145: `stub.GetHistoryForKey(key)` similarly collects results into slice and returns via `shim.Success()` at L159. Same classification: read-only response, not a write decision.\n   - **C6 (GLOBAL_MUTABLE_STATE)**: No package-level mutable variables. No C6.\n   - **C5 (ITERATOR_LEAK)**: All iterators (`keysIter`) have `defer keysIter.Close()` on all paths (L102, L121, L149). No C5.\n\n3. **Intra-file Evidence of Source→Sink**: No C1–C4 or C6 sources reach ledger write or response sinks.\n\n4. **Dead Code / Logging**: All code is active transaction logic. No dead code.\n\n---\n\n## Verdict\n\n**VERDICT: SAFE**\n\n**PRIMARY_CLASS: NONE**\n\n**SECONDARY_CLASS: NONE**\n\n**AUXILIARY_C5: NO**\n\n**EVIDENCE_LINES: None**\n\n**RATIONALE**: The file contains recognizable HLF transaction entrypoints but exhibits no consensus-critical nondeterminism. `time.Sleep()` at L95 does not influence ledger state or response values. `GetQueryResult()` and `GetHistoryForKey()` results are read-only responses, not write decisions. All iterators are properly closed. No map iteration, goroutines, or mutable global state affecting consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:44.260417",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0199_BCEvanFang_marbles_chaincode",
+  "repo": "BCEvanFang",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 17.14,
+  "input_tokens": 5950,
+  "output_tokens": 780,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L275-299, L333-350, L352-406",
+  "rationale": "The chaincode uses GetQueryResult and GetHistoryForKey, but these are only for read-only queries returned via shim.Success without influencing any write decisions. GetStateByPartialCompositeKey used in transferMarblesBasedOnColor is explicitly not a C4 source. The time.Unix() call converts existing timestamp data, not time.Now().",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so it's a valid chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: \n- Line 390: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts existing data.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iteration found.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `queryMarblesByOwner` (L275-286) and `queryMarbles` (L288-299) use `GetQueryResult` via `getQueryResultForQueryString`. These are **read-only** - they return results via `shim.Success(queryResults)` without making write decisions.\n- `queryMarblesWithPagination` (L333-350) uses `GetQueryResultWithPagination` - also **read-only**.\n- `getHistoryForMarble` (L352-406) uses `GetHistoryForKey` - also **read-only**.\n\nNone of these query results are used to determine writes. They simply return data to the client.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables.\n\n### C5 Iterator Leak Check\nAll iterators appear to have `defer resultsIterator.Close()` calls:\n- L227: `defer resultsIterator.Close()`\n- L243: `defer coloredMarbleResultsIterator.Close()`\n- L309: `defer resultsIterator.Close()`\n- L323: `defer resultsIterator.Close()`\n- L360: `defer resultsIterator.Close()`\n- L366: `defer resultsIterator.Close()`\n\nAll iterators are properly closed.\n\n### Key Observation\nThe `transferMarblesBasedOnColor` function (L231-271) uses `GetStateByPartialCompositeKey` which is explicitly stated as NOT a C4 source in the taxonomy. It iterates over results and calls `transferMarble` for each, but `GetStateByPartialCompositeKey` returns results in deterministic lexicographic order.\n\nThe rich queries (`GetQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`) are only used for read-only operations that return data via `shim.Success()` - they don't influence any write decisions.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L275-299, L333-350, L352-406\nRATIONALE: The chaincode uses GetQueryResult and GetHistoryForKey, but these are only for read-only queries returned via shim.Success without influencing any write decisions. GetStateByPartialCompositeKey used in transferMarblesBasedOnColor is explicitly not a C4 source. The time.Unix() call converts existing timestamp data, not time.Now().",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:17:06.734872",
+  "annotator": "2nd"
+}

@@ -1,0 +1,55 @@
+{
+  "repo": "alext234",
+  "filename": "main.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "8366d73ddd061328",
+  "seeds": {
+    "1": {
+      "raw_response": "### Analysis of 'main.go' for Security Vulnerabilities\n\n#### 1. Access Control Issues\n**Vulnerability Type:** Access control issues\n**Severity:** Medium\n**Affected Code Location:** `testGetID` function (lines 30-45)\n**Description:** The `testGetID` function retrieves various identity attributes and certificates without any access control checks. This could allow unauthorized users to access sensitive information.\n**Recommended Fix:** Implement access control checks to ensure that only authorized users can access certain attributes and certificates.\n\n#### 2. Input Validation Flaws\n**Vulnerability Type:** Input validation flaws\n**Severity:** Low\n**Affected Code Location:** `testGetID` function (lines 30-45)\n**Description:** The function does not validate the input arguments. While this is not directly related to security, it could lead to unexpected behavior or errors.\n**Recommended Fix:** Validate input arguments to ensure they are within expected ranges and formats.\n\n#### 3. Read-After-Write Conflicts (Phantom Reads)\n**Vulnerability Type:** Read-after-write conflicts (phantom reads)\n**Severity:** Low\n**Affected Code Location:** `testGetID` function (lines 30-45)\n**Description:** The function retrieves various identity attributes and certificates without any transactional context. This could lead to phantom reads if the data is modified during the execution of the function.\n**Recommended Fix:** Use transactional context to ensure that the data retrieved is consistent and not modified during the execution of the function.\n\n#### 4. Private Data Leakage\n**Vulnerability Type:** Private data leakage\n**Severity:** High\n**Affected Code Location:** `testGetID` function (lines 30-45)\n**Description:** The function retrieves various identity attributes and certificates, which could include sensitive information such as private keys and certificates. This could lead to private data leakage if the function is accessed by unauthorized users.\n**Recommended Fix:** Restrict access to the `testGetID` function to authorized users only. Ensure that sensitive information is not exposed in the function's output.\n\n#### 5. Non-Deterministic Operations\n**Vulnerability Type:** Non-deterministic operations\n**Severity:** Low\n**Affected Code Location:** `testGetID` function (lines 30-45)\n**Description:** The function retrieves various identity attributes and certificates without any transactional context. This could lead to non-deterministic operations if the data is modified during the execution of the function.\n**Recommended Fix:** Use transactional context to ensure that the data retrieved is consistent and not modified during the execution of the function.\n\n#### 6. Insecure Key Management\n**Vulnerability Type:** Insecure key management\n**Severity:** High\n**Affected Code Location:** `testGetID` function (lines 30-45)\n**Description:** The function retrieves the public key and other sensitive information from the certificate. This could lead to insecure key management if the function is accessed by unauthorized users.\n**Recommended Fix:** Restrict access to the `testGetID` function to authorized users only. Ensure that sensitive information is not exposed in the function's output.\n\n### Summary\n- **Access Control Issues:** Medium\n- **Input Validation Flaws:** Low\n- **Read-After-Write Conflicts (Phantom Reads):** Low\n- **Private Data Leakage:** High\n- **Non-Deterministic Operations:** Low\n- **Insecure Key Management:** High\n\n**Recommendations:**\n1. Implement access control checks.\n2. Validate input arguments.\n3. Use transactional context.\n4. Restrict access to sensitive functions.\n5. Ensure secure key management.",
+      "prediction": "vulnerable",
+      "elapsed_s": 6.39,
+      "finish_reason": "stop",
+      "prompt_tokens": 754,
+      "completion_tokens": 759
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 754,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 754,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 754,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 754,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 0.8,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 1.31,
+  "total_elapsed_s": 6.55,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T04:32:41.722487"
+}

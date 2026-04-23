@@ -1,0 +1,55 @@
+{
+  "repo": "esumit",
+  "filename": "chaincode.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "6e53d2e5bdff09e5",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.07,
+      "finish_reason": "stop",
+      "prompt_tokens": 272,
+      "completion_tokens": 4
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is a simple wrapper around a `Group` router, delegating `Init` and `Invoke` calls to it. Without further context or the implementation of the `Group` router, it's not possible to identify more specific vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.78,
+      "finish_reason": "stop",
+      "prompt_tokens": 272,
+      "completion_tokens": 97
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file does not contain any obvious security vulnerabilities based on the given code snippet. The code appears to be a basic structure for a Hyperledger Fabric chaincode, delegating the `Init` and `Invoke` methods to a `Group` object. However, without further context or the implementation of the `Group` struct and its methods (`HandleInit` and `Handle`), it's impossible to identify more specific vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. \n\nFor a thorough security analysis, the implementation of the `Group` struct and its methods would need to be reviewed.",
+      "prediction": "safe",
+      "elapsed_s": 1.19,
+      "finish_reason": "stop",
+      "prompt_tokens": 272,
+      "completion_tokens": 146
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is a simple wrapper around a `Group` router, delegating `Init` and `Invoke` calls to it. Without further context or the implementation of the `Group` router, it's not possible to identify more specific vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.83,
+      "finish_reason": "stop",
+      "prompt_tokens": 272,
+      "completion_tokens": 97
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 272,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.58,
+  "total_elapsed_s": 2.91,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:22:19.307836"
+}

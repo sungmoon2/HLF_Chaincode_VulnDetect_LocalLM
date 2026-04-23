@@ -1,0 +1,19 @@
+{
+  "file_id": "0579_nagarajmanjunath_fileData",
+  "repo": "nagarajmanjunath",
+  "filename": "fileData.go",
+  "elapsed_s": 4.16,
+  "input_tokens": 2613,
+  "output_tokens": 274,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L95-L110, L113-L140",
+  "rationale": "The `queryfile` function (L95-L110) invokes `getQueryResultForQueryString`, which calls `stub.GetQueryResult(queryString)` at L118. This is a C4 NON_REVALIDATED_QUERY source. The query result is directly returned via `shim.Success(queryResults)` at L109 without any write operation, making it a read-only response. However, the query string is user-supplied (`args[0]`) and passed directly to `GetQueryResult` without validation or deterministic filtering. While the immediate sink is a response (not a write), the iterator is consumed in `constructQueryResponseFromIterator` (L113-L140) where the order of results from the iterator influences the JSON response structure. Since `GetQueryResult` results are not guaranteed to be deterministically ordered across endorsers without explicit sorting, and the response influences consensus, this constitutes a C4 vulnerability where a non-revalidated query result determines the proposal response content.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L95-L110, L113-L140\n\nRATIONALE: The `queryfile` function (L95-L110) invokes `getQueryResultForQueryString`, which calls `stub.GetQueryResult(queryString)` at L118. This is a C4 NON_REVALIDATED_QUERY source. The query result is directly returned via `shim.Success(queryResults)` at L109 without any write operation, making it a read-only response. However, the query string is user-supplied (`args[0]`) and passed directly to `GetQueryResult` without validation or deterministic filtering. While the immediate sink is a response (not a write), the iterator is consumed in `constructQueryResponseFromIterator` (L113-L140) where the order of results from the iterator influences the JSON response structure. Since `GetQueryResult` results are not guaranteed to be deterministically ordered across endorsers without explicit sorting, and the response influences consensus, this constitutes a C4 vulnerability where a non-revalidated query result determines the proposal response content.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:28.680126",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0353_FLombardi-PhD_governance",
+  "repo": "FLombardi-PhD",
+  "filename": "governance.go",
+  "elapsed_s": 13.36,
+  "input_tokens": 4773,
+  "output_tokens": 607,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "RATIONALE: The chaincode uses maps only for boolean lookups (not iteration), uses GetStateByPartialCompositeKey which is explicitly excluded from C4 per the taxonomy, and contains no time-based operations, goroutines, or global mutable state. All iterators are properly closed with defer statements.",
+  "rationale": "The chaincode uses maps only for boolean lookups (not iteration), uses GetStateByPartialCompositeKey which is explicitly excluded from C4 per the taxonomy, and contains no time-based operations, goroutines, or global mutable state. All iterators are properly closed with defer statements.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with transaction functions: `submitProposal`, `getProposal`, `vote`, `countVote`.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning (`go func()` or `go methodCall()`).\n\n**C3 MAP_ITERATION**: \n- Line 60: `acceptedQuorum := map[string]bool{...}` - used only for lookup (`acceptedQuorum[propQuorum]`), no iteration.\n- Line 127: `acceptedVotValues := map[string]bool{...}` - used only for lookup, no iteration.\n- Line 207: `acceptedVotValues := map[string]bool{...}` - used only for lookup, no iteration.\n\nNo `for...range` over maps exists in this code.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetStateByPartialCompositeKey` is used at lines 168 and 233. Per the taxonomy, \"GetStateByPartialCompositeKey and GetStateByRange are NOT C4 sources.\"\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 168-169: Iterator created, `defer keyResultsIterator.Close()` called - properly closed.\n- Line 233-234: Iterator created, `defer keyResultsIterator.Close()` called - properly closed.\n\nNo iterator leaks detected.\n\n### Conclusion\n\nThe code uses maps only for lookups (not iteration), uses `GetStateByPartialCompositeKey` which is explicitly excluded from C4, and has no other nondeterminism sources. All iterators are properly closed with defer.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: \nRATIONALE: The chaincode uses maps only for boolean lookups (not iteration), uses GetStateByPartialCompositeKey which is explicitly excluded from C4 per the taxonomy, and contains no time-based operations, goroutines, or global mutable state. All iterators are properly closed with defer statements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:28:10.359890",
+  "annotator": "2nd"
+}

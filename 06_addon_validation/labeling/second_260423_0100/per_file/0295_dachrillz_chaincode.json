@@ -1,0 +1,19 @@
+{
+  "file_id": "0295_dachrillz_chaincode",
+  "repo": "dachrillz",
+  "filename": "chaincode.go",
+  "elapsed_s": 5.33,
+  "input_tokens": 2977,
+  "output_tokens": 164,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L127-L157, L213-L232",
+  "rationale": "The file contains GetQueryResult (L127) and GetHistoryForKey (L215), but both are read-only operations that return results via shim.Success without influencing any ledger writes (PutState/DelState). QueryMolecules only reads and returns data. GetHistoryForAsset only reads history and returns it. Neither function uses query results to make write decisions, so C4 does not apply. No C1, C2, C3, or C6 patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L127-L157, L213-L232\nRATIONALE: The file contains GetQueryResult (L127) and GetHistoryForKey (L215), but both are read-only operations that return results via shim.Success without influencing any ledger writes (PutState/DelState). QueryMolecules only reads and returns data. GetHistoryForAsset only reads history and returns it. Neither function uses query results to make write decisions, so C4 does not apply. No C1, C2, C3, or C6 patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:24:16.720044",
+  "annotator": "2nd"
+}

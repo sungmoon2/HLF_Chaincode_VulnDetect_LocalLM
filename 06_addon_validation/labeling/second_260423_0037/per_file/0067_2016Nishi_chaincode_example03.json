@@ -1,0 +1,19 @@
+{
+  "file_id": "0067_2016Nishi_chaincode_example03",
+  "repo": "2016Nishi",
+  "filename": "chaincode_example03.go",
+  "elapsed_s": 2.38,
+  "input_tokens": 1419,
+  "output_tokens": 148,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains two HLF transaction entrypoints (Init and Invoke) with deterministic logic. All state writes (PutState calls at L27 and L60) depend only on parsed function arguments and string/integer conversions—no time-dependent, goroutine-based, map-iteration, non-revalidated query, or mutable global state sources influence the ledger writes or responses. The fmt.Printf calls are logging-only and do not affect consensus.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains two HLF transaction entrypoints (Init and Invoke) with deterministic logic. All state writes (PutState calls at L27 and L60) depend only on parsed function arguments and string/integer conversions—no time-dependent, goroutine-based, map-iteration, non-revalidated query, or mutable global state sources influence the ledger writes or responses. The fmt.Printf calls are logging-only and do not affect consensus.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:40:01.884522",
+  "annotator": "2nd"
+}

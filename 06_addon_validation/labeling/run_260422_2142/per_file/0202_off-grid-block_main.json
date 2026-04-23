@@ -1,0 +1,28 @@
+{
+  "file_id": "0202_off-grid-block_main",
+  "repo": "off-grid-block",
+  "filename": "main.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\off-grid-block\\main.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "PHANTOM_READ"
+  ],
+  "code_chars": 4891,
+  "stripped_chars": 3602,
+  "code_hash": "ca2dee0af2901d06",
+  "stripped_hash": "6f1dcbb25f7b67b2",
+  "elapsed_s": 17.65,
+  "input_tokens": 2377,
+  "output_tokens": 686,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L113-L125",
+  "rationale": "GetPrivateDataQueryResult is used but results only flow to response buffer for client return, not to determine ledger writes. Query-only operations returning data to clients do not cause consensus-critical nondeterminism since no write decisions depend on the query result ordering.",
+  "raw_response": "## Analysis\n\n### Step 1: HLF Transaction Entrypoint Check\nThis file contains `Init` and `Invoke` methods on `VoteChaincode` implementing the shim chaincode interface. These are valid HLF transaction entrypoints.\n\n### Step 2: Source Pattern Identification\n\n**C4 (NON_REVALIDATED_QUERY):** Line 113 contains `stub.GetPrivateDataQueryResult(\"collectionVote\", queryString)` - this is a rich query that returns results in non-deterministic order.\n\n### Step 3: Source-to-Sink Analysis\n\nThe `getQueryResultForQueryString` function:\n1. Calls `GetPrivateDataQueryResult` (line 113)\n2. Passes the iterator to `constructQueryResponseFromIterator` (line 119)\n3. Returns the buffer bytes (line 125)\n\nLooking at the `Invoke` function, `getQueryResultForQueryString` is called by:\n- `queryVotePrivateDetailsByPoll`\n- `queryVotesByPoll`\n- `queryVotesByVoter`\n- `queryVotes`\n\nHowever, these methods are not defined in this file - only their routing is shown in the switch statement. The actual implementations are not present.\n\n**Critical observation:** The `getQueryResultForQueryString` function returns `[]byte` which would be used in `shim.Success()` as a response. Looking at the pattern, this is a query-only function that returns data to the client - it does NOT make write decisions based on the query results.\n\nThe function:\n- Queries data\n- Formats it into JSON\n- Returns it\n\nThere is no evidence in this file that the query results influence any ledger writes (PutState, DelState, etc.). The query results flow to the response, but returning query results is the intended use case - the nondeterminism concern for C4 is when query results **determine write decisions**, not when they're simply returned.\n\n### Step 4: Auxiliary Check (C5)\nLine 114: `defer resultsIterator.Close()` - iterator is properly closed.\n\n### Verdict Determination\nWhile `GetPrivateDataQueryResult` is present, the results are only used to construct a response buffer and return to the client. There is no evidence in this file that query results determine any write operations. Query-only operations that return results to clients are not consensus-critical nondeterminism - different peers returning results in different orders for a query response doesn't cause consensus failure since no state modification depends on the order.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L113-L125\nRATIONALE: GetPrivateDataQueryResult is used but results only flow to response buffer for client return, not to determine ledger writes. Query-only operations returning data to clients do not cause consensus-critical nondeterminism since no write decisions depend on the query result ordering.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:22:30.637430"
+}

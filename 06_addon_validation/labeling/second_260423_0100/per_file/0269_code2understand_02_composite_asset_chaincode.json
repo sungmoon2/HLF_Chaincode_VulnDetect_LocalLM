@@ -1,0 +1,19 @@
+{
+  "file_id": "0269_code2understand_02_composite_asset_chaincode",
+  "repo": "code2understand",
+  "filename": "02_composite_asset_chaincode.go",
+  "elapsed_s": 5.5,
+  "input_tokens": 1696,
+  "output_tokens": 165,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L26, L85-101",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). The package-level `logger` variable (L26) is only used for logging, not for influencing ledger writes or responses. The `getBatchDetails` function uses `GetStateByPartialCompositeKey` (L87), which is explicitly NOT a C4 source per the taxonomy, and properly closes the iterator with defer (L91). No time.Now(), goroutines, map iteration, or mutable global state affecting transaction logic is present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L26, L85-101\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). The package-level `logger` variable (L26) is only used for logging, not for influencing ledger writes or responses. The `getBatchDetails` function uses `GetStateByPartialCompositeKey` (L87), which is explicitly NOT a C4 source per the taxonomy, and properly closes the iterator with defer (L91). No time.Now(), goroutines, map iteration, or mutable global state affecting transaction logic is present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:22:01.172643",
+  "annotator": "2nd"
+}

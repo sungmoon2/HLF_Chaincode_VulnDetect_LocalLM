@@ -1,0 +1,19 @@
+{
+  "file_id": "0219_BOCno1team_chaincode",
+  "repo": "BOCno1team",
+  "filename": "chaincode.go",
+  "elapsed_s": 16.39,
+  "input_tokens": 9955,
+  "output_tokens": 715,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L413-L428",
+  "rationale": "The chaincode uses GetQueryResult but only for read-only queries that return results to clients via shim.Success. No query results are used to make write decisions. No time.Now(), goroutines, map iteration, or global mutable state patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so this is valid chaincode.\n\n### Checking for Vulnerability Classes\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The structs use `json.Marshal()` but on struct types, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `getQueryResultForQueryString` (L413-428) uses `stub.GetQueryResult(queryString)` \n- This is called by `queryByOrganization` (L398-410)\n- Looking at `queryByOrganization`: it calls `getQueryResultForQueryString` and returns the result via `shim.Success(queryResults)` - this is a **read-only query** that just returns data to the client\n- The query result is NOT used to make write decisions (no PutState/DelState based on query results)\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables found.\n\n**C5 ITERATOR_LEAK**: \n- Checking all iterator usages:\n  - L340: `nameUnpsupplyIDResultsIterator` - has `defer Close()` ✓\n  - L360: `namePsupplyIDResultsIterator` - has `defer Close()` ✓\n  - L380: `organizationUnpsupplyIDResultsIterator` - has `defer Close()` ✓\n  - L398: `organizationPsupplyIDResultsIterator` - has `defer Close()` ✓\n  - L418: `resultsIterator` in `getQueryResultForQueryString` - has `defer Close()` ✓\n\nAll iterators are properly closed.\n\n### Key Observation on C4\nThe `GetQueryResult` usage in `getQueryResultForQueryString` is only used for read-only queries that return data to the client. The function `queryByOrganization` that calls it simply returns the query results via `shim.Success()`. There's no code path where the rich query results influence a write decision (PutState/DelState).\n\nPer the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L413-L428\nRATIONALE: The chaincode uses GetQueryResult but only for read-only queries that return results to clients via shim.Success. No query results are used to make write decisions. No time.Now(), goroutines, map iteration, or global mutable state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:18:21.567691",
+  "annotator": "2nd"
+}

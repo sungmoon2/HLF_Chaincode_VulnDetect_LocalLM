@@ -1,0 +1,55 @@
+{
+  "repo": "BingHongLi",
+  "filename": "chaincode_tutorial.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "731142e1f4eb8785",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'chaincode_tutorial.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, or insecure key management. The chaincode is a basic template and does not perform any operations that could introduce these types of vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 0.73,
+      "finish_reason": "stop",
+      "prompt_tokens": 518,
+      "completion_tokens": 79
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 518,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 518,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 518,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 518,
+      "completion_tokens": 4
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.18,
+  "total_elapsed_s": 0.89,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T04:52:34.002200"
+}

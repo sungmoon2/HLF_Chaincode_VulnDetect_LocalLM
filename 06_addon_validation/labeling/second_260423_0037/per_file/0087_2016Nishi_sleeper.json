@@ -1,0 +1,19 @@
+{
+  "file_id": "0087_2016Nishi_sleeper",
+  "repo": "2016Nishi",
+  "filename": "sleeper.go",
+  "elapsed_s": 3.2,
+  "input_tokens": 1478,
+  "output_tokens": 209,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L16-L21, L24-L34, L36-L54, L56-L68",
+  "rationale": "The file contains HLF transaction entrypoints (Init and Invoke methods). While time.Sleep() is called at L20, L52, and L66, sleep operations do NOT influence ledger writes or proposal responses—they only introduce delays. The invoke() method performs PutState at L48, but this occurs before the sleep call and is not conditioned on sleep duration. The query() method returns GetState results at L67, also independent of sleep timing. No C1–C6 vulnerability patterns exist where nondeterministic sources (time.Now, goroutines, map iteration, unvalidated queries, or mutable globals) determine write or response decisions.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L16-L21, L24-L34, L36-L54, L56-L68\n\nRATIONALE: The file contains HLF transaction entrypoints (Init and Invoke methods). While time.Sleep() is called at L20, L52, and L66, sleep operations do NOT influence ledger writes or proposal responses—they only introduce delays. The invoke() method performs PutState at L48, but this occurs before the sleep call and is not conditioned on sleep duration. The query() method returns GetState results at L67, also independent of sleep timing. No C1–C6 vulnerability patterns exist where nondeterministic sources (time.Now, goroutines, map iteration, unvalidated queries, or mutable globals) determine write or response decisions.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:40:30.889061",
+  "annotator": "2nd"
+}

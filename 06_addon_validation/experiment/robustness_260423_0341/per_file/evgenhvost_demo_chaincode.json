@@ -1,0 +1,55 @@
+{
+  "repo": "evgenhvost",
+  "filename": "demo_chaincode.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "e7948203aa0bc229",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'demo_chaincode.go' does not contain any of the security vulnerabilities mentioned in the question. Here's a brief overview of the chaincode:\n\n1. **Init Method**: This method is used for initialization and does not perform any operations that could lead to vulnerabilities.\n\n2. **Invoke Method**: This method handles function calls. It checks if the function name is \"invoke\" and then calls the `invoke` method. If the function name is not \"invoke\", it returns an error. This method does not perform any operations that could lead to vulnerabilities.\n\n3. **main Function**: This function starts the chaincode using `shim.Start`. It does not perform any operations that could lead to vulnerabilities.\n\nSince the chaincode does not perform any operations that could lead to access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management, no vulnerabilities are detected.",
+      "prediction": "safe",
+      "elapsed_s": 1.66,
+      "finish_reason": "stop",
+      "prompt_tokens": 434,
+      "completion_tokens": 197
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 434,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 434,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 434,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'demo_chaincode.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The code appears to be a basic template for a Hyperledger Fabric chaincode, focusing on initialization and a simple invoke method without any complex operations or data handling.",
+      "prediction": "safe",
+      "elapsed_s": 0.76,
+      "finish_reason": "stop",
+      "prompt_tokens": 434,
+      "completion_tokens": 85
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.51,
+  "total_elapsed_s": 2.54,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:22:21.892717"
+}

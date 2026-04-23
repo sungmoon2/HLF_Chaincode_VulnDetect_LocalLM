@@ -1,0 +1,19 @@
+{
+  "file_id": "0807_TigerWit_sealtx",
+  "repo": "TigerWit",
+  "filename": "sealtx.go",
+  "elapsed_s": 3.44,
+  "input_tokens": 2174,
+  "output_tokens": 206,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L67-L89",
+  "rationale": "The `gettxidspec` function (L67-L89) uses `stub.GetHistoryForKey(key)` (L73), a C4 non-revalidated query source, whose result directly determines a write decision via the conditional `if value == string(kv.Value)` (L82). The function returns `shim.Success([]byte(kv.TxId))` (L83) based on history query results without revalidation, creating consensus divergence risk if history state differs across endorsers. Although this is technically a read-only response rather than a ledger write, the query result determines the proposal response content in a non-deterministic manner across endorsers, violating consensus requirements.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L67-L89\n\nRATIONALE: The `gettxidspec` function (L67-L89) uses `stub.GetHistoryForKey(key)` (L73), a C4 non-revalidated query source, whose result directly determines a write decision via the conditional `if value == string(kv.Value)` (L82). The function returns `shim.Success([]byte(kv.TxId))` (L83) based on history query results without revalidation, creating consensus divergence risk if history state differs across endorsers. Although this is technically a read-only response rather than a ledger write, the query result determines the proposal response content in a non-deterministic manner across endorsers, violating consensus requirements.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:00:58.322901",
+  "annotator": "2nd"
+}

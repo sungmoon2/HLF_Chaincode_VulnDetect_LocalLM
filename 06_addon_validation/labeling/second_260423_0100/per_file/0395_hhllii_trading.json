@@ -1,0 +1,19 @@
+{
+  "file_id": "0395_hhllii_trading",
+  "repo": "hhllii",
+  "filename": "trading.go",
+  "elapsed_s": 5.14,
+  "input_tokens": 4299,
+  "output_tokens": 148,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF chaincode with Init/Invoke entrypoints. No C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (GetQueryResult/GetHistoryForKey), or C6 (mutable global state) patterns are present. GetStateByRange (L89, L227) is explicitly excluded from C4 sources per the taxonomy. All iterators are properly closed with defer statements.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF chaincode with Init/Invoke entrypoints. No C1 (time.Now), C2 (goroutines), C3 (map iteration), C4 (GetQueryResult/GetHistoryForKey), or C6 (mutable global state) patterns are present. GetStateByRange (L89, L227) is explicitly excluded from C4 sources per the taxonomy. All iterators are properly closed with defer statements.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:31:06.549826",
+  "annotator": "2nd"
+}

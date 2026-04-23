@@ -1,0 +1,19 @@
+{
+  "file_id": "0387_gorbunovperm_optimum",
+  "repo": "gorbunovperm",
+  "filename": "optimum.go",
+  "elapsed_s": 17.33,
+  "input_tokens": 2202,
+  "output_tokens": 725,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "While this chaincode has severe design issues (external network calls to Google APIs that will cause endorsement failures in practice), it does not contain any of the specific C1-C6 vulnerability patterns defined in the taxonomy. No time.Now(), goroutines, map iterations, rich queries, or global mutable state affecting ledger writes or responses.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has valid HLF transaction entrypoints: `Init` and `Invoke` methods using shim interface.\n\n### Examining Each Function\n\n**`Init`**: Stores credentials from args - deterministic.\n\n**`setVar`**: Simple PutState with args - deterministic.\n\n**`getAuthUrl`**: \n- Reads credentials from state\n- Calls `google.ConfigFromJSON` and `config.AuthCodeURL` - these are external library calls\n- Returns `shim.Success(nil)` - no state written, no data returned\n\n**`getLabels`** (Lines 94-139):\n- Reads `authToken` and `credentials` from state\n- Calls `config.Exchange(context.TODO(), authCode)` - **this makes an external HTTP call to Google's OAuth servers** (Line 113)\n- Creates Gmail client and calls `srv.Users.Labels.List(user).Do()` - **another external HTTP call** (Line 123)\n- The response `r.Labels` is iterated and printed\n\n### Critical Issue in `getLabels`\n\nThe function makes **external network calls** to Google's OAuth and Gmail APIs:\n1. `config.Exchange()` - exchanges auth code for token via HTTP\n2. `srv.Users.Labels.List().Do()` - fetches Gmail labels via HTTP\n\nWhile the function returns `shim.Success(nil)` without writing state or returning data, the **external network calls themselves are nondeterministic**:\n- Network latency varies between peers\n- External service responses may differ in timing\n- `log.Fatalf` calls on errors will terminate the chaincode container differently on different peers\n\nHowever, looking strictly at the taxonomy provided:\n- **C1 TIME_NOW**: No `time.Now()` usage\n- **C2 GOROUTINE**: No goroutines\n- **C3 MAP_ITERATION**: No map iteration affecting writes/responses\n- **C4 NON_REVALIDATED_QUERY**: No GetQueryResult/GetHistoryForKey\n- **C6 GLOBAL_MUTABLE_STATE**: No package-level mutable vars\n\nThe external network calls are a serious design flaw causing nondeterminism, but they don't fall into the specific C1-C6 categories defined in the taxonomy. The `log.Fatalf` calls could cause different peers to crash at different points, but this is also outside the defined categories.\n\n### Auxiliary Check\n**C5 ITERATOR_LEAK**: No iterators created.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: While this chaincode has severe design issues (external network calls to Google APIs that will cause endorsement failures in practice), it does not contain any of the specific C1-C6 vulnerability patterns defined in the taxonomy. No time.Now(), goroutines, map iterations, rich queries, or global mutable state affecting ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:30:26.107713",
+  "annotator": "2nd"
+}

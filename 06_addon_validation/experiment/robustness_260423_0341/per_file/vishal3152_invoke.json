@@ -1,0 +1,55 @@
+{
+  "repo": "vishal3152",
+  "filename": "invoke.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "930be6b42932aae8",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'invoke.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, or insecure key management. The code appears to be structured and follows best practices for handling function calls and error handling. However, it's important to note that this analysis is based on the provided code snippet and does not cover the entire chaincode or its interactions with the Hyperledger Fabric network. For a comprehensive security assessment, a thorough review of the entire chaincode, its interactions with the network, and its integration with other components would be necessary.",
+      "prediction": "safe",
+      "elapsed_s": 1.29,
+      "finish_reason": "stop",
+      "prompt_tokens": 541,
+      "completion_tokens": 139
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 541,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 541,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 541,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'invoke.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts (phantom reads), private data leakage, non-deterministic operations, or insecure key management. The code appears to be structured to handle different functions and validate inputs before performing operations, which is a good practice for maintaining security in Hyperledger Fabric chaincode. However, it's important to note that this analysis is based on the provided code snippet, and a thorough security review should consider the entire chaincode implementation, including the logic within the `Init`, `AddProject`, `AddItem`, `AddDonation`, `AddSpend`, `GetProject`, `GetItem`, `GetDonation`, and `GetSpend` functions.",
+      "prediction": "safe",
+      "elapsed_s": 1.29,
+      "finish_reason": "stop",
+      "prompt_tokens": 541,
+      "completion_tokens": 165
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.54,
+  "total_elapsed_s": 2.71,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T07:47:15.854985"
+}

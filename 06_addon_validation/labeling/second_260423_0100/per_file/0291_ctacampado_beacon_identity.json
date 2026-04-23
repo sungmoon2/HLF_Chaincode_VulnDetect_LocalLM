@@ -1,0 +1,19 @@
+{
+  "file_id": "0291_ctacampado_beacon_identity",
+  "repo": "ctacampado",
+  "filename": "beacon_identity.go",
+  "elapsed_s": 10.6,
+  "input_tokens": 1253,
+  "output_tokens": 567,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The map `t.FMap` is created and accessed via direct key lookup only (not iterated), which is deterministic. No time-based operations, goroutines, rich queries, or global mutable state patterns are present in this file.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods with `shim.ChaincodeStubInterface` parameter returning `pb.Response`. This is a valid HLF chaincode entrypoint. → Proceed with analysis.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- Line 17-21: A map `t.FMap` is created with string keys and function values.\n- Line 33-35: The map is accessed via direct key lookup `t.FMap[function]`, NOT iterated with `for...range`.\n- Direct map access (`map[key]`) is deterministic - it doesn't involve iteration order.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls found.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level `var` declarations in this file.\n- `t.FMap` is a struct field, not a package-level variable, and it's initialized fresh in each `Invoke` call (line 17-21).\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Sink Analysis\nThe map `t.FMap` is only used for direct key lookup (`t.FMap[function]`), not iteration. Direct map access is deterministic across all peers.\n\n### Step 4: Logging/Test/Dead Code Check\nThe patterns found are in active transaction code, but they don't constitute vulnerabilities.\n\n## Output\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The map `t.FMap` is created and accessed via direct key lookup only (not iterated), which is deterministic. No time-based operations, goroutines, rich queries, or global mutable state patterns are present in this file.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:24:00.589163",
+  "annotator": "2nd"
+}

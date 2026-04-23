@@ -1,0 +1,55 @@
+{
+  "repo": "elciusferreira",
+  "filename": "cardController.go",
+  "ground_truth": "SAFE",
+  "primary_class": "NONE",
+  "content_hash": "49c10db1081e5f4d",
+  "seeds": {
+    "1": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'cardController.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The chaincode is structured to handle different functions (`Create`, `GetByNumber`, `GetAll`) and delegates the actual logic to the `card` package. However, without further inspection of the `card` package, it's not possible to determine if there are any vulnerabilities in the implementation of these functions.",
+      "prediction": "safe",
+      "elapsed_s": 1.1,
+      "finish_reason": "stop",
+      "prompt_tokens": 385,
+      "completion_tokens": 115
+    },
+    "2": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 385,
+      "completion_tokens": 4
+    },
+    "3": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 385,
+      "completion_tokens": 4
+    },
+    "4": {
+      "raw_response": "No vulnerabilities detected.",
+      "prediction": "safe",
+      "elapsed_s": 0.04,
+      "finish_reason": "stop",
+      "prompt_tokens": 385,
+      "completion_tokens": 4
+    },
+    "5": {
+      "raw_response": "No vulnerabilities detected.\n\nThe provided Go chaincode file 'cardController.go' does not contain any obvious security vulnerabilities such as access control issues, input validation flaws, read-after-write conflicts, private data leakage, non-deterministic operations, or insecure key management. The code appears to be a basic structure for a Hyperledger Fabric chaincode, with functions for initializing and invoking the chaincode. The `Invoke` function handles different cases, delegating to the `card` package for specific operations. Without further context or the implementation of the `card` package, it's not possible to identify more specific vulnerabilities.",
+      "prediction": "safe",
+      "elapsed_s": 1.07,
+      "finish_reason": "stop",
+      "prompt_tokens": 385,
+      "completion_tokens": 122
+    }
+  },
+  "stability": 1.0,
+  "majority_vote": "safe",
+  "avg_elapsed_s": 0.46,
+  "total_elapsed_s": 2.3,
+  "any_truncated": false,
+  "timestamp": "2026-04-23T05:21:19.598310"
+}

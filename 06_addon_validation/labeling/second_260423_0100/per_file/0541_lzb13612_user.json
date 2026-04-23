@@ -1,0 +1,19 @@
+{
+  "file_id": "0541_lzb13612_user",
+  "repo": "lzb13612",
+  "filename": "user.go",
+  "elapsed_s": 5.06,
+  "input_tokens": 3705,
+  "output_tokens": 150,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF chaincode with Init/Invoke entrypoints. No time.Now() (C1), goroutines (C2), map iteration (C3), rich queries like GetQueryResult (C4), or mutable global state (C6) are present. GetStateByPartialCompositeKey in queryAllUser is explicitly excluded from C4 sources per the taxonomy. The iterator in queryAllUser is properly closed via defer. All operations are deterministic.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF chaincode with Init/Invoke entrypoints. No time.Now() (C1), goroutines (C2), map iteration (C3), rich queries like GetQueryResult (C4), or mutable global state (C6) are present. GetStateByPartialCompositeKey in queryAllUser is explicitly excluded from C4 sources per the taxonomy. The iterator in queryAllUser is properly closed via defer. All operations are deterministic.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:42:18.936502",
+  "annotator": "2nd"
+}

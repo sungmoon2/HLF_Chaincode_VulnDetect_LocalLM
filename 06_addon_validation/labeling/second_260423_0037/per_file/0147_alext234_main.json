@@ -1,0 +1,19 @@
+{
+  "file_id": "0147_alext234_main",
+  "repo": "alext234",
+  "filename": "main.go",
+  "elapsed_s": 2.99,
+  "input_tokens": 1632,
+  "output_tokens": 188,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The chaincode contains a recognizable HLF transaction entrypoint (Invoke method). However, all transaction logic (testGetID) performs only identity/certificate queries via cid package functions and outputs results via fmt.Println (logging only). No ledger writes (PutState, DelState, PutPrivateData, DelPrivateData) or proposal response mutations (shim.Success with data, SetEvent, or conditional returns based on nondeterministic sources) occur. The shim.Success(nil) and shim.Error() calls are deterministic and do not depend on time, goroutines, map iteration, or mutable global state.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The chaincode contains a recognizable HLF transaction entrypoint (Invoke method). However, all transaction logic (testGetID) performs only identity/certificate queries via cid package functions and outputs results via fmt.Println (logging only). No ledger writes (PutState, DelState, PutPrivateData, DelPrivateData) or proposal response mutations (shim.Success with data, SetEvent, or conditional returns based on nondeterministic sources) occur. The shim.Success(nil) and shim.Error() calls are deterministic and do not depend on time, goroutines, map iteration, or mutable global state.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:42:00.147293",
+  "annotator": "2nd"
+}

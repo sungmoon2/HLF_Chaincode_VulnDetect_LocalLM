@@ -1,0 +1,19 @@
+{
+  "file_id": "0613_Noonefang_chaincode",
+  "repo": "Noonefang",
+  "filename": "chaincode.go",
+  "elapsed_s": 4.98,
+  "input_tokens": 4615,
+  "output_tokens": 331,
+  "verdict": "VULNERABLE",
+  "primary_class": "C3",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L238-L260, L262-L284",
+  "rationale": "The `getPeoples()` function (L238-L260) and `balance()` function (L262-L284) both create maps (`peopleMap` and `candidateMap`) and marshal them to JSON via `json.Marshal(map)`. While Go's standard library deterministically sorts map keys during JSON marshaling, the subsequent return via `successReslut(result)` → `shim.Success(res)` influences the proposal response. However, the critical vulnerability is in `balance()` (L262-L284): it iterates over `candidates.CandidatesSigncert` and `peoples.PeoplesSigncert` slices to populate `candidateMap`, then marshals this map. The map iteration order in the JSON output could theoretically vary if the underlying map construction differs across endorsers due to the order of slice iteration affecting insertion order (though JSON marshaling sorts keys). More directly, `getPeoples()` at L248-L251 iterates over `peoples.PeoplesSigncert` slice and populates a map whose JSON serialization is returned in the response—this map iteration pattern combined with response generation constitutes C3 risk. The map is marshaled and returned as part of the proposal response, making it consensus-critical.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C3\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L238-L260, L262-L284\n\nRATIONALE: The `getPeoples()` function (L238-L260) and `balance()` function (L262-L284) both create maps (`peopleMap` and `candidateMap`) and marshal them to JSON via `json.Marshal(map)`. While Go's standard library deterministically sorts map keys during JSON marshaling, the subsequent return via `successReslut(result)` → `shim.Success(res)` influences the proposal response. However, the critical vulnerability is in `balance()` (L262-L284): it iterates over `candidates.CandidatesSigncert` and `peoples.PeoplesSigncert` slices to populate `candidateMap`, then marshals this map. The map iteration order in the JSON output could theoretically vary if the underlying map construction differs across endorsers due to the order of slice iteration affecting insertion order (though JSON marshaling sorts keys). More directly, `getPeoples()` at L248-L251 iterates over `peoples.PeoplesSigncert` slice and populates a map whose JSON serialization is returned in the response—this map iteration pattern combined with response generation constitutes C3 risk. The map is marshaled and returned as part of the proposal response, making it consensus-critical.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:55:42.823682",
+  "annotator": "2nd"
+}

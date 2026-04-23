@@ -1,0 +1,19 @@
+{
+  "file_id": "0289_ctacampado_beacon_cmpgns",
+  "repo": "ctacampado",
+  "filename": "beacon_cmpgns.go",
+  "elapsed_s": 11.64,
+  "input_tokens": 1263,
+  "output_tokens": 631,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains no nondeterminism source patterns. The map `t.FMap` is accessed via direct key lookup (not iteration), and it's recreated fresh on each invocation rather than being global mutable state. No time functions, goroutines, or rich queries are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on a `Chaincode` type that implement the `shim.ChaincodeStubInterface` pattern. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns present.\n\n**C3 MAP_ITERATION**: \n- Line 18-22: A map `t.FMap` is created with string keys and function values.\n- Line 36: The map is accessed via `t.FMap[function]` - this is a direct key lookup, NOT iteration.\n- There is no `for...range` over any map in this file.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls present.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level `var` declarations in this file.\n- `t.FMap` is an instance field on the `Chaincode` struct, set during each `Invoke` call. This is per-invocation state, not global mutable state.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Step 3: Sink Analysis\nThe file does call `shim.Success` and `shim.Error`, but none of the nondeterminism source patterns (C1-C4, C6) are present to flow into these sinks.\n\n### Step 4: Code Path Analysis\n- The `Invoke` function creates a fresh map each invocation (line 18-22)\n- It performs a direct map lookup (not iteration) to dispatch to handler functions\n- The actual handler functions (`addCampaign`, `getCOCampaigns`, `modifyCampaign`) are not defined in this file\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains no nondeterminism source patterns. The map `t.FMap` is accessed via direct key lookup (not iteration), and it's recreated fresh on each invocation rather than being global mutable state. No time functions, goroutines, or rich queries are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:23:49.971544",
+  "annotator": "2nd"
+}

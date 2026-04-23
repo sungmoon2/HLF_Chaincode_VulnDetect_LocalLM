@@ -1,0 +1,19 @@
+{
+  "file_id": "0713_samlinux_sacc3",
+  "repo": "samlinux",
+  "filename": "sacc3.go",
+  "elapsed_s": 5.3,
+  "input_tokens": 1906,
+  "output_tokens": 162,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L79-L81, L85-L95",
+  "rationale": "The file uses GetQueryResult (L80) which is a C4 source, but the result is only used for a read-only query returned via shim.Success (L87). The query results do not influence any write decisions (PutState, DelState, etc.) - they are simply returned to the client. Per the taxonomy, \"Read-only queries returned via shim.Success are NOT C4.\" No other vulnerability patterns (C1, C2, C3, C6) are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L79-L81, L85-L95\nRATIONALE: The file uses GetQueryResult (L80) which is a C4 source, but the result is only used for a read-only query returned via shim.Success (L87). The query results do not influence any write decisions (PutState, DelState, etc.) - they are simply returned to the client. Per the taxonomy, \"Read-only queries returned via shim.Success are NOT C4.\" No other vulnerability patterns (C1, C2, C3, C6) are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:54:30.156655",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0641_Pharmeum_chaincode",
+  "repo": "Pharmeum",
+  "filename": "chaincode.go",
+  "elapsed_s": 3.64,
+  "input_tokens": 3183,
+  "output_tokens": 203,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L35, L36, L37",
+  "rationale": "Line 35 calls time.Now() and stores it in startedTime. Line 37 uses time.Since(startedTime) within a deferred function that logs the duration. Although the time measurement itself is only logged (not written to ledger), the deferred function at L36-L38 executes during the Invoke transaction lifecycle and the duration string is included in logging output that could influence transaction semantics or be observable in endorsement responses. More critically, the startedTime variable captures wall-clock time that is non-deterministic across endorsers, and while the primary use is logging, the pattern demonstrates consensus-critical time dependency in the transaction execution path that could affect timing-sensitive logic or response consistency.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L35, L36, L37\nRATIONALE: Line 35 calls time.Now() and stores it in startedTime. Line 37 uses time.Since(startedTime) within a deferred function that logs the duration. Although the time measurement itself is only logged (not written to ledger), the deferred function at L36-L38 executes during the Invoke transaction lifecycle and the duration string is included in logging output that could influence transaction semantics or be observable in endorsement responses. More critically, the startedTime variable captures wall-clock time that is non-deterministic across endorsers, and while the primary use is logging, the pattern demonstrates consensus-critical time dependency in the transaction execution path that could affect timing-sensitive logic or response consistency.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:33.678323",
+  "annotator": "2nd"
+}

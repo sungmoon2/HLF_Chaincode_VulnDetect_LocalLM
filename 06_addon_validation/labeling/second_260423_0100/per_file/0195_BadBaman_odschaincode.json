@@ -1,0 +1,19 @@
+{
+  "file_id": "0195_BadBaman_odschaincode",
+  "repo": "BadBaman",
+  "filename": "odschaincode.go",
+  "elapsed_s": 14.31,
+  "input_tokens": 3177,
+  "output_tokens": 657,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L137, L129",
+  "rationale": "The GetQueryResult at L137 is used in a read-only context - results are returned via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations. No other nondeterminism patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so this is valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning (`go func()` or `go methodCall()`).\n\n**C3 MAP_ITERATION**: No map iteration with `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `queryApplicationRecordByApplicant` (L117-130) calls `getQueryResultForQueryString`\n- `getQueryResultForQueryString` (L132-168) uses `stub.GetQueryResult(queryString)` at L137\n- The result is returned via `shim.Success(queryResults)` at L129\n- This is a **read-only query** - the results are returned to the client but do NOT influence any `PutState`, `DelState`, or other write operations\n- Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4\"\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- `queryAllApplicationRecords` (L95-115): Uses `defer resultsIterator.Close()` - properly closed\n- `getQueryResultForQueryString` (L132-168): Uses `defer resultsIterator.Close()` - properly closed\n\n### Key Observation\nThe `GetQueryResult` in `getQueryResultForQueryString` is used purely for reading data and returning it to the client. There is no subsequent write operation based on the query results. The function returns the query results which are then passed to `shim.Success()`. This is a read-only pattern that does not cause endorsement divergence because:\n1. No ledger writes depend on the query results\n2. The response is just returning data to the client\n\nNote: There's a bug in the code (`stub` vs `APIstub` at L137), but this is a compilation error, not a nondeterminism issue.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L137, L129\nRATIONALE: The GetQueryResult at L137 is used in a read-only context - results are returned via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations. No other nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:16:44.811639",
+  "annotator": "2nd"
+}

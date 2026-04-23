@@ -1,0 +1,19 @@
+{
+  "file_id": "0067_2016Nishi_chaincode_example03",
+  "repo": "2016Nishi",
+  "filename": "chaincode_example03.go",
+  "elapsed_s": 12.67,
+  "input_tokens": 1419,
+  "output_tokens": 604,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The chaincode contains only deterministic operations. All state writes use values derived directly from transaction arguments via deterministic parsing (strconv.Atoi). No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Identify Transaction Entrypoints\nThe file contains recognizable HLF transaction entrypoints:\n- `Init(stub shim.ChaincodeStubInterface) pb.Response` at L12\n- `Invoke(stub shim.ChaincodeStubInterface) pb.Response` at L35\n\nThis is valid chaincode, so I proceed with analysis.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over map-typed expressions found.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` found.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic. The `SimpleChaincode` struct is empty and used only as a method receiver.\n\n### Step 3: Check for C5 (Auxiliary)\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Code Flow Summary\n- `Init`: Takes 2 arguments, parses an integer, writes to state via `PutState` - all deterministic\n- `Invoke`: Routes to `query` function\n- `query`: Takes 2 arguments, parses an integer, writes to state via `PutState` - all deterministic\n\nAll operations use only:\n- `stub.GetFunctionAndParameters()` - deterministic\n- `strconv.Atoi()` - deterministic\n- `stub.PutState()` - deterministic sink\n- `fmt.Printf()` - logging only, doesn't affect ledger or response\n\nNo nondeterministic sources are present that could influence ledger writes or proposal responses.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The chaincode contains only deterministic operations. All state writes use values derived directly from transaction arguments via deterministic parsing (strconv.Atoi). No time functions, goroutines, map iterations, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:06:53.020113",
+  "annotator": "2nd"
+}

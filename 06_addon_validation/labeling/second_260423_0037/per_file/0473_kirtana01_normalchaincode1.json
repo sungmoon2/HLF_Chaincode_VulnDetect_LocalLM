@@ -1,0 +1,19 @@
+{
+  "file_id": "0473_kirtana01_normalchaincode1",
+  "repo": "kirtana01",
+  "filename": "normalchaincode1.go",
+  "elapsed_s": 3.15,
+  "input_tokens": 1541,
+  "output_tokens": 199,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains two recognizable HLF transaction entrypoints (Init and Invoke methods on SimpleChaincode). All ledger writes (PutState at L18, L57; DelState at L48) are driven by deterministic inputs from stub.GetStringArgs() and stub.GetFunctionAndParameters(), with no time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state sources influencing the write decisions. The get() function performs a read-only GetState (L70) that is returned via shim.Success without driving any write, so it is not a C4 vulnerability. No C1–C6 patterns are present.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: N/A\n\nRATIONALE: The file contains two recognizable HLF transaction entrypoints (Init and Invoke methods on SimpleChaincode). All ledger writes (PutState at L18, L57; DelState at L48) are driven by deterministic inputs from stub.GetStringArgs() and stub.GetFunctionAndParameters(), with no time-dependent, goroutine-based, map-iteration, non-revalidated-query, or mutable global state sources influencing the write decisions. The get() function performs a read-only GetState (L70) that is returned via shim.Success without driving any write, so it is not a C4 vulnerability. No C1–C6 patterns are present.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:51:20.689140",
+  "annotator": "2nd"
+}

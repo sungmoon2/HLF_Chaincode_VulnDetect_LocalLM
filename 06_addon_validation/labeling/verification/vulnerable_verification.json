@@ -1,0 +1,429 @@
+[
+  {
+    "repo": "Noonefang",
+    "filename": "chaincode.go",
+    "primary_class": "C3",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L152-L163, L168-L169, L186-L199, L201",
+    "reclassification_reason": "Iterates over slices, not maps. No for...range over map-typed expression."
+  },
+  {
+    "repo": "Running_Examples",
+    "filename": "GoRoutines.go",
+    "primary_class": "C2",
+    "secondary_class": "C6",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L17-L22, L24-L29, L33"
+  },
+  {
+    "repo": "Trust-Contract",
+    "filename": "cargo-chaincode.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L83-L95"
+  },
+  {
+    "repo": "akshay111meher",
+    "filename": "myexample.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L17-L18, L23-L30, L37-L40"
+  },
+  {
+    "repo": "alejandrolr",
+    "filename": "lab.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L79-L81, L108-L109, L143-L145, L147"
+  },
+  {
+    "repo": "arthurmsouza",
+    "filename": "boleto.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L93-L94, L116-L117"
+  },
+  {
+    "repo": "ashokcin1",
+    "filename": "main.go",
+    "primary_class": "C1",
+    "secondary_class": "C3",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L75-L83, L117-L124"
+  },
+  {
+    "repo": "bairathirahul",
+    "filename": "genesiskyc.go",
+    "primary_class": "C1",
+    "secondary_class": "C3",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L393-L397, L399"
+  },
+  {
+    "repo": "bugfrog1024",
+    "filename": "solution.go",
+    "primary_class": "C3",
+    "secondary_class": "C6",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L44-L47, L241-L248, L262-L263, L303-L310, L324-L325"
+  },
+  {
+    "repo": "cristiano-andrade",
+    "filename": "chaincode-test.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L90-L91, L99"
+  },
+  {
+    "repo": "eshita53",
+    "filename": "fabcar.go",
+    "primary_class": "C1",
+    "secondary_class": "C4",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L247-L248, L260-L261, L295-L296, L310-L311, L355-L356, L370-L371, L406-L407"
+  },
+  {
+    "repo": "farmerrrrr",
+    "filename": "asset management.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L20, L63-L67"
+  },
+  {
+    "repo": "gymgle",
+    "filename": "diploma.go",
+    "primary_class": "C1",
+    "secondary_class": "C6",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L137-L137, L175-L175, L180-L180, L22-L23"
+  },
+  {
+    "repo": "haydencoinprima",
+    "filename": "wallet_chaincode.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L137-L147, L175-L185"
+  },
+  {
+    "repo": "hungryMob",
+    "filename": "sendEvent.go",
+    "primary_class": "C4",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L66-L79, L140-L157, L247-L256, L262-L275"
+  },
+  {
+    "repo": "imineev",
+    "filename": "carTrace.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L540-L545, L551"
+  },
+  {
+    "repo": "jasonren0403",
+    "filename": "operations.go",
+    "primary_class": "C3",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L296-L313, L318"
+  },
+  {
+    "repo": "jbibodi",
+    "filename": "Invoice.go",
+    "primary_class": "C1",
+    "secondary_class": "C4",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L117-L135, L97-L113"
+  },
+  {
+    "repo": "jinjiaKarl",
+    "filename": "edu.go",
+    "primary_class": "C6",
+    "secondary_class": "C1",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L22-L23, L143-L156, L227-L256"
+  },
+  {
+    "repo": "juniorug",
+    "filename": "foodSCM.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L87-L89, L104-L106, L127-L129, L150-L152, L173-L175, L196-L198"
+  },
+  {
+    "repo": "richardfelkl",
+    "filename": "main.go",
+    "primary_class": "C3",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L147-L165, L167",
+    "reclassification_reason": "No for...range over any map. Iteration is over StateQueryIterator."
+  },
+  {
+    "repo": "sachin-ngpws",
+    "filename": "cpu-use.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L79-L87, L133-L141"
+  },
+  {
+    "repo": "soodakshay",
+    "filename": "mycc.go",
+    "primary_class": "C4",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L161-L167, L79-L93",
+    "reclassification_reason": "GetQueryResult HasNext gates entry; PutState is unconditional after gate passes."
+  },
+  {
+    "repo": "sriyanshcse",
+    "filename": "fabcar.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L107-L107, L119-L119, L127-L127, L128-L128"
+  },
+  {
+    "repo": "tkalai25298",
+    "filename": "cpu-use.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L97-L105, L143-L153"
+  },
+  {
+    "repo": "vivianLL",
+    "filename": "mychaincode.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L207-L212, L268-L273, L327-L332, L371-L376"
+  },
+  {
+    "repo": "vmorris",
+    "filename": "procon.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L79-L82, L103-L108, L127-L131, L152-L157"
+  },
+  {
+    "repo": "netkiller",
+    "filename": "gasoline.go",
+    "primary_class": "C3",
+    "secondary_class": "NONE",
+    "candidate_type": "safe",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L12-L12, L108-L108, L110-L110",
+    "reclassification_reason": "Map field modified directly (no iteration). Only path to ledger is through json.Marshal (deterministic)."
+  },
+  {
+    "repo": "yoonjk",
+    "filename": "account.go",
+    "primary_class": "C4",
+    "secondary_class": "NONE",
+    "candidate_type": "positive",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L63-L64, L97-L103",
+    "reclassification_reason": "Read-only query returning via shim.Success; no write-decision logic."
+  },
+  {
+    "repo": "linqd1",
+    "filename": "chaincode.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "safe",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L14-L15, L22-L28, L40-L41",
+    "reclassification_reason": "Globals modified but no PutState in invoke(). Hard negative."
+  },
+  {
+    "repo": "2016Nishi",
+    "filename": "chaincode_example01.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L16-L17, L22-L28, L38-L40",
+    "reclassification_reason": "PutState is commented out (block comment L56-68). Globals modified but never written to ledger."
+  },
+  {
+    "repo": "abegpatel",
+    "filename": "marbles_chaincode.go",
+    "primary_class": "C4",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L44-L48, L56-L61",
+    "reclassification_reason": "GetQueryResult result only used for error check. PutState executes unconditionally regardless of query result."
+  },
+  {
+    "repo": "Co-Verify",
+    "filename": "fabcar.go",
+    "primary_class": "C4",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L166-L175, L195-L206"
+  },
+  {
+    "repo": "einai",
+    "filename": "main.go",
+    "primary_class": "C1",
+    "secondary_class": "C3",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L73-L82, L107-L118, L14"
+  },
+  {
+    "repo": "fourbroad",
+    "filename": "chaincode_example01.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L17-L18, L23-L30, L38-L41",
+    "reclassification_reason": "PutState calls are commented out in block comment. Globals modified but never written to ledger."
+  },
+  {
+    "repo": "isheejong",
+    "filename": "carTrace.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L497-L501, L507-L511"
+  },
+  {
+    "repo": "jinjiaKarl",
+    "filename": "energyCommunity.go",
+    "primary_class": "C6",
+    "secondary_class": "C1",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L22-L23, L100-L101, L155-L156, L73-L74, L107-L108"
+  },
+  {
+    "repo": "koakh",
+    "filename": "lscc.go",
+    "primary_class": "C3",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L227-L244, L232-L243",
+    "reclassification_reason": "GetMSPs() is cross-package call (mspmgr package). Violates intra-file scope rule."
+  },
+  {
+    "repo": "lcy1317",
+    "filename": "chaincode.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L21-L25, L36-L38",
+    "reclassification_reason": "time.Local is from the time package, not a file-level package var. Out of scope."
+  },
+  {
+    "repo": "qubing",
+    "filename": "relay_adapter.go",
+    "primary_class": "C4",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L113-L114, L195-L196, L302-L303, L330-L331",
+    "reclassification_reason": "queryTopicsByOrg/querySessionByTopic are cross-package function calls. Violates intra-file scope rule."
+  },
+  {
+    "repo": "ryu-sato",
+    "filename": "chaincode_sample.go",
+    "primary_class": "C3",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L24-L26, L36-L37"
+  },
+  {
+    "repo": "whatisoop",
+    "filename": "chaincode_example01.go",
+    "primary_class": "C6",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "FALSE_POSITIVE",
+    "evidence_lines": "L17-L18, L23-L30, L38-L41",
+    "reclassification_reason": "PutState calls are commented out in block comment. Globals modified but never written to ledger."
+  },
+  {
+    "repo": "xuansonha17031991",
+    "filename": "drug_information.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L77-L78, L87-L91, L136-L137, L146-L150"
+  },
+  {
+    "repo": "xuansonha17031991",
+    "filename": "hospital_fees.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L77-L78, L87-L91"
+  },
+  {
+    "repo": "xuansonha17031991",
+    "filename": "medical_record.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L117-L117, L127-L127, L175-L175, L185-L185"
+  },
+  {
+    "repo": "xuansonha17031991",
+    "filename": "patient_inormation.go",
+    "primary_class": "C1",
+    "secondary_class": "NONE",
+    "candidate_type": "unlabeled",
+    "verification_status": "VERIFIED_CORRECT",
+    "evidence_lines": "L117-L118, L127-L129"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "file_id": "0557_Medullus_main_router",
+  "repo": "Medullus",
+  "filename": "main_router.go",
+  "elapsed_s": 4.63,
+  "input_tokens": 1549,
+  "output_tokens": 174,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L47-L82",
+  "rationale": "This file contains the Init and Invoke entrypoints, but the Invoke function only dispatches to other methods (initPurchaseOrders, readPurchaseOrder, addInvoices, etc.) that are not defined in this file. The Init function simply returns shim.Success(nil) with no nondeterministic patterns. The logger global is only used for logging purposes. Without the implementations of the dispatched methods in this file, there is no intra-file evidence of any C1-C4 or C6 vulnerability patterns that could influence ledger writes or responses.",
+  "raw_response": "VERDICT: EXCLUDE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L47-L82\nRATIONALE: This file contains the Init and Invoke entrypoints, but the Invoke function only dispatches to other methods (initPurchaseOrders, readPurchaseOrder, addInvoices, etc.) that are not defined in this file. The Init function simply returns shim.Success(nil) with no nondeterministic patterns. The logger global is only used for logging purposes. Without the implementations of the dispatched methods in this file, there is no intra-file evidence of any C1-C4 or C6 vulnerability patterns that could influence ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:43:04.019361",
+  "annotator": "2nd"
+}

@@ -1,0 +1,145 @@
+[
+  {
+    "repo_id": "C0rWin",
+    "filename": "bank.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\C0rWin\\bank.go",
+    "file_size": 1351,
+    "line_count": 51,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "978404a49b5246a7"
+  },
+  {
+    "repo_id": "Mr-lay",
+    "filename": "contract_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Mr-lay\\contract_chaincode.go",
+    "file_size": 13341,
+    "line_count": 411,
+    "possible_families": [
+      "MAP_ITERATION"
+    ],
+    "file_hash": "738726b270dda00c"
+  },
+  {
+    "repo_id": "OneChainGeek",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\OneChainGeek\\main.go",
+    "file_size": 1359,
+    "line_count": 54,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "bc5b2cbabc939415"
+  },
+  {
+    "repo_id": "cactusfluo",
+    "filename": "invoke.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\invoke.go",
+    "file_size": 2198,
+    "line_count": 87,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "file_hash": "7bac2ae431ed0a5f"
+  },
+  {
+    "repo_id": "debutdeveloper",
+    "filename": "debut_asset.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\debutdeveloper\\debut_asset.go",
+    "file_size": 5055,
+    "line_count": 163,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "file_hash": "48d573e98d8c199e"
+  },
+  {
+    "repo_id": "hyperledgendary",
+    "filename": "wasm_contract.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hyperledgendary\\wasm_contract.go",
+    "file_size": 3333,
+    "line_count": 117,
+    "possible_families": [
+      "MAP_ITERATION"
+    ],
+    "file_hash": "aed5be6b63b0b843"
+  },
+  {
+    "repo_id": "linqd1",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\linqd1\\chaincode.go",
+    "file_size": 2082,
+    "line_count": 74,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "8eab2579f36ffeaf"
+  },
+  {
+    "repo_id": "nmatsui",
+    "filename": "fabric-payment.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\nmatsui\\fabric-payment.go",
+    "file_size": 2028,
+    "line_count": 71,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "c4b2b107e3e087b6"
+  },
+  {
+    "repo_id": "off-grid-block",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\off-grid-block\\main.go",
+    "file_size": 4891,
+    "line_count": 163,
+    "possible_families": [
+      "PHANTOM_READ"
+    ],
+    "file_hash": "672e91c8bd213dfa"
+  },
+  {
+    "repo_id": "papandas",
+    "filename": "fabric-payment.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\papandas\\fabric-payment.go",
+    "file_size": 2014,
+    "line_count": 71,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "289f9dc64a337849"
+  },
+  {
+    "repo_id": "payprotocol",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\payprotocol\\main.go",
+    "file_size": 7286,
+    "line_count": 284,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "f18bdbf04b90fc3d"
+  },
+  {
+    "repo_id": "peteim",
+    "filename": "fabric_cc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\peteim\\fabric_cc.go",
+    "file_size": 3133,
+    "line_count": 134,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "file_hash": "5ed465f1461fedfe"
+  },
+  {
+    "repo_id": "zs-papandas",
+    "filename": "pscc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\zs-papandas\\pscc.go",
+    "file_size": 2328,
+    "line_count": 75,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "file_hash": "f657402804d0f2f4"
+  }
+]

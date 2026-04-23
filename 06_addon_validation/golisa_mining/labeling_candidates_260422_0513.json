@@ -1,0 +1,1853 @@
+[
+  {
+    "repo_id": "bluezd",
+    "filename": "integralTrace.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bluezd\\integralTrace.go",
+    "file_size": 23770,
+    "line_count": 700,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 6,
+    "file_hash": "fd0edced884817c4"
+  },
+  {
+    "repo_id": "xuehuiit",
+    "filename": "example_cc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\xuehuiit\\example_cc.go",
+    "file_size": 20202,
+    "line_count": 818,
+    "possible_families": [
+      "TIME_NOW",
+      "GOROUTINE",
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 23,
+    "file_hash": "441e0fe6c2a76a9e"
+  },
+  {
+    "repo_id": "alejandrolr",
+    "filename": "lab.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\alejandrolr\\lab.go",
+    "file_size": 11860,
+    "line_count": 404,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "34e82b0bc3e1a585"
+  },
+  {
+    "repo_id": "ashokcin1",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\ashokcin1\\main.go",
+    "file_size": 5531,
+    "line_count": 201,
+    "possible_families": [
+      "TIME_NOW",
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 3,
+    "file_hash": "ae812a546c00fd56"
+  },
+  {
+    "repo_id": "bairathirahul",
+    "filename": "genesiskyc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bairathirahul\\genesiskyc.go",
+    "file_size": 24084,
+    "line_count": 817,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "c99cf561f17f9635"
+  },
+  {
+    "repo_id": "einai",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\einai\\main.go",
+    "file_size": 5531,
+    "line_count": 201,
+    "possible_families": [
+      "TIME_NOW",
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 3,
+    "file_hash": "ae812a546c00fd56"
+  },
+  {
+    "repo_id": "jasonren0403",
+    "filename": "operations.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jasonren0403\\operations.go",
+    "file_size": 18325,
+    "line_count": 618,
+    "possible_families": [
+      "MAP_ITERATION",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 8,
+    "file_hash": "a2e9f8d6e74496b9"
+  },
+  {
+    "repo_id": "jbibodi",
+    "filename": "Invoice.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jbibodi\\Invoice.go",
+    "file_size": 8315,
+    "line_count": 277,
+    "possible_families": [
+      "TIME_NOW",
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "fe68e29baf4d747b"
+  },
+  {
+    "repo_id": "sachin-ngpws",
+    "filename": "cpu-use.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sachin-ngpws\\cpu-use.go",
+    "file_size": 4848,
+    "line_count": 234,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 4,
+    "file_hash": "9cadd873e455ea64"
+  },
+  {
+    "repo_id": "sriyanshcse",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sriyanshcse\\fabcar.go",
+    "file_size": 11166,
+    "line_count": 388,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 7,
+    "file_hash": "1540d93e39473993"
+  },
+  {
+    "repo_id": "tkalai25298",
+    "filename": "cpu-use.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\tkalai25298\\cpu-use.go",
+    "file_size": 4964,
+    "line_count": 242,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 4,
+    "file_hash": "49bbcdc6f2e95779"
+  },
+  {
+    "repo_id": "2016Nishi",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\2016Nishi\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "18ec7ec6d7010586"
+  },
+  {
+    "repo_id": "Amit9887",
+    "filename": "marble.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Amit9887\\marble.go",
+    "file_size": 31341,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "c869a062b83747c2"
+  },
+  {
+    "repo_id": "Avery7Li",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Avery7Li\\chaincode.go",
+    "file_size": 26125,
+    "line_count": 738,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "b61daa02fd8adce5"
+  },
+  {
+    "repo_id": "BCEvanFang",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\BCEvanFang\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "BOCno1team",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\BOCno1team\\chaincode.go",
+    "file_size": 29261,
+    "line_count": 818,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "e05650cff6f1bafc"
+  },
+  {
+    "repo_id": "BadBaman",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\BadBaman\\marbles_chaincode.go",
+    "file_size": 28423,
+    "line_count": 687,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "26945d7aed61d00d"
+  },
+  {
+    "repo_id": "Co-Verify",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Co-Verify\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "JohnnyKuo99",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\JohnnyKuo99\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "KTyrantOnly",
+    "filename": "crowdTest.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\KTyrantOnly\\crowdTest.go",
+    "file_size": 10732,
+    "line_count": 366,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "277479c9d39c85bf"
+  },
+  {
+    "repo_id": "KarthikSamaganam550",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\KarthikSamaganam550\\marbles_chaincode.go",
+    "file_size": 31205,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "cfaa76ea10571f43"
+  },
+  {
+    "repo_id": "MSaber9",
+    "filename": "diamonds.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\MSaber9\\diamonds.go",
+    "file_size": 21092,
+    "line_count": 555,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "b43db8ead0267d51"
+  },
+  {
+    "repo_id": "Noonefang",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Noonefang\\chaincode.go",
+    "file_size": 10953,
+    "line_count": 377,
+    "possible_families": [
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 2,
+    "file_hash": "aa149e2d61bab83d"
+  },
+  {
+    "repo_id": "RakhiSoni",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\RakhiSoni\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "Running_Examples",
+    "filename": "GoRoutines.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Running_Examples\\goroutine\\GoRoutines.go",
+    "file_size": 458,
+    "line_count": 41,
+    "possible_families": [
+      "GOROUTINE",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 5,
+    "file_hash": "976e903a571653a2"
+  },
+  {
+    "repo_id": "SipengXie",
+    "filename": "record.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\SipengXie\\record.go",
+    "file_size": 9095,
+    "line_count": 316,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "7d2a2a5e65d57b16"
+  },
+  {
+    "repo_id": "SurabhiBorgikar",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\SurabhiBorgikar\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "TongjiUniversityStudent1",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\TongjiUniversityStudent1\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "XmissterioX",
+    "filename": "diamonds.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\XmissterioX\\diamonds.go",
+    "file_size": 21092,
+    "line_count": 555,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "b43db8ead0267d51"
+  },
+  {
+    "repo_id": "YewPu",
+    "filename": "rowObjects.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\YewPu\\rowObjects.go",
+    "file_size": 32521,
+    "line_count": 785,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "68b73539405ef9ff"
+  },
+  {
+    "repo_id": "abegpatel",
+    "filename": "mapkeys.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\abegpatel\\mapkeys.go",
+    "file_size": 8498,
+    "line_count": 305,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "a8a32b2328d1b3a5"
+  },
+  {
+    "repo_id": "alejoacosta74",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\alejoacosta74\\marbles_chaincode.go",
+    "file_size": 31205,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "cfaa76ea10571f43"
+  },
+  {
+    "repo_id": "anzalbeg",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\anzalbeg\\marbles_chaincode.go",
+    "file_size": 25022,
+    "line_count": 631,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "c31aca915d960a9c"
+  },
+  {
+    "repo_id": "bgaughran",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bgaughran\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "bugfrog1024",
+    "filename": "solution.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\bugfrog1024\\solution.go",
+    "file_size": 13792,
+    "line_count": 498,
+    "possible_families": [
+      "MAP_ITERATION",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 8,
+    "file_hash": "e0cad10148b0c2ae"
+  },
+  {
+    "repo_id": "cactusfluo",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\cactusfluo\\marbles_chaincode.go",
+    "file_size": 26628,
+    "line_count": 653,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "1bfc5de494b03ed1"
+  },
+  {
+    "repo_id": "chintanr97",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\chintanr97\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "clydedacruz",
+    "filename": "simplechaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\clydedacruz\\simplechaincode.go",
+    "file_size": 20533,
+    "line_count": 554,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "325ec218eddf4b78"
+  },
+  {
+    "repo_id": "dachrillz",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\dachrillz\\chaincode.go",
+    "file_size": 6905,
+    "line_count": 301,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "b8d7c71b236240db"
+  },
+  {
+    "repo_id": "deevotech",
+    "filename": "food_supplychain.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\deevotech\\food_supplychain.go",
+    "file_size": 26434,
+    "line_count": 864,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "cada5415cb6019f6"
+  },
+  {
+    "repo_id": "farmerrrrr",
+    "filename": "asset management.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\farmerrrrr\\asset management.go",
+    "file_size": 5531,
+    "line_count": 219,
+    "possible_families": [
+      "ITERATOR_LEAK",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 2,
+    "file_hash": "34bcc581915298c8"
+  },
+  {
+    "repo_id": "femiadewumi",
+    "filename": "diamonds.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\femiadewumi\\diamonds.go",
+    "file_size": 21092,
+    "line_count": 555,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "b43db8ead0267d51"
+  },
+  {
+    "repo_id": "fourbroad",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\fourbroad\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "gymgle",
+    "filename": "diploma.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\gymgle\\diploma.go",
+    "file_size": 11579,
+    "line_count": 467,
+    "possible_families": [
+      "TIME_NOW",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 5,
+    "file_hash": "fb9df94acdf7ac09"
+  },
+  {
+    "repo_id": "haydencoinprima",
+    "filename": "wallet_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\haydencoinprima\\wallet_chaincode.go",
+    "file_size": 7507,
+    "line_count": 248,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "729c062ecd43d901"
+  },
+  {
+    "repo_id": "heixiongTT",
+    "filename": "simple.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\heixiongTT\\simple.go",
+    "file_size": 12993,
+    "line_count": 449,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "ac9fed4539721ecc"
+  },
+  {
+    "repo_id": "hisham-sameeh",
+    "filename": "diamonds.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hisham-sameeh\\diamonds.go",
+    "file_size": 21092,
+    "line_count": 555,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "b43db8ead0267d51"
+  },
+  {
+    "repo_id": "imineev",
+    "filename": "carTrace.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\imineev\\carTrace.go",
+    "file_size": 36243,
+    "line_count": 887,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "9d91010105a5451f"
+  },
+  {
+    "repo_id": "imran-iitp",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\imran-iitp\\marbles_chaincode.go",
+    "file_size": 31205,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "cfaa76ea10571f43"
+  },
+  {
+    "repo_id": "inotnako",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\inotnako\\main.go",
+    "file_size": 8616,
+    "line_count": 304,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "cb344f8a05238ef2"
+  },
+  {
+    "repo_id": "isheejong",
+    "filename": "carTrace.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\isheejong\\carTrace.go",
+    "file_size": 36132,
+    "line_count": 877,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "2e68364684f5a28b"
+  },
+  {
+    "repo_id": "jinjiaKarl",
+    "filename": "edu.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jinjiaKarl\\edu.go",
+    "file_size": 15400,
+    "line_count": 580,
+    "possible_families": [
+      "TIME_NOW",
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 5,
+    "file_hash": "d97d22497c641169"
+  },
+  {
+    "repo_id": "jonyjones96",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\jonyjones96\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "juniorug",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\juniorug\\marbles_chaincode.go",
+    "file_size": 31205,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "cfaa76ea10571f43"
+  },
+  {
+    "repo_id": "kavixooa",
+    "filename": "GetSetDelCC.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\kavixooa\\GetSetDelCC.go",
+    "file_size": 14157,
+    "line_count": 502,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 9,
+    "file_hash": "e5c325c585024fb7"
+  },
+  {
+    "repo_id": "kmiyachi",
+    "filename": "ledgersafe_cc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\kmiyachi\\ledgersafe_cc.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "koakh",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\koakh\\marbles_chaincode.go",
+    "file_size": 30502,
+    "line_count": 743,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "a2ac97ac2583bff8"
+  },
+  {
+    "repo_id": "lafenicecc",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\lafenicecc\\marbles_chaincode.go",
+    "file_size": 24909,
+    "line_count": 627,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "linqd1",
+    "filename": "map.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\linqd1\\map.go",
+    "file_size": 8701,
+    "line_count": 310,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "c9801907ef00cc70"
+  },
+  {
+    "repo_id": "liuhuanyuxcx",
+    "filename": "marbles02.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\liuhuanyuxcx\\marbles02.go",
+    "file_size": 31449,
+    "line_count": 769,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "b1c013b031edb60a"
+  },
+  {
+    "repo_id": "lujiean",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\lujiean\\marbles_chaincode.go",
+    "file_size": 26628,
+    "line_count": 653,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "1bfc5de494b03ed1"
+  },
+  {
+    "repo_id": "murlionline",
+    "filename": "product_review.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\murlionline\\product_review.go",
+    "file_size": 8535,
+    "line_count": 234,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "06d470faf0422f2b"
+  },
+  {
+    "repo_id": "nagarajmanjunath",
+    "filename": "fileData.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\nagarajmanjunath\\fileData.go",
+    "file_size": 8153,
+    "line_count": 243,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "3b22706b6255ce16"
+  },
+  {
+    "repo_id": "neelbanker",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\neelbanker\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "neeraj-badhani",
+    "filename": "chaincodeexample01.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\neeraj-badhani\\chaincodeexample01.go",
+    "file_size": 26628,
+    "line_count": 653,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "1bfc5de494b03ed1"
+  },
+  {
+    "repo_id": "nitesh7sid",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\nitesh7sid\\marbles_chaincode.go",
+    "file_size": 24910,
+    "line_count": 628,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "2b81dfc99b52ac04"
+  },
+  {
+    "repo_id": "off-grid-block",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\off-grid-block\\chaincode.go",
+    "file_size": 7413,
+    "line_count": 281,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "b150cb84156b1278"
+  },
+  {
+    "repo_id": "phong101665",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\phong101665\\fabcar.go",
+    "file_size": 6458,
+    "line_count": 209,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "a48a81b35617fe70"
+  },
+  {
+    "repo_id": "piedup",
+    "filename": "pop.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\piedup\\pop.go",
+    "file_size": 11979,
+    "line_count": 429,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "a3f92091f6fa92e2"
+  },
+  {
+    "repo_id": "prabhu94",
+    "filename": "healthcare_v1.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\prabhu94\\healthcare_v1.go",
+    "file_size": 22947,
+    "line_count": 532,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 5,
+    "file_hash": "28bd905274afb044"
+  },
+  {
+    "repo_id": "qubing",
+    "filename": "chaincode-api-go.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\qubing\\chaincode-api-go.go",
+    "file_size": 18061,
+    "line_count": 623,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 20,
+    "file_hash": "7b775df612d62975"
+  },
+  {
+    "repo_id": "rfrabasile",
+    "filename": "cc_example_footballbet.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\rfrabasile\\cc_example_footballbet.go",
+    "file_size": 5146,
+    "line_count": 184,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "68e3c3c69ef6e427"
+  },
+  {
+    "repo_id": "rupeshtr78",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\rupeshtr78\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "samlinux",
+    "filename": "sacc4.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\samlinux\\sacc4.go",
+    "file_size": 7706,
+    "line_count": 250,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "45c404276607ec9f"
+  },
+  {
+    "repo_id": "sapcis",
+    "filename": "perishable-net.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sapcis\\perishable-net.go",
+    "file_size": 6500,
+    "line_count": 222,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "7eb352eaf19af096"
+  },
+  {
+    "repo_id": "sighttviewliu",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sighttviewliu\\marbles_chaincode.go",
+    "file_size": 26628,
+    "line_count": 653,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "1bfc5de494b03ed1"
+  },
+  {
+    "repo_id": "soodakshay",
+    "filename": "mycc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\soodakshay\\mycc.go",
+    "file_size": 6199,
+    "line_count": 266,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "53b372ee50fc231f"
+  },
+  {
+    "repo_id": "sunny4767",
+    "filename": "chaincode_example02.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sunny4767\\chaincode_example02.go",
+    "file_size": 31249,
+    "line_count": 757,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "25b858510514ba64"
+  },
+  {
+    "repo_id": "testibmbc",
+    "filename": "diamonds.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\testibmbc\\diamonds.go",
+    "file_size": 21092,
+    "line_count": 555,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 6,
+    "file_hash": "b43db8ead0267d51"
+  },
+  {
+    "repo_id": "vanitas92",
+    "filename": "marbles02.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vanitas92\\marbles02.go",
+    "file_size": 31449,
+    "line_count": 769,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "b1c013b031edb60a"
+  },
+  {
+    "repo_id": "vasile-coste",
+    "filename": "MedChain.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vasile-coste\\MedChain.go",
+    "file_size": 15595,
+    "line_count": 527,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "94e60a79a8726770"
+  },
+  {
+    "repo_id": "vivianLL",
+    "filename": "mychaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vivianLL\\mychaincode.go",
+    "file_size": 19466,
+    "line_count": 640,
+    "possible_families": [
+      "TIME_NOW",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 5,
+    "file_hash": "f46b3d86f6556097"
+  },
+  {
+    "repo_id": "whatisoop",
+    "filename": "map_experimental.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\whatisoop\\map_experimental.go",
+    "file_size": 8725,
+    "line_count": 312,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "ef397dbefb966a42"
+  },
+  {
+    "repo_id": "yangjaejae",
+    "filename": "marbles_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yangjaejae\\marbles_chaincode.go",
+    "file_size": 31204,
+    "line_count": 756,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 7,
+    "file_hash": "6ccabaa974485dc5"
+  },
+  {
+    "repo_id": "yokeshvs",
+    "filename": "hello_world.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yokeshvs\\hello_world.go",
+    "file_size": 14345,
+    "line_count": 409,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "7d524617c2511536"
+  },
+  {
+    "repo_id": "yoonjk",
+    "filename": "account.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yoonjk\\account.go",
+    "file_size": 8340,
+    "line_count": 333,
+    "possible_families": [
+      "PHANTOM_READ",
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "52998e7ed78153fc"
+  },
+  {
+    "repo_id": "C0rWin",
+    "filename": "person.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\C0rWin\\person.go",
+    "file_size": 2049,
+    "line_count": 80,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 1,
+    "file_hash": "6a9efb79255f1fb8"
+  },
+  {
+    "repo_id": "DCoT-EL",
+    "filename": "dcotWorkflow.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\DCoT-EL\\dcotWorkflow.go",
+    "file_size": 24742,
+    "line_count": 806,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "fb9b1eae4e4a5caa"
+  },
+  {
+    "repo_id": "DappCampus",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\DappCampus\\chaincode.go",
+    "file_size": 5007,
+    "line_count": 176,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "74aa22c7c086047c"
+  },
+  {
+    "repo_id": "FLombardi-PhD",
+    "filename": "governance.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\FLombardi-PhD\\governance.go",
+    "file_size": 16219,
+    "line_count": 434,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "f92b5a080461ab7b"
+  },
+  {
+    "repo_id": "FeiyangTan",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\FeiyangTan\\main.go",
+    "file_size": 13570,
+    "line_count": 477,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "25ba7e1aca31e9b6"
+  },
+  {
+    "repo_id": "Kayaanoosh",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Kayaanoosh\\fabcar.go",
+    "file_size": 6393,
+    "line_count": 205,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "31228ae20242b105"
+  },
+  {
+    "repo_id": "LinkaKorea",
+    "filename": "linkatoken.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\LinkaKorea\\linkatoken.go",
+    "file_size": 10826,
+    "line_count": 259,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 1,
+    "file_hash": "d60c92d53dafa512"
+  },
+  {
+    "repo_id": "Pharmeum",
+    "filename": "chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Pharmeum\\chaincode.go",
+    "file_size": 8495,
+    "line_count": 255,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 2,
+    "file_hash": "7fabb7216fdef997"
+  },
+  {
+    "repo_id": "RAntonio09",
+    "filename": "ccConsortium.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\RAntonio09\\ccConsortium.go",
+    "file_size": 20238,
+    "line_count": 821,
+    "possible_families": [
+      "MAP_ITERATION"
+    ],
+    "hit_count": 2,
+    "file_hash": "e4298684fcd6d188"
+  },
+  {
+    "repo_id": "TigerWit",
+    "filename": "sealtx.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\TigerWit\\sealtx.go",
+    "file_size": 3899,
+    "line_count": 141,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "6082774a34b8440c"
+  },
+  {
+    "repo_id": "Trust-Contract",
+    "filename": "cargo-chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Trust-Contract\\cargo-chaincode.go",
+    "file_size": 6226,
+    "line_count": 202,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 1,
+    "file_hash": "5de353d288abfdb9"
+  },
+  {
+    "repo_id": "VegeBun-csj",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\VegeBun-csj\\fabcar.go",
+    "file_size": 7165,
+    "line_count": 221,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "8067e4d97212d6d2"
+  },
+  {
+    "repo_id": "Z-Voting",
+    "filename": "rahasak.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\Z-Voting\\rahasak.go",
+    "file_size": 3130,
+    "line_count": 129,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "274ef06ae9fd015b"
+  },
+  {
+    "repo_id": "akm4",
+    "filename": "Person.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\akm4\\Person.go",
+    "file_size": 4122,
+    "line_count": 139,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "ea53b30c7a668229"
+  },
+  {
+    "repo_id": "akshay111meher",
+    "filename": "myexample.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\akshay111meher\\myexample.go",
+    "file_size": 2437,
+    "line_count": 89,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 2,
+    "file_hash": "ffbec184f11ddbe1"
+  },
+  {
+    "repo_id": "allan-zhou",
+    "filename": "marble.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\allan-zhou\\marble.go",
+    "file_size": 9806,
+    "line_count": 349,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 4,
+    "file_hash": "25cc01dde959878d"
+  },
+  {
+    "repo_id": "arslanali9797",
+    "filename": "firstchaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\arslanali9797\\firstchaincode.go",
+    "file_size": 6393,
+    "line_count": 205,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "31228ae20242b105"
+  },
+  {
+    "repo_id": "arthurmsouza",
+    "filename": "boleto.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\arthurmsouza\\boleto.go",
+    "file_size": 8768,
+    "line_count": 318,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 5,
+    "file_hash": "8b0141ad6b4793a3"
+  },
+  {
+    "repo_id": "boohyung",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\boohyung\\fabcar.go",
+    "file_size": 8450,
+    "line_count": 242,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "8e17404cda83ab77"
+  },
+  {
+    "repo_id": "chpwssn",
+    "filename": "redvblue.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\chpwssn\\redvblue.go",
+    "file_size": 3752,
+    "line_count": 139,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "d5cc46fd0b193a41"
+  },
+  {
+    "repo_id": "code2understand",
+    "filename": "02_composite_asset_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\code2understand\\02_composite_asset_chaincode.go",
+    "file_size": 2951,
+    "line_count": 129,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "eaf9cb1a7c5ac58e"
+  },
+  {
+    "repo_id": "cristiano-andrade",
+    "filename": "chaincode-test.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\cristiano-andrade\\chaincode-test.go",
+    "file_size": 3752,
+    "line_count": 152,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 1,
+    "file_hash": "60d4842c2177dac1"
+  },
+  {
+    "repo_id": "eshita53",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\eshita53\\fabcar.go",
+    "file_size": 27153,
+    "line_count": 759,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 8,
+    "file_hash": "93890028e80129bc"
+  },
+  {
+    "repo_id": "georgkoester",
+    "filename": "blacklist_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\georgkoester\\blacklist_chaincode.go",
+    "file_size": 8190,
+    "line_count": 282,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "fc94263245ab3301"
+  },
+  {
+    "repo_id": "ggdranzor",
+    "filename": "chaincode_example02.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\ggdranzor\\chaincode_example02.go",
+    "file_size": 7289,
+    "line_count": 222,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "e53276683d55ca99"
+  },
+  {
+    "repo_id": "grishawh",
+    "filename": "new.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\grishawh\\new.go",
+    "file_size": 5956,
+    "line_count": 230,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "ccf0e6c99a607171"
+  },
+  {
+    "repo_id": "hhllii",
+    "filename": "trading.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hhllii\\trading.go",
+    "file_size": 10382,
+    "line_count": 369,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "4cc4dd10c22e1487"
+  },
+  {
+    "repo_id": "higyigma",
+    "filename": "hashChainCode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\higyigma\\hashChainCode.go",
+    "file_size": 3658,
+    "line_count": 135,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "d58e560a05fce10f"
+  },
+  {
+    "repo_id": "hoke58",
+    "filename": "vendorpdc.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hoke58\\vendorpdc.go",
+    "file_size": 9384,
+    "line_count": 272,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "23567cc5a70c3ce8"
+  },
+  {
+    "repo_id": "hungryMob",
+    "filename": "sendEvent.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\hungryMob\\sendEvent.go",
+    "file_size": 9452,
+    "line_count": 383,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 5,
+    "file_hash": "833e92bda18056d2"
+  },
+  {
+    "repo_id": "idowuakinde",
+    "filename": "diamonds.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\idowuakinde\\diamonds.go",
+    "file_size": 13724,
+    "line_count": 370,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "54ee5ca753eb8e87"
+  },
+  {
+    "repo_id": "kmazz",
+    "filename": "sample.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\kmazz\\sample.go",
+    "file_size": 2856,
+    "line_count": 115,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 1,
+    "file_hash": "1b85a93a6e851bc4"
+  },
+  {
+    "repo_id": "komaldhiman112",
+    "filename": "material-trace.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\komaldhiman112\\material-trace.go",
+    "file_size": 21507,
+    "line_count": 560,
+    "possible_families": [
+      "GLOBAL_MUTABLE_STATE"
+    ],
+    "hit_count": 2,
+    "file_hash": "d9ed35b0b6337f75"
+  },
+  {
+    "repo_id": "krishna-suman",
+    "filename": "chaincode_example02.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\krishna-suman\\chaincode_example02.go",
+    "file_size": 7957,
+    "line_count": 280,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "939a146c63ab6771"
+  },
+  {
+    "repo_id": "lmj101910",
+    "filename": "car.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\lmj101910\\car.go",
+    "file_size": 28800,
+    "line_count": 1104,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "a436b15b08716313"
+  },
+  {
+    "repo_id": "lzb13612",
+    "filename": "example.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\lzb13612\\example.go",
+    "file_size": 12202,
+    "line_count": 409,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "1d541876d10f6080"
+  },
+  {
+    "repo_id": "malkani-kamal",
+    "filename": "autonomy_chain.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\malkani-kamal\\autonomy_chain.go",
+    "file_size": 8182,
+    "line_count": 249,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "d61742681268557d"
+  },
+  {
+    "repo_id": "martingdela",
+    "filename": "halley.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\martingdela\\halley.go",
+    "file_size": 8535,
+    "line_count": 292,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "f6cd5feaaa357657"
+  },
+  {
+    "repo_id": "noatt",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\noatt\\main.go",
+    "file_size": 6323,
+    "line_count": 207,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "f6c27347d1d07485"
+  },
+  {
+    "repo_id": "oneminutenotes",
+    "filename": "smartcontract.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\oneminutenotes\\smartcontract.go",
+    "file_size": 10839,
+    "line_count": 375,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "645751ceef9ca79a"
+  },
+  {
+    "repo_id": "pavanirao",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\pavanirao\\fabcar.go",
+    "file_size": 6393,
+    "line_count": 205,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "31228ae20242b105"
+  },
+  {
+    "repo_id": "richardfelkl",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\richardfelkl\\main.go",
+    "file_size": 5807,
+    "line_count": 214,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "b38a475150933a45"
+  },
+  {
+    "repo_id": "rolivieri",
+    "filename": "removerCC.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\rolivieri\\removerCC.go",
+    "file_size": 5162,
+    "line_count": 144,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "e4e1955232989c62"
+  },
+  {
+    "repo_id": "s7santosh",
+    "filename": "slachaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\s7santosh\\slachaincode.go",
+    "file_size": 4051,
+    "line_count": 156,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "653c001c24a1db1f"
+  },
+  {
+    "repo_id": "sac1984pat",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\sac1984pat\\fabcar.go",
+    "file_size": 6393,
+    "line_count": 205,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "31228ae20242b105"
+  },
+  {
+    "repo_id": "samdwise1367",
+    "filename": "chaincode_example02.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\samdwise1367\\chaincode_example02.go",
+    "file_size": 5509,
+    "line_count": 188,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "d967754a341cd58c"
+  },
+  {
+    "repo_id": "shahazad999",
+    "filename": "medicalrecord.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\shahazad999\\medicalrecord.go",
+    "file_size": 5313,
+    "line_count": 174,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "e0867ee8de543722"
+  },
+  {
+    "repo_id": "shubhamj25",
+    "filename": "fabcar-chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\shubhamj25\\fabcar-chaincode.go",
+    "file_size": 6629,
+    "line_count": 225,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "d7afbdd537c0bbb4"
+  },
+  {
+    "repo_id": "skazska",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\skazska\\main.go",
+    "file_size": 9918,
+    "line_count": 321,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "3b6b0e07927067fc"
+  },
+  {
+    "repo_id": "skybat007",
+    "filename": "purchase_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\skybat007\\purchase_chaincode.go",
+    "file_size": 8072,
+    "line_count": 280,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "6cff4d3b5c6df725"
+  },
+  {
+    "repo_id": "suddutt1",
+    "filename": "main.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\suddutt1\\main.go",
+    "file_size": 8612,
+    "line_count": 271,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "18f2355943d24b95"
+  },
+  {
+    "repo_id": "surajresearch",
+    "filename": "smartcontract.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\surajresearch\\smartcontract.go",
+    "file_size": 10839,
+    "line_count": 375,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "645751ceef9ca79a"
+  },
+  {
+    "repo_id": "tcd93",
+    "filename": "sample_token.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\tcd93\\sample_token.go",
+    "file_size": 12770,
+    "line_count": 392,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "f07c91211bccc629"
+  },
+  {
+    "repo_id": "to7485",
+    "filename": "fabcar.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\to7485\\fabcar.go",
+    "file_size": 5938,
+    "line_count": 198,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "2caf1f6a41d5ba47"
+  },
+  {
+    "repo_id": "u-wut-m8",
+    "filename": "fabric.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\u-wut-m8\\fabric.go",
+    "file_size": 6982,
+    "line_count": 229,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "e7435879eb0f56e8"
+  },
+  {
+    "repo_id": "vitorduarte",
+    "filename": "basicChaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vitorduarte\\basicChaincode.go",
+    "file_size": 5263,
+    "line_count": 198,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 1,
+    "file_hash": "4a80db150a452bae"
+  },
+  {
+    "repo_id": "vmorris",
+    "filename": "procon.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\vmorris\\procon.go",
+    "file_size": 9797,
+    "line_count": 280,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 4,
+    "file_hash": "46229bf60f29109b"
+  },
+  {
+    "repo_id": "xuansonha17031991",
+    "filename": "COD_chaincode.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\xuansonha17031991\\COD_chaincode.go",
+    "file_size": 23478,
+    "line_count": 848,
+    "possible_families": [
+      "TIME_NOW"
+    ],
+    "hit_count": 33,
+    "file_hash": "0695e18c4eda7e5b"
+  },
+  {
+    "repo_id": "yigitpolat",
+    "filename": "voting.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\yigitpolat\\voting.go",
+    "file_size": 8049,
+    "line_count": 271,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 3,
+    "file_hash": "6ccca663c799e7bc"
+  },
+  {
+    "repo_id": "zerox12311",
+    "filename": "smart_contract_sample.go",
+    "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\zerox12311\\smart_contract_sample.go",
+    "file_size": 4252,
+    "line_count": 183,
+    "possible_families": [
+      "ITERATOR_LEAK"
+    ],
+    "hit_count": 2,
+    "file_hash": "259b7af71239bd60"
+  }
+]

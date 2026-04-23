@@ -1,0 +1,19 @@
+{
+  "file_id": "0101_abegpatel_marbles_chaincode",
+  "repo": "abegpatel",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 18.17,
+  "input_tokens": 6285,
+  "output_tokens": 851,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains GetQueryResult and GetHistoryForKey calls, but they are either used only for logging (Init) or are read-only queries returned via shim.Success without influencing any ledger writes. The time.Unix() usage converts existing ledger timestamps, not time.Now(). All iterators are properly closed.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - valid HLF entrypoints.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Line 420: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger history, NOT `time.Now()`. This is deterministic as it converts existing data.\n\n**C2 GOROUTINE**: No goroutines found.\n\n**C3 MAP_ITERATION**: No map iteration found.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `Init` method (lines 32-62): Calls `getQueryResultForQueryString` (which uses `GetQueryResult`) at line 45, then proceeds to `PutState` at line 57. The query result is only printed/logged, not used to determine the write decision. The write happens unconditionally.\n- `queryMarblesByOwner` (lines 295-306): Uses `GetQueryResult` but only returns results via `shim.Success` - read-only, no writes.\n- `queryMarbles` (lines 308-320): Same pattern - read-only query returned via `shim.Success`.\n- `queryMarblesWithPagination` (lines 365-381): Uses `GetQueryResultWithPagination` but only returns results - read-only.\n- `getHistoryForMarble` (lines 397-441): Uses `GetHistoryForKey` but only returns results - read-only.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables.\n\n**C5 ITERATOR_LEAK**: All iterators have proper `defer resultsIterator.Close()` calls.\n\n### Step 3: Detailed C4 Analysis for Init\n\nLooking at `Init` more carefully:\n```go\nqueryResults, err := getQueryResultForQueryString(stub, queryString)  // L45\nif err != nil {\n    fmt.Println(\"queryResults \", queryResults)  // L47 - only logging\n    return shim.Error(err.Error())  // L48 - error path\n}\n// ... continues to PutState unconditionally at L57\n```\n\nThe query result is only used for logging (`fmt.Println`). The `PutState` at line 57 happens regardless of query results - it's not conditional on the query data. This is NOT a C4 violation because the query doesn't influence the write decision.\n\n### Step 4: Verify Read-Only Queries\n\nThe query methods (`queryMarblesByOwner`, `queryMarbles`, `queryMarblesWithPagination`, `getHistoryForMarble`) all return results via `shim.Success()` without performing any writes. Per the taxonomy, \"Read-only queries returned via shim.Success are NOT C4.\"\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains GetQueryResult and GetHistoryForKey calls, but they are either used only for logging (Init) or are read-only queries returned via shim.Success without influencing any ledger writes. The time.Unix() usage converts existing ledger timestamps, not time.Now(). All iterators are properly closed.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:09:51.682619",
+  "annotator": "2nd"
+}

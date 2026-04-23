@@ -1,0 +1,19 @@
+{
+  "file_id": "0775_starJsm_account",
+  "repo": "starJsm",
+  "filename": "account.go",
+  "elapsed_s": 16.89,
+  "input_tokens": 2703,
+  "output_tokens": 791,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode uses only deterministic operations (GetState, PutState, DelState). The `founder` instance field is a logic bug (not persisted between calls) but not nondeterministic - all peers will have the same empty string value during Invoke, causing identical (though incorrect) behavior across endorsers.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has valid HLF transaction entrypoints: `Init` and `Invoke` methods using the shim interface.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning (`go func()` or `go methodCall()`).\n\n**C3 MAP_ITERATION**: No map iteration with `for...range`.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used, which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- The struct `AccountChaincode` has a field `founder string` (line 12)\n- In `Init` (line 22), `t.founder = A` sets this field\n- In `unsubscribe` (lines 147-148), `t.founder` is checked: `if t.founder == args[0]`\n- In `unsubscribe` (lines 161-167), `t.founder` is used to read and write state: `stub.GetState(t.founder)` and `stub.PutState(t.founder, ...)`\n\n**Critical Issue with `t.founder`**: This is an instance field, not a package-level variable. In Hyperledger Fabric, chaincode instances are created fresh for each endorsement. The `founder` field set during `Init` is NOT persisted - it only exists in memory during that single `Init` call. When `Invoke` is called later (potentially on different peers), `t.founder` will be an empty string (Go's zero value).\n\nThis means:\n1. The check `if t.founder == args[0]` at line 147 will behave inconsistently\n2. The `stub.GetState(t.founder)` at line 161 will query for an empty key\n3. The `stub.PutState(t.founder, ...)` at line 165 will write to an empty key\n\nHowever, this is a **logic bug**, not nondeterminism. All peers will have the same empty string for `t.founder` during `Invoke` calls, so they will all behave identically (albeit incorrectly).\n\n**C5 ITERATOR_LEAK**: No iterators are created.\n\n### Conclusion\n\nThe code has a significant logic bug with the `founder` field not being persisted, but this does not cause nondeterminism - all peers will have the same (incorrect) behavior. There are no sources of consensus-critical nondeterminism in this file.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode uses only deterministic operations (GetState, PutState, DelState). The `founder` instance field is a logic bug (not persisted between calls) but not nondeterministic - all peers will have the same empty string value during Invoke, causing identical (though incorrect) behavior across endorsers.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:59:05.796825",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0137_alejandrolr_arm",
+  "repo": "alejandrolr",
+  "filename": "arm.go",
+  "elapsed_s": 4.96,
+  "input_tokens": 2630,
+  "output_tokens": 138,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L175-L186",
+  "rationale": "The file contains a `for...range` loop over `armStruct.Laboratory` (L175-L186), but `Laboratory` is a slice (`[]Laboratory`), not a map. Slice iteration order is deterministic in Go. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All operations use GetState/PutState with deterministic data handling.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L175-L186\nRATIONALE: The file contains a `for...range` loop over `armStruct.Laboratory` (L175-L186), but `Laboratory` is a slice (`[]Laboratory`), not a map. Slice iteration order is deterministic in Go. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present. All operations use GetState/PutState with deterministic data handling.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:12:41.518496",
+  "annotator": "2nd"
+}

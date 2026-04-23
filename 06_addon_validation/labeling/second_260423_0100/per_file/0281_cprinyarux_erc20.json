@@ -1,0 +1,19 @@
+{
+  "file_id": "0281_cprinyarux_erc20",
+  "repo": "cprinyarux",
+  "filename": "erc20.go",
+  "elapsed_s": 4.33,
+  "input_tokens": 2379,
+  "output_tokens": 124,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This ERC20 token chaincode contains valid HLF transaction entrypoints (Init and Invoke). The code uses only deterministic operations: GetState, PutState, SetEvent with deterministic string construction. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state that could influence ledger writes or responses.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This ERC20 token chaincode contains valid HLF transaction entrypoints (Init and Invoke). The code uses only deterministic operations: GetState, PutState, SetEvent with deterministic string construction. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state that could influence ledger writes or responses.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:22:57.349955",
+  "annotator": "2nd"
+}

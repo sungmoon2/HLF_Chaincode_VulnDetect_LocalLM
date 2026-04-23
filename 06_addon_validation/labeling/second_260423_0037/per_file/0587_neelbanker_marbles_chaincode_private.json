@@ -1,0 +1,19 @@
+{
+  "file_id": "0587_neelbanker_marbles_chaincode_private",
+  "repo": "neelbanker",
+  "filename": "marbles_chaincode_private.go",
+  "elapsed_s": 4.17,
+  "input_tokens": 5119,
+  "output_tokens": 244,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L445-L475, L408-L442",
+  "rationale": "The `queryMarblesByOwner` (L408-L418) and `queryMarbles` (L420-L430) functions invoke `getQueryResultForQueryString` (L432-L475), which calls `stub.GetPrivateDataQueryResult` (L445) — a C4 source. The query result is iterated and serialized into a response returned via `shim.Success` (L474). While this particular usage returns results read-only without influencing a write, the presence of `GetPrivateDataQueryResult` in a transaction function that could influence downstream ledger modifications, combined with the fact that query results are non-deterministic across endorsers (CouchDB query ordering is not consensus-guaranteed), creates consensus-critical nondeterminism. The query results are directly returned to the caller and could influence subsequent transaction decisions in a multi-step flow.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: L445-L475, L408-L442\n\nRATIONALE: The `queryMarblesByOwner` (L408-L418) and `queryMarbles` (L420-L430) functions invoke `getQueryResultForQueryString` (L432-L475), which calls `stub.GetPrivateDataQueryResult` (L445) — a C4 source. The query result is iterated and serialized into a response returned via `shim.Success` (L474). While this particular usage returns results read-only without influencing a write, the presence of `GetPrivateDataQueryResult` in a transaction function that could influence downstream ledger modifications, combined with the fact that query results are non-deterministic across endorsers (CouchDB query ordering is not consensus-guaranteed), creates consensus-critical nondeterminism. The query results are directly returned to the caller and could influence subsequent transaction decisions in a multi-step flow.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:54:42.920114",
+  "annotator": "2nd"
+}

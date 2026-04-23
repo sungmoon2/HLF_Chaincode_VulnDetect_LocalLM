@@ -1,0 +1,19 @@
+{
+  "file_id": "0303_dbadoy_fabcar",
+  "repo": "dbadoy",
+  "filename": "fabcar.go",
+  "elapsed_s": 11.95,
+  "input_tokens": 1084,
+  "output_tokens": 672,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The map `s.fwm` is accessed via single-key lookup (`s.fwm[function]`), which is deterministic. There is no map iteration (`for...range`), no time-based operations, no goroutines, no rich queries, and no mutable global state that influences transaction outcomes.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SmartContract` with `shim.ChaincodeStubInterface` parameter - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls present.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns present.\n\n**C3 MAP_ITERATION**: \n- Line 23: `m, exist := s.fwm[function]` - This is a map **lookup** (single key access), NOT iteration. Map lookups are deterministic.\n- There is no `for...range` over a map in this file.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level `var` declarations in this file.\n- `smt` is created in `main()` and `smt.fwm` is initialized there, but this is instance state, not package-level global state.\n- The `SmartContract` struct has a `fwm` field, but it's initialized once in `main()` before `shim.Start()` and the map is only read (lookup) during transaction execution, not written to.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Sink Analysis\nThe map `s.fwm` is accessed via lookup (`s.fwm[function]`), which is deterministic. The result `m.Proceed(APIstub, m.param)` delegates to external code (`mesg` package), but we only analyze intra-file evidence.\n\n### Step 4: Logging/Test/Dead Code Check\nThe code is production chaincode logic, not test or logging-only.\n\n### Conclusion\nThe map access pattern is a **lookup** (deterministic), not **iteration** (potentially nondeterministic). No other vulnerability patterns are present in this file.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The map `s.fwm` is accessed via single-key lookup (`s.fwm[function]`), which is deterministic. There is no map iteration (`for...range`), no time-based operations, no goroutines, no rich queries, and no mutable global state that influences transaction outcomes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:24:49.568589",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0045_sriyanshcse_fabcar",
+  "repo": "sriyanshcse",
+  "filename": "fabcar.go",
+  "elapsed_s": 5.1,
+  "input_tokens": 3457,
+  "output_tokens": 156,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L107-L108, L131-L138, L143",
+  "rationale": "The `initLedger` function (L107-L108) uses `time.Now()` to set Timestamp fields in Med structs that are then marshaled and written via `PutState`. The `getUpdatedObject` helper (L138) also uses `time.Now()` and is called by `createMed` (L131) which writes to the ledger. Different endorsing peers will capture different timestamps, causing endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L107-L108, L131-L138, L143\nRATIONALE: The `initLedger` function (L107-L108) uses `time.Now()` to set Timestamp fields in Med structs that are then marshaled and written via `PutState`. The `getUpdatedObject` helper (L138) also uses `time.Now()` and is called by `createMed` (L131) which writes to the ledger. Different endorsing peers will capture different timestamps, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:34.565550",
+  "annotator": "2nd"
+}

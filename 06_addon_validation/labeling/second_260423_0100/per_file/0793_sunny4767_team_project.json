@@ -1,0 +1,19 @@
+{
+  "file_id": "0793_sunny4767_team_project",
+  "repo": "sunny4767",
+  "filename": "team_project.go",
+  "elapsed_s": 15.62,
+  "input_tokens": 6028,
+  "output_tokens": 726,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "All rich queries (GetQueryResult, GetHistoryForKey, GetQueryResultWithPagination) are used for read-only responses via shim.Success, not for write decisions. The time.Unix() call converts existing timestamp data from history, not time.Now(). GetStateByPartialCompositeKey is explicitly excluded from C4 sources per taxonomy.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Step 2: Source Pattern Detection\n\n**C1 TIME_NOW**: \n- Line 424: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts existing data.\n\n**C2 GOROUTINE**: No goroutines detected.\n\n**C3 MAP_ITERATION**: No map iteration detected.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (L305-320): Uses `stub.GetQueryResult()` - results returned via `shim.Success()` (read-only, not C4)\n- `queryMarblesByPid` (L280-291): Uses rich query, returns via `shim.Success()` (read-only)\n- `queryMarbles` (L293-303): Uses rich query, returns via `shim.Success()` (read-only)\n- `getHistoryForMarble` (L385-441): Uses `GetHistoryForKey()`, returns via `shim.Success()` (read-only)\n- `queryMarblesWithPagination` (L355-371): Uses pagination query, returns via `shim.Success()` (read-only)\n\nAll rich queries are read-only - they don't influence write decisions.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables.\n\n### Step 3: Sink Analysis\n- `transferMarblesBasedOnOrg` (L248-278): Uses `GetStateByPartialCompositeKey` (explicitly NOT a C4 source per taxonomy) and performs writes based on iteration. This is deterministic as composite key queries return ordered results.\n\n### Step 4: C5 Iterator Leak Check\nAll iterators have proper `defer resultsIterator.Close()` calls.\n\n### Conclusion\nThe file contains no consensus-critical nondeterminism:\n- The `time.Unix()` usage converts existing timestamp data, not current time\n- All rich queries (`GetQueryResult`, `GetHistoryForKey`) are read-only returns\n- No map iteration, goroutines, or global mutable state affecting writes\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: All rich queries (GetQueryResult, GetHistoryForKey, GetQueryResultWithPagination) are used for read-only responses via shim.Success, not for write decisions. The time.Unix() call converts existing timestamp data from history, not time.Now(). GetStateByPartialCompositeKey is explicitly excluded from C4 sources per taxonomy.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:00:23.741523",
+  "annotator": "2nd"
+}

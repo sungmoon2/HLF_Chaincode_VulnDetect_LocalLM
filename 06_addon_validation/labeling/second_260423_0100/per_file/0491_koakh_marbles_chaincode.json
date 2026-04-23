@@ -1,0 +1,19 @@
+{
+  "file_id": "0491_koakh_marbles_chaincode",
+  "repo": "koakh",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 16.1,
+  "input_tokens": 5891,
+  "output_tokens": 738,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The chaincode uses GetQueryResult and GetHistoryForKey only for read-only operations returned via shim.Success, not for write decisions. The time.Unix() call converts an existing ledger timestamp, not time.Now(). No map iteration, goroutines, or global mutable state patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface` - this is a valid HLF chaincode.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Line 380: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the ledger (response.Timestamp), NOT `time.Now()`. This is deterministic as it converts an existing timestamp to string format.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found. The code uses slices and iterators.\n\n**C4 NON_REVALIDATED_QUERY**:\n- `getQueryResultForQueryString` (L296-311): Uses `stub.GetQueryResult()` but only returns results via `shim.Success()` - read-only, no write decisions.\n- `queryMarblesByOwner` (L268-279): Calls `getQueryResultForQueryString`, returns via `shim.Success()` - read-only.\n- `queryMarbles` (L281-293): Same pattern - read-only.\n- `getQueryResultForQueryStringWithPagination` (L349-368): Uses `GetQueryResultWithPagination`, returns via `shim.Success()` - read-only.\n- `getHistoryForMarble` (L370-410): Uses `GetHistoryForKey()`, returns via `shim.Success()` - read-only.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables declared.\n\n### Step 3: Sink Analysis\nThe query functions (`queryMarblesByOwner`, `queryMarbles`, `queryMarblesWithPagination`, `getHistoryForMarble`) all use rich queries but only return results - they don't make write decisions based on query results.\n\nThe `transferMarblesBasedOnColor` function (L232-266) uses `GetStateByPartialCompositeKey` which is explicitly NOT a C4 source per the taxonomy.\n\n### Step 4: C5 Iterator Leak Check\nAll iterators have proper `defer resultsIterator.Close()` calls:\n- L218, L243, L305, L327, L357, L382\n\n**AUXILIARY_C5**: NO\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The chaincode uses GetQueryResult and GetHistoryForKey only for read-only operations returned via shim.Success, not for write decisions. The time.Unix() call converts an existing ledger timestamp, not time.Now(). No map iteration, goroutines, or global mutable state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:37:57.476829",
+  "annotator": "2nd"
+}

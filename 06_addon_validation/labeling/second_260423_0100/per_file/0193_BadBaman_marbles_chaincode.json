@@ -1,0 +1,19 @@
+{
+  "file_id": "0193_BadBaman_marbles_chaincode",
+  "repo": "BadBaman",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 5.09,
+  "input_tokens": 6172,
+  "output_tokens": 171,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L340-L341, L295-L296, L330-L331",
+  "rationale": "The file imports `time` but only uses `time.Unix()` (L340-L341) to format a timestamp from `GetHistoryForKey` response, which is deterministic conversion not `time.Now()`. `GetQueryResult` (L295) and `GetHistoryForKey` (L330) are used only for read-only queries returned via `shim.Success`, not for write decisions (C4 requires query result to determine a write). All iterators are properly closed with `defer`.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L340-L341, L295-L296, L330-L331\nRATIONALE: The file imports `time` but only uses `time.Unix()` (L340-L341) to format a timestamp from `GetHistoryForKey` response, which is deterministic conversion not `time.Now()`. `GetQueryResult` (L295) and `GetHistoryForKey` (L330) are used only for read-only queries returned via `shim.Success`, not for write decisions (C4 requires query result to determine a write). All iterators are properly closed with `defer`.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:16:30.445939",
+  "annotator": "2nd"
+}

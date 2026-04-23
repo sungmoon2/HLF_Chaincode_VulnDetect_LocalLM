@@ -1,0 +1,19 @@
+{
+  "file_id": "0559_MennaAnees_diamonds",
+  "repo": "MennaAnees",
+  "filename": "diamonds.go",
+  "elapsed_s": 4.05,
+  "input_tokens": 2292,
+  "output_tokens": 114,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode implements standard diamond asset management with Init/Invoke entrypoints. It uses only deterministic operations: GetState, PutState, json.Marshal on structs (not maps), and string manipulation. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode implements standard diamond asset management with Init/Invoke entrypoints. It uses only deterministic operations: GetState, PutState, json.Marshal on structs (not maps), and string manipulation. No time.Now(), goroutines, map iteration, rich queries, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:43:08.088979",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0471_Kayaanoosh_Proto1",
+  "repo": "Kayaanoosh",
+  "filename": "Proto1.go",
+  "elapsed_s": 5.6,
+  "input_tokens": 2274,
+  "output_tokens": 153,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints (Init/Invoke). No C1-C4 or C6 patterns are present: no time.Now(), no goroutines, no map iteration, no rich queries (GetQueryResult/GetHistoryForKey). GetStateByRange at L89 is explicitly excluded from C4 sources per the taxonomy. json.Marshal is used only on structs, not maps. The iterator at L89 is properly closed via defer at L93.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints (Init/Invoke). No C1-C4 or C6 patterns are present: no time.Now(), no goroutines, no map iteration, no rich queries (GetQueryResult/GetHistoryForKey). GetStateByRange at L89 is explicitly excluded from C4 sources per the taxonomy. json.Marshal is used only on structs, not maps. The iterator at L89 is properly closed via defer at L93.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:36:29.442962",
+  "annotator": "2nd"
+}

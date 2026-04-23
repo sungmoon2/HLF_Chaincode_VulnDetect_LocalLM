@@ -1,0 +1,19 @@
+{
+  "file_id": "0605_nguyentb_chaincode",
+  "repo": "nguyentb",
+  "filename": "chaincode.go",
+  "elapsed_s": 4.32,
+  "input_tokens": 926,
+  "output_tokens": 174,
+  "verdict": "EXCLUDE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L17-L19, L22-L24",
+  "rationale": "This file contains HLF transaction entrypoints (Init/Invoke), but they are pure delegation wrappers that call methods on an external router object (`cc.router.HandleInit` and `cc.router.Handle`). There is no transaction logic, no ledger operations, and no nondeterministic patterns within this file itself. The actual chaincode logic resides in the `Group` type defined elsewhere, which is outside the scope of intra-file analysis. Since this file is merely a thin wrapper with no analyzable behavior, it should be excluded.",
+  "raw_response": "VERDICT: EXCLUDE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L17-L19, L22-L24\nRATIONALE: This file contains HLF transaction entrypoints (Init/Invoke), but they are pure delegation wrappers that call methods on an external router object (`cc.router.HandleInit` and `cc.router.Handle`). There is no transaction logic, no ledger operations, and no nondeterministic patterns within this file itself. The actual chaincode logic resides in the `Group` type defined elsewhere, which is outside the scope of intra-file analysis. Since this file is merely a thin wrapper with no analyzable behavior, it should be excluded.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:46:51.339900",
+  "annotator": "2nd"
+}

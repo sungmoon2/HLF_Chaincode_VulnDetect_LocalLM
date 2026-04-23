@@ -1,0 +1,19 @@
+{
+  "file_id": "0851_viridian-project_chaincode",
+  "repo": "viridian-project",
+  "filename": "chaincode.go",
+  "elapsed_s": 3.31,
+  "input_tokens": 1116,
+  "output_tokens": 127,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains HLF transaction entrypoints (Init/Invoke) but only performs routing logic. It delegates to external chaincode methods (Product.AddProduct, Producer.InitProducer, etc.) without any time.Now(), goroutines, map iteration, rich queries, or mutable global state within this file. All operations are deterministic string comparisons and method dispatches.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains HLF transaction entrypoints (Init/Invoke) but only performs routing logic. It delegates to external chaincode methods (Product.AddProduct, Producer.InitProducer, etc.) without any time.Now(), goroutines, map iteration, rich queries, or mutable global state within this file. All operations are deterministic string comparisons and method dispatches.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:04:12.995024",
+  "annotator": "2nd"
+}

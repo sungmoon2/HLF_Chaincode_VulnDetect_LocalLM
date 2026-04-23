@@ -1,0 +1,19 @@
+{
+  "file_id": "0623_oneminutenotes_smartcontract",
+  "repo": "oneminutenotes",
+  "filename": "smartcontract.go",
+  "elapsed_s": 16.47,
+  "input_tokens": 4177,
+  "output_tokens": 738,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L243-L275",
+  "rationale": "The GetHistoryForKey usage in getHistoryForStudent is read-only (returns data via shim.Success without influencing any writes). The time.Unix() call converts a deterministic ledger timestamp, not time.Now(). No other nondeterminism sources are present.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so this is valid chaincode.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: \n- Line 261: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` which converts a timestamp from the ledger (response.Timestamp from GetHistoryForKey) to a string. This is NOT `time.Now()` - it's converting an existing deterministic timestamp value. This is SAFE.\n\n**C2 GOROUTINE**: \n- No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: \n- No `for...range` over maps. The structs use `json.Marshal()` on struct types, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 243: `stub.GetHistoryForKey(key)` - This is a C4 source. However, examining the usage in `getHistoryForStudent`:\n  - The results are iterated and returned via `shim.Success(bytes)` at line 275\n  - There are NO write operations (PutState, DelState) based on the query results\n  - This is a read-only query returned to the client, which is explicitly NOT C4 per the rules\n\n- Line 207: `stub.GetStateByRange(\"\", \"\")` - Per the rules, \"GetStateByPartialCompositeKey and GetStateByRange are NOT C4 sources\"\n\n**C5 ITERATOR_LEAK**: \n- Line 208: `defer resultsIterator.Close()` - properly closed\n- Line 248: `defer resultsIterator.Close()` - properly closed\n- No iterator leaks detected.\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- No package-level `var` declarations in this file.\n\n### Key Observations\n\n1. The `getHistoryForStudent` function uses `GetHistoryForKey` but only reads data and returns it - no write decisions are made based on the query results.\n\n2. The `time.Unix()` call converts a ledger-provided timestamp (from the history iterator response) to a string format. This is deterministic because `response.Timestamp` comes from the ledger and is the same across all peers.\n\n3. All write operations (`PutState`, `DelState`) use deterministic inputs from function arguments or `GetState` results.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L243-L275\nRATIONALE: The GetHistoryForKey usage in getHistoryForStudent is read-only (returns data via shim.Success without influencing any writes). The time.Unix() call converts a deterministic ledger timestamp, not time.Now(). No other nondeterminism sources are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:48:04.484939",
+  "annotator": "2nd"
+}

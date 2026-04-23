@@ -1,0 +1,19 @@
+{
+  "file_id": "0667_qubing_balance_mgr",
+  "repo": "qubing",
+  "filename": "balance_mgr.go",
+  "elapsed_s": 14.81,
+  "input_tokens": 4091,
+  "output_tokens": 638,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L253-L273",
+  "rationale": "The GetQueryResult in the `json` function is used only for read-only purposes - results are aggregated and returned via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations. The unclosed iterator is a C5 issue but does not affect the SAFE verdict.",
+  "raw_response": "Looking at this Hyperledger Fabric chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has valid HLF transaction entrypoints: `Init` and `Invoke` methods on `BalanceManager` struct.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()` found.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps found.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 253-254: `stub.GetQueryResult(selector)` is called in the `json` function\n- The result is iterated and returned via `shim.Success(buff.Bytes())` at line 273\n- This is a **read-only query** - the results are aggregated and returned to the client\n- There are NO write operations (`PutState`, `DelState`, etc.) that depend on the query results\n- Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4\"\n\n**C6 GLOBAL_MUTABLE_STATE**: \n- Only `const` declarations at package level (lines 12-15): `KEY_PUBLIC`, `KEY_PRIVATE`, `KEY_PREFIX`\n- These are constants, not mutable state\n\n**C5 ITERATOR_LEAK**:\n- Line 253: `queryIt, err := stub.GetQueryResult(selector)` creates an iterator\n- The iterator `queryIt` is never closed with `Close()` - this is a C5 issue\n- However, C5 alone does not make a file VULNERABLE per the taxonomy\n\n### Key Decision Point\n\nThe `json` function uses `GetQueryResult` but only for reading data and returning it to the client. The query results do not influence any ledger writes. The function simply aggregates results into a JSON array and returns them via `shim.Success()`. This matches the explicit exception: \"Read-only queries returned via shim.Success are NOT C4.\"\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: YES\nEVIDENCE_LINES: L253-L273\nRATIONALE: The GetQueryResult in the `json` function is used only for read-only purposes - results are aggregated and returned via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations. The unclosed iterator is a C5 issue but does not affect the SAFE verdict.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:50:59.851099",
+  "annotator": "2nd"
+}

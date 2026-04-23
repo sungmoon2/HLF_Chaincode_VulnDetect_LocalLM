@@ -1,0 +1,19 @@
+{
+  "file_id": "0589_neelbanker_product_chaincode_private",
+  "repo": "neelbanker",
+  "filename": "product_chaincode_private.go",
+  "elapsed_s": 16.12,
+  "input_tokens": 5174,
+  "output_tokens": 697,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L350-L351, L320, L332",
+  "rationale": "The GetPrivateDataQueryResult calls in getQueryResultForQueryString are used only for read-only queries that return results via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations. No other nondeterminism patterns (C1-C3, C6) are present.",
+  "raw_response": "Looking at this chaincode, I need to identify consensus-critical nondeterminism patterns.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with multiple transaction functions.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No `time.Now()`, `time.Since()`, or `time.Until()` calls found.\n\n**C2 GOROUTINE**: No `go func()` or goroutine spawning found.\n\n**C3 MAP_ITERATION**: \n- Line 87-89: `transMap, err := stub.GetTransient()` returns a map, but I don't see any `for...range` iteration over this map. The code only accesses specific keys like `transMap[\"product\"]`.\n- Same pattern in `delete` and `transferProduct` functions - only key access, no iteration.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Lines 350-351: `stub.GetPrivateDataQueryResult(\"collectionProducts\", queryString)` is called in `getQueryResultForQueryString`.\n- This function is called by `queryProductsByOwner` (line 320) and `queryProducts` (line 332).\n- Both callers return the results via `shim.Success(queryResults)` - this is a **read-only query** returned to the client.\n- There are NO writes (PutState, DelState, PutPrivateData, DelPrivateData) based on these query results.\n- Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 296: `resultsIterator` in `getProductsByRange` - has `defer resultsIterator.Close()` ✓\n- Line 353: `resultsIterator` in `getQueryResultForQueryString` - has `defer resultsIterator.Close()` ✓\n\n### Key Observation\nThe `GetPrivateDataQueryResult` calls are used purely for read operations that return data to the client. The query results do not influence any write decisions within the chaincode. The functions `queryProductsByOwner` and `queryProducts` simply format and return query results - they don't make write decisions based on those results.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L350-L351, L320, L332\nRATIONALE: The GetPrivateDataQueryResult calls in getQueryResultForQueryString are used only for read-only queries that return results via shim.Success without influencing any ledger writes. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations. No other nondeterminism patterns (C1-C3, C6) are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:45:30.405296",
+  "annotator": "2nd"
+}

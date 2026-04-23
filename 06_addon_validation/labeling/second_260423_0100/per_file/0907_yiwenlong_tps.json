@@ -1,0 +1,19 @@
+{
+  "file_id": "0907_yiwenlong_tps",
+  "repo": "yiwenlong",
+  "filename": "tps.go",
+  "elapsed_s": 9.02,
+  "input_tokens": 1047,
+  "output_tokens": 528,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains only deterministic operations. It uses `GetState` and `PutState` with transaction parameters as inputs, and `log.Println` for logging only. No time-based, concurrent, map iteration, rich query, or global mutable state patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Recognizable HLF Transaction Entrypoint\nYes, this file contains both `Init` and `Invoke` methods on the `Tps` struct that implement the `shim.ChaincodeStubInterface` pattern (lines 12-14 and 16-28).\n\n### Step 2: Check for C1-C4, C6 Source Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`. Only `GetState` is used (line 22), which is not a C4 source.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables declared in this file.\n\n### Step 3: Auxiliary Check (C5)\n**C5 ITERATOR_LEAK**: No iterators are created in this code.\n\n### Summary\nThe chaincode is straightforward:\n- `Init`: Just logs and returns success\n- `Invoke`: \n  - \"put\" function: Writes state using `PutState` with deterministic input from transaction parameters\n  - \"get\" function: Reads state using `GetState` and returns it\n\nAll operations are deterministic - they use only transaction parameters (`params[0]`, `params[1]`) which are identical across all endorsing peers.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains only deterministic operations. It uses `GetState` and `PutState` with transaction parameters as inputs, and `log.Println` for logging only. No time-based, concurrent, map iteration, rich query, or global mutable state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:08:31.297452",
+  "annotator": "2nd"
+}

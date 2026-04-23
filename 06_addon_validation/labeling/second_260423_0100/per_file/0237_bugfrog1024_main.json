@@ -1,0 +1,19 @@
+{
+  "file_id": "0237_bugfrog1024_main",
+  "repo": "bugfrog1024",
+  "filename": "main.go",
+  "elapsed_s": 13.14,
+  "input_tokens": 1417,
+  "output_tokens": 675,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "This file contains only the dispatcher logic for the chaincode. All operations within this file are deterministic - argument parsing, string comparisons, and event setting with deterministic inputs. The actual business logic methods (createUser, readUser, etc.) are not defined in this file, and per intra-file analysis rules, I cannot speculate about their implementations.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on a struct implementing `shim.ChaincodeStubInterface` patterns - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: The code references methods like `readAllUser`, `readHistory` which might use `GetQueryResult` or `GetHistoryForKey`, but these are method calls to functions not defined in this file. I can only see the dispatcher logic here, not the implementations of:\n- `t.createUser(stub, args)`\n- `t.updateUserData(stub, args)`\n- `t.readUser(stub, args)`\n- `t.readAllUser(stub, args)`\n- `t.readHistory(stub, args)`\n- `t.deleteUser(stub, args)`\n\nThese methods are called but not defined in this file - they must be in another file.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level variables that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators created in this file.\n\n### Step 3: Intra-file Evidence\nThe code visible in this file only contains:\n1. Basic `Init` function that returns success/error based on function name\n2. `Invoke` dispatcher that routes to other methods (not defined here)\n3. A `testInvoke` case that sets an event based on deterministic input (`args[1]`)\n\nAll operations in this file are deterministic:\n- String comparisons\n- Argument parsing\n- `SetEvent` with deterministic input from transaction arguments\n- `shim.Success`/`shim.Error` calls\n\nThe methods being called (`createUser`, `updateUserData`, etc.) are not defined in this file, so I cannot analyze them. Per the rules, I must use strictly intra-file evidence only.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: This file contains only the dispatcher logic for the chaincode. All operations within this file are deterministic - argument parsing, string comparisons, and event setting with deterministic inputs. The actual business logic methods (createUser, readUser, etc.) are not defined in this file, and per intra-file analysis rules, I cannot speculate about their implementations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:19:35.185737",
+  "annotator": "2nd"
+}

@@ -1,0 +1,326 @@
+{
+  "timestamp": "260422_0515",
+  "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+  "n_ctx": 16384,
+  "temperature": 0.0,
+  "n_runs": 2,
+  "dev_files": 10,
+  "total_runs": 20,
+  "parse_ok": 16,
+  "parse_fail": 4,
+  "deterministic_files": 10,
+  "results": [
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: time.Now() used in timeHelper() function",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "time.Now() used in timeHelper() function",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 1.84,
+      "repo": "bluezd",
+      "filename": "integralTrace.go",
+      "code_chars": 23770,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: time.Now() used in timeHelper() function",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "time.Now() used in timeHelper() function",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.27,
+      "repo": "bluezd",
+      "filename": "integralTrace.go",
+      "code_chars": 23770,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: GOROUTINE  \nEVIDENCE: go statement influencing a sink",
+      "label": "VULNERABLE",
+      "classes": [
+        "GOROUTINE"
+      ],
+      "evidence": "go statement influencing a sink",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 1.63,
+      "repo": "xuehuiit",
+      "filename": "example_cc.go",
+      "code_chars": 19804,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: GOROUTINE  \nEVIDENCE: go statement influencing a sink",
+      "label": "VULNERABLE",
+      "classes": [
+        "GOROUTINE"
+      ],
+      "evidence": "go statement influencing a sink",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.25,
+      "repo": "xuehuiit",
+      "filename": "example_cc.go",
+      "code_chars": 19804,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 1.85,
+      "repo": "nitesh7sid",
+      "filename": "marbles_chaincode.go",
+      "code_chars": 24910,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.35,
+      "repo": "nitesh7sid",
+      "filename": "marbles_chaincode.go",
+      "code_chars": 24910,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: NONE  \nEVIDENCE: No consensus-critical nondeterminism classes found.",
+      "label": "VULNERABLE",
+      "classes": [],
+      "evidence": "No consensus-critical nondeterminism classes found.",
+      "parse_ok": false,
+      "errors": [
+        "VULNERABLE but CLASSES is NONE"
+      ],
+      "run": 1,
+      "elapsed_s": 2.14,
+      "repo": "RAntonio09",
+      "filename": "ccConsortium.go",
+      "code_chars": 20237,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: NONE  \nEVIDENCE: No consensus-critical nondeterminism classes found.",
+      "label": "VULNERABLE",
+      "classes": [],
+      "evidence": "No consensus-critical nondeterminism classes found.",
+      "parse_ok": false,
+      "errors": [
+        "VULNERABLE but CLASSES is NONE"
+      ],
+      "run": 2,
+      "elapsed_s": 0.28,
+      "repo": "RAntonio09",
+      "filename": "ccConsortium.go",
+      "code_chars": 20237,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 1.98,
+      "repo": "cactusfluo",
+      "filename": "marbles_chaincode.go",
+      "code_chars": 26628,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.35,
+      "repo": "cactusfluo",
+      "filename": "marbles_chaincode.go",
+      "code_chars": 26628,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: PHANTOM_READ  \nEVIDENCE: Rich query results (GetQueryResult, GetQueryResultWithPagination) used to decide writes.",
+      "label": "VULNERABLE",
+      "classes": [
+        "PHANTOM_READ"
+      ],
+      "evidence": "Rich query results (GetQueryResult, GetQueryResultWithPagination) used to decide writes.",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 2.28,
+      "repo": "RakhiSoni",
+      "filename": "marbles_chaincode.go",
+      "code_chars": 31204,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: PHANTOM_READ  \nEVIDENCE: Rich query results (GetQueryResult, GetQueryResultWithPagination) used to decide writes.",
+      "label": "VULNERABLE",
+      "classes": [
+        "PHANTOM_READ"
+      ],
+      "evidence": "Rich query results (GetQueryResult, GetQueryResultWithPagination) used to decide writes.",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.39,
+      "repo": "RakhiSoni",
+      "filename": "marbles_chaincode.go",
+      "code_chars": 31204,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: NONE  \nEVIDENCE: None",
+      "label": "VULNERABLE",
+      "classes": [],
+      "evidence": "None",
+      "parse_ok": false,
+      "errors": [
+        "VULNERABLE but CLASSES is NONE"
+      ],
+      "run": 1,
+      "elapsed_s": 0.28,
+      "repo": "lutianYan",
+      "filename": "myHospital.go",
+      "code_chars": 2290,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: NONE  \nEVIDENCE: None",
+      "label": "VULNERABLE",
+      "classes": [],
+      "evidence": "None",
+      "parse_ok": false,
+      "errors": [
+        "VULNERABLE but CLASSES is NONE"
+      ],
+      "run": 2,
+      "elapsed_s": 0.15,
+      "repo": "lutianYan",
+      "filename": "myHospital.go",
+      "code_chars": 2290,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: `time.Now()` used in `updateReading` function",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "`time.Now()` used in `updateReading` function",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 0.84,
+      "repo": "joseprados",
+      "filename": "ReadingAsset.go",
+      "code_chars": 10748,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: VULNERABLE  \nCLASSES: TIME_NOW  \nEVIDENCE: `time.Now()` used in `updateReading` function",
+      "label": "VULNERABLE",
+      "classes": [
+        "TIME_NOW"
+      ],
+      "evidence": "`time.Now()` used in `updateReading` function",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.26,
+      "repo": "joseprados",
+      "filename": "ReadingAsset.go",
+      "code_chars": 10748,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: SAFE  \nCLASSES: NONE  \nEVIDENCE: No consensus-critical nondeterminism classes found.",
+      "label": "SAFE",
+      "classes": [],
+      "evidence": "No consensus-critical nondeterminism classes found.",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 0.35,
+      "repo": "ewerter",
+      "filename": "customerloyalty.go",
+      "code_chars": 2844,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: SAFE  \nCLASSES: NONE  \nEVIDENCE: No consensus-critical nondeterminism classes found.",
+      "label": "SAFE",
+      "classes": [],
+      "evidence": "No consensus-critical nondeterminism classes found.",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.19,
+      "repo": "ewerter",
+      "filename": "customerloyalty.go",
+      "code_chars": 2844,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: SAFE  \nCLASSES: NONE  \nEVIDENCE: No consensus-critical nondeterminism classes found.",
+      "label": "SAFE",
+      "classes": [],
+      "evidence": "No consensus-critical nondeterminism classes found.",
+      "parse_ok": true,
+      "errors": [],
+      "run": 1,
+      "elapsed_s": 0.35,
+      "repo": "pankajcheema",
+      "filename": "dummyuser.go",
+      "code_chars": 3110,
+      "deterministic": true
+    },
+    {
+      "raw": "LABEL: SAFE  \nCLASSES: NONE  \nEVIDENCE: No consensus-critical nondeterminism classes found.",
+      "label": "SAFE",
+      "classes": [],
+      "evidence": "No consensus-critical nondeterminism classes found.",
+      "parse_ok": true,
+      "errors": [],
+      "run": 2,
+      "elapsed_s": 0.19,
+      "repo": "pankajcheema",
+      "filename": "dummyuser.go",
+      "code_chars": 3110,
+      "deterministic": true
+    }
+  ]
+}

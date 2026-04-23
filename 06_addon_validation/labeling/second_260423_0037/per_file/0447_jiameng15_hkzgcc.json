@@ -1,0 +1,19 @@
+{
+  "file_id": "0447_jiameng15_hkzgcc",
+  "repo": "jiameng15",
+  "filename": "hkzgcc.go",
+  "elapsed_s": 2.73,
+  "input_tokens": 1949,
+  "output_tokens": 159,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains HLF transaction entrypoints (Init and Invoke methods), but examination reveals no C1 (time.Now usage influencing writes), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable package-level state) patterns. The Init function writes deterministic hardcoded values; the Invoke function is a dispatcher that routes to helper functions defined elsewhere. All writes use static, predetermined data with no nondeterministic sources.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The file contains HLF transaction entrypoints (Init and Invoke methods), but examination reveals no C1 (time.Now usage influencing writes), C2 (goroutines), C3 (map iteration), C4 (non-revalidated queries), or C6 (mutable package-level state) patterns. The Init function writes deterministic hardcoded values; the Invoke function is a dispatcher that routes to helper functions defined elsewhere. All writes use static, predetermined data with no nondeterministic sources.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:50:18.611671",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0491_koakh_marbles_chaincode",
+  "repo": "koakh",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 3.31,
+  "input_tokens": 5891,
+  "output_tokens": 183,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains multiple HLF transaction entrypoints (Init, Invoke, and several transaction functions). However, no C1–C6 vulnerability patterns are present. All time usage (L506) is via `time.Unix()` converting a deterministic timestamp from the ledger, not `time.Now()`. No goroutines, map iterations influencing writes, non-revalidated queries determining writes, or mutable global state exist. Query results (GetQueryResult, GetHistoryForKey, GetStateByRange) are returned read-only via shim.Success without influencing write decisions. All iterators are properly closed via defer statements.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: None\nRATIONALE: The file contains multiple HLF transaction entrypoints (Init, Invoke, and several transaction functions). However, no C1–C6 vulnerability patterns are present. All time usage (L506) is via `time.Unix()` converting a deterministic timestamp from the ledger, not `time.Now()`. No goroutines, map iterations influencing writes, non-revalidated queries determining writes, or mutable global state exist. Query results (GetQueryResult, GetHistoryForKey, GetStateByRange) are returned read-only via shim.Success without influencing write decisions. All iterators are properly closed via defer statements.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:51:55.986945",
+  "annotator": "2nd"
+}

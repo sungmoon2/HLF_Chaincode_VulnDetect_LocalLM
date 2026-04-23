@@ -1,0 +1,19 @@
+{
+  "file_id": "0407_hyperledgendary_wasm_contract",
+  "repo": "hyperledgendary",
+  "filename": "wasm_contract.go",
+  "elapsed_s": 17.71,
+  "input_tokens": 1816,
+  "output_tokens": 791,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The file contains valid HLF transaction entrypoints but no nondeterministic patterns. The transientMap is passed to protobuf marshaling (google.golang.org/protobuf/proto.Marshal) which produces deterministic output by sorting map keys. No time.Now(), goroutines, map range iterations, or rich queries are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `WasmContract` that take `shim.ChaincodeStubInterface` and return `pb.Response`. These are recognizable HLF transaction entrypoints.\n\n### Step 2: Pattern Detection\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: \n- Line 79: `transientMap map[string][]byte` is passed to `createInvokeTransactionArgs`\n- Line 91: `TransientArgs: transientMap` - the map is assigned to a protobuf field\n- Line 94: `proto.Marshal(msg)` - protobuf marshaling of a message containing the map\n\nLooking at the protobuf field `TransientArgs`, this is a `map[string][]byte` being marshaled. In Protocol Buffers (proto3), map iteration order during serialization is **not guaranteed to be deterministic** across different implementations or even different runs. However, the Go protobuf library (`google.golang.org/protobuf`) does sort map keys during marshaling for deterministic output.\n\n**C4 NON_REVALIDATED_QUERY**: No `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey` calls.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables in this file.\n\n**C5 ITERATOR_LEAK**: No iterators created.\n\n### Step 3: Sink Analysis\n\nThe `transientMap` from `APIstub.GetTransient()` (line 53) is passed through to `createInvokeTransactionArgs` and marshaled into the args that are passed to `wc.wasmGuestInvoker.InvokeWasmOperation`. The result of this invocation is returned via `shim.Success(result)`.\n\nHowever, examining more carefully:\n- `proto.Marshal` in the Go protobuf library (`google.golang.org/protobuf/proto`) produces deterministic output for maps by sorting keys\n- The transient map itself comes from the transaction proposal, which is the same across all endorsers\n\nThe map is not iterated with `for...range` in this file - it's passed directly to protobuf marshaling which handles it deterministically.\n\n### Step 4: Final Assessment\n\nNo C1-C4 or C6 patterns that would cause nondeterminism are present. The map usage goes through protobuf marshaling which is deterministic in the Go implementation.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The file contains valid HLF transaction entrypoints but no nondeterministic patterns. The transientMap is passed to protobuf marshaling (google.golang.org/protobuf/proto.Marshal) which produces deterministic output by sorting map keys. No time.Now(), goroutines, map range iterations, or rich queries are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:32:12.223030",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0207_bezant-developers_simpleChaincode",
+  "repo": "bezant-developers",
+  "filename": "simpleChaincode.go",
+  "elapsed_s": 11.09,
+  "input_tokens": 1603,
+  "output_tokens": 524,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. All operations use deterministic stub methods (GetState, PutState) with inputs derived from transaction arguments or the external `getWalletAddress` function (which is out of scope for intra-file analysis).",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `SimpleChaincode` using `shim.ChaincodeStubInterface` - this is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n### Step 3: Additional Observations\n\n- Line 75: `getWalletAddress(stub)` is called but this function is not defined in this file. However, per the rules, I must only consider intra-file evidence. The function call itself doesn't introduce nondeterminism - whatever `getWalletAddress` does is out of scope.\n- The chaincode uses `stub.GetState()` and `stub.PutState()` which are deterministic operations.\n- `fmt.Println` calls are for logging only and don't affect ledger writes or responses.\n\n### Step 4: C5 Iterator Leak Check\nNo iterators are created in this file.\n\n## Verdict\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains no time-based operations, goroutines, map iterations, rich queries, or mutable global state. All operations use deterministic stub methods (GetState, PutState) with inputs derived from transaction arguments or the external `getWalletAddress` function (which is out of scope for intra-file analysis).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:17:41.929723",
+  "annotator": "2nd"
+}

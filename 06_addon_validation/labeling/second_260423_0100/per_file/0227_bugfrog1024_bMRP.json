@@ -1,0 +1,19 @@
+{
+  "file_id": "0227_bugfrog1024_bMRP",
+  "repo": "bugfrog1024",
+  "filename": "bMRP.go",
+  "elapsed_s": 14.77,
+  "input_tokens": 2001,
+  "output_tokens": 614,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L82-L100",
+  "rationale": "GetHistoryForKey is used in GetMRByID but only for read-only purposes - the query result is marshaled and returned via shim.Success without influencing any ledger write operations. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has valid HLF transaction entrypoints via `Init` and `Invoke` methods using the shim interface. Two transaction functions exist: `AddNewMR` and `GetMRByID`.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No goroutine spawning (`go func()` or `go methodCall()`).\n\n**C3 MAP_ITERATION**: No map iteration with `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetHistoryForKey` is used at line 82 in `GetMRByID`\n- The result is iterated and the last valid record is returned via `shim.Success`\n- This is a **read-only query** - the result is marshaled and returned, but does NOT influence any write decision (no `PutState`, `DelState`, etc. based on the query result)\n- Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4\"\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- `resultsIterator` is created at line 82\n- `defer resultsIterator.Close()` is called at line 86\n- Iterator is properly closed.\n\n### Key Observation for GetMRByID\nThe `GetHistoryForKey` result is used purely for reading - the function iterates through history, finds the last valid record, and returns it. There is no write operation (`PutState`, `DelState`) that depends on this query result. The function is read-only, returning data via `shim.Success`.\n\n### Verdict\n\nThe chaincode does not contain any patterns that would cause endorsement divergence. The `GetHistoryForKey` usage is for read-only purposes and doesn't influence any ledger writes.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L82-L100\nRATIONALE: GetHistoryForKey is used in GetMRByID but only for read-only purposes - the query result is marshaled and returned via shim.Success without influencing any ledger write operations. Per the taxonomy, read-only queries returned via shim.Success are not C4 violations.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:18:49.537516",
+  "annotator": "2nd"
+}

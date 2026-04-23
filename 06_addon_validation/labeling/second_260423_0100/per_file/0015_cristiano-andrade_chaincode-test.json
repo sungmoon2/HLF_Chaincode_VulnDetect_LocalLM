@@ -1,0 +1,19 @@
+{
+  "file_id": "0015_cristiano-andrade_chaincode-test",
+  "repo": "cristiano-andrade",
+  "filename": "chaincode-test.go",
+  "elapsed_s": 4.89,
+  "input_tokens": 1842,
+  "output_tokens": 114,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L87",
+  "rationale": "In MakePayment (L75-L105), time.Now().Format() at L87 is used to set payment.PaidAt, which is then marshaled and written to the ledger via stub.PutState at L95. Different endorsing peers will have different local times, causing endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L87\nRATIONALE: In MakePayment (L75-L105), time.Now().Format() at L87 is used to set payment.PaidAt, which is then marshaled and written to the ledger via stub.PutState at L95. Different endorsing peers will have different local times, causing endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:09.404089",
+  "annotator": "2nd"
+}

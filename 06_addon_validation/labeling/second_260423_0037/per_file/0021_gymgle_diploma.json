@@ -1,0 +1,19 @@
+{
+  "file_id": "0021_gymgle_diploma",
+  "repo": "gymgle",
+  "filename": "diploma.go",
+  "elapsed_s": 3.2,
+  "input_tokens": 4212,
+  "output_tokens": 179,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "C6",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L165, L189, L22, L23, L165, L189",
+  "rationale": "The file contains two package-level mutable globals (`BackGroundNo` and `RecordNo` at L22–23) that are incremented during transaction execution (L165, L189) and influence ledger writes via `writeRecord()` and `writeBackground()`. Additionally, `time.Now().Unix()` is called at L165 and L189 to set `ModifyTime` and `ExitTime` fields in records written to the ledger via `PutState`, creating consensus-critical nondeterminism across endorsers.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: C6\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L165, L189, L22, L23, L165, L189\nRATIONALE: The file contains two package-level mutable globals (`BackGroundNo` and `RecordNo` at L22–23) that are incremented during transaction execution (L165, L189) and influence ledger writes via `writeRecord()` and `writeBackground()`. Additionally, `time.Now().Unix()` is called at L165 and L189 to set `ModifyTime` and `ExitTime` fields in records written to the ledger via `PutState`, creating consensus-critical nondeterminism across endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:38:27.383513",
+  "annotator": "2nd"
+}

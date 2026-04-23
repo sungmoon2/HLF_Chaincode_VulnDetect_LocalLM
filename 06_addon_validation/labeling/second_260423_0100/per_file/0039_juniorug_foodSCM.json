@@ -1,0 +1,19 @@
+{
+  "file_id": "0039_juniorug_foodSCM",
+  "repo": "juniorug",
+  "filename": "foodSCM.go",
+  "elapsed_s": 4.86,
+  "input_tokens": 3276,
+  "output_tokens": 160,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L83-L86, L101-L104, L125-L128, L149-L152, L173-L176, L197-L200",
+  "rationale": "Multiple transaction functions (createRawFood, manufactureProcessing, wholesalerDistribute, initiateShipment, deliverToRetail, completeOrder) use time.Now() to set date fields that are then written to the ledger via stub.PutState(). Since time.Now() returns different values on different endorsing peers, this causes endorsement divergence.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C1\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L83-L86, L101-L104, L125-L128, L149-L152, L173-L176, L197-L200\nRATIONALE: Multiple transaction functions (createRawFood, manufactureProcessing, wholesalerDistribute, initiateShipment, deliverToRetail, completeOrder) use time.Now() to set date fields that are then written to the ledger via stub.PutState(). Since time.Now() returns different values on different endorsing peers, this causes endorsement divergence.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:11.931052",
+  "annotator": "2nd"
+}

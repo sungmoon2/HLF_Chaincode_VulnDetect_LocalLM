@@ -1,0 +1,19 @@
+{
+  "file_id": "0563_MisterPineapple_chaincode1",
+  "repo": "MisterPineapple",
+  "filename": "chaincode1.go",
+  "elapsed_s": 5.03,
+  "input_tokens": 2954,
+  "output_tokens": 131,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not use any nondeterministic patterns. No time.Now(), goroutines, map iterations, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state are present. All state operations use deterministic GetState/PutState/DelState with argument-derived keys and values.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not use any nondeterministic patterns. No time.Now(), goroutines, map iterations, rich queries (GetQueryResult/GetHistoryForKey), or mutable global state are present. All state operations use deterministic GetState/PutState/DelState with argument-derived keys and values.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:43:26.997926",
+  "annotator": "2nd"
+}

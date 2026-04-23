@@ -1,0 +1,19 @@
+{
+  "file_id": "0693_richardfelkl_main",
+  "repo": "richardfelkl",
+  "filename": "main.go",
+  "elapsed_s": 2.94,
+  "input_tokens": 2693,
+  "output_tokens": 174,
+  "verdict": "VULNERABLE",
+  "primary_class": "C1",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L45, L52",
+  "rationale": "The `put` function uses `uuid.NewV4().String()` (L45) to generate a non-deterministic ID when one is not provided, and this ID is subsequently written to the ledger via `stub.PutState(key, ...)` (L52). UUID generation is non-deterministic across endorsers and will cause divergence in the written state key. Additionally, the `list` function creates an iterator at L127 via `GetStateByPartialCompositeKey` but never calls `Close()` on the iterator object (C5 auxiliary issue).",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C1\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: YES\n\nEVIDENCE_LINES: L45, L52\n\nRATIONALE: The `put` function uses `uuid.NewV4().String()` (L45) to generate a non-deterministic ID when one is not provided, and this ID is subsequently written to the ledger via `stub.PutState(key, ...)` (L52). UUID generation is non-deterministic across endorsers and will cause divergence in the written state key. Additionally, the `list` function creates an iterator at L127 via `GetStateByPartialCompositeKey` but never calls `Close()` on the iterator object (C5 auxiliary issue).",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:57:58.028212",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0829_TongjiUniversityStudent1_publicityReport",
+  "repo": "TongjiUniversityStudent1",
+  "filename": "publicityReport.go",
+  "elapsed_s": 3.04,
+  "input_tokens": 1830,
+  "output_tokens": 165,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries influencing writes, or mutable package-level state. All ledger writes (PutState calls in Init, add, and comfirm) depend only on deterministic function arguments or prior GetState reads, which are safe. The query function performs a read-only operation with no write side effects.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods). However, no C1–C6 vulnerability patterns are present: there are no time.Now() calls, goroutines, map iterations, non-revalidated queries influencing writes, or mutable package-level state. All ledger writes (PutState calls in Init, add, and comfirm) depend only on deterministic function arguments or prior GetState reads, which are safe. The query function performs a read-only operation with no write side effects.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:33.594147",
+  "annotator": "2nd"
+}

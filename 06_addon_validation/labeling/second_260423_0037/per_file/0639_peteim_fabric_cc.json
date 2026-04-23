@@ -1,0 +1,19 @@
+{
+  "file_id": "0639_peteim_fabric_cc",
+  "repo": "peteim",
+  "filename": "fabric_cc.go",
+  "elapsed_s": 3.2,
+  "input_tokens": 1963,
+  "output_tokens": 178,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L57-L58, L68-L69",
+  "rationale": "The file contains HLF transaction entrypoints (Init and Invoke methods). However, the time.Now() calls at L57 and time.Since() calls at L68-L69 are used exclusively for logging performance metrics (via log.Printf) and do NOT influence any ledger writes (PutState, DelState, etc.) or proposal response content. The response body is determined solely by the return value of cc.rpc.Handler(), which is external to this file. No C1–C6 vulnerability patterns reach a consensus-critical sink within this file's scope.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L57-L58, L68-L69\nRATIONALE: The file contains HLF transaction entrypoints (Init and Invoke methods). However, the time.Now() calls at L57 and time.Since() calls at L68-L69 are used exclusively for logging performance metrics (via log.Printf) and do NOT influence any ledger writes (PutState, DelState, etc.) or proposal response content. The response body is determined solely by the return value of cc.rpc.Handler(), which is external to this file. No C1–C6 vulnerability patterns reach a consensus-critical sink within this file's scope.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:29.993732",
+  "annotator": "2nd"
+}

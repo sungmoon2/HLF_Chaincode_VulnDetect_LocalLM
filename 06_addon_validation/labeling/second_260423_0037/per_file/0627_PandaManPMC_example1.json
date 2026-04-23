@@ -1,0 +1,19 @@
+{
+  "file_id": "0627_PandaManPMC_example1",
+  "repo": "PandaManPMC",
+  "filename": "example1.go",
+  "elapsed_s": 2.49,
+  "input_tokens": 1431,
+  "output_tokens": 170,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "None",
+  "rationale": "The file contains recognizable HLF transaction entrypoints (Init and Invoke methods on ChaincodeExample1). However, no consensus-critical nondeterminism sources are present: there are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no non-revalidated queries (C4), and no mutable package-level state influencing writes (C6). All ledger writes (PutState in Init and set function) depend only on deterministic function arguments. The code is deterministic across all endorsers.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\n\nSECONDARY_CLASS: NONE\n\nAUXILIARY_C5: NO\n\nEVIDENCE_LINES: None\n\nRATIONALE: The file contains recognizable HLF transaction entrypoints (Init and Invoke methods on ChaincodeExample1). However, no consensus-critical nondeterminism sources are present: there are no time.Now() calls (C1), no goroutines (C2), no map iterations (C3), no non-revalidated queries (C4), and no mutable package-level state influencing writes (C6). All ledger writes (PutState in Init and set function) depend only on deterministic function arguments. The code is deterministic across all endorsers.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:56:03.834157",
+  "annotator": "2nd"
+}

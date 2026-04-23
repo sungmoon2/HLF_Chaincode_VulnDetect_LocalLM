@@ -1,0 +1,32 @@
+{
+  "file_id": "0199_linqd1_chaincode",
+  "repo": "linqd1",
+  "filename": "chaincode.go",
+  "filepath": "C:\\Users\\qkrtj\\Desktop\\02_논문\\[AANN_2026]-China_Qingdao\\Exp_HLF_Chaincode_VulnDetect_LocalLM\\02_resources\\golisa_benchmark\\Benchmark\\linqd1\\chaincode.go",
+  "candidate_type": "safe",
+  "is_hard_negative": true,
+  "mining_families": [
+    "GLOBAL_MUTABLE_STATE"
+  ],
+  "code_chars": 2082,
+  "stripped_chars": 1696,
+  "code_hash": "98abe4640361e131",
+  "stripped_hash": "7e8770b54efc6627",
+  "elapsed_s": 4.02,
+  "input_tokens": 1756,
+  "output_tokens": 164,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L14-L15, L22-L28, L40-L41",
+  "rationale": "Package-level variables A, B, Aval, Bval are initialized in Init() (L22-L28) and then read/modified in invoke() (L40-L41: `Aval = Aval - X`, `Bval = Bval + X`). These global mutable state variables influence the transaction response via shim.Success, and their values depend on prior transaction executions, causing nondeterminism across peers with different execution histories.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L14-L15, L22-L28, L40-L41\nRATIONALE: Package-level variables A, B, Aval, Bval are initialized in Init() (L22-L28) and then read/modified in invoke() (L40-L41: `Aval = Aval - X`, `Bval = Bval + X`). These global mutable state variables influence the transaction response via shim.Success, and their values depend on prior transaction executions, causing nondeterminism across peers with different execution histories.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-22T22:19:22.167342",
+  "verified_reclassified": true,
+  "reclassification_reason": "Globals modified but no PutState in invoke(). Hard negative.",
+  "original_verdict": "VULNERABLE",
+  "original_primary_class": "C6"
+}

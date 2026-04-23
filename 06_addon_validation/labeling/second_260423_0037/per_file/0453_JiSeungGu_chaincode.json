@@ -1,0 +1,19 @@
+{
+  "file_id": "0453_JiSeungGu_chaincode",
+  "repo": "JiSeungGu",
+  "filename": "chaincode.go",
+  "elapsed_s": 6.66,
+  "input_tokens": 4310,
+  "output_tokens": 492,
+  "verdict": "SAFE",
+  "primary_class": "** NONE",
+  "secondary_class": "** NONE",
+  "auxiliary_c5": "** NO",
+  "evidence_lines": "** N/A",
+  "rationale": "",
+  "raw_response": "# Audit Report: ERC20 Chaincode\n\n## Verdict: SAFE\n\n**PRIMARY_CLASS:** NONE  \n**SECONDARY_CLASS:** NONE  \n**AUXILIARY_C5:** NO  \n**EVIDENCE_LINES:** N/A\n\n---\n\n## Rationale\n\nThis file contains recognizable HLF transaction entrypoints (`Init` and `Invoke` methods implementing `shim.ChaincodeStubInterface`), so it is not excluded.\n\n**Analysis of vulnerability classes:**\n\n- **C1 (TIME_NOW):** No `time.Now()`, `time.Since()`, or `time.Until()` calls present. All timestamp operations use `GetTxTimestamp()` (none present) or are absent.\n\n- **C2 (GOROUTINE):** No `go func()` or `go methodCall()` patterns that could influence ledger writes or responses.\n\n- **C3 (MAP_ITERATION):** No `for...range` over map-typed expressions. All iterations are over slices (e.g., `stub.GetArgs()`, `stub.GetStringArgs()`), which have deterministic order.\n\n- **C4 (NON_REVALIDATED_QUERY):** `GetState()` calls (L165, L180, L195, L210, L225, L280) are used to read balances and approval amounts, but these are deterministic ledger reads. The results directly influence write decisions (e.g., `Transfer` computes new balances), but `GetState()` is not a query-result source (it is a direct key lookup, not `GetQueryResult`, `GetHistoryForKey`, etc.). No C4 vulnerability.\n\n- **C6 (GLOBAL_MUTABLE_STATE):** No package-level mutable variables declared in this file that influence transaction logic.\n\n- **C5 (ITERATOR_LEAK):** No iterator creation (`GetStateByRange`, `GetQueryResult`, etc.) present.\n\nAll ledger writes (`PutState`, `SetEvent`) are driven by deterministic input parameters and ledger state, with no nondeterministic sources.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:50:39.753787",
+  "annotator": "2nd"
+}

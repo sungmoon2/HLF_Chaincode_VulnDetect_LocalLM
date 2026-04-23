@@ -1,0 +1,19 @@
+{
+  "file_id": "0445_jganobsik_chaincode",
+  "repo": "jganobsik",
+  "filename": "chaincode.go",
+  "elapsed_s": 12.81,
+  "input_tokens": 3501,
+  "output_tokens": 537,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "The chaincode contains standard CRUD operations using GetState/PutState/DelState with deterministic JSON marshaling of structs. No time-based operations, goroutines, map iterations, rich queries, or mutable global state patterns are present.",
+  "raw_response": "Looking at this chaincode file, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoint Check\nThe file contains `Init` and `Invoke` methods on `TicketsChaincode` that implement the shim interface. This is a valid HLF chaincode entrypoint.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No usage of `GetQueryResult`, `GetPrivateDataQueryResult`, `GetQueryResultWithPagination`, or `GetHistoryForKey`.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read in transaction logic.\n\n**C5 ITERATOR_LEAK**: No iterators are created in this file.\n\n### Additional Observations\n\nThere's a compilation issue in the `redeemTicket` function (lines 218-241) - it returns `string, error` tuples like `return \"Failed to get ticket:\", err` but the function signature is `peer.Response`. This is a bug but not a nondeterminism issue - it would fail to compile consistently.\n\nThe code uses:\n- `stub.GetState()` - deterministic\n- `stub.PutState()` - deterministic write\n- `stub.DelState()` - deterministic write\n- `json.Marshal()` on structs (not maps) - deterministic\n- `stub.CreateCompositeKey()` - deterministic\n\nAll operations are deterministic and there are no patterns from the vulnerability taxonomy present.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: The chaincode contains standard CRUD operations using GetState/PutState/DelState with deterministic JSON marshaling of structs. No time-based operations, goroutines, map iterations, rich queries, or mutable global state patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:34:48.990784",
+  "annotator": "2nd"
+}

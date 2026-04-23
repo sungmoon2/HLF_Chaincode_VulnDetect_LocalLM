@@ -1,0 +1,19 @@
+{
+  "file_id": "0771_soodakshay_mycc",
+  "repo": "soodakshay",
+  "filename": "mycc.go",
+  "elapsed_s": 3.91,
+  "input_tokens": 2624,
+  "output_tokens": 229,
+  "verdict": "VULNERABLE",
+  "primary_class": "C4",
+  "secondary_class": "C5",
+  "auxiliary_c5": "YES",
+  "evidence_lines": "L127-L145, L161-L180",
+  "rationale": "The `login` function (L127-L145) uses `stub.GetQueryResult()` at L135 to execute a CouchDB query based on email and password. The result of this non-revalidated query directly determines whether to return a successful login response (L141-L148) or an error. This is a C4 violation: the query result influences a ledger write decision (in this case, the response payload). Additionally, the `queryIterator` created at L135 is never closed, and the iterator in `CheckEmail` (L161-L180) at L170 is also never closed on the success path, constituting C5 iterator leaks. The C4 issue alone makes the file VULNERABLE because query results may vary across endorsers due to state divergence or timing.",
+  "raw_response": "VERDICT: VULNERABLE\n\nPRIMARY_CLASS: C4\n\nSECONDARY_CLASS: C5\n\nAUXILIARY_C5: YES\n\nEVIDENCE_LINES: L127-L145, L161-L180\n\nRATIONALE: The `login` function (L127-L145) uses `stub.GetQueryResult()` at L135 to execute a CouchDB query based on email and password. The result of this non-revalidated query directly determines whether to return a successful login response (L141-L148) or an error. This is a C4 violation: the query result influences a ledger write decision (in this case, the response payload). Additionally, the `queryIterator` created at L135 is never closed, and the iterator in `CheckEmail` (L161-L180) at L170 is also never closed on the success path, constituting C5 iterator leaks. The C4 issue alone makes the file VULNERABLE because query results may vary across endorsers due to state divergence or timing.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:59:57.845797",
+  "annotator": "2nd"
+}

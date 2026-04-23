@@ -1,0 +1,19 @@
+{
+  "file_id": "0241_bugfrog1024_marbles_chaincode",
+  "repo": "bugfrog1024",
+  "filename": "marbles_chaincode.go",
+  "elapsed_s": 3.02,
+  "input_tokens": 5045,
+  "output_tokens": 171,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains multiple transaction entrypoints (Init, Invoke, and helper methods) but exhibits no consensus-critical nondeterminism. All ledger writes (PutState, DelState) use deterministic inputs derived from arguments or prior GetState reads. Query results (GetQueryResult, GetHistoryForKey, GetStateByRange, GetStateByPartialCompositeKey) are only returned via shim.Success without influencing write decisions. No time.Now() calls influence ledger state. No goroutines, map iterations, or mutable global state affect transaction outcomes.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains multiple transaction entrypoints (Init, Invoke, and helper methods) but exhibits no consensus-critical nondeterminism. All ledger writes (PutState, DelState) use deterministic inputs derived from arguments or prior GetState reads. Query results (GetQueryResult, GetHistoryForKey, GetStateByRange, GetStateByPartialCompositeKey) are only returned via shim.Success without influencing write decisions. No time.Now() calls influence ledger state. No goroutines, map iterations, or mutable global state affect transaction outcomes.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T00:44:26.072490",
+  "annotator": "2nd"
+}

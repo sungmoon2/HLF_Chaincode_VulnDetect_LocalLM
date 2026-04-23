@@ -1,0 +1,19 @@
+{
+  "file_id": "0343_Ferwoo_finance",
+  "repo": "Ferwoo",
+  "filename": "finance.go",
+  "elapsed_s": 3.8,
+  "input_tokens": 1176,
+  "output_tokens": 160,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This file contains HLF transaction entrypoints (Init/Invoke) but no direct evidence of consensus-critical nondeterminism within the file itself. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state. The `loan` function delegates to external packages (`utils.GetCreator`, `bean.Loan`), but intra-file analysis shows no vulnerable patterns. Any potential issues would be in the imported packages, which are out of scope for this file-level audit.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This file contains HLF transaction entrypoints (Init/Invoke) but no direct evidence of consensus-critical nondeterminism within the file itself. There are no time.Now() calls, goroutines, map iterations, rich queries, or mutable global state. The `loan` function delegates to external packages (`utils.GetCreator`, `bean.Loan`), but intra-file analysis shows no vulnerable patterns. Any potential issues would be in the imported packages, which are out of scope for this file-level audit.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:27:43.862729",
+  "annotator": "2nd"
+}

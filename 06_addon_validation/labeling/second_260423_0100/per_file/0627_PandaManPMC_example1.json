@@ -1,0 +1,19 @@
+{
+  "file_id": "0627_PandaManPMC_example1",
+  "repo": "PandaManPMC",
+  "filename": "example1.go",
+  "elapsed_s": 3.57,
+  "input_tokens": 1431,
+  "output_tokens": 136,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init and Invoke) but uses no nondeterministic patterns. All operations use deterministic inputs from stub.GetStringArgs() and stub.GetFunctionAndParameters(). State operations (PutState, GetState) use only these deterministic inputs. No time.Now(), goroutines, map iteration, rich queries, or mutable global state are present.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init and Invoke) but uses no nondeterministic patterns. All operations use deterministic inputs from stub.GetStringArgs() and stub.GetFunctionAndParameters(). State operations (PutState, GetState) use only these deterministic inputs. No time.Now(), goroutines, map iteration, rich queries, or mutable global state are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:48:13.285465",
+  "annotator": "2nd"
+}

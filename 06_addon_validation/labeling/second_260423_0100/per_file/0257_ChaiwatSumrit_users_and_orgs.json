@@ -1,0 +1,19 @@
+{
+  "file_id": "0257_ChaiwatSumrit_users_and_orgs",
+  "repo": "ChaiwatSumrit",
+  "filename": "users_and_orgs.go",
+  "elapsed_s": 8.34,
+  "input_tokens": 959,
+  "output_tokens": 523,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L26-L32",
+  "rationale": "The file contains only type definitions and a trivial Init method that returns shim.Success(nil) with no operations. No nondeterministic patterns (C1-C4, C6) are present. The chaincode has no Invoke method and performs no state writes.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode file for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Check for HLF Transaction Entrypoint\nThe file contains a `UsersAndOrgs` struct with an `Init` method that takes `shim.ChaincodeStubInterface` and returns `pb.Response`. This is a recognizable HLF transaction entrypoint.\n\nHowever, I notice there is NO `Invoke` method defined in this file. The `Init` method exists but only returns `shim.Success(nil)` with no logic.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go func()` or `go methodCall()` patterns.\n\n**C3 MAP_ITERATION**: No `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: No query operations (`GetQueryResult`, `GetPrivateDataQueryResult`, etc.).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations.\n\n**C5 ITERATOR_LEAK**: No iterators created.\n\n### Step 3: Evaluate the Code\n\nThe file contains:\n1. Type definitions (`Organization`, `User`, `IT_RPT`, `UsersAndOrgs`)\n2. An `Init` method that simply returns `shim.Success(nil)`\n\nThere is no `Invoke` method, meaning this chaincode cannot process transactions beyond initialization. The `Init` method performs no state operations and contains no nondeterministic patterns.\n\nThis appears to be an incomplete chaincode stub or a partial file containing only type definitions and a minimal Init.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L26-L32\nRATIONALE: The file contains only type definitions and a trivial Init method that returns shim.Success(nil) with no operations. No nondeterministic patterns (C1-C4, C6) are present. The chaincode has no Invoke method and performs no state writes.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:21:01.024156",
+  "annotator": "2nd"
+}

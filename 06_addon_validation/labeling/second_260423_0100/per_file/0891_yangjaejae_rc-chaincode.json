@@ -1,0 +1,19 @@
+{
+  "file_id": "0891_yangjaejae_rc-chaincode",
+  "repo": "yangjaejae",
+  "filename": "rc-chaincode.go",
+  "elapsed_s": 5.92,
+  "input_tokens": 3107,
+  "output_tokens": 176,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L193-L220",
+  "rationale": "The file contains a valid HLF chaincode with Init/Invoke entrypoints. The `get_txList` function uses `GetHistoryForKey` (L203), which is a C4 source, but the result is only used to build a read-only response returned via `shim.Success` (L220) - it does not influence any ledger writes (PutState/DelState). All other functions use deterministic operations with no time.Now(), goroutines, map iteration, or mutable global state affecting writes. The iterator is properly closed via defer (L207).",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L193-L220\nRATIONALE: The file contains a valid HLF chaincode with Init/Invoke entrypoints. The `get_txList` function uses `GetHistoryForKey` (L203), which is a C4 source, but the result is only used to build a read-only response returned via `shim.Success` (L220) - it does not influence any ledger writes (PutState/DelState). All other functions use deterministic operations with no time.Now(), goroutines, map iteration, or mutable global state affecting writes. The iterator is properly closed via defer (L207).",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T02:07:25.069547",
+  "annotator": "2nd"
+}

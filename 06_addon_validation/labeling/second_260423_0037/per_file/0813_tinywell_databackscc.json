@@ -1,0 +1,19 @@
+{
+  "file_id": "0813_tinywell_databackscc",
+  "repo": "tinywell",
+  "filename": "databackscc.go",
+  "elapsed_s": 3.57,
+  "input_tokens": 1319,
+  "output_tokens": 192,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "N/A",
+  "rationale": "The file contains a valid HLF transaction entrypoint (Init/Invoke methods), but the Invoke function performs only filesystem operations (os.OpenFile, WriteString, os.Create) that do NOT influence ledger writes (PutState/DelState/PutPrivateData/DelPrivateData) or the proposal response beyond shim.Success(nil). No C1 (time-based), C2 (goroutine), C3 (map iteration), C4 (non-revalidated query), or C6 (mutable global state affecting writes) patterns exist that reach a consensus-critical sink. The logger global is read-only and safe.",
+  "raw_response": "VERDICT: SAFE\n\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: N/A\nRATIONALE: The file contains a valid HLF transaction entrypoint (Init/Invoke methods), but the Invoke function performs only filesystem operations (os.OpenFile, WriteString, os.Create) that do NOT influence ledger writes (PutState/DelState/PutPrivateData/DelPrivateData) or the proposal response beyond shim.Success(nil). No C1 (time-based), C2 (goroutine), C3 (map iteration), C4 (non-revalidated query), or C6 (mutable global state affecting writes) patterns exist that reach a consensus-critical sink. The logger global is read-only and safe.",
+  "model": "claude-haiku-4-5@20251001",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:01:08.737250",
+  "annotator": "2nd"
+}

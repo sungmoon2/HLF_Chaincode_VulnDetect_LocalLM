@@ -1,0 +1,19 @@
+{
+  "file_id": "0191_Avery7Li_chaincode",
+  "repo": "Avery7Li",
+  "filename": "chaincode.go",
+  "elapsed_s": 19.06,
+  "input_tokens": 8865,
+  "output_tokens": 806,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L318-L328, L330-L346",
+  "rationale": "The `GetQueryResult` usage in `queryByOrganization` is dead code (not routed in Invoke dispatcher) and even if reachable, only returns data without influencing writes. All write operations use deterministic `GetState` reads. No other nondeterminism patterns are present.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, so this is valid chaincode.\n\n### Checking for Vulnerability Patterns\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`.\n\n**C2 GOROUTINE**: No `go` statements found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The structs use defined fields, and `json.Marshal` on structs is deterministic.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `GetQueryResult` is used in `getQueryResultForQueryString` (lines 330-346)\n- This function is called by `queryByOrganization` (lines 318-328)\n- Looking at `queryByOrganization`: it calls `getQueryResultForQueryString`, gets results, and returns them via `shim.Success(queryResults)` - this is a **read-only query** that doesn't influence any writes.\n- The `GetStateByPartialCompositeKey` calls in `queryProByName`, `queryUnproByName`, `queryProByOrganization`, `queryUnproByOrganization` are explicitly excluded from C4 per the rules, and they're also read-only (no writes based on results).\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level `var` declarations that are read/written in transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- All iterators from `GetStateByPartialCompositeKey` have proper `defer Close()` calls (lines 247, 265, 283, 301)\n- The iterator in `getQueryResultForQueryString` also has `defer Close()` (line 337)\n\n### Key Observations\n\nThe `queryByOrganization` function uses `GetQueryResult` but:\n1. It's not exposed in the `Invoke` dispatcher (lines 62-82) - there's no routing to `queryByOrganization`\n2. Even if it were called, it only returns data via `shim.Success()` without making any write decisions\n\nSince `queryByOrganization` is not reachable through the `Invoke` function (it's dead code - not in the if-else chain), and even if it were, it's read-only, there's no C4 vulnerability.\n\nAll other functions that do writes (`initDemand`, `initProfitablesupply`, `initUnprofitablesupply`, `initOrganization`, `set`, `updateDemandamount`, `updateProfitablesupplyamount`, `updateUnprofitablesupplyamount`, `updateOrganization`, `delete`) use only `GetState` for reads, which is deterministic.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L318-L328, L330-L346\nRATIONALE: The `GetQueryResult` usage in `queryByOrganization` is dead code (not routed in Invoke dispatcher) and even if reachable, only returns data without influencing writes. All write operations use deterministic `GetState` reads. No other nondeterminism patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:16:25.305202",
+  "annotator": "2nd"
+}

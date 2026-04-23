@@ -1,0 +1,19 @@
+{
+  "file_id": "0501_KTyrantOnly_crowdTest",
+  "repo": "KTyrantOnly",
+  "filename": "crowdTest.go",
+  "elapsed_s": 16.14,
+  "input_tokens": 4294,
+  "output_tokens": 731,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L108-119, L121-137, L232, L248",
+  "rationale": "The chaincode uses GetQueryResult and GetQueryResultWithPagination, but these are read-only operations whose results are returned via shim.Success() without influencing any ledger writes (PutState/DelState). The save() and delete() functions operate solely on input arguments, not query results.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface, with functions: `findOne`, `save`, `delete`, `query`, `queryWithPagination`, and `history`.\n\n### Checking Each Vulnerability Class\n\n**C1 TIME_NOW**: No usage of `time.Now()`, `time.Since()`, or `time.Until()`. The `UpdateTime` fields are passed as arguments, not generated.\n\n**C2 GOROUTINE**: No `go` statements found.\n\n**C3 MAP_ITERATION**: No map iteration with `for...range` over maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- `query()` (L108-119): Calls `getQueryResultForQueryString()` which uses `stub.GetQueryResult()` (L232). The result is returned via `shim.Success(queryResults)` - this is a **read-only query** returned to the client, NOT used to make write decisions.\n- `queryWithPagination()` (L121-137): Calls `getQueryResultWithPagination()` which uses `stub.GetQueryResultWithPagination()` (L248). Again, results are returned via `shim.Success()` - **read-only**.\n- `history()` (L195-229): Uses `stub.GetHistoryForKey()`. Results are returned via `shim.Success(nil)` - actually the buffer is built but not returned (bug in code, but not a nondeterminism issue). This is read-only.\n\nThe key insight for C4: The query results from `GetQueryResult` and `GetQueryResultWithPagination` are only returned to the client via `shim.Success()`. They do NOT influence any `PutState` or `DelState` calls. The `save()` and `delete()` functions operate on arguments passed directly, not on query results.\n\n**C5 ITERATOR_LEAK**: All iterators have `defer resultsIterator.Close()` - properly closed.\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n### Conclusion\n\nThe rich queries (`GetQueryResult`, `GetQueryResultWithPagination`, `GetHistoryForKey`) are used purely for read operations. Their results are returned to clients but never used to determine what gets written to the ledger. The `save()` function writes based solely on input arguments, and `delete()` deletes based on the key argument.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L108-119, L121-137, L232, L248\nRATIONALE: The chaincode uses GetQueryResult and GetQueryResultWithPagination, but these are read-only operations whose results are returned via shim.Success() without influencing any ledger writes (PutState/DelState). The save() and delete() functions operate solely on input arguments, not query results.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:38:56.424555",
+  "annotator": "2nd"
+}

@@ -1,0 +1,19 @@
+{
+  "file_id": "0037_jinjiaKarl_energyCommunity",
+  "repo": "jinjiaKarl",
+  "filename": "energyCommunity.go",
+  "elapsed_s": 5.96,
+  "input_tokens": 3774,
+  "output_tokens": 202,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "C1",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L21-L22, L97-L98, L108, L152-L153, L175, L195-L196",
+  "rationale": "Package-level mutable variables `homeNo` and `transactionNo` (L21-22) are read and incremented in transaction functions `createUser` (L97-98) and `buyByAddress` (L152-153), directly influencing ledger writes via `writeHome` and `writeTransaction`. Additionally, `time.Now().Unix()` at L151 is stored in the Transaction struct and written to the ledger, causing endorsement divergence. The `rand.Reader` usage in `GetAddress()` (L72) also produces nondeterministic addresses written to state.",
+  "raw_response": "VERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: C1\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L21-L22, L97-L98, L108, L152-L153, L175, L195-L196\nRATIONALE: Package-level mutable variables `homeNo` and `transactionNo` (L21-22) are read and incremented in transaction functions `createUser` (L97-98) and `buyByAddress` (L152-153), directly influencing ledger writes via `writeHome` and `writeTransaction`. Additionally, `time.Now().Unix()` at L151 is stored in the Transaction struct and written to the ledger, causing endorsement divergence. The `rand.Reader` usage in `GetAddress()` (L72) also produces nondeterministic addresses written to state.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:05:07.025130",
+  "annotator": "2nd"
+}

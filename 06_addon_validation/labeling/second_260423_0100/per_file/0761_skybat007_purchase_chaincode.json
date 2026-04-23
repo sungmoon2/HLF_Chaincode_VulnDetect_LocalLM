@@ -1,0 +1,19 @@
+{
+  "file_id": "0761_skybat007_purchase_chaincode",
+  "repo": "skybat007",
+  "filename": "purchase_chaincode.go",
+  "elapsed_s": 17.46,
+  "input_tokens": 2950,
+  "output_tokens": 722,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L163-L202",
+  "rationale": "The `getHistory` function uses `GetHistoryForKey` but only for read-only response construction (not write decisions), which is explicitly safe per taxonomy. The `time.Unix()` usage converts existing ledger timestamps deterministically, not `time.Now()`. No other vulnerability patterns are present.",
+  "raw_response": "I'll analyze this Hyperledger Fabric chaincode for consensus-critical nondeterminism.\n\n## Analysis\n\n### Step 1: Transaction Entrypoints\nThe file contains `Init` and `Invoke` methods implementing the shim interface. The `Invoke` method routes to `create` and `query`. Additionally, `delete` and `getHistory` are defined but not routed through `Invoke`.\n\n### Step 2: Check for Vulnerability Patterns\n\n**C1 TIME_NOW**: \n- Line 8: `\"time\"` is imported\n- Lines 186-187: `time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String()` - This uses `time.Unix()` to convert a timestamp from the history iterator, NOT `time.Now()`. This is deterministic as it converts existing ledger data.\n\n**C2 GOROUTINE**: No `go` keywords found.\n\n**C3 MAP_ITERATION**: No `for...range` over maps. The `purchase` struct uses slices, not maps.\n\n**C4 NON_REVALIDATED_QUERY**: \n- Line 163: `stub.GetHistoryForKey(key)` is called in `getHistory`\n- The result is iterated and returned via `shim.Success(buffer.Bytes())` at line 202\n- This is a **read-only query** - the history data is formatted and returned, but does NOT influence any write decision (no PutState/DelState based on the query result)\n\n**C6 GLOBAL_MUTABLE_STATE**: No package-level mutable variables that influence transaction logic.\n\n**C5 ITERATOR_LEAK**: \n- Line 163-165: `resultsIterator` is created and `defer resultsIterator.Close()` is properly called.\n\n### Step 3: Detailed Review of getHistory\n\nThe `getHistory` function:\n1. Calls `GetHistoryForKey` (C4 source)\n2. Iterates through results building a JSON response\n3. Returns the data via `shim.Success`\n\nThis is a **read-only query pattern** - the history data is only used to construct a response, not to make write decisions. Per the taxonomy: \"Read-only queries returned via shim.Success are NOT C4.\"\n\n### Step 4: Review of time usage\n\nThe `time.Unix()` call converts the `response.Timestamp` (which comes from the ledger's recorded transaction timestamps) into a string format. This is deterministic - all peers will have the same timestamp data from the ledger history. This is NOT `time.Now()`.\n\nVERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L163-L202\nRATIONALE: The `getHistory` function uses `GetHistoryForKey` but only for read-only response construction (not write decisions), which is explicitly safe per taxonomy. The `time.Unix()` usage converts existing ledger timestamps deterministically, not `time.Now()`. No other vulnerability patterns are present.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:57:39.582188",
+  "annotator": "2nd"
+}

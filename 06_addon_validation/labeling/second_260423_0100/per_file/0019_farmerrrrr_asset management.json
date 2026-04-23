@@ -1,0 +1,19 @@
+{
+  "file_id": "0019_farmerrrrr_asset management",
+  "repo": "farmerrrrr",
+  "filename": "asset management.go",
+  "elapsed_s": 14.02,
+  "input_tokens": 2656,
+  "output_tokens": 579,
+  "verdict": "VULNERABLE",
+  "primary_class": "C6",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "L19, L24, L53, L62, L66",
+  "rationale": "Package-level variable `userNumber` is modified in Init (L24) and mint (L66), read to influence ledger writes via PutState key construction (L62). This in-memory state will diverge across peers, causing different keys to be written for the same transaction.",
+  "raw_response": "Looking at this chaincode, I need to analyze it for consensus-critical nondeterminism.\n\n## Analysis\n\n### Transaction Entrypoints\nThe file has `Init` and `Invoke` methods implementing the shim interface - this is a valid HLF chaincode.\n\n### Global Mutable State (C6)\n**Line 19**: `var userNumber int = 0`\n\nThis is a package-level mutable variable that is:\n1. **Written in Init** (line 24): `userNumber = 1`\n2. **Read in mint** (line 53): `if user == \"Total\" && userNumber > 0` - influences control flow\n3. **Read in mint** (line 62): `stub.PutState(\"USER\"+strconv.Itoa(userNumber), ...)` - directly influences ledger write\n4. **Written in mint** (line 66): `userNumber++`\n\nThis is a classic C6 vulnerability. The `userNumber` variable is stored in the peer's memory, not on the ledger. Different peers may have different values for `userNumber` if:\n- They process transactions in different orders\n- They restart at different times\n- Init is called multiple times or not at all on some peers\n\nWhen `mint` is called, the key `\"USER\"+strconv.Itoa(userNumber)` will differ across peers if `userNumber` has diverged, causing endorsement failures.\n\n### Other Patterns\n- **C1 TIME_NOW**: No `time.Now()` usage found\n- **C2 GOROUTINE**: No goroutines found\n- **C3 MAP_ITERATION**: No map iteration found\n- **C4 NON_REVALIDATED_QUERY**: `GetStateByRange` is used in `queryAllUsers` but this is explicitly excluded from C4 sources per the taxonomy\n- **C5 ITERATOR_LEAK**: Line 168 has `defer resultsIterator.Close()` - properly closed\n\n## Verdict\n\n```\nVERDICT: VULNERABLE\nPRIMARY_CLASS: C6\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: L19, L24, L53, L62, L66\nRATIONALE: Package-level variable `userNumber` is modified in Init (L24) and mint (L66), read to influence ledger writes via PutState key construction (L62). This in-memory state will diverge across peers, causing different keys to be written for the same transaction.\n```",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:02:41.935086",
+  "annotator": "2nd"
+}

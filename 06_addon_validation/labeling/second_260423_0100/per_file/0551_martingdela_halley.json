@@ -1,0 +1,19 @@
+{
+  "file_id": "0551_martingdela_halley",
+  "repo": "martingdela",
+  "filename": "halley.go",
+  "elapsed_s": 5.3,
+  "input_tokens": 2688,
+  "output_tokens": 170,
+  "verdict": "SAFE",
+  "primary_class": "NONE",
+  "secondary_class": "NONE",
+  "auxiliary_c5": "NO",
+  "evidence_lines": "NONE",
+  "rationale": "This chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not exhibit any consensus-critical nondeterminism patterns. No time.Now() (C1), no goroutines (C2), no map iteration (C3), no rich queries like GetQueryResult (C4 - GetStateByRange is explicitly excluded per taxonomy), and no mutable global state (C6). The getWalletsByRange function uses GetStateByRange which returns deterministically ordered results and is explicitly not a C4 source. Iterator is properly closed with defer.",
+  "raw_response": "VERDICT: SAFE\nPRIMARY_CLASS: NONE\nSECONDARY_CLASS: NONE\nAUXILIARY_C5: NO\nEVIDENCE_LINES: NONE\nRATIONALE: This chaincode contains standard HLF transaction entrypoints (Init/Invoke) but does not exhibit any consensus-critical nondeterminism patterns. No time.Now() (C1), no goroutines (C2), no map iteration (C3), no rich queries like GetQueryResult (C4 - GetStateByRange is explicitly excluded per taxonomy), and no mutable global state (C6). The getWalletsByRange function uses GetStateByRange which returns deterministically ordered results and is explicitly not a C4 source. Iterator is properly closed with defer.",
+  "model": "claude-opus-4-5@20251101",
+  "temperature": 0.0,
+  "timestamp": "2026-04-23T01:42:51.457485",
+  "annotator": "2nd"
+}
